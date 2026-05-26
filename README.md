@@ -6,7 +6,7 @@ Setup, tips & tweaks pour CachyOS sur ZENBOOK 14 OLED KA!
 <table>
   <tr>
     <td style="vertical-align: middle;">
-      <img src="https://github.com/Shogu/Fedora41-setup-config/blob/main/Images%20USER/.user-astronaut.png" alt="logo_user" width="150">
+      <img src="https://gitlab.com/trevisiolugo/CACHYOS-Setup/-/blob/Main/Icons%20&%20background/.user-astronaut.png?ref_type=heads" alt="logo_user" width="150">
     </td>
     <td style="vertical-align: middle; padding-left: 10px;">
       <h2 style="margin: 0;">CachyOS Setup</h2>
