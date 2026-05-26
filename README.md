@@ -4,6 +4,7 @@
 Setup, tips & tweaks pour CachyOS sur ZENBOOK 14 OLED KA!
 
 <table>
+> 
   <tr>
     <td style="vertical-align: middle;">
       <div style="display: flex; align-items: center; gap: 12px;">
@@ -11,13 +12,12 @@ Setup, tips & tweaks pour CachyOS sur ZENBOOK 14 OLED KA!
         <img src="https://gitlab.com/trevisiolugo/CACHYOS-Setup/-/raw/Main/Icons%20%26%20background/icones%20suppl%C3%A9mentaires/Apps/Cachy-Hello.png" alt="CachyOS logo" width="120">
       </div>
     </td>
-    <td style="vertical-align: middle; padding-left: 10px;">
+    <td style="vertical-align: middle; padding-left: 10px;">w
       <h2 style="margin: 0;">CachyOS Setup</h2>
     </td>
   </tr>
 </table>
-
-🐧 Mémo pour le setup complet de **CachyOS** sur laptop **ASUS ZENBOOK 14 OLED UM3406KA**
+fbvc Mémo pour le setup complet de **CachyOS** sur laptop **ASUS ZENBOOK 14 OLED UM3406KA**
 
 ---
 
