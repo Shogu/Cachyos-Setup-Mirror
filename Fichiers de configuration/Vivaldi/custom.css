@@ -1,14 +1,15 @@
-/* Supprime bouton Maximize inconsistant */
+
+/* Supprime le bouton Maximiser, jugé incohérent dans ce thème. */
 button.window-maximize {
   display: none !important;
 }
 
-/* Adwaita font */
+/* Police de type Adwaita côté navigateur. */
 #browser.linux {
   font-family: sans-serif, system-ui;
 }
 
-/* Suppression bouton marque-page de la barre URL */
+/* Supprime le bouton de marque-page dans la barre d'URL. */
 .BookmarkButton,
 .url-bar-button.bookmark-button,
 .button.bookmark-button {
