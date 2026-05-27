@@ -1,4 +1,3 @@
-
 source /usr/share/cachyos-fish-config/cachyos-config.fish
 
 # overwrite greeting
@@ -7,48 +6,47 @@ source /usr/share/cachyos-fish-config/cachyos-config.fish
 #    # smth smth
 #end
 
-
 ############################################################################################################################
-# Alias logiciels
+# Alias Editeurs
 alias vim='micro'
 alias vi='micro'
 alias gedit='gnome-text-editor'
 alias nano='micro'
 alias notepad='gnome-text-editor'
+
+# Alias système
 alias rm='rm -I'
 alias stockage='duf'
-alias sourcefish='source ~/.config/fish/config.fish'
-alias fishedit='xdg-open /home/ogu/.config/fish/config.fish'
 alias systemd='isd'
 alias lastpackages='rip'
 alias liminestats='limine-snapper-info'
 alias scrub='sudo btrfs scrub start -B /'
 
-
-
-
-############################################################################################################################
-# gnome-text-editor comme éditeur par defaut sudoedit
-export SUDO_EDITOR="gnome-text-editor"
-export EDITOR="gnome-text-editor"
-export VISUAL="gnome-text-editor"
+# Alias Fish
+alias sourcefish='source ~/.config/fish/config.fish'
+alias fishedit='xdg-open ~/.config/fish/config.fish'
 
 
 ############################################################################################################################
-# Désactive le message d'accueil de Fish.
+# Éditeur par défaut
+set -gx SUDO_EDITOR gnome-text-editor
+set -gx EDITOR gnome-text-editor
+set -gx VISUAL gnome-text-editor
+
+############################################################################################################################
+# Message d'accueil Fish
 function fish_greeting
 end
 
-
 ############################################################################################################################
-# Contrôleur live de _scheduler - commande scx
+# Surveillance
 function scx --description 'scxctl get + check scheduler + monitor sans WARN'
     set -l output (scxctl get 2>/dev/null)
 
     if test -z "$output"
         set_color red
         echo "KO  scxctl ne retourne rien."
-        set_color --reset
+        set_color normal
         return 1
     end
 
@@ -60,7 +58,7 @@ function scx --description 'scxctl get + check scheduler + monitor sans WARN'
     if test -z "$sched_name"
         set_color red
         echo "KO  Aucun scheduler sched-ext actif."
-        set_color --reset
+        set_color normal
         return 1
     end
 
@@ -73,89 +71,74 @@ function scx --description 'scxctl get + check scheduler + monitor sans WARN'
 
         set_color cyan
         echo "Disk       : $disk"
-        set_color --reset
+        set_color normal
         echo "Scheduler  : $current_io"
     else
         set_color yellow
         echo "WARN Impossible de lire /sys/block/$disk/queue/scheduler"
-        set_color --reset
+        set_color normal
     end
 
     echo
     set_color brmagenta
     echo "Monitor : sudo $bin --monitor 3"
-    set_color --reset
+    set_color normal
 
     command sudo $bin --monitor 3 2>/dev/null
 end
 
-############################################################################################################################
-# 20 dernières erreurs journalctl - commande journal
 function journal
-    journalctl -p err -n 20 --no-pager | bat -l log  
+    journalctl -p err -n 20 --no-pager | bat -l log
 end
 
-
-############################################################################################################################
-# Arguments kernel - commande flags
 function flags
     clear
     echo "KERNEL FLAGS (/proc/cmdline)"
     echo "============================="
-
-    # Ligne brute colorée (jaune)
     echo "Ligne complète :"
-    printf "\\e[93m%s\\e[0m\\n\\n" (cat /proc/cmdline)
-
+    printf "\e[93m%s\e[0m\n\n" (cat /proc/cmdline)
     echo "Flags par ligne (triés, uniques) :"
-    
-    set -l all_flags (string split " " (cat /proc/cmdline))
+    set -l all_flags (string split ' ' (cat /proc/cmdline))
     set -l flags
     for flag in $all_flags
-        if not contains $flag $flags
+        if not contains -- $flag $flags
             set flags $flags $flag
         end
     end
-
-    set -l sorted_flags (printf "%s\\n" $flags | sort)
-    set i 1
+    set -l sorted_flags (printf "%s\n" $flags | sort)
+    set -l i 1
     for flag in $sorted_flags
-        printf "\\e[92m%2d.\\e[0m \\e[96m%s\\e[0m\\n" $i $flag
+        printf "\e[92m%2d.\e[0m \e[96m%s\e[0m\n" $i $flag
         set i (math $i + 1)
     end
-
-    echo ""
+    echo
 end
 
-
 ############################################################################################################################
-# FSTAB - commande fstab
+# Boot
 function fstab
     clear
-    echo "📁 /etc/fstab"
-    echo ""
+    echo "/etc/fstab"
+    echo
     sudo bat --language=fstab --paging=never --style=plain /etc/fstab
-    echo ""
+    echo
 end
 
-
-############################################################################################################################
-# MKINITCPIO - commande mkinitcpio
 function mkinitcpio
     clear
-    echo "🔧 /etc/mkinitcpio.conf"
-    echo ""
+    echo "/etc/mkinitcpio.conf"
+    echo
     sudo bat --language=ini --paging=never --style=plain /etc/mkinitcpio.conf
-    echo ""
+    echo
 end
 
-
 ############################################################################################################################
-# cleanup orphelins, cache paru, cache Vivaldi, caches Arch
+# Maintenance
 function clean
-    set orphans (pacman -Qtdq)
+    set -l orphans (pacman -Qtdq 2>/dev/null)
+
     if test (count $orphans) -gt 0
-        echo "Suppression des orphelins : $orphans"
+        echo "Suppression des paquets orphelins : $orphans"
         sudo pacman -Rns $orphans
     else
         echo "Aucun paquet orphelin."
@@ -166,53 +149,77 @@ function clean
     archclean full
 end
 
+function pacmanstats
+    echo "Nombre de paquets installés :"
+    pacman -Q | wc -l
+    echo "Taille totale des paquets installés :"
+    expac -H M '%m' | awk '{sum += $1} END {printf "%.2f GiB\n", sum/1024}'
+end
+
+function lastpackages
+    rip
+end
+
+function liminestats
+    limine-snapper-info
+end
 
 ############################################################################################################################
-# afficher l'état power de tuned-ppd
+# Fish
+function sourcefish
+    source ~/.config/fish/config.fish
+end
+
+function fishedit
+    xdg-open ~/.config/fish/config.fish
+end
+
+############################################################################################################################
+# Système
 function power
     set -l cpu0 /sys/devices/system/cpu/cpu0/cpufreq
 
-    set -l epp_raw "n/a"
-    set -l epp_label "n/a"
+    set -l epp_raw 'n/a'
+    set -l epp_label 'n/a'
     if test -r $cpu0/energy_performance_preference
         set epp_raw (cat $cpu0/energy_performance_preference 2>/dev/null)
         switch $epp_raw
             case balance_power balance_performance
-                set epp_label "balanced"
+                set epp_label 'balanced'
             case performance
-                set epp_label "performance"
+                set epp_label 'performance'
             case power
-                set epp_label "power"
+                set epp_label 'power'
             case default
                 set epp_label $epp_raw
         end
     end
 
-    set -l pprof "n/a"
+    set -l pprof 'n/a'
     if command -q powerprofilesctl
         set pprof (powerprofilesctl get 2>/dev/null)
         if test -z "$pprof"
-            set pprof "n/a"
+            set pprof 'n/a'
         end
     end
 
-    set -l tuned_ppd "no"
+    set -l tuned_ppd 'no'
     if command -q systemctl
         if systemctl --user is-active tuned-ppd.service >/dev/null 2>&1; or systemctl is-active tuned-ppd.service >/dev/null 2>&1
-            set tuned_ppd "yes"
+            set tuned_ppd 'yes'
         end
     end
 
-    set -l scx "n/a"
+    set -l scx 'n/a'
     if command -q scxctl
         set scx (scxctl get 2>/dev/null)
         if test -z "$scx"
-            set scx "n/a"
+            set scx 'n/a'
         end
     end
 
     set -l batdev (for d in /sys/class/power_supply/*; test -e "$d/type"; and string match -qr '^Battery$' (cat $d/type 2>/dev/null); and basename $d; end | head -n 1)
-    set -l bat "none"
+    set -l bat 'none'
     if test -n "$batdev"
         set -l base /sys/class/power_supply/$batdev
         set -l bat_status (cat $base/status 2>/dev/null)
@@ -237,10 +244,6 @@ function power
     echo "BAT: $bat"
 end
 
-
-
-############################################################################################################################
-# Fonction fwupdmgr full : unmask → start → refresh → updates → stop + mask
 function fwupdate --description "Mettre à jour firmware (fwupdmgr full)"
     echo
     set_color yellow
@@ -295,65 +298,73 @@ function fwupdate --description "Mettre à jour firmware (fwupdmgr full)"
     set_color normal
 end
 
-
-############################################################################################################################
-
-function pacmanstats
-    # Afficher le nombre de paquets installés
-    echo "Nombre de paquets installés :"
-    pacman -Q | wc -l
-    
-    # Afficher la taille totale des paquets installés
-    echo "Taille totale des paquets installés :"
-    expac -H M '%m' | awk '{sum += $1} END {printf "%.2f GiB\n", sum/1024}'
+function systemd
+    isd
 end
 
+function control
+    command control
+end
+
+function scrub
+    command sudo btrfs scrub start -B /
+end
 
 ############################################################################################################################
-
+# Menu
 function vault --description "Vault de commandes utiles"
     set -l vault_labels \
+        "=== BOOT ===" \
         "MAJ initramfs (limine-mkinitcpio)" \
         "Boot time (systemd-analyze)" \
-        "Boot analyze (sytemd-analyze blame)" \
+        "Boot analyze (systemd-analyze blame)" \
+        "=== SURVEILLANCE ===" \
         "Scheduler scx (scx)" \
-        "Nettoyage système (clean)" \
         "Erreurs journalctl" \
         "Flags kernel" \
-        "fstab" \
-        "mkinitcpio.conf" \
         "Afficher EPP / power" \
-        "fwupd" \
-        "control" \
+        "=== MAINTENANCE ===" \
+        "Nettoyage système (clean)" \
         "pacmanstats" \
         "liminestats" \
-        "stockage (duf)" \
+        "lastpackages (rip)" \
+        "=== FISH ===" \
         "sourcefish (reload config)" \
         "fishedit (edit config)" \
+        "=== SYSTÈME ===" \
+        "fstab" \
+        "mkinitcpio.conf" \
+        "stockage (duf)" \
+        "fwupd" \
+        "control" \
         "systemd (isd)" \
-        "lastpackages (rip)"
         "scrub"
 
     set -l vault_cmds \
+        "" \
         "sudo limine-mkinitcpio" \
         "systemd-analyze" \
         "systemd-analyze blame" \
+        "" \
         "scx" \
-        "clean" \
         "journal" \
         "flags" \
-        "sudo bat --language=fstab --paging=never --style=plain /etc/fstab" \
-        "sudo bat --language=ini --paging=never --style=plain /etc/mkinitcpio.conf" \
         "power" \
-        "fwupdate" \
-        "control" \
+        "" \
+        "clean" \
         "pacmanstats" \
         "liminestats" \
-        "stockage" \
+        "lastpackages" \
+        "" \
         "sourcefish" \
         "fishedit" \
+        "" \
+        "fstab" \
+        "mkinitcpio" \
+        "stockage" \
+        "fwupdate" \
+        "control" \
         "systemd" \
-        "lastpackages"
         "scrub"
 
     set -l count (count $vault_labels)
@@ -365,7 +376,13 @@ function vault --description "Vault de commandes utiles"
     echo
 
     for i in (seq $count)
-        printf "%2d) %s\n" $i $vault_labels[$i]
+        if string match -qr '^===.*===$' -- $vault_labels[$i]
+            set_color brblue
+            echo $vault_labels[$i]
+            set_color normal
+        else
+            printf "%2d) %s\n" $i $vault_labels[$i]
+        end
     end
 
     echo
@@ -389,6 +406,9 @@ function vault --description "Vault de commandes utiles"
         if string match -rq '^[0-9]+$' -- $choice
             if test $choice -ge 1 -a $choice -le $count
                 set -l cmd $vault_cmds[$choice]
+                if test -z "$cmd"
+                    continue
+                end
                 echo
                 set_color green
                 echo "→ Exécution : $cmd"
