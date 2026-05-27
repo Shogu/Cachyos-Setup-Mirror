@@ -226,9 +226,10 @@ Développement et compilation
 - `linux-cachyos-headers` : headers noyau pour modules externes.
 - `linux-cachyos-lts-headers` : headers noyau LTS pour modules externes.
 - `mesa-utils` : outils de test OpenGL/EGL.
+- `cachyos-packageinstaller` : mini installeur CachyOS
 
 ```
-sudo pacman -Rns ninja tesseract tesseract-data-fra tesseract-data-osd autoconf base-devel rust lld llvm pahole linux-cachyos-headers linux-cachyos-lts-headers mesa-utils
+sudo pacman -Rns ninja tesseract tesseract-data-fra tesseract-data-osd autoconf base-devel rust lld llvm pahole linux-cachyos-headers linux-cachyos-lts-headers mesa-utils cachyos-packageinstaller
 ```
 
 Flatpak et contrôle parental
