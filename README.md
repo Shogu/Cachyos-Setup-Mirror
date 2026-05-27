@@ -227,7 +227,10 @@ Développement et compilation
 - `linux-cachyos-lts-headers` : headers noyau LTS pour modules externes.
 - `mesa-utils` : outils de test OpenGL/EGL.
 - `cachyos-packageinstaller` : mini installeur CachyOS
-- `base-devel` : packages de compilation pour AUR - à réinstaller en cas de compil/update AUR
+
+Nota : `base-devel` : packages de compilation pour AUR - à réinstaller en cas de compil/update AUR
+
+
 ```
 sudo pacman -Rns ninja tesseract tesseract-data-fra tesseract-data-osd autoconf base-devel rust lld llvm pahole linux-cachyos-headers linux-cachyos-lts-headers mesa-utils cachyos-packageinstaller
 ```
