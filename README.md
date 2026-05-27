@@ -1156,8 +1156,6 @@ penser à copier le logo cachyOS `Watermark` (à dl dans le repo) dans /home/ogu
 
 Enfin, supprimer le paquet.
 
-Installer également le **theme GTK4** pour les applications utilisant encore GTK3 : `sudo pacman -S adw-gtk-theme` et activer le thème avec Gnome Tweaks.
-
 
 Sortie de veille : pour relancer le thème de curseurs en sortie de suspend :
 ```
