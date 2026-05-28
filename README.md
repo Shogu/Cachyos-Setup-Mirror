@@ -17,7 +17,8 @@ Setup, tips & tweaks pour CachyOS sur ZENBOOK 14 OLED KA
     </td>
   </tr>
 </table>
-fbvc Mémo pour le setup complet de **CachyOS** sur laptop **ASUS ZENBOOK 14 OLED UM3406KA**
+
+Mémo pour le setup complet de **CachyOS** sur laptop **ASUS ZENBOOK 14 OLED UM3406KA**
 
 ---
 
