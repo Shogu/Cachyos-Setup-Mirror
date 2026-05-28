@@ -427,8 +427,28 @@ function vault --description "Vault de commandes utiles"
     end
 end
 
+############################################################################################################################
 
+# Recherche fuzzy de fichiers sur toutes les partitions montées
+#utilise find + fzf avec prévisualisation
+function search --description "Recherche fuzzy de fichiers (toutes partitions)"
+    set -l pattern $argv
+    if test -z "$pattern"
+        echo "Usage: search <motif>"
+        return 1
+    end
 
+    # recherche sur / et autres montages courants, en excluant certains dossiers lourds
+    find / -xdev -type f -name "*$pattern*" 2>/dev/null | \
+        fzf --preview "bat --color=always {} 2>/dev/null || cat {} 2>/dev/null | head -n 100" \
+            --preview-window "right:60%" \
+            --height 80% \
+            --bind "ctrl-a:select-all" \
+            --multi | \
+        while read -l file
+            test -n "$file" && echo "$file"
+        end
+end
 
 
 
@@ -495,3 +515,22 @@ function pacvault --description "Affiche la liste des alias pacman et leurs fonc
     echo "  pacfiles         Fichiers fournis par un paquet installé"
     echo ""
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
