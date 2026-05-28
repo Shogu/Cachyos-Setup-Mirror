@@ -21,6 +21,7 @@ alias systemd='isd'
 alias lastpackages='rip'
 alias liminestats='limine-snapper-info'
 alias scrub='sudo btrfs scrub start -B /'
+alias bios='systemctl reboot --firmware-setup'
 
 # Alias Fish
 alias sourcefish='source ~/.config/fish/config.fish'
@@ -465,7 +466,7 @@ end
 # === DÉPENDANCES ===
 
 # Dépendances d'un paquet installé
-alias pacdep='pacman -Qi'
+alias pacdep='pactree -r'
 
 # === RECHERCHE DE FICHIERS DANS UN PAQUET ===
 
@@ -482,7 +483,7 @@ function pacvault --description "Affiche la liste des alias pacman et leurs fonc
     echo ""
     echo "━━━ 🔍 RECHERCHE DE PAQUETS ━━━"
     echo "  pacsearch        Recherche dans les dépôts (nom/description)"
-    echo "  pacsearch_inst   Recherche dans les paquets installés"
+    echo "  pacsearch_installed   Recherche dans les paquets installés"
     echo ""
     echo "━━━ ℹ️  INFORMATIONS SUR LES PAQUETS ━━━"
     echo "  pacinfo          Infos paquet (installé ou dépôt - auto-détection)"
