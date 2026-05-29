@@ -288,13 +288,11 @@ end
 ############################################################################################################################
 # Menu
 function vault --description "Vault de commandes utiles"
-    echo
-    set_color cyan
+    echo ""
     echo "╔═══════════════════════════════════════════════════════════╗"
-    echo "║                  📦 VAULT - Mémo commandes                ║"
+    echo "║                  📦 VAULT - Mémo alias et functions                 ║"
     echo "╚═══════════════════════════════════════════════════════════╝"
-    set_color normal
-    echo
+    echo ""
 
     set -l vault_labels \
         "=== BOOT ===" \
@@ -440,6 +438,8 @@ alias pacdep='pactree -r'
 # === RECHERCHE DE FICHIERS DANS UN PAQUET ===
 alias pacfiles='pacman -Ql'
 
+
+############################################################################################################################
 function pacvault --description "Affiche la liste des alias pacman et leurs fonctions"
     echo ""
     echo "╔═══════════════════════════════════════════════════════════╗"
