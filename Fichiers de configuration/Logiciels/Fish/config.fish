@@ -27,7 +27,6 @@ alias bios='systemctl reboot --firmware-setup'
 alias sourcefish='source ~/.config/fish/config.fish'
 alias fishedit='xdg-open ~/.config/fish/config.fish'
 
-
 ############################################################################################################################
 # Éditeur par défaut
 set -gx SUDO_EDITOR gnome-text-editor
@@ -157,24 +156,6 @@ function pacmanstats
     expac -H M '%m' | awk '{sum += $1} END {printf "%.2f GiB\n", sum/1024}'
 end
 
-function lastpackages
-    rip
-end
-
-function liminestats
-    limine-snapper-info
-end
-
-############################################################################################################################
-# Fish
-function sourcefish
-    source ~/.config/fish/config.fish
-end
-
-function fishedit
-    xdg-open ~/.config/fish/config.fish
-end
-
 ############################################################################################################################
 # Système
 function power
@@ -299,16 +280,8 @@ function fwupdate --description "Mettre à jour firmware (fwupdmgr full)"
     set_color normal
 end
 
-function systemd
-    isd
-end
-
 function control
     command control
-end
-
-function scrub
-    command sudo btrfs scrub start -B /
 end
 
 ############################################################################################################################
@@ -327,19 +300,17 @@ function vault --description "Vault de commandes utiles"
         "=== MAINTENANCE ===" \
         "Nettoyage système (clean)" \
         "pacmanstats" \
-        "liminestats" \
-        "lastpackages (rip)" \
         "=== FISH ===" \
-        "sourcefish (reload config)" \
-        "fishedit (edit config)" \
+        "sourcefish (alias reload config)" \
+        "fishedit (alias edit config)" \
         "=== SYSTÈME ===" \
         "fstab" \
         "mkinitcpio.conf" \
         "stockage (duf)" \
         "fwupd" \
         "control" \
-        "systemd (isd)" \
-        "scrub"
+        "systemd (alias isd)" \
+        "scrub (alias btrfs scrub)"
 
     set -l vault_cmds \
         "" \
@@ -354,8 +325,6 @@ function vault --description "Vault de commandes utiles"
         "" \
         "clean" \
         "pacmanstats" \
-        "liminestats" \
-        "lastpackages" \
         "" \
         "sourcefish" \
         "fishedit" \
@@ -426,111 +395,3 @@ function vault --description "Vault de commandes utiles"
         set_color normal
     end
 end
-
-############################################################################################################################
-
-# Recherche fuzzy de fichiers sur toutes les partitions montées
-#utilise find + fzf avec prévisualisation
-function search --description "Recherche fuzzy de fichiers (toutes partitions)"
-    set -l pattern $argv
-    if test -z "$pattern"
-        echo "Usage: search <motif>"
-        return 1
-    end
-
-    # recherche sur / et autres montages courants, en excluant certains dossiers lourds
-    find / -xdev -type f -name "*$pattern*" 2>/dev/null | \
-        fzf --preview "bat --color=always {} 2>/dev/null || cat {} 2>/dev/null | head -n 100" \
-            --preview-window "right:60%" \
-            --height 80% \
-            --bind "ctrl-a:select-all" \
-            --multi | \
-        while read -l file
-            test -n "$file" && echo "$file"
-        end
-end
-
-
-
-
-############################################################################################################################
-# Pacman
-
-# === RECHERCHE DE PAQUETS ===
-
-# Recherche dans les dépôts (nom/description)
-alias pacsearch='pacman -Ss'
-
-# Recherche dans les paquets installés
-alias pacsearch_installed='pacman -Qs'
-
-# === INFORMATIONS SUR LES PAQUETS ===
-
-# Infos paquet (auto-détection installé ou non)
-function pacinfo --description "Infos paquet (installé ou dépôt)"
-    set -l pkg $argv
-    if test -z "$pkg"
-        echo "Usage: pacinfo <nom_paquet>"
-        return 1
-    end
-
-    if pacman -Q --quiet "$pkg" > /dev/null 2>&1
-        echo "=== Paquet installé ==="
-        pacman -Qi "$pkg"
-    else
-        echo "=== Paquet dans les dépôts ==="
-        pacman -Si "$pkg"
-    end
-end
-
-# === DÉPENDANCES ===
-
-# Dépendances d'un paquet installé
-alias pacdep='pactree -r'
-
-# === RECHERCHE DE FICHIERS DANS UN PAQUET ===
-
-# Fichiers fournis par un paquet installé
-alias pacfiles='pacman -Ql'
-
-
-############################################################################################################################
-function pacvault --description "Affiche la liste des alias pacman et leurs fonctions"
-    echo ""
-    echo "╔═══════════════════════════════════════════════════════════╗"
-    echo "║                  📦 PACVAULT - Mémo Pacman                 ║"
-    echo "╚═══════════════════════════════════════════════════════════╝"
-    echo ""
-    echo "━━━ 🔍 RECHERCHE DE PAQUETS ━━━"
-    echo "  pacsearch        Recherche dans les dépôts (nom/description)"
-    echo "  pacsearch_installed   Recherche dans les paquets installés"
-    echo ""
-    echo "━━━ ℹ️  INFORMATIONS SUR LES PAQUETS ━━━"
-    echo "  pacinfo          Infos paquet (installé ou dépôt - auto-détection)"
-    echo ""
-    echo "━━━ 🔗 DÉPENDANCES ━━━"
-    echo "  pacdep           Dépendances d'un paquet installé"
-    echo ""
-    echo "━━━ 📄 RECHERCHE DE FICHIERS ━━━"
-    echo "  pacfiles         Fichiers fournis par un paquet installé"
-    echo ""
-end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
