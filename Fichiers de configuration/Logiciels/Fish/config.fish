@@ -27,6 +27,7 @@ alias bios='systemctl reboot --firmware-setup'
 alias sourcefish='source ~/.config/fish/config.fish'
 alias fishedit='xdg-open ~/.config/fish/config.fish'
 
+
 ############################################################################################################################
 # Éditeur par défaut
 set -gx SUDO_EDITOR gnome-text-editor
@@ -53,7 +54,7 @@ function scx --description 'scxctl get + check scheduler + monitor sans WARN'
     echo $output
     echo
 
-    set -l sched_name (string match -rg 'running\s+([[:alnum:]_-]+)' -- $output)
+    set -l sched_name (string match -rg 'running\\s+([[:alnum:]_-]+)' -- $output)
 
     if test -z "$sched_name"
         set_color red
@@ -96,7 +97,7 @@ function flags
     echo "KERNEL FLAGS (/proc/cmdline)"
     echo "============================="
     echo "Ligne complète :"
-    printf "\e[93m%s\e[0m\n\n" (cat /proc/cmdline)
+    printf "\\e[93m%s\\e[0m\\n\\n" (cat /proc/cmdline)
     echo "Flags par ligne (triés, uniques) :"
     set -l all_flags (string split ' ' (cat /proc/cmdline))
     set -l flags
@@ -105,10 +106,10 @@ function flags
             set flags $flags $flag
         end
     end
-    set -l sorted_flags (printf "%s\n" $flags | sort)
+    set -l sorted_flags (printf "%s\\n" $flags | sort)
     set -l i 1
     for flag in $sorted_flags
-        printf "\e[92m%2d.\e[0m \e[96m%s\e[0m\n" $i $flag
+        printf "\\e[92m%2d.\\e[0m \\e[96m%s\\e[0m\\n" $i $flag
         set i (math $i + 1)
     end
     echo
@@ -153,7 +154,7 @@ function pacmanstats
     echo "Nombre de paquets installés :"
     pacman -Q | wc -l
     echo "Taille totale des paquets installés :"
-    expac -H M '%m' | awk '{sum += $1} END {printf "%.2f GiB\n", sum/1024}'
+    expac -H M '%m' | awk '{sum += $1} END {printf "%.2f GiB\\n", sum/1024}'
 end
 
 ############################################################################################################################
@@ -287,6 +288,14 @@ end
 ############################################################################################################################
 # Menu
 function vault --description "Vault de commandes utiles"
+    echo
+    set_color cyan
+    echo "╔═══════════════════════════════════════════════════════════╗"
+    echo "║                  📦 VAULT - Mémo commandes                ║"
+    echo "╚═══════════════════════════════════════════════════════════╝"
+    set_color normal
+    echo
+
     set -l vault_labels \
         "=== BOOT ===" \
         "MAJ initramfs (limine-mkinitcpio)" \
@@ -300,17 +309,12 @@ function vault --description "Vault de commandes utiles"
         "=== MAINTENANCE ===" \
         "Nettoyage système (clean)" \
         "pacmanstats" \
-        "=== FISH ===" \
-        "sourcefish (alias reload config)" \
-        "fishedit (alias edit config)" \
         "=== SYSTÈME ===" \
         "fstab" \
         "mkinitcpio.conf" \
         "stockage (duf)" \
         "fwupd" \
-        "control" \
-        "systemd (alias isd)" \
-        "scrub (alias btrfs scrub)"
+        "control"
 
     set -l vault_cmds \
         "" \
@@ -326,24 +330,13 @@ function vault --description "Vault de commandes utiles"
         "clean" \
         "pacmanstats" \
         "" \
-        "sourcefish" \
-        "fishedit" \
-        "" \
         "fstab" \
         "mkinitcpio" \
         "stockage" \
         "fwupdate" \
-        "control" \
-        "systemd" \
-        "scrub"
+        "control"
 
     set -l count (count $vault_labels)
-
-    echo
-    set_color cyan
-    echo "================= VAULT COMMANDES ================="
-    set_color normal
-    echo
 
     for i in (seq $count)
         if string match -qr '^===.*===$' -- $vault_labels[$i]
@@ -394,4 +387,76 @@ function vault --description "Vault de commandes utiles"
         echo "Entrée invalide. Numéro entre 1 et $count, ou q pour quitter."
         set_color normal
     end
+end
+
+############################################################################################################################
+# Recherche fuzzy de fichiers sur toutes les partitions montées
+#utilise find + fzf avec prévisualisation
+function search --description "Recherche fuzzy de fichiers (toutes partitions)"
+    set -l pattern $argv
+    if test -z "$pattern"
+        echo "Usage: search <motif>"
+        return 1
+    end
+
+    find / -xdev -type f -name "*$pattern*" 2>/dev/null | \
+        fzf --preview "bat --color=always {} 2>/dev/null || cat {} 2>/dev/null | head -n 100" \
+            --preview-window "right:60%" \
+            --height 80% \
+            --bind "ctrl-a:select-all" \
+            --multi | \
+        while read -l file
+            test -n "$file" && echo "$file"
+        end
+end
+
+############################################################################################################################
+# Pacman
+
+# === RECHERCHE DE PAQUETS ===
+alias pacsearch='pacman -Ss'
+alias pacsearch_installed='pacman -Qs'
+
+# === INFORMATIONS SUR LES PAQUETS ===
+function pacinfo --description "Infos paquet (installé ou dépôt)"
+    set -l pkg $argv
+    if test -z "$pkg"
+        echo "Usage: pacinfo <nom_paquet>"
+        return 1
+    end
+
+    if pacman -Q --quiet "$pkg" > /dev/null 2>&1
+        echo "=== Paquet installé ==="
+        pacman -Qi "$pkg"
+    else
+        echo "=== Paquet dans les dépôts ==="
+        pacman -Si "$pkg"
+    end
+end
+
+# === DÉPENDANCES ===
+alias pacdep='pactree -r'
+
+# === RECHERCHE DE FICHIERS DANS UN PAQUET ===
+alias pacfiles='pacman -Ql'
+
+function pacvault --description "Affiche la liste des alias pacman et leurs fonctions"
+    echo ""
+    echo "╔═══════════════════════════════════════════════════════════╗"
+    echo "║                  📦 PACVAULT - Mémo Pacman                 ║"
+    echo "╚═══════════════════════════════════════════════════════════╝"
+    echo ""
+    echo "━━━ 🔍 RECHERCHE DE PAQUETS ━━━"
+    echo "  pacsearch           Recherche dans les dépôts (nom/description)"
+    echo "  pacsearch_installed  Recherche dans les paquets installés"
+    echo ""
+    echo "━━━ ℹ️  INFORMATIONS SUR LES PAQUETS ━━━"
+    echo "  pacinfo              Infos paquet (installé ou dépôt - auto-détection)"
+    echo ""
+    echo "━━━ 🔗 DÉPENDANCES ━━━"
+    echo "  pacdep               Dépendances d'un paquet installé"
+    echo ""
+    echo "━━━ 📄 RECHERCHE DE FICHIERS ━━━"
+    echo "  pacfiles             Fichiers fournis par un paquet installé"
+    echo ""
 end
