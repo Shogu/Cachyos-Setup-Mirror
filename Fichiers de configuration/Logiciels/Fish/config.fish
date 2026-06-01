@@ -22,6 +22,8 @@ alias lastpackages='rip'
 alias liminestats='limine-snapper-info'
 alias scrub='sudo btrfs scrub start -B /'
 alias bios='systemctl reboot --firmware-setup'
+alias boot='systemd-analyze'
+alias boot!='systemd-analyze blame'
 
 # Alias Fish
 alias sourcefish='source ~/.config/fish/config.fish'
