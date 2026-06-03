@@ -152,7 +152,7 @@ function clean
     archclean full
 end
 
-function pacmanstats
+function pacstats
     echo "Nombre de paquets installés :"
     pacman -Q | wc -l
     echo "Taille totale des paquets installés :"
@@ -308,7 +308,7 @@ function vault --description "Vault de commandes utiles"
         "Afficher EPP / power" \
         "=== MAINTENANCE ===" \
         "Nettoyage système (clean)" \
-        "pacmanstats" \
+        "pacstats" \
         "=== SYSTÈME ===" \
         "fstab" \
         "mkinitcpio.conf" \
@@ -328,7 +328,7 @@ function vault --description "Vault de commandes utiles"
         "power" \
         "" \
         "clean" \
-        "pacmanstats" \
+        "pacstats" \
         "" \
         "fstab" \
         "mkinitcpio" \
