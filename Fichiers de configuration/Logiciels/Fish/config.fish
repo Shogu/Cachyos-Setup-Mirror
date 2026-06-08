@@ -446,8 +446,8 @@ alias pacdep='pactree -r'
 # === RECHERCHE DE FICHIERS DANS UN PAQUET ===
 alias pacfiles='pacman -Ql'
 
-# === RECHERCHE D'ORPHELINS ===
-alias orphans='pacman -Qdtq | xargs -r sudo pacman -Rns'
+# === RECHERCHE ET SUPPRESSION D'ORPHELINS + DÉPENDANCES INUTILES ===
+alias orphans='sudo pacman -Qdtq | ifne sudo pacman -Rns; pacman -Qdq | ifne sudo pacman -Rsu'
 
 
 ############################################################################################################################
