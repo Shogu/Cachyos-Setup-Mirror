@@ -446,9 +446,8 @@ alias pacdep='pactree -r'
 # === RECHERCHE DE FICHIERS DANS UN PAQUET ===
 alias pacfiles='pacman -Ql'
 
-
 # === RECHERCHE D'ORPHELINS ===
-alias orphans='pacman -Qdtq | sudo pacman -Rns -'
+alias orphans='pacman -Qdtq | xargs -r sudo pacman -Rns'
 
 
 ############################################################################################################################
