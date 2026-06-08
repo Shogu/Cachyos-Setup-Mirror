@@ -446,12 +446,24 @@ alias pacdep='pactree -r'
 # === RECHERCHE DE FICHIERS DANS UN PAQUET ===
 alias pacfiles='pacman -Ql'
 
-# === RECHERCHE ET SUPPRESSION D'ORPHELINS ===
-alias orphans='pacman -Qdtq | xargs -r sudo pacman -Rns
+# === RECHERCHE ET SUPPRESSION D'ORPHELINS + DÉPENDANCES INUTILES ===
+alias orphans='pacman -Qdtq | xargs -r sudo pacman -Rns'
 
 # === RECHERCHE DE DÉPENDANCES INUTILES !! VERIFIER CHAQUE PAQUET AVEC PACMAN -Qi ===
-alias orphans+='echo "!!! VERIFIE CHAQUE PAQUET AVEC pacman -Qi AVANT TOUTE SUPPRESSION !!!"; pacman -Qdq | xargs -r sudo pacman -Rsu --print -'
+function orphans+ --description "Affiche les dépendances inutiles, avec avertissement"
+    echo
+    set_color yellow
+    echo "╔═══════════════════════════════════════════════════════════╗"
+    echo "║      ⚠️  DÉPENDANCES INUTILES — VÉRIFIER AVEC Qi         ║"
+    echo "╚═══════════════════════════════════════════════════════════╝"
+    echo
+    echo "Aperçu uniquement : aucune suppression."
+    echo "Commande de contrôle : pacman -Qi <paquet>"
+    echo
+    set_color normal
 
+    pacman -Qdq | xargs -r sudo pacman -Rsu --print
+end
 
 ############################################################################################################################
 function pacvault --description "Affiche la liste des alias pacman et leurs fonctions"
