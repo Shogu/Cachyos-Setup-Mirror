@@ -26,9 +26,8 @@ alias boot='systemd-analyze'
 alias boot!='systemd-analyze blame'
 
 # Alias Shelly pour packages AUR
-alias aursearch='shelly aur search'
 alias aur='shelly aur install'
-
+alias aursearch='shelly aur search'
 
 # Alias Fish
 alias sourcefish='source ~/.config/fish/config.fish'
@@ -384,7 +383,8 @@ function vault --description "Vault de commandes utiles"
                 echo
                 eval $cmd
                 set_color normal
-                return $status
+                echo
+                continue
             end
         end
 
@@ -396,22 +396,23 @@ end
 
 ############################################################################################################################
 # Recherche fuzzy de fichiers sur toutes les partitions montées
-#utilise find + fzf avec prévisualisation
-function search --description "Recherche fuzzy de fichiers (toutes partitions)"
+function search --description "Recherche fuzzy de fichiers (sans caches)"
     set -l pattern $argv
-    if test -z "$pattern"
+    if test (count $pattern) -eq 0
         echo "Usage: search <motif>"
         return 1
     end
 
-    find / -xdev -type f -name "*$pattern*" 2>/dev/null | \
-        fzf --preview "bat --color=always {} 2>/dev/null || cat {} 2>/dev/null | head -n 100" \
+    find / \
+        \( -path /proc -o -path /sys -o -path /dev -o -path /run -o -path /tmp -o -path /var/tmp -o -path /var/cache -o -path '*/.cache' -o -path '*/.cache/*' -o -path '*/.local/share/Trash' -o -path '*/.local/share/Trash/*' -o -path '*/node_modules' -o -path '*/node_modules/*' -o -path '*/.git' -o -path '*/.git/*' -o -path '*/.venv' -o -path '*/.venv/*' -o -path '*/venv' -o -path '*/venv/*' -o -path '*/build' -o -path '*/build/*' -o -path '*/dist' -o -path '*/dist/*' -o -path '*/target' -o -path '*/target/*' \) -prune -o \
+        -type f -iname "*$pattern*" -print 2>/dev/null | \
+        fzf --preview "bat --color=always --style=plain --line-range=:200 {} 2>/dev/null || head -n 200 {} 2>/dev/null" \
             --preview-window "right:60%" \
             --height 80% \
             --bind "ctrl-a:select-all" \
             --multi | \
         while read -l file
-            test -n "$file" && echo "$file"
+            test -n "$file"; and echo "$file"
         end
 end
 
@@ -445,8 +446,10 @@ alias pacdep='pactree -r'
 # === RECHERCHE DE FICHIERS DANS UN PAQUET ===
 alias pacfiles='pacman -Ql'
 
+
 # === RECHERCHE D'ORPHELINS ===
 alias orphans='pacman -Qdtq | sudo pacman -Rns -'
+
 
 ############################################################################################################################
 function pacvault --description "Affiche la liste des alias pacman et leurs fonctions"
@@ -516,9 +519,16 @@ function pacvault --description "Affiche la liste des alias pacman et leurs fonc
                             pacdep "$term"
                         end
                 end
-                return $status
+                echo
+                continue
             end
         end
+
+        set_color red
+        echo "Entrée invalide. Numéro entre 1 et $count, ou q pour quitter."
+        set_color normal
+    end
+end
 
 
 
@@ -714,8 +724,4 @@ function fetch --description "System info type fastfetch"
     echo "╭── 󰥔 Uptime ─────────────────────────────"
     set_color normal
     echo "󰥔  Uptime: $uptime"
-end
-        echo "Entrée invalide. Numéro entre 1 et $count, ou q pour quitter."
-        set_color normal
-    end
 end
