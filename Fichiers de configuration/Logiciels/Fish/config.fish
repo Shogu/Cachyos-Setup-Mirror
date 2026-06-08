@@ -445,6 +445,8 @@ alias pacdep='pactree -r'
 # === RECHERCHE DE FICHIERS DANS UN PAQUET ===
 alias pacfiles='pacman -Ql'
 
+# === RECHERCHE D'ORPHELINS ===
+alias orphans='pacman -Qdtq | sudo pacman -Rns -'
 
 ############################################################################################################################
 function pacvault --description "Affiche la liste des alias pacman et leurs fonctions"
