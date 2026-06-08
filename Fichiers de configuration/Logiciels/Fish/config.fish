@@ -25,6 +25,11 @@ alias bios='systemctl reboot --firmware-setup'
 alias boot='systemd-analyze'
 alias boot!='systemd-analyze blame'
 
+# Alias Shelly pour packages AUR
+alias aursearch='shelly aur search'
+alias aur='shelly aur install'
+
+
 # Alias Fish
 alias sourcefish='source ~/.config/fish/config.fish'
 alias fishedit='xdg-open ~/.config/fish/config.fish'
