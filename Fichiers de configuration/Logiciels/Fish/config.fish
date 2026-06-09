@@ -1,10 +1,6 @@
 source /usr/share/cachyos-fish-config/cachyos-config.fish
 
-# overwrite greeting
-# potentially disabling fastfetch
-#function fish_greeting
-#    # smth smth
-#end
+# Message d'accueil désactivé (voir fonction fish_greeting plus bas)
 
 ############################################################################################################################
 # Alias Editeurs
@@ -103,19 +99,12 @@ function flags
     echo "KERNEL FLAGS (/proc/cmdline)"
     echo "============================="
     echo "Ligne complète :"
-    printf "\\e[93m%s\\e[0m\\n\\n" (cat /proc/cmdline)
+    printf "\e[93m%s\e[0m\n\n" (cat /proc/cmdline)
     echo "Flags par ligne (triés, uniques) :"
-    set -l all_flags (string split ' ' (cat /proc/cmdline))
-    set -l flags
-    for flag in $all_flags
-        if not contains -- $flag $flags
-            set flags $flags $flag
-        end
-    end
-    set -l sorted_flags (printf "%s\\n" $flags | sort)
+    set -l sorted_flags (string split ' ' (cat /proc/cmdline) | sort -u)
     set -l i 1
     for flag in $sorted_flags
-        printf "\\e[92m%2d.\\e[0m \\e[96m%s\\e[0m\\n" $i $flag
+        printf "\e[92m%2d.\e[0m \e[96m%s\e[0m\n" $i $flag
         set i (math $i + 1)
     end
     echo
@@ -277,7 +266,7 @@ function fwupdate --description "Mettre à jour firmware (fwupdmgr full)"
 
     echo
     set_color green
-    echo "7. Masker le service fwupd…"
+    echo "7. Masquer le service fwupd…"
     set_color normal
     sudo systemctl mask fwupd.service
 
@@ -285,10 +274,6 @@ function fwupdate --description "Mettre à jour firmware (fwupdmgr full)"
     set_color cyan
     echo "📦 Mise à jour firmware terminée."
     set_color normal
-end
-
-function control
-    command control
 end
 
 ############################################################################################################################
@@ -381,7 +366,7 @@ function vault --description "Vault de commandes utiles"
                 echo "→ Exécution : $cmd"
                 set_color normal
                 echo
-                eval $cmd
+                fish -c $cmd
                 set_color normal
                 echo
                 continue
@@ -545,197 +530,3 @@ function pacvault --description "Affiche la liste des alias pacman et leurs fonc
 end
 
 
-
-
-############################################################################################################################
-function fetch --description "System info type fastfetch"
-    set -l os (grep '^PRETTY_NAME=' /etc/os-release | cut -d= -f2- | tr -d '"')
-    set -l kernel (uname -r)
-    set -l shell (basename $SHELL)
-
-    set -l pkgs "N/A"
-    if type -q pacman
-        set pkgs (pacman -Qq 2>/dev/null | count)
-    end
-
-    set -l cpu "N/A"
-    set -l cpu_raw ""
-    if test -r /proc/cpuinfo
-        set cpu_raw (awk -F': *' '/model name/ {print $2; exit}' /proc/cpuinfo)
-    end
-    if test -z "$cpu_raw" -a (type -q lscpu; echo $status) -eq 0
-        set cpu_raw (lscpu 2>/dev/null | awk -F': *' '/Model name:/ {print $2; exit}')
-    end
-    if test -n "$cpu_raw"
-        set cpu (string replace -r '\s+w/ Radeon.*$' '' -- $cpu_raw)
-        set cpu (string replace -r '\s+with Radeon.*$' '' -- $cpu)
-        set cpu (string trim -- $cpu)
-    end
-    test -z "$cpu"; and set cpu "N/A"
-
-    set -l gpu "N/A"
-    if type -q lspci
-        set -l gpu_raw (lspci -nn 2>/dev/null | awk '/VGA compatible controller|3D controller|Display controller/ {print; exit}')
-        if test -n "$gpu_raw"
-            set gpu (echo $gpu_raw | sed -E 's/^.*: //; s/ \[[0-9a-fA-F]{4}:[0-9a-fA-F]{4}\]$//; s/ \(rev [^)]+\)$//')
-            set gpu (string replace -r '^Advanced Micro Devices, Inc\. \[AMD/ATI\] ' 'AMD ' -- $gpu)
-            set gpu (string replace -r ' \[Radeon ([^]]+) Graphics\]' ' Radeon \1' -- $gpu)
-            set gpu (string replace -r '^AMD ([Kk]rackan).*' 'AMD Radeon $1' -- $gpu)
-            set gpu (string replace -r '\s+/\s+' '/' -- $gpu)
-            set gpu (string trim -- $gpu)
-        end
-    end
-    test -z "$gpu"; and set gpu "N/A"
-
-    set -l ramline "N/A"
-    if type -q free
-        set -l mem_total (free -h | awk '/^Mem:/ {print $2}')
-        set -l mem_used (free -h | awk '/^Mem:/ {print $3}')
-        set -l mem_pct (free | awk '/^Mem:/ {if ($2>0) printf "%.0f", $3/$2*100}')
-        if test -n "$mem_total" -a -n "$mem_used" -a -n "$mem_pct"
-            set ramline "$mem_used / $mem_total ($mem_pct%)"
-        end
-    end
-
-    set -l de "N/A"
-    set -q XDG_CURRENT_DESKTOP; and set de $XDG_CURRENT_DESKTOP
-
-    set -l session "Wayland"
-    set -q XDG_SESSION_TYPE; and set session $XDG_SESSION_TYPE
-    set -l wm "Mutter"
-
-    set -l uptime (uptime -p | sed 's/^up //')
-    test -z "$uptime"; and set uptime "N/A"
-
-    set -l bootline "N/A"
-    if type -q systemd-analyze
-        set bootline (systemd-analyze time 2>/dev/null | sed -n 's/.*= \([0-9.]*s\).*/\1/p' | head -n1)
-        test -z "$bootline"; and set bootline "N/A"
-    end
-
-    set -l scxline "N/A"
-    if type -q scxctl
-        set scxline (scxctl get 2>/dev/null | string trim)
-        test -z "$scxline"; and set scxline "N/A"
-    end
-
-    set -l iosched "N/A"
-    for dev in nvme0n1 nvme1n1 nvme2n1 sda sdb vda vdb
-        set -l schedfile /sys/block/$dev/queue/scheduler
-        if test -r $schedfile
-            set -l raw (cat $schedfile 2>/dev/null | string trim)
-            set -l picked (string replace -r '.*\[([^]]+)\].*' '$1' -- $raw)
-            if test -n "$picked"
-                set iosched "$dev: $picked"
-                break
-            else if test -n "$raw"
-                set iosched "$dev: $raw"
-                break
-            end
-        end
-    end
-
-    set -l root_line "N/A"
-    set -l root_src (findmnt -n -o SOURCE / 2>/dev/null)
-    set -l root_fstype (findmnt -n -o FSTYPE / 2>/dev/null)
-    set -l root_used (df -h / | awk 'NR==2 {print $3}')
-    set -l root_size (df -h / | awk 'NR==2 {print $2}')
-    set -l root_pct (df -h / | awk 'NR==2 {print $5}')
-    if test -n "$root_size" -a -n "$root_used"
-        set root_line "$root_size $root_used /"
-        if test -n "$root_fstype"
-            set root_line "$root_line $root_fstype"
-        end
-        if test -n "$root_pct"
-            set root_line "$root_line ($root_pct)"
-        end
-        if test -n "$root_src"
-            set root_line "$root_line - $root_src"
-        end
-    end
-
-    set -l boot_fs_line "N/A"
-    if test -d /boot
-        set -l boot_src (findmnt -n -o SOURCE /boot 2>/dev/null)
-        set -l boot_fstype (findmnt -n -o FSTYPE /boot 2>/dev/null)
-        set -l boot_used (df -h /boot | awk 'NR==2 {print $3}')
-        set -l boot_size (df -h /boot | awk 'NR==2 {print $2}')
-        set -l boot_pct (df -h /boot | awk 'NR==2 {print $5}')
-        if test -n "$boot_size" -a -n "$boot_used"
-            set boot_fs_line "$boot_size $boot_used /"
-            if test -n "$boot_fstype"
-                set boot_fs_line "$boot_fs_line $boot_fstype"
-            end
-            if test -n "$boot_pct"
-                set boot_fs_line "$boot_fs_line ($boot_pct)"
-            end
-            if test -n "$boot_src"
-                set boot_fs_line "$boot_fs_line - $boot_src"
-            end
-        end
-    end
-
-    set -l battery_line "N/A"
-    if type -q upower
-        set -l batdev (upower -e 2>/dev/null | awk '/battery/ {print; exit}')
-        if test -n "$batdev"
-            set -l batt_pct (upower -i $batdev 2>/dev/null | awk -F': *' '/percentage/ {print $2; exit}')
-            set -l batt_state (upower -i $batdev 2>/dev/null | awk -F': *' '/state/ {print $2; exit}')
-            set -l batt_time (upower -i $batdev 2>/dev/null | awk -F': *' '/time to (empty|full)/ {print $2; exit}')
-            set -l batt_watts (upower -i $batdev 2>/dev/null | awk -F': *' '/energy-rate/ {print $2; exit}')
-            if test -n "$batt_pct"
-                set battery_line $batt_pct
-                if test -n "$batt_state"
-                    set battery_line "$battery_line, $batt_state"
-                end
-                if test -n "$batt_time"
-                    set battery_line "$battery_line, $batt_time"
-                end
-                if test -n "$batt_watts"
-                    set battery_line "$battery_line, $batt_watts"
-                end
-            end
-        end
-    end
-
-    set_color cyan
-    echo "╭──  Software ────────────────────────────"
-    set_color normal
-    echo "  OS: $os"
-    echo "  Kernel: Linux $kernel"
-    echo "󰏖  Packages: $pkgs (pacman)"
-    echo "  Shell: $shell"
-
-    set_color cyan
-    echo "╭──  Hardware ───────────────────────────"
-    set_color normal
-    echo "  CPU: $cpu"
-    echo "󰢮  GPU: $gpu"
-    echo "  RAM: $ramline"
-    echo "  Disk /: $root_line"
-    echo "󰜋  Disk /boot: $boot_fs_line"
-
-    set_color cyan
-    echo "╭── 󰍹 Desktop ────────────────────────────"
-    set_color normal
-    echo "󰍹  Session: $session"
-    echo "󰌽  WM: $wm"
-    echo "  DE: $de"
-
-    set_color cyan
-    echo "╭──  Kernel extras ──────────────────────"
-    set_color normal
-    echo "  SCX: $scxline"
-    echo "󰕍  I/O scheduler: $iosched"
-    echo "󰔟  Boot: $bootline"
-
-    set_color cyan
-    echo "╭── 󰂄 Power ──────────────────────────────"
-    set_color normal
-    echo "󰂄  Battery: $battery_line"
-
-    set_color cyan
-    echo "╭── 󰥔 Uptime ─────────────────────────────"
-    set_color normal
-    echo "󰥔  Uptime: $uptime"
-end
