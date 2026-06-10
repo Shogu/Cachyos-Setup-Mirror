@@ -3,14 +3,14 @@ source /usr/share/cachyos-fish-config/cachyos-config.fish
 # Message d'accueil désactivé (voir fonction fish_greeting plus bas)
 
 ############################################################################################################################
-# Alias Editeurs
+# === Alias Editeurs ===
 alias vim='micro'
 alias vi='micro'
 alias gedit='gnome-text-editor'
 alias nano='micro'
 alias notepad='gnome-text-editor'
 
-# Alias système
+# === Alias Système ===
 alias rm='rm -I'
 alias stockage='duf'
 alias systemd='isd'
@@ -21,28 +21,30 @@ alias bios='systemctl reboot --firmware-setup'
 alias boot='systemd-analyze'
 alias boot!='systemd-analyze blame'
 
-# Alias Shelly pour packages AUR
+# === Alias Shelly pour AUR ===
 alias aur='shelly aur install'
 alias aursearch='shelly aur search'
 
-# Alias Fish
+# === Alias Fish ===
 alias sourcefish='source ~/.config/fish/config.fish'
 alias fishedit='xdg-open ~/.config/fish/config.fish'
 
 
 ############################################################################################################################
-# Éditeur par défaut
+# ===  Editeurs ===
 set -gx SUDO_EDITOR gnome-text-editor
 set -gx EDITOR gnome-text-editor
 set -gx VISUAL gnome-text-editor
 
 ############################################################################################################################
-# Message d'accueil Fish
+# === Message d'accueil Fish ===
 function fish_greeting
 end
 
 ############################################################################################################################
-# Surveillance
+# === Surveilance du système ===
+
+# === SCX ===
 function scx --description 'scxctl get + check scheduler + monitor sans WARN'
     set -l output (scxctl get 2>/dev/null)
 
@@ -90,10 +92,12 @@ function scx --description 'scxctl get + check scheduler + monitor sans WARN'
     command sudo $bin --monitor 3 2>/dev/null
 end
 
+# === Journalctl ===
 function journal
     journalctl -p err -n 20 --no-pager | bat -l log
 end
 
+# === Flags Kernel ===
 function flags
     clear
     echo "KERNEL FLAGS (/proc/cmdline)"
@@ -110,50 +114,7 @@ function flags
     echo
 end
 
-############################################################################################################################
-# Boot
-function fstab
-    clear
-    echo "/etc/fstab"
-    echo
-    sudo bat --language=fstab --paging=never --style=plain /etc/fstab
-    echo
-end
-
-function mkinitcpio
-    clear
-    echo "/etc/mkinitcpio.conf"
-    echo
-    sudo bat --language=ini --paging=never --style=plain /etc/mkinitcpio.conf
-    echo
-end
-
-############################################################################################################################
-# Maintenance
-function clean
-    set -l orphans (pacman -Qtdq 2>/dev/null)
-
-    if test (count $orphans) -gt 0
-        echo "Suppression des paquets orphelins : $orphans"
-        sudo pacman -Rns $orphans
-    else
-        echo "Aucun paquet orphelin."
-    end
-
-    paru -Scc
-    profile-cleaner v
-    archclean full
-end
-
-function pacstats
-    echo "Nombre de paquets installés :"
-    pacman -Q | wc -l
-    echo "Taille totale des paquets installés :"
-    expac -H M '%m' | awk '{sum += $1} END {printf "%.2f GiB\\n", sum/1024}'
-end
-
-############################################################################################################################
-# Système
+# === EPP ===
 function power
     set -l cpu0 /sys/devices/system/cpu/cpu0/cpufreq
 
@@ -222,6 +183,57 @@ function power
     echo "BAT: $bat"
 end
 
+############################################################################################################################
+# === Surveillance Boot ===
+
+# === FSTAB ===
+function fstab
+    clear
+    echo "/etc/fstab"
+    echo
+    sudo bat --language=fstab --paging=never --style=plain /etc/fstab
+    echo
+end
+
+# === MKINITCPIO ===
+function mkinitcpio
+    clear
+    echo "/etc/mkinitcpio.conf"
+    echo
+    sudo bat --language=ini --paging=never --style=plain /etc/mkinitcpio.conf
+    echo
+end
+
+
+############################################################################################################################
+# === Maintenance ===
+
+# === Clean ===
+function clean
+    set -l orphans (pacman -Qtdq 2>/dev/null)
+
+    if test (count $orphans) -gt 0
+        echo "Suppression des paquets orphelins : $orphans"
+        sudo pacman -Rns $orphans
+    else
+        echo "Aucun paquet orphelin."
+    end
+
+    paru -Scc
+    profile-cleaner v
+    archclean full
+end
+
+# === Statistiques Pacman ===
+function pacstats
+    echo "Nombre de paquets installés :"
+    pacman -Q | wc -l
+    echo "Taille totale des paquets installés :"
+    expac -H M '%m' | awk '{sum += $1} END {printf "%.2f GiB\\n", sum/1024}'
+end
+
+
+# === FWUPDATE ===
 function fwupdate --description "Mettre à jour firmware (fwupdmgr full)"
     echo
     set_color yellow
@@ -277,7 +289,7 @@ function fwupdate --description "Mettre à jour firmware (fwupdmgr full)"
 end
 
 ############################################################################################################################
-# Menu
+# === VAULT de commandes ===
 function vault --description "Vault de commandes utiles"
     echo ""
     echo "╔═══════════════════════════════════════════════════════════╗"
@@ -380,7 +392,7 @@ function vault --description "Vault de commandes utiles"
 end
 
 ############################################################################################################################
-############################################################################################################################
+# === Fussy search ===
 function search --description "Recherche fuzzy de fichiers (sans les caches) avec aperçu et lancement du fichier (ENTREE)"
 
     set -l pattern $argv
@@ -423,8 +435,9 @@ function search --description "Recherche fuzzy de fichiers (sans les caches) ave
     end
 end
 
+
 ############################################################################################################################
-# Pacman
+# === PACMAN ===
 
 # === RECHERCHE DE PAQUETS ===
 alias pacsearch='pacman -Ss'
@@ -473,6 +486,7 @@ function orphans+ --description "Affiche les dépendances inutiles, avec avertis
 end
 
 ############################################################################################################################
+# === VAULT Pacman ===
 function pacvault --description "Affiche la liste des alias pacman et leurs fonctions"
     echo
     echo "╔═══════════════════════════════════════════════════════════╗"
