@@ -29,6 +29,28 @@ alias aursearch='shelly aur search'
 alias sourcefish='source ~/.config/fish/config.fish'
 alias fishedit='xdg-open ~/.config/fish/config.fish'
 
+# === Alias Pacman ===
+
+# === RECHERCHE DE PAQUETS ===
+alias pacsearch='pacman -Ss'
+alias pacsearch_installed='pacman -Qs'
+
+# === INSTALLATION DE PAQUETS ===
+alias pacinstall='sudo pacman -S'
+alias pacremove='sudo pacman -Rns'
+
+# === DÉPENDANCES ===
+alias pacdep='pactree -r'
+
+# === RECHERCHE DE FICHIERS DANS UN PAQUET ===
+alias pacfiles='pacman -Ql'
+
+# === RECHERCHE ET SUPPRESSION D'ORPHELINS + DÉPENDANCES INUTILES ===
+alias orphans='pacman -Qdtq | xargs -r sudo pacman -Rns'
+
+# === INFORMATIONS SUR LES PAQUETS ===
+#pacinfo (function)
+
 
 ############################################################################################################################
 # ===  Editeurs ===
@@ -448,9 +470,6 @@ end
 ############################################################################################################################
 # === PACMAN ===
 
-# === RECHERCHE DE PAQUETS ===
-alias pacsearch='pacman -Ss'
-alias pacsearch_installed='pacman -Qs'
 
 # === INFORMATIONS SUR LES PAQUETS ===
 function pacinfo --description "Infos paquet (installé ou dépôt)"
@@ -469,14 +488,6 @@ function pacinfo --description "Infos paquet (installé ou dépôt)"
     end
 end
 
-# === DÉPENDANCES ===
-alias pacdep='pactree -r'
-
-# === RECHERCHE DE FICHIERS DANS UN PAQUET ===
-alias pacfiles='pacman -Ql'
-
-# === RECHERCHE ET SUPPRESSION D'ORPHELINS + DÉPENDANCES INUTILES ===
-alias orphans='pacman -Qdtq | xargs -r sudo pacman -Rns'
 
 # === RECHERCHE DE DÉPENDANCES INUTILES !! VERIFIER CHAQUE PAQUET AVEC PACMAN -Qi ===
 function orphans+ --description "Affiche les dépendances inutiles, avec avertissement"
