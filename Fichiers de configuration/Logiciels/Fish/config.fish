@@ -42,12 +42,13 @@ function fish_greeting
 end
 
 ############################################################################################################################
-# === SUDO! ===
-function sudo!
-    set -l cmd (history | head -n 1)
-    set -l clean (string replace -r '^[0-9-]{10}\s+[0-9:]{8}\s+' '' -- "$cmd")
-    eval command sudo $clean
+# === SUDO!! ===
+function last_history_item
+    history --max=1 --show-time=''
 end
+
+abbr -a !! --position anywhere --function last_history_item
+
 
 ############################################################################################################################
 # === Surveilance du système ===
