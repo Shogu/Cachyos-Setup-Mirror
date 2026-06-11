@@ -35,10 +35,6 @@ alias fishedit='xdg-open ~/.config/fish/config.fish'
 alias pacsearch='pacman -Ss'
 alias pacsearch_installed='pacman -Qs'
 
-# === INSTALLATION DE PAQUETS ===
-alias pacinstall='sudo pacman -S'
-alias pacremove='sudo pacman -Rns'
-
 # === DÉPENDANCES ===
 alias pacdep='pactree -r'
 
@@ -470,6 +466,17 @@ end
 ############################################################################################################################
 # === PACMAN ===
 
+# === INSTALLATION/DESINSTALLATION DE PAQUETS ===
+# === sudo pacman -S ===
+function pacinstall --description "Installe un paquet avec pacman"
+    command sudo pacman -S $argv
+end
+
+# === sudo pacman -Rns ===
+function pacremove --description "Supprime un paquet avec vérification des dépendances"
+    command sudo pacman -Rns $argv
+end
+
 
 # === INFORMATIONS SUR LES PAQUETS ===
 function pacinfo --description "Infos paquet (installé ou dépôt)"
@@ -585,4 +592,102 @@ function pacvault --description "Affiche la liste des alias pacman et leurs fonc
     end
 end
 
+############################################################################################################################
+# === VAULT LIMINE ===
+function liminevault --description "Affiche la liste des commandes Limine/Snapper"
+    echo
+    echo "╔══════════════════════════════════════════════════════════════╗"
+    echo "║                 🧭 LIMINEVAULT - Mémo Limine                   ║"
+    echo "╚══════════════════════════════════════════════════════════════╝"
+    echo
 
+    echo "Boot / installation"
+    echo
+
+    set -l boot_labels \
+        "Éditer /etc/default/limine" \
+        "Installer Limine sur l'ESP (limine-install)" \
+        "Mettre à jour Limine (limine-update)" \
+        "Mettre à jour avec mkinitcpio (limine-mkinitcpio)" \
+        "Scanner les entrées EFI actives (limine-scan)" \
+        "Lister l'arborescence des entrées (limine-list)"
+
+    set -l boot_count (count $boot_labels)
+
+    for i in (seq $boot_count)
+        printf "%2d) %s\n" $i $boot_labels[$i]
+    end
+
+    echo
+    echo "Snapper / snapshots"
+    echo
+
+    set -l snap_labels \
+        "Synchroniser les snapshots Snapper (limine-snapper-sync)" \
+        "Lister les snapshots gérés par Limine (limine-snapper-list)" \
+        "Détails sur les snapshots bootables (limine-snapper-info)" \
+        "Restaurer depuis un snapshot (limine-snapper-restore)" \
+        "Afficher /etc/mkinitcpio.conf (mkinitcpio)"
+
+    set -l snap_count (count $snap_labels)
+
+    for i in (seq $snap_count)
+        printf "%2d) %s\n" (math $boot_count + $i) $snap_labels[$i]
+    end
+
+    set -l count (math $boot_count + $snap_count)
+
+    echo
+    set_color yellow
+    echo "Choisis un numéro entre 1 et $count (q pour quitter)"
+    set_color normal
+
+    while true
+        read -P "> " choice
+
+        if test -z "$choice"
+            continue
+        end
+
+        if test "$choice" = "q"
+            echo "Abandon."
+            set_color normal
+            return 0
+        end
+
+        if string match -rq '^[0-9]+$' -- $choice
+            if test $choice -ge 1 -a $choice -le $count
+                switch $choice
+                    case 1
+                        sudo micro /etc/default/limine
+                    case 2
+                        sudo limine-install
+                    case 3
+                        sudo limine-update
+                    case 4
+                        sudo limine-mkinitcpio
+                    case 5
+                        limine-scan
+                    case 6
+                        limine-list
+                    case 7
+                        sudo limine-snapper-sync
+                    case 8
+                        limine-snapper-list
+                    case 9
+                        limine-snapper-info
+                    case 10
+                        sudo limine-snapper-restore
+                    case 11
+                        mkinitcpio
+                end
+                echo
+                continue
+            end
+        end
+
+        set_color red
+        echo "Entrée invalide. Numéro entre 1 et $count, ou q pour quitter."
+        set_color normal
+    end
+end
