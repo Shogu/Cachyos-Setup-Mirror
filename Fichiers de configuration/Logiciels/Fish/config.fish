@@ -691,3 +691,94 @@ function liminevault --description "Affiche la liste des commandes Limine/Snappe
         set_color normal
     end
 end
+
+
+############################################################################################################################
+# === MEMO GENERAL ===
+function memo --description "Liste les commandes utiles du config.fish par catégories"
+    echo
+    set_color brcyan
+    echo "╔═══════════════════════════════════════════════════════════╗"
+    echo "║              📝 MEMO - Commandes du config.fish          ║"
+    echo "╚═══════════════════════════════════════════════════════════╝"
+    set_color normal
+    echo
+
+    set -l n 1
+
+    function __memo_print_section --argument title icon color
+        echo
+        set_color $color
+        echo "$icon $title"
+        set_color normal
+    end
+
+    function __memo_print_item --argument idx cmd desc
+        set_color brblack
+        printf "%2d) " $idx
+        set_color brgreen
+        printf "%s" $cmd
+        set_color normal
+        printf " — %s\n" $desc
+    end
+
+    __memo_print_section "Éditeurs" "✏️" brmagenta
+    __memo_print_item $n "vim" "Ouvre Micro à la place de Vim."; set n (math $n + 1)
+    __memo_print_item $n "vi" "Ouvre Micro à la place de Vi."; set n (math $n + 1)
+    __memo_print_item $n "gedit" "Ouvre l'éditeur GNOME."; set n (math $n + 1)
+    __memo_print_item $n "nano" "Ouvre Micro à la place de Nano."; set n (math $n + 1)
+    __memo_print_item $n "notepad" "Ouvre l'éditeur GNOME."; set n (math $n + 1)
+
+    __memo_print_section "Système" "⚙️" brcyan
+    __memo_print_item $n "rm" "Demande confirmation avant suppression."; set n (math $n + 1)
+    __memo_print_item $n "stockage" "Affiche l'usage disque."; set n (math $n + 1)
+    __memo_print_item $n "systemd" "Lance l'outil systemd simplifié."; set n (math $n + 1)
+    __memo_print_item $n "lastpackages" "Recherche les derniers paquets."; set n (math $n + 1)
+    __memo_print_item $n "liminestats" "Affiche les infos snapshot Limine."; set n (math $n + 1)
+    __memo_print_item $n "scrub" "Lance un scrub Btrfs sur /."; set n (math $n + 1)
+    __memo_print_item $n "bios" "Redémarre dans le BIOS/UEFI."; set n (math $n + 1)
+    __memo_print_item $n "boot" "Affiche les infos de boot."; set n (math $n + 1)
+    __memo_print_item $n "boot!" "Affiche le détail des lenteurs de boot."; set n (math $n + 1)
+
+    __memo_print_section "AUR" "📦" bryellow
+    __memo_print_item $n "aur" "Installe un paquet AUR via Shelly."; set n (math $n + 1)
+    __memo_print_item $n "aursearch" "Recherche dans l'AUR via Shelly."; set n (math $n + 1)
+
+    __memo_print_section "Fish" "🐟" brblue
+    __memo_print_item $n "sourcefish" "Recharge la config Fish."; set n (math $n + 1)
+    __memo_print_item $n "fishedit" "Ouvre la config Fish dans l'éditeur."; set n (math $n + 1)
+    __memo_print_item $n "!!" "Remplace par la dernière commande."; set n (math $n + 1)
+
+    __memo_print_section "Pacman" "🧰" brgreen
+    __memo_print_item $n "pacsearch" "Recherche un paquet dans les dépôts."; set n (math $n + 1)
+    __memo_print_item $n "pacsearch_installed" "Recherche un paquet installé."; set n (math $n + 1)
+    __memo_print_item $n "pacdep" "Affiche les dépendances inverses."; set n (math $n + 1)
+    __memo_print_item $n "pacfiles" "Liste les fichiers d'un paquet."; set n (math $n + 1)
+    __memo_print_item $n "orphans" "Supprime les orphelins."; set n (math $n + 1)
+    __memo_print_item $n "pacinstall" "Installe un paquet avec pacman."; set n (math $n + 1)
+    __memo_print_item $n "pacremove" "Supprime un paquet avec pacman et vérifie les dépendances."; set n (math $n + 1)
+    __memo_print_item $n "pacinfo" "Affiche les infos d'un paquet installé ou dépôt."; set n (math $n + 1)
+    __memo_print_item $n "orphans+" "Liste les dépendances inutiles sans supprimer."; set n (math $n + 1)
+
+    __memo_print_section "Surveillance" "📈" bryellow
+    __memo_print_item $n "scx" "Affiche le scheduler SCX et son monitoring."; set n (math $n + 1)
+    __memo_print_item $n "journal" "Affiche les 20 dernières erreurs du journal systemd."; set n (math $n + 1)
+    __memo_print_item $n "flags" "Montre les flags kernel de /proc/cmdline."; set n (math $n + 1)
+    __memo_print_item $n "power" "Montre EPP, power profile, SCX et batterie."; set n (math $n + 1)
+
+    __memo_print_section "Boot" "🧭" brred
+    __memo_print_item $n "fstab" "Affiche /etc/fstab en lecture seule."; set n (math $n + 1)
+    __memo_print_item $n "mkinitcpio" "Affiche /etc/mkinitcpio.conf en lecture seule."; set n (math $n + 1)
+    __memo_print_item $n "fwupdate" "Lance une mise à jour firmware complète."; set n (math $n + 1)
+    __memo_print_item $n "vault" "Menu des commandes utiles globales."; set n (math $n + 1)
+    __memo_print_item $n "liminevault" "Menu des commandes Limine/Snapper."; set n (math $n + 1)
+    __memo_print_item $n "pacvault" "Menu des commandes Pacman."; set n (math $n + 1)
+
+    __memo_print_section "Utilitaires" "🔎" brwhite
+    __memo_print_item $n "clean" "Nettoie les paquets orphelins et le cache."; set n (math $n + 1)
+    __memo_print_item $n "pacstats" "Affiche le nombre et la taille des paquets."; set n (math $n + 1)
+    __memo_print_item $n "search" "Recherche fuzzy de fichiers sur le système."; set n (math $n + 1)
+
+    functions -e __memo_print_section
+    functions -e __memo_print_item
+end
