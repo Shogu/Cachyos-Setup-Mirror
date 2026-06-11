@@ -749,7 +749,7 @@ function memo --description "Liste les commandes utiles du config.fish par caté
     __memo_print_item $n "fishedit" "Ouvre la config Fish dans l'éditeur."; set n (math $n + 1)
     __memo_print_item $n "!!" "Remplace par la dernière commande."; set n (math $n + 1)
 
-    __memo_print_section "Pacman" "🧰" brgreen
+    __memo_print_section "Pacman" "👾" brgreen
     __memo_print_item $n "pacsearch" "Recherche un paquet dans les dépôts."; set n (math $n + 1)
     __memo_print_item $n "pacsearch_installed" "Recherche un paquet installé."; set n (math $n + 1)
     __memo_print_item $n "pacdep" "Affiche les dépendances inverses."; set n (math $n + 1)
@@ -766,7 +766,7 @@ function memo --description "Liste les commandes utiles du config.fish par caté
     __memo_print_item $n "flags" "Montre les flags kernel de /proc/cmdline."; set n (math $n + 1)
     __memo_print_item $n "power" "Montre EPP, power profile, SCX et batterie."; set n (math $n + 1)
 
-    __memo_print_section "Boot" "🧭" brred
+    __memo_print_section "Boot" "🚀" brred
     __memo_print_item $n "fstab" "Affiche /etc/fstab en lecture seule."; set n (math $n + 1)
     __memo_print_item $n "mkinitcpio" "Affiche /etc/mkinitcpio.conf en lecture seule."; set n (math $n + 1)
     __memo_print_item $n "fwupdate" "Lance une mise à jour firmware complète."; set n (math $n + 1)
