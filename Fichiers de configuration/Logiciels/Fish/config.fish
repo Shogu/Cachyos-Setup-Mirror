@@ -73,10 +73,11 @@ abbr -a !! --position anywhere --function last_history_item
 
 # === SCX ===
 function scx --description 'scxctl get + check scheduler + monitor sans WARN'
- if not set -q USE_SCX
+    if not set -q USE_SCX
     return 0
 end
-   
+    
+    
     set -l output (scxctl get 2>/dev/null)
 
     if test -z "$output"
@@ -481,7 +482,6 @@ function pacremove --description "Supprime un paquet avec vérification des dép
     command sudo pacman -Rns $argv
 end
 
-
 # === INFORMATIONS SUR LES PAQUETS ===
 function pacinfo --description "Infos paquet (installé ou dépôt)"
     set -l pkg $argv
@@ -499,7 +499,50 @@ function pacinfo --description "Infos paquet (installé ou dépôt)"
     end
 end
 
+# === RECHERCHE DE CHEMIN D'UN PAQUET PUIS DE QUEL PAQUET IL DEPEND ===
+function pacpick --description "Trouver un fichier par nom puis lancer pacman -Qo sur le chemin choisi"
+    read -P "Nom du fichier ou fragment: " term
+    if test -z "$term"
+        echo "Aucune saisie."
+        return 1
+    end
 
+    set -l matches (pacman -Ql | grep -F "$term")
+    if test (count $matches) -eq 0
+        echo "Aucun fichier trouvé."
+        return 1
+    end
+
+    set -l paths
+    echo
+
+    for i in (seq (count $matches))
+        set -l path (string replace -r '^[^ ]+\s+' '' -- $matches[$i])
+        set paths $paths "$path"
+        printf "%3d) %s\n" $i "$path"
+    end
+
+    echo
+    read -P "Numéro du fichier (q pour quitter): " choice
+
+    if test "$choice" = "q"
+        echo "Abandon."
+        return 0
+    end
+
+    if not string match -rq '^[0-9]+$' -- "$choice"
+        echo "Entrée invalide."
+        return 1
+    end
+
+    if test "$choice" -lt 1 -o "$choice" -gt (count $paths)
+        echo "Numéro hors plage."
+        return 1
+    end
+
+    echo
+    pacman -Qo "$paths[$choice]"
+end
 # === RECHERCHE DE DÉPENDANCES INUTILES !! VERIFIER CHAQUE PAQUET AVEC PACMAN -Qi ===
 function orphans+ --description "Affiche les dépendances inutiles, avec avertissement"
     echo
@@ -530,7 +573,8 @@ function pacvault --description "Affiche la liste des alias pacman et leurs fonc
         "Recherche dans les paquets installés" \
         "Infos paquet" \
         "Fichiers d'un paquet" \
-        "Dépendances d'un paquet"
+        "Dépendances d'un paquet" \
+        "Fichier → paquet propriétaire"
 
     set -l count (count $vault_labels)
 
@@ -584,6 +628,8 @@ function pacvault --description "Affiche la liste des alias pacman et leurs fonc
                         if test -n "$term"
                             pacdep "$term"
                         end
+                    case 6
+                        pacpick
                 end
                 echo
                 continue
@@ -762,6 +808,7 @@ function memo --description "Liste les commandes utiles du config.fish par caté
     __memo_print_item $n "pacinstall" "Installe un paquet avec pacman."; set n (math $n + 1)
     __memo_print_item $n "pacremove" "Supprime un paquet avec pacman et vérifie les dépendances."; set n (math $n + 1)
     __memo_print_item $n "pacinfo" "Affiche les infos d'un paquet installé ou dépôt."; set n (math $n + 1)
+    __memo_print_item $n "pacpick" "Affiche le chemin d'un pbinaire puis à quel paquet il appartient."; set n (math $n + 1)
     __memo_print_item $n "orphans+" "Liste les dépendances inutiles sans supprimer."; set n (math $n + 1)
 
     __memo_print_section "Surveillance" "📈" bryellow
