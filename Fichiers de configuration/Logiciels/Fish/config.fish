@@ -424,7 +424,7 @@ function vault --description "Vault de commandes utiles"
 end
 
 ############################################################################################################################
-# === Fussy search ===
+# === Fuzzy search ===
 function search --description "Recherche fuzzy de fichiers (sans les caches) avec aperçu et lancement du fichier (ENTREE)"
 
     set -l pattern $argv
@@ -808,7 +808,7 @@ function memo --description "Liste les commandes utiles du config.fish par caté
     __memo_print_item $n "pacinstall" "Installe un paquet avec pacman."; set n (math $n + 1)
     __memo_print_item $n "pacremove" "Supprime un paquet avec pacman et vérifie les dépendances."; set n (math $n + 1)
     __memo_print_item $n "pacinfo" "Affiche les infos d'un paquet installé ou dépôt."; set n (math $n + 1)
-    __memo_print_item $n "pacpick" "Affiche le chemin d'un pbinaire puis à quel paquet il appartient."; set n (math $n + 1)
+    __memo_print_item $n "pacpick" "Affiche le chemin d'un binaire puis à quel paquet il appartient."; set n (math $n + 1)
     __memo_print_item $n "orphans+" "Liste les dépendances inutiles sans supprimer."; set n (math $n + 1)
 
     __memo_print_section "Surveillance" "📈" bryellow
