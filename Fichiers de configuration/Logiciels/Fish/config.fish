@@ -73,6 +73,10 @@ abbr -a !! --position anywhere --function last_history_item
 
 # === SCX ===
 function scx --description 'scxctl get + check scheduler + monitor sans WARN'
+ if not set -q USE_SCX
+    return 0
+end
+   
     set -l output (scxctl get 2>/dev/null)
 
     if test -z "$output"
