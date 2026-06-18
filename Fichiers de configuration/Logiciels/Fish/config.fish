@@ -6,10 +6,11 @@ source /usr/share/cachyos-fish-config/cachyos-config.fish
 # === Alias Editeurs ===
 alias vim='micro'
 alias vi='micro'
-alias edit='micro'
 alias nano='micro'
+
 alias notepad='gnome-text-editor'
 alias gedit='gnome-text-editor'
+alias edit='gnome-text-editor'
 
 
 # === Alias Système ===
