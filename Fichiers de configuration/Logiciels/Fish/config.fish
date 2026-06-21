@@ -25,9 +25,9 @@ alias boot='systemd-analyze'
 alias boot!='systemd-analyze blame'
 
 # === Alias Shelly pour AUR ===
-alias aur='shelly aur install'
-alias aurremove='shelly aur remove --opt-deps'
+alias aur='shelly install -A'
 alias aursearch='shelly aur search'
+alias aurremove='shelly remove -A --no-optdeps'
 
 # === Alias Fish ===
 alias sourcefish='source ~/.config/fish/config.fish'
