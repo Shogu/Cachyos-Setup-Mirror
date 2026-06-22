@@ -24,10 +24,11 @@ alias bios='systemctl reboot --firmware-setup'
 alias boot='systemd-analyze'
 alias boot!='systemd-analyze blame'
 
-# === Alias Shelly pour AUR ===
+# === Alias Shelly ===
 alias aur='shelly install -A'
 alias aursearch='shelly aur search'
 alias aurremove='shelly remove -A --no-optdeps'
+alias upgrade="fish -c 'set_color 3584e4; echo \"╔══════════════════════════════════════════════╗\"; echo \"║  󰮯  MISE À JOUR SHELLY                      ║\"; echo \"╚══════════════════════════════════════════════╝\"; set_color normal; echo; set_color yellow; echo \"🔐 Mot de passe\"; set_color normal; echo; shelly upgrade; and shelly aur upgrade; if test \$status -eq 0; set_color green; echo \"✅ Mise à jour terminée avec succès.\"; else; set_color red; echo \"❌ La mise à jour a échoué.\"; end; set_color normal; echo; read -P \"⏎ Fermer avec ENTREE \"'"
 
 # === Alias Fish ===
 alias sourcefish='source ~/.config/fish/config.fish'
