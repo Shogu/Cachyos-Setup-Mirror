@@ -24,9 +24,9 @@ alias boot='systemd-analyze'
 alias boot!='systemd-analyze blame'
 
 # === Alias Shelly ===
-alias aur='shelly install -A'
+alias aur='shelly aur install'
 alias aursearch='shelly aur search'
-alias aurremove='shelly remove -A --no-optdeps'
+alias aurremove='shelly aur remove --opt-deps'
 alias aurlist='shelly aur list'
 alias upgrade="fish -c 'set_color 3584e4; echo \"╔══════════════════════════════════════════════╗\"; echo \"║  󰮯  MISE À JOUR SHELLY                      ║\"; echo \"╚══════════════════════════════════════════════╝\"; set_color normal; echo; set_color yellow; echo \"🔐 Mot de passe\"; set_color normal; echo; shelly upgrade; and shelly aur upgrade; if test \$status -eq 0; set_color green; echo \"✅ Mise à jour terminée avec succès.\"; else; set_color red; echo \"❌ La mise à jour a échoué.\"; end; set_color normal; echo; read -P \"⏎ Fermer avec ENTREE \"'"
 
