@@ -12,7 +12,6 @@ alias notepad='gnome-text-editor'
 alias gedit='gnome-text-editor'
 alias edit='gnome-text-editor'
 
-
 # === Alias Système ===
 alias rm='rm -I'
 alias stockage='duf'
@@ -79,11 +78,7 @@ abbr -a !! --position anywhere --function last_history_item
 
 # === SCX ===
 function scx --description 'scxctl get + check scheduler + monitor sans WARN'
-    if not set -q USE_SCX
-    return 0
-end
-    
-    
+     
     set -l output (scxctl get 2>/dev/null)
 
     if test -z "$output"
@@ -259,6 +254,7 @@ function clean
 
     paru -Scc
     profile-cleaner v
+    shelly purify
     archclean full
 end
 
@@ -781,10 +777,11 @@ function memo --description "Liste les commandes utiles du config.fish par caté
     __memo_print_section "Éditeurs" "✏️" brmagenta
     __memo_print_item $n "vim" "Ouvre Micro à la place de Vim."; set n (math $n + 1)
     __memo_print_item $n "vi" "Ouvre Micro à la place de Vi."; set n (math $n + 1)
-    __memo_print_item $n "gedit" "Ouvre l'éditeur GNOME."; set n (math $n + 1)
     __memo_print_item $n "nano" "Ouvre Micro à la place de Nano."; set n (math $n + 1)
+    __memo_print_item $n "gedit" "Ouvre l'éditeur GNOME."; set n (math $n + 1)
     __memo_print_item $n "notepad" "Ouvre l'éditeur GNOME."; set n (math $n + 1)
-
+    __memo_print_item $n "edit" "Ouvre l'éditeur GNOME."; set n (math $n + 1)
+    
     __memo_print_section "Système" "⚙️" brcyan
     __memo_print_item $n "rm" "Demande confirmation avant suppression."; set n (math $n + 1)
     __memo_print_item $n "stockage" "Affiche l'usage disque."; set n (math $n + 1)
@@ -796,7 +793,10 @@ function memo --description "Liste les commandes utiles du config.fish par caté
     __memo_print_item $n "boot" "Affiche les infos de boot."; set n (math $n + 1)
     __memo_print_item $n "boot!" "Affiche le détail des lenteurs de boot."; set n (math $n + 1)
 
-    __memo_print_section "AUR" "📦" bryellow
+    __memo_print_section "SHELLY - PACKAGES & AUR" "📦" bryellow
+    __memo_print_item $n "upgrade" "Lance la mise à jour Shelly avec cartouche coloré."; set n (math $n + 1)
+    __memo_print_item $n "aurremove" "Supprime un paquet AUR via Shelly."; set n (math $n + 1)
+    __memo_print_item $n "aurlist" "Liste les paquets AUR installés via Shelly."; set n (math $n + 1)
     __memo_print_item $n "aur" "Installe un paquet AUR via Shelly."; set n (math $n + 1)
     __memo_print_item $n "aursearch" "Recherche dans l'AUR via Shelly."; set n (math $n + 1)
 
