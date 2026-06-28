@@ -28,7 +28,7 @@ alias aur='shelly aur install'
 alias aursearch='shelly aur search'
 alias aurremove='shelly aur remove --opt-deps'
 alias aurlist='shelly aur list'
-alias upgrade 'ptyxis --maximize --standalone -e fish -c '\''set_color 3584e4; echo "╔══════════════════════════════════════════════╗"; echo "║  󰮯  MISE À JOUR SHELLY                      ║"; echo "╚══════════════════════════════════════════════╝"; set_color normal; echo; shelly upgrade; and shelly aur upgrade; echo; read'\'''
+alias upgrade='ptyxis --maximize --standalone -e fish -c '\''set_color 3584e4; echo "╔══════════════════════════════════════════════╗"; echo "║  󰮯  MISE À JOUR SHELLY                      ║"; echo "╚══════════════════════════════════════════════╝"; set_color normal; echo; shelly upgrade; and shelly aur upgrade; echo; read'\'''
 
 # === Alias Fish ===
 alias sourcefish='source ~/.config/fish/config.fish'
