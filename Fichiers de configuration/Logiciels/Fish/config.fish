@@ -47,7 +47,7 @@ alias pacdep='pactree -r'
 alias pacfiles='pacman -Ql'
 
 # === RECHERCHE ET SUPPRESSION D'ORPHELINS + DÉPENDANCES INUTILES ===
-alias orphans='pacman -Qdtq | xargs -r sudo pacman -Rns'
+alias orphans='pkgs=$(pacman -Qdtq); [[ -z "$pkgs" ]] && echo "Aucun paquet orphelin." || { echo "$pkgs"; read -r -p "Supprimer ces orphelins ? [y/N] " r; [[ "$r" =~ ^[Yy]$ ]] && echo "$pkgs" | xargs -r sudo pacman -Rns; }'
 
 # === INFORMATIONS SUR LES PAQUETS ===
 #pacinfo (function)
