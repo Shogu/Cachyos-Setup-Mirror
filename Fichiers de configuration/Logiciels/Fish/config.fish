@@ -46,8 +46,8 @@ alias pacdep='pactree -r'
 # === RECHERCHE DE FICHIERS DANS UN PAQUET ===
 alias pacfiles='pacman -Ql'
 
-# === RECHERCHE ET SUPPRESSION D'ORPHELINS + DÉPENDANCES INUTILES ===
-alias orphans='pkgs=$(pacman -Qdtq); [[ -z "$pkgs" ]] && echo "Aucun paquet orphelin." || { echo "$pkgs"; read -r -p "Supprimer ces orphelins ? [y/N] " r; [[ "$r" =~ ^[Yy]$ ]] && echo "$pkgs" | xargs -r sudo pacman -Rns; }'
+# === RECHERCHE D'ORPHELINS + DÉPENDANCES INUTILES ===
+alias orphans='pacman -Qdtq'
 
 # === INFORMATIONS SUR LES PAQUETS ===
 #pacinfo (function)
