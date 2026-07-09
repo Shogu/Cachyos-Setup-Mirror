@@ -252,7 +252,7 @@ function clean
         echo "Aucun paquet orphelin."
     end
 
-    paru -Scc
+    sudo pacman -Scc
     profile-cleaner v
     shelly purify
     archclean full
