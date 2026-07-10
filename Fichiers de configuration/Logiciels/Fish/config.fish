@@ -13,6 +13,7 @@ alias gedit='gnome-text-editor'
 alias edit='gnome-text-editor'
 
 # === Alias Système ===
+alias stop='shutdown now'
 alias rm='rm -I'
 alias stockage='duf'
 alias systemd='isd'
