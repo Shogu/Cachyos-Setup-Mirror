@@ -13,6 +13,7 @@ alias gedit='gnome-text-editor'
 alias edit='gnome-text-editor'
 
 # === Alias Système ===
+alias powertop='sudo powertop'
 alias stop='shutdown now'
 alias rm='rm -I'
 alias stockage='duf'
@@ -25,11 +26,15 @@ alias boot='systemd-analyze'
 alias boot!='systemd-analyze blame'
 
 # === Alias Shelly ===
+
+# Gestion AUR
 alias aur='shelly aur install'
 alias aursearch='shelly aur search'
 alias aurremove='shelly aur remove --opt-deps'
 alias aurlist='shelly aur list'
-alias upgrade='set_color 3584e4; echo "╔══════════════════════╗"; echo "║  MISE À JOUR SHELLY  ║"; echo "╚══════════════════════╝"; set_color normal; echo; shelly upgrade; shelly aur upgrade; echo; read -P "Fermer avec ENTREE "'
+
+# Mises à jour Shelly
+alias upgrade='set_color 3584e4; echo "╔══════════════════════╗"; echo "║  MISE À JOUR SHELLY  ║"; echo "╚══════════════════════╝"; set_color normal; echo; shelly upgrade standard; shelly upgrade aur; echo; read -P "Fermer avec ENTREE "'
 
 # === Alias Fish ===
 alias sourcefish='source ~/.config/fish/config.fish'
@@ -47,7 +52,7 @@ alias pacdep='pactree -r'
 # === RECHERCHE DE FICHIERS DANS UN PAQUET ===
 alias pacfiles='pacman -Ql'
 
-# === RECHERCHE D'ORPHELINS + DÉPENDANCES INUTILES ===
+# === RECHERCHE  D'ORPHELINS + DÉPENDANCES INUTILES ===
 alias orphans='pacman -Qdtq'
 
 # === INFORMATIONS SUR LES PAQUETS ===
