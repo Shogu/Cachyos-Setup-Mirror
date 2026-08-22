@@ -33,6 +33,10 @@ alias aursearch='shelly aur search'
 alias aurremove='shelly aur remove --opt-deps'
 alias aurlist='shelly aur list'
 
+# Gestion paquets standards
+alias add='shelly install standard'
+alias remove='shelly remove standard'
+
 # Mises à jour Shelly
 alias upgrade='set_color 3584e4; echo "╔══════════════════════╗"; echo "║  MISE À JOUR SHELLY  ║"; echo "╚══════════════════════╝"; set_color normal; echo; shelly upgrade standard; shelly upgrade aur; echo; read -P "Fermer avec ENTREE "'
 
