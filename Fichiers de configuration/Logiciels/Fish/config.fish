@@ -4,6 +4,7 @@ source /usr/share/cachyos-fish-config/cachyos-config.fish
 
 ############################################################################################################################
 # === Alias Editeurs ===
+
 alias vim='micro'
 alias vi='micro'
 alias nano='micro'
@@ -13,6 +14,7 @@ alias gedit='gnome-text-editor'
 alias edit='gnome-text-editor'
 
 # === Alias Système ===
+
 alias powertop='sudo powertop'
 alias stop='shutdown now'
 alias rm='rm -I'
@@ -28,10 +30,10 @@ alias boot!='systemd-analyze blame'
 # === Alias Shelly ===
 
 # Gestion AUR
-alias aur='shelly aur install'
-alias aursearch='shelly aur search'
-alias aurremove='shelly aur remove --opt-deps'
-alias aurlist='shelly aur list'
+alias aur='shelly install aur'
+alias aursearch='shelly search aur'
+alias aurremove='shelly remove aur --opt-deps'
+alias aurlist='shelly list aur'
 
 # Gestion paquets standards
 alias add='shelly install standard'
