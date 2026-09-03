@@ -4,19 +4,13 @@ source /usr/share/cachyos-fish-config/cachyos-config.fish
 
 ############################################################################################################################
 # === Alias Editeurs ===
-
 alias vim='micro'
 alias vi='micro'
-alias nano='micro'
-
-alias notepad='gnome-text-editor'
 alias gedit='gnome-text-editor'
-alias edit='gnome-text-editor'
+alias nano='micro'
+alias notepad='gnome-text-editor'
 
 # === Alias Système ===
-
-alias powertop='sudo powertop'
-alias stop='shutdown now'
 alias rm='rm -I'
 alias stockage='duf'
 alias systemd='isd'
@@ -26,22 +20,10 @@ alias scrub='sudo btrfs scrub start -B /'
 alias bios='systemctl reboot --firmware-setup'
 alias boot='systemd-analyze'
 alias boot!='systemd-analyze blame'
-alias watts='upower -d | grep -E "energy-rate|native-path"'
 
-# === Alias Shelly ===
-
-# Gestion AUR
-alias aur='shelly install aur'
-alias aursearch='shelly search aur'
-alias aurremove='shelly remove aur --opt-deps'
-alias aurlist='shelly list aur'
-
-# Gestion paquets standards
-alias add='shelly install standard'
-alias remove='shelly remove standard'
-
-# Mises à jour Shelly
-alias upgrade='set_color 3584e4; echo "╔══════════════════════╗"; echo "║  MISE À JOUR SHELLY  ║"; echo "╚══════════════════════╝"; set_color normal; echo; shelly upgrade standard; shelly upgrade aur; echo; read -P "Fermer avec ENTREE "'
+# === Alias Shelly pour AUR ===
+alias aur='shelly aur install'
+alias aursearch='shelly aur search'
 
 # === Alias Fish ===
 alias sourcefish='source ~/.config/fish/config.fish'
@@ -59,8 +41,8 @@ alias pacdep='pactree -r'
 # === RECHERCHE DE FICHIERS DANS UN PAQUET ===
 alias pacfiles='pacman -Ql'
 
-# === RECHERCHE  D'ORPHELINS + DÉPENDANCES INUTILES ===
-alias orphans='pacman -Qdtq'
+# === RECHERCHE ET SUPPRESSION D'ORPHELINS + DÉPENDANCES INUTILES ===
+alias orphans='pacman -Qdtq | xargs -r sudo pacman -Rns'
 
 # === INFORMATIONS SUR LES PAQUETS ===
 #pacinfo (function)
@@ -91,7 +73,11 @@ abbr -a !! --position anywhere --function last_history_item
 
 # === SCX ===
 function scx --description 'scxctl get + check scheduler + monitor sans WARN'
-     
+    if not set -q USE_SCX
+    return 0
+end
+    
+    
     set -l output (scxctl get 2>/dev/null)
 
     if test -z "$output"
@@ -265,9 +251,8 @@ function clean
         echo "Aucun paquet orphelin."
     end
 
-    sudo pacman -Scc
+    paru -Scc
     profile-cleaner v
-    shelly purify
     archclean full
 end
 
@@ -790,11 +775,10 @@ function memo --description "Liste les commandes utiles du config.fish par caté
     __memo_print_section "Éditeurs" "✏️" brmagenta
     __memo_print_item $n "vim" "Ouvre Micro à la place de Vim."; set n (math $n + 1)
     __memo_print_item $n "vi" "Ouvre Micro à la place de Vi."; set n (math $n + 1)
-    __memo_print_item $n "nano" "Ouvre Micro à la place de Nano."; set n (math $n + 1)
     __memo_print_item $n "gedit" "Ouvre l'éditeur GNOME."; set n (math $n + 1)
+    __memo_print_item $n "nano" "Ouvre Micro à la place de Nano."; set n (math $n + 1)
     __memo_print_item $n "notepad" "Ouvre l'éditeur GNOME."; set n (math $n + 1)
-    __memo_print_item $n "edit" "Ouvre l'éditeur GNOME."; set n (math $n + 1)
-    
+
     __memo_print_section "Système" "⚙️" brcyan
     __memo_print_item $n "rm" "Demande confirmation avant suppression."; set n (math $n + 1)
     __memo_print_item $n "stockage" "Affiche l'usage disque."; set n (math $n + 1)
@@ -806,10 +790,7 @@ function memo --description "Liste les commandes utiles du config.fish par caté
     __memo_print_item $n "boot" "Affiche les infos de boot."; set n (math $n + 1)
     __memo_print_item $n "boot!" "Affiche le détail des lenteurs de boot."; set n (math $n + 1)
 
-    __memo_print_section "SHELLY - PACKAGES & AUR" "📦" bryellow
-    __memo_print_item $n "upgrade" "Lance la mise à jour Shelly avec cartouche coloré."; set n (math $n + 1)
-    __memo_print_item $n "aurremove" "Supprime un paquet AUR via Shelly."; set n (math $n + 1)
-    __memo_print_item $n "aurlist" "Liste les paquets AUR installés via Shelly."; set n (math $n + 1)
+    __memo_print_section "AUR" "📦" bryellow
     __memo_print_item $n "aur" "Installe un paquet AUR via Shelly."; set n (math $n + 1)
     __memo_print_item $n "aursearch" "Recherche dans l'AUR via Shelly."; set n (math $n + 1)
 
