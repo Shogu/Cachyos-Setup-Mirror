@@ -26,6 +26,7 @@ alias scrub='sudo btrfs scrub start -B /'
 alias bios='systemctl reboot --firmware-setup'
 alias boot='systemd-analyze'
 alias boot!='systemd-analyze blame'
+alias watts='upower -d | grep -E "energy-rate|native-path"'
 
 # === Alias Shelly ===
 
