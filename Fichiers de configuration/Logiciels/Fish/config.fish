@@ -6,11 +6,15 @@ source /usr/share/cachyos-fish-config/cachyos-config.fish
 # === Alias Editeurs ===
 alias vim='micro'
 alias vi='micro'
-alias gedit='gnome-text-editor'
 alias nano='micro'
+
 alias notepad='gnome-text-editor'
+alias gedit='gnome-text-editor'
+alias edit='gnome-text-editor'
 
 # === Alias Système ===
+alias powertop='sudo powertop'
+alias stop='shutdown now'
 alias rm='rm -I'
 alias stockage='duf'
 alias systemd='isd'
@@ -21,9 +25,21 @@ alias bios='systemctl reboot --firmware-setup'
 alias boot='systemd-analyze'
 alias boot!='systemd-analyze blame'
 
-# === Alias Shelly pour AUR ===
-alias aur='shelly aur install'
-alias aursearch='shelly aur search'
+# === Alias Shelly ===
+
+# Gestion AUR
+alias aur='shelly install aur'
+alias aursearch='shelly search aur'
+alias aurremove='shelly remove aur --opt-deps'
+alias aurlist='shelly list aur'
+
+# Gestion paquets standards
+alias add='shelly install standard'
+alias remove='shelly remove standard'
+
+
+# Mises à jour Shelly
+alias upgrade='set_color 3584e4; echo "╔══════════════════════╗"; echo "║  MISE À JOUR SHELLY  ║"; echo "╚══════════════════════╝"; set_color normal; echo; shelly upgrade standard; shelly upgrade aur; echo; read -P "Fermer avec ENTREE "'
 
 # === Alias Fish ===
 alias sourcefish='source ~/.config/fish/config.fish'
@@ -41,8 +57,8 @@ alias pacdep='pactree -r'
 # === RECHERCHE DE FICHIERS DANS UN PAQUET ===
 alias pacfiles='pacman -Ql'
 
-# === RECHERCHE ET SUPPRESSION D'ORPHELINS + DÉPENDANCES INUTILES ===
-alias orphans='pacman -Qdtq | xargs -r sudo pacman -Rns'
+# === RECHERCHE  D'ORPHELINS + DÉPENDANCES INUTILES ===
+alias orphans='pacman -Qdtq'
 
 # === INFORMATIONS SUR LES PAQUETS ===
 #pacinfo (function)
@@ -73,11 +89,7 @@ abbr -a !! --position anywhere --function last_history_item
 
 # === SCX ===
 function scx --description 'scxctl get + check scheduler + monitor sans WARN'
-    if not set -q USE_SCX
-    return 0
-end
-    
-    
+     
     set -l output (scxctl get 2>/dev/null)
 
     if test -z "$output"
@@ -251,8 +263,9 @@ function clean
         echo "Aucun paquet orphelin."
     end
 
-    paru -Scc
+    sudo pacman -Scc
     profile-cleaner v
+    shelly purify standard
     archclean full
 end
 
@@ -318,109 +331,6 @@ function fwupdate --description "Mettre à jour firmware (fwupdmgr full)"
     set_color cyan
     echo "📦 Mise à jour firmware terminée."
     set_color normal
-end
-
-############################################################################################################################
-# === VAULT de commandes ===
-function vault --description "Vault de commandes utiles"
-    echo ""
-    echo "╔═══════════════════════════════════════════════════════════╗"
-    echo "║                  📦 VAULT - Mémo alias et functions                 ║"
-    echo "╚═══════════════════════════════════════════════════════════╝"
-    echo ""
-
-    set -l vault_labels \
-        "=== BOOT ===" \
-        "MAJ initramfs (limine-mkinitcpio)" \
-        "Boot time (systemd-analyze)" \
-        "Boot analyze (systemd-analyze blame)" \
-        "=== SURVEILLANCE ===" \
-        "Scheduler scx (scx)" \
-        "Erreurs journalctl" \
-        "Flags kernel" \
-        "Afficher EPP / power" \
-        "=== MAINTENANCE ===" \
-        "Nettoyage système (clean)" \
-        "pacstats" \
-        "=== SYSTÈME ===" \
-        "fstab" \
-        "mkinitcpio.conf" \
-        "stockage (duf)" \
-        "fwupd" \
-        "control"
-
-    set -l vault_cmds \
-        "" \
-        "sudo limine-mkinitcpio" \
-        "systemd-analyze" \
-        "systemd-analyze blame" \
-        "" \
-        "scx" \
-        "journal" \
-        "flags" \
-        "power" \
-        "" \
-        "clean" \
-        "pacstats" \
-        "" \
-        "fstab" \
-        "mkinitcpio" \
-        "stockage" \
-        "fwupdate" \
-        "control"
-
-    set -l count (count $vault_labels)
-
-    for i in (seq $count)
-        if string match -qr '^===.*===$' -- $vault_labels[$i]
-            set_color brblue
-            echo $vault_labels[$i]
-            set_color normal
-        else
-            printf "%2d) %s\n" $i $vault_labels[$i]
-        end
-    end
-
-    echo
-    set_color yellow
-    echo "Choisis un numéro entre 1 et $count (q pour quitter)"
-    set_color normal
-
-    while true
-        read -P "> " choice
-
-        if test -z "$choice"
-            continue
-        end
-
-        if test "$choice" = "q"
-            echo "Abandon."
-            set_color normal
-            return 0
-        end
-
-        if string match -rq '^[0-9]+$' -- $choice
-            if test $choice -ge 1 -a $choice -le $count
-                set -l cmd $vault_cmds[$choice]
-                if test -z "$cmd"
-                    continue
-                end
-                echo
-                set_color green
-                echo "→ Exécution : $cmd"
-                set_color normal
-                echo
-                fish -c $cmd
-                set_color normal
-                echo
-                continue
-            end
-        end
-
-        set_color red
-        echo "Entrée invalide. Numéro entre 1 et $count, ou q pour quitter."
-        set_color normal
-    end
 end
 
 ############################################################################################################################
@@ -655,6 +565,7 @@ function liminevault --description "Affiche la liste des commandes Limine/Snappe
     echo
 
     set -l boot_labels \
+        "Éditer /boot/limine.conf" \
         "Éditer /etc/default/limine" \
         "Installer Limine sur l'ESP (limine-install)" \
         "Mettre à jour Limine (limine-update)" \
@@ -709,26 +620,28 @@ function liminevault --description "Affiche la liste des commandes Limine/Snappe
             if test $choice -ge 1 -a $choice -le $count
                 switch $choice
                     case 1
-                        sudo micro /etc/default/limine
+                        sudo micro /boot/limine.conf
                     case 2
-                        sudo limine-install
+                        sudo micro /etc/default/limine
                     case 3
-                        sudo limine-update
+                        sudo limine-install
                     case 4
-                        sudo limine-mkinitcpio
+                        sudo limine-update
                     case 5
-                        limine-scan
+                        sudo limine-mkinitcpio
                     case 6
-                        limine-list
+                        limine-scan
                     case 7
-                        sudo limine-snapper-sync
+                        limine-list
                     case 8
-                        limine-snapper-list
+                        sudo limine-snapper-sync
                     case 9
-                        limine-snapper-info
+                        limine-snapper-list
                     case 10
-                        sudo limine-snapper-restore
+                        limine-snapper-info
                     case 11
+                        sudo limine-snapper-restore
+                    case 12
                         mkinitcpio
                 end
                 echo
@@ -744,92 +657,279 @@ end
 
 
 ############################################################################################################################
-# === MEMO GENERAL ===
-function memo --description "Liste les commandes utiles du config.fish par catégories"
+# === MEMO UNIFIÉ (Alias + Fonctions) ===
+function memo --description "Liste interactive des alias et fonctions disponibles, organisés par catégories"
     echo
     set_color brcyan
     echo "╔═══════════════════════════════════════════════════════════╗"
-    echo "║              📝 MEMO - Commandes du config.fish          ║"
+    echo "║              📝 MEMO - Alias et Fonctions Disponibles       ║"
     echo "╚═══════════════════════════════════════════════════════════╝"
     set_color normal
     echo
 
-    set -l n 1
+    echo "Sélectionnez une catégorie :"
+    echo
+    set_color brblue
+    echo "  [1] 📑  ALIAS"
+    echo "  [2] ⚙️  FONCTIONS"
+    set_color normal
+    echo
+    set_color yellow
+    read -P "Choix (1-2) ou 'q' pour quitter : " main_choice
+    set_color normal
 
-    function __memo_print_section --argument title icon color
+    if test "$main_choice" = "q"
+        echo "Abandon."
+        return 0
+    end
+
+    if not string match -rq '^[0-9]+$' -- "$main_choice"
+        set_color red
+        echo "Entrée invalide. Veuillez entrer un numéro valide."
+        set_color normal
+        return 1
+    end
+
+    if test "$main_choice" -lt 1 -o "$main_choice" -gt 2
+        set_color red
+        echo "Numéro hors plage. Veuillez choisir entre 1 et 2."
+        set_color normal
+        return 1
+    end
+
+    if test "$main_choice" = "1"
+        # Affichage des alias
+        set_color brcyan
+        echo "╔═══════════════════════════════════════════════════════════╗"
+        echo "║                     📑  ALIAS                             ║"
+        echo "╚═══════════════════════════════════════════════════════════╝"
+        set_color normal
         echo
-        set_color $color
-        echo "$icon $title"
+        set_color brmagenta
+        echo "✏️  ÉDITEURS"
         set_color normal
-    end
+        set_color brblue; echo -n "  1) vim"; set_color normal; echo " → Micro"
+        set_color brblue; echo -n "  2) vi"; set_color normal; echo " → Micro"
+        set_color brblue; echo -n "  3) nano"; set_color normal; echo " → Micro"
+        set_color brblue; echo -n "  4) notepad"; set_color normal; echo " → Éditeur GNOME"
+        set_color brblue; echo -n "  5) gedit"; set_color normal; echo " → Éditeur GNOME"
+        set_color brblue; echo -n "  6) edit"; set_color normal; echo " → Éditeur GNOME"
+        echo
 
-    function __memo_print_item --argument idx cmd desc
-        set_color brblack
-        printf "%2d) " $idx
-        set_color brgreen
-        printf "%s" $cmd
+        set_color brmagenta
+        echo "⚙️  SYSTÈME"
         set_color normal
-        printf " — %s\n" $desc
+        set_color brblue; echo -n "  7) powertop"; set_color normal; echo " → Powertop (sudo)"
+        set_color brblue; echo -n "  8) stop"; set_color normal; echo " → Arrêt système"
+        set_color brblue; echo -n "  9) rm"; set_color normal; echo " → Suppression sécurisée"
+        set_color brblue; echo -n " 10) stockage"; set_color normal; echo " → Usage disque (duf)"
+        set_color brblue; echo -n " 11) systemd"; set_color normal; echo " → Outil systemd"
+        set_color brblue; echo -n " 12) lastpackages"; set_color normal; echo " → Derniers paquets"
+        set_color brblue; echo -n " 13) liminestats"; set_color normal; echo " → Snapshots Limine"
+        set_color brblue; echo -n " 14) scrub"; set_color normal; echo " → Scrub Btrfs sur /"
+        set_color brblue; echo -n " 15) bios"; set_color normal; echo " → Redémarrage BIOS/UEFI"
+        set_color brblue; echo -n " 16) boot"; set_color normal; echo " → Infos boot"
+        set_color brblue; echo -n " 17) boot!"; set_color normal; echo " → Lenteurs boot"
+        set_color brblue; echo -n " 18) watts"; set_color normal; echo " → Consommation énergétique"
+        echo
+
+        set_color brmagenta
+        echo "📦  SHELLY (AUR & Paquets)"
+        set_color normal
+        set_color brblue; echo -n " 19) aur"; set_color normal; echo " → Installe paquet AUR"
+        set_color brblue; echo -n " 20) aursearch"; set_color normal; echo " → Recherche AUR"
+        set_color brblue; echo -n " 21) aurremove"; set_color normal; echo " → Supprime paquet AUR"
+        set_color brblue; echo -n " 22) aurlist"; set_color normal; echo " → Liste paquets AUR"
+        set_color brblue; echo -n " 23) add"; set_color normal; echo " → Installe paquet standard"
+        set_color brblue; echo -n " 24) remove"; set_color normal; echo " → Supprime paquet standard"
+        set_color brblue; echo -n " 25) upgrade"; set_color normal; echo " → Met à jour Shelly"
+        echo
+
+        set_color brmagenta
+        echo "🐟  FISH"
+        set_color normal
+        set_color brblue; echo -n " 26) sourcefish"; set_color normal; echo " → Recharge config Fish"
+        set_color brblue; echo -n " 27) fishedit"; set_color normal; echo " → Édite config Fish"
+        set_color brblue; echo -n " 28) !!"; set_color normal; echo " → Dernière commande"
+        echo
+
+        set_color brmagenta
+        echo "👾  PACMAN"
+        set_color normal
+        set_color brblue; echo -n " 29) pacsearch"; set_color normal; echo " → Recherche paquet"
+        set_color brblue; echo -n " 30) pacsearch_installed"; set_color normal; echo " → Recherche paquet installé"
+        set_color brblue; echo -n " 31) pacdep"; set_color normal; echo " → Dépendances inverses"
+        set_color brblue; echo -n " 32) pacfiles"; set_color normal; echo " → Fichiers paquet"
+        set_color brblue; echo -n " 33) orphans"; set_color normal; echo " → Supprime paquets orphelins"
+        set_color brblue; echo -n " 34) pacinstall"; set_color normal; echo " → Installe paquet"
+        set_color brblue; echo -n " 35) pacremove"; set_color normal; echo " → Supprime paquet"
+        set_color brblue; echo -n " 36) pacinfo"; set_color normal; echo " → Infos paquet"
+        set_color brblue; echo -n " 37) pacpick"; set_color normal; echo " → Paquet propriétaire fichier"
+        set_color brblue; echo -n " 38) orphans+"; set_color normal; echo " → Dépendances inutiles"
+        echo
+
+        set_color yellow
+        read -P "Choisissez un numéro entre 1 et 38, 'r' pour revenir au menu principal, ou 'q' pour quitter : " choice
+        set_color normal
+
+        if test "$choice" = "q"
+            echo "Abandon."
+            return 0
+        else if test "$choice" = "r"
+            fish -c "memo"
+            return 0
+        end
+
+        if not string match -rq '^[0-9]+$' -- "$choice"
+            set_color red
+            echo "Entrée invalide. Veuillez entrer un numéro valide."
+            set_color normal
+            return 1
+        end
+
+        if test "$choice" -lt 1 -o "$choice" -gt 38
+            set_color red
+            echo "Numéro hors plage. Veuillez choisir entre 1 et 38."
+            set_color normal
+            return 1
+        end
+
+        # Exécution de la commande
+        switch "$choice"
+            case 1; set -l cmd "vim"
+            case 2; set -l cmd "vi"
+            case 3; set -l cmd "nano"
+            case 4; set -l cmd "notepad"
+            case 5; set -l cmd "gedit"
+            case 6; set -l cmd "edit"
+            case 7; set -l cmd "powertop"
+            case 8; set -l cmd "stop"
+            case 9; set -l cmd "rm"
+            case 10; set -l cmd "stockage"
+            case 11; set -l cmd "systemd"
+            case 12; set -l cmd "lastpackages"
+            case 13; set -l cmd "liminestats"
+            case 14; set -l cmd "scrub"
+            case 15; set -l cmd "bios"
+            case 16; set -l cmd "boot"
+            case 17; set -l cmd "boot!"
+            case 18; set -l cmd "watts"
+            case 19; set -l cmd "aur"
+            case 20; set -l cmd "aursearch"
+            case 21; set -l cmd "aurremove"
+            case 22; set -l cmd "aurlist"
+            case 23; set -l cmd "add"
+            case 24; set -l cmd "remove"
+            case 25; set -l cmd "upgrade"
+            case 26; set -l cmd "sourcefish"
+            case 27; set -l cmd "fishedit"
+            case 28; set -l cmd "!!"
+            case 29; set -l cmd "pacsearch"
+            case 30; set -l cmd "pacsearch_installed"
+            case 31; set -l cmd "pacdep"
+            case 32; set -l cmd "pacfiles"
+            case 33; set -l cmd "orphans"
+            case 34; set -l cmd "pacinstall"
+            case 35; set -l cmd "pacremove"
+            case 36; set -l cmd "pacinfo"
+            case 37; set -l cmd "pacpick"
+            case 38; set -l cmd "orphans+"
+        end
+
+        echo
+        set_color green
+        echo "→ Exécution : $cmd"
+        set_color normal
+        echo
+        fish -c "$cmd"
+        echo
+
+    else if test "$main_choice" = "2"
+        # Affichage des fonctions
+        set_color brcyan
+        echo "╔═══════════════════════════════════════════════════════════╗"
+        echo "║                   ⚙️  FONCTIONS                        ║"
+        echo "╚═══════════════════════════════════════════════════════════╝"
+        set_color normal
+        echo
+        set_color brmagenta
+        echo "📈  SURVEILLANCE"
+        set_color normal
+        set_color brblue; echo -n "  1) scx"; set_color normal; echo " → Scheduler SCX"
+        set_color brblue; echo -n "  2) journal"; set_color normal; echo " → Erreurs journalctl"
+        set_color brblue; echo -n "  3) flags"; set_color normal; echo " → Flags kernel"
+        set_color brblue; echo -n "  4) power"; set_color normal; echo " → EPP et batterie"
+        echo
+
+        set_color brmagenta
+        echo "🚀  BOOT"
+        set_color normal
+        set_color brblue; echo -n "  5) fstab"; set_color normal; echo " → /etc/fstab"
+        set_color brblue; echo -n "  6) mkinitcpio"; set_color normal; echo " → /etc/mkinitcpio.conf"
+        set_color brblue; echo -n "  7) fwupdate"; set_color normal; echo " → Mise à jour firmware"
+        echo
+
+        set_color brmagenta
+        echo "🧹  MAINTENANCE"
+        set_color normal
+        set_color brblue; echo -n "  8) clean"; set_color normal; echo " → Nettoyage système"
+        set_color brblue; echo -n "  9) pacstats"; set_color normal; echo " → Statistiques paquets"
+        set_color brblue; echo -n " 10) search"; set_color normal; echo " → Recherche fichiers"
+        echo
+
+        set_color brmagenta
+        echo "🔍  LIMINE"
+        set_color normal
+        set_color brblue; echo -n " 11) liminevault"; set_color normal; echo " → Commandes Limine"
+        echo
+
+        set_color yellow
+        read -P "Choisissez un numéro entre 1 et 11, 'r' pour revenir au menu principal, ou 'q' pour quitter : " choice
+        set_color normal
+
+        if test "$choice" = "q"
+            echo "Abandon."
+            return 0
+        else if test "$choice" = "r"
+            fish -c "memo"
+            return 0
+        end
+
+        if not string match -rq '^[0-9]+$' -- "$choice"
+            set_color red
+            echo "Entrée invalide. Veuillez entrer un numéro valide."
+            set_color normal
+            return 1
+        end
+
+        if test "$choice" -lt 1 -o "$choice" -gt 11
+            set_color red
+            echo "Numéro hors plage. Veuillez choisir entre 1 et 11."
+            set_color normal
+            return 1
+        end
+
+        # Exécution de la commande
+        switch "$choice"
+            case 1; set -l cmd "scx"
+            case 2; set -l cmd "journal"
+            case 3; set -l cmd "flags"
+            case 4; set -l cmd "power"
+            case 5; set -l cmd "fstab"
+            case 6; set -l cmd "mkinitcpio"
+            case 7; set -l cmd "fwupdate"
+            case 8; set -l cmd "clean"
+            case 9; set -l cmd "pacstats"
+            case 10; set -l cmd "search"
+            case 11; set -l cmd "liminevault"
+        end
+
+        echo
+        set_color green
+        echo "→ Exécution : $cmd"
+        set_color normal
+        echo
+        fish -c "$cmd"
+        echo
     end
-
-    __memo_print_section "Éditeurs" "✏️" brmagenta
-    __memo_print_item $n "vim" "Ouvre Micro à la place de Vim."; set n (math $n + 1)
-    __memo_print_item $n "vi" "Ouvre Micro à la place de Vi."; set n (math $n + 1)
-    __memo_print_item $n "gedit" "Ouvre l'éditeur GNOME."; set n (math $n + 1)
-    __memo_print_item $n "nano" "Ouvre Micro à la place de Nano."; set n (math $n + 1)
-    __memo_print_item $n "notepad" "Ouvre l'éditeur GNOME."; set n (math $n + 1)
-
-    __memo_print_section "Système" "⚙️" brcyan
-    __memo_print_item $n "rm" "Demande confirmation avant suppression."; set n (math $n + 1)
-    __memo_print_item $n "stockage" "Affiche l'usage disque."; set n (math $n + 1)
-    __memo_print_item $n "systemd" "Lance l'outil systemd simplifié."; set n (math $n + 1)
-    __memo_print_item $n "lastpackages" "Recherche les derniers paquets."; set n (math $n + 1)
-    __memo_print_item $n "liminestats" "Affiche les infos snapshot Limine."; set n (math $n + 1)
-    __memo_print_item $n "scrub" "Lance un scrub Btrfs sur /."; set n (math $n + 1)
-    __memo_print_item $n "bios" "Redémarre dans le BIOS/UEFI."; set n (math $n + 1)
-    __memo_print_item $n "boot" "Affiche les infos de boot."; set n (math $n + 1)
-    __memo_print_item $n "boot!" "Affiche le détail des lenteurs de boot."; set n (math $n + 1)
-
-    __memo_print_section "AUR" "📦" bryellow
-    __memo_print_item $n "aur" "Installe un paquet AUR via Shelly."; set n (math $n + 1)
-    __memo_print_item $n "aursearch" "Recherche dans l'AUR via Shelly."; set n (math $n + 1)
-
-    __memo_print_section "Fish" "🐟" brblue
-    __memo_print_item $n "sourcefish" "Recharge la config Fish."; set n (math $n + 1)
-    __memo_print_item $n "fishedit" "Ouvre la config Fish dans l'éditeur."; set n (math $n + 1)
-    __memo_print_item $n "!!" "Remplace par la dernière commande."; set n (math $n + 1)
-
-    __memo_print_section "Pacman" "👾" brgreen
-    __memo_print_item $n "pacsearch" "Recherche un paquet dans les dépôts."; set n (math $n + 1)
-    __memo_print_item $n "pacsearch_installed" "Recherche un paquet installé."; set n (math $n + 1)
-    __memo_print_item $n "pacdep" "Affiche les dépendances inverses."; set n (math $n + 1)
-    __memo_print_item $n "pacfiles" "Liste les fichiers d'un paquet."; set n (math $n + 1)
-    __memo_print_item $n "orphans" "Supprime les orphelins."; set n (math $n + 1)
-    __memo_print_item $n "pacinstall" "Installe un paquet avec pacman."; set n (math $n + 1)
-    __memo_print_item $n "pacremove" "Supprime un paquet avec pacman et vérifie les dépendances."; set n (math $n + 1)
-    __memo_print_item $n "pacinfo" "Affiche les infos d'un paquet installé ou dépôt."; set n (math $n + 1)
-    __memo_print_item $n "pacpick" "Affiche le chemin d'un binaire puis à quel paquet il appartient."; set n (math $n + 1)
-    __memo_print_item $n "orphans+" "Liste les dépendances inutiles sans supprimer."; set n (math $n + 1)
-
-    __memo_print_section "Surveillance" "📈" bryellow
-    __memo_print_item $n "scx" "Affiche le scheduler SCX et son monitoring."; set n (math $n + 1)
-    __memo_print_item $n "journal" "Affiche les 20 dernières erreurs du journal systemd."; set n (math $n + 1)
-    __memo_print_item $n "flags" "Montre les flags kernel de /proc/cmdline."; set n (math $n + 1)
-    __memo_print_item $n "power" "Montre EPP, power profile, SCX et batterie."; set n (math $n + 1)
-
-    __memo_print_section "Boot" "🚀" brred
-    __memo_print_item $n "fstab" "Affiche /etc/fstab en lecture seule."; set n (math $n + 1)
-    __memo_print_item $n "mkinitcpio" "Affiche /etc/mkinitcpio.conf en lecture seule."; set n (math $n + 1)
-    __memo_print_item $n "fwupdate" "Lance une mise à jour firmware complète."; set n (math $n + 1)
-    __memo_print_item $n "vault" "Menu des commandes utiles globales."; set n (math $n + 1)
-    __memo_print_item $n "liminevault" "Menu des commandes Limine/Snapper."; set n (math $n + 1)
-    __memo_print_item $n "pacvault" "Menu des commandes Pacman."; set n (math $n + 1)
-
-    __memo_print_section "Utilitaires" "🔎" brwhite
-    __memo_print_item $n "clean" "Nettoie les paquets orphelins et le cache."; set n (math $n + 1)
-    __memo_print_item $n "pacstats" "Affiche le nombre et la taille des paquets."; set n (math $n + 1)
-    __memo_print_item $n "search" "Recherche fuzzy de fichiers sur le système."; set n (math $n + 1)
-
-    functions -e __memo_print_section
-    functions -e __memo_print_item
 end
