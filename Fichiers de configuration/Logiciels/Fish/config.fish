@@ -69,14 +69,12 @@ alias la='eza -a --color=always --group-directories-first --icons=always'
 alias ll='eza -l --color=always --group-directories-first --icons=always'
 alias lt='eza -aT --color=always --group-directories-first --icons=always'
 alias l.="eza -a | grep -e '^\.'"
-
 alias fixpacman="sudo rm /var/lib/pacman/db.lck"
-
-alias ..
-alias ...
-alias ....
-alias .....
-alias ......
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+alias ......='cd ../../../../..'
 alias dir='dir --color=auto'
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
