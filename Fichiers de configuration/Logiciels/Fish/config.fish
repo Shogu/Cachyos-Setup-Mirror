@@ -63,6 +63,32 @@ alias orphans='pacman -Qdtq'
 # === INFORMATIONS SUR LES PAQUETS ===
 #pacinfo (function)
 
+# === ALIAS CACHYOS - cachyos-config-fish- ===
+alias ls='eza -al --color=always --group-directories-first --icons=always'
+alias la='eza -a --color=always --group-directories-first --icons=always'
+alias ll='eza -l --color=always --group-directories-first --icons=always'
+alias lt='eza -aT --color=always --group-directories-first --icons=always'
+alias l.="eza -a | grep -e '^\.'"
+
+alias fixpacman="sudo rm /var/lib/pacman/db.lck"
+
+alias ..
+alias ...
+alias ....
+alias .....
+alias ......
+alias dir='dir --color=auto'
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias update='sudo cachyos-rate-mirrors && sudo pacman -Syu'
+alias mirror="sudo cachyos-rate-mirrors"
+alias cleanup='sudo pacman -Rns (pacman -Qtdq)'
+alias jctl="journalctl -p 3 -xb"
+alias rip="expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort | tail -200 | nl"
+
+
+
+
 
 ############################################################################################################################
 # ===  Editeurs ===
