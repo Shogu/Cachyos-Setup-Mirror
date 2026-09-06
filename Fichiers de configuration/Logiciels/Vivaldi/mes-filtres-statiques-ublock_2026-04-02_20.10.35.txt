@@ -21,3 +21,16 @@
 ||tfbnw.*^$all,important
 www.reddit.com##faceplate-tracker[noun="games_drawer"]
 www.reddit.com##faceplate-tracker[noun="games_drawer"] + hr
+||utiq.
+||utiq-aws.net^
+||utiqcontent.com^
+/utiqLoader.js
+/op/idconnect/mno-precheck
+*##+js(set, Utiq.API, undefined)
+*##+js(set, Utiq.getIdGraphEntry, undefined)
+*##+js(set, Utiq.idGraph, undefined)
+*##+js(set, mtid, undefined)
+*##+js(set, atid, undefined)
+*##+js(set, Utiq.mtid, undefined)
+*##+js(set, Utiq.atid, undefined)
+*##+js(cookie-remover, utiq_logging_level)
