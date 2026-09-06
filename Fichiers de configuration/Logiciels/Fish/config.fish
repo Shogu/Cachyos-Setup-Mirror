@@ -89,7 +89,7 @@ abbr -a !! --position anywhere --function last_history_item
 
 # === SCX ===
 function scx --description 'scxctl get + check scheduler + monitor sans WARN'
-     
+
     set -l output (scxctl get 2>/dev/null)
 
     if test -z "$output"
@@ -99,10 +99,10 @@ function scx --description 'scxctl get + check scheduler + monitor sans WARN'
         return 1
     end
 
-    echo $output
+    echo "$output"
     echo
 
-    set -l sched_name (string match -rg 'running\\s+([[:alnum:]_-]+)' -- $output)
+    set -l sched_name (string match -rg 'running\s+([[:alnum:]_-]+)' -- $output)
 
     if test -z "$sched_name"
         set_color red
@@ -111,7 +111,7 @@ function scx --description 'scxctl get + check scheduler + monitor sans WARN'
         return 1
     end
 
-    set sched_name (string lower -- $sched_name)
+    set -l sched_name (string lower -- $sched_name)
     set -l bin "scx_$sched_name"
 
     set -l disk nvme0n1
@@ -128,13 +128,11 @@ function scx --description 'scxctl get + check scheduler + monitor sans WARN'
         set_color normal
     end
 
-    echo
-    set_color brmagenta
-    echo "Monitor : sudo $bin --monitor 3"
-    set_color normal
-
-    command sudo $bin --monitor 3 2>/dev/null
+    return 0
 end
+
+
+    
 
 # === Journalctl ===
 function journal
