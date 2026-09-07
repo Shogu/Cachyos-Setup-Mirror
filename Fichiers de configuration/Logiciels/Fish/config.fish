@@ -24,6 +24,7 @@ alias scrub='sudo btrfs scrub start -B /'
 alias bios='systemctl reboot --firmware-setup'
 alias boot='systemd-analyze'
 alias boot!='systemd-analyze blame'
+alias watts='echo "scale=2; $(cat /sys/class/power_supply/BAT0/power_now)/1000000" | bc'
 
 # === Alias Shelly ===
 
