@@ -7,7 +7,9 @@
 - [Sélectionner ADIOS avec udev et TuneD](#adios)
 - [Pistes split-lock à tester](#split-lock)
 
-## D1 — Blacklister les pilotes inutilisés {: #pilotes }
+<a id="pilotes"></a>
+
+## D1 — Blacklister les pilotes inutilisés
 
 Créer ou éditer le fichier de blacklist :
 
@@ -16,7 +18,6 @@ sudoedit /etc/modprobe.d/blacklist.conf
 ```
 
 Reprendre la liste personnelle du mémo :
-
 ```
 # ==============================
 # Intel et watchdog
@@ -25,8 +26,6 @@ blacklist iTCO_vendor_support
 blacklist iTCO_wdt
 blacklist wdat_wdt
 blacklist intel_pmc_bxt
-blacklist intel_rapl_msr
-blacklist intel_rapl_common
 
 # ==============================
 # Nvidia
@@ -97,37 +96,37 @@ blacklist tpm_vtpm_proxy
 # ==============================
 blacklist amdxdna
 ```
-
 Reconstruire l’initramfs pour prendre en compte la configuration embarquée :
 
 ```fish
 sudo limine-mkinitcpio
 ```
 
-Puis
+Après redémarrage, le mémo propose ce contrôle ciblé :
 
 ```fish
 lsmod | grep serial8250
 ```
 
-## D2 — Paramètres du noyau, SCX et Ananicy {: #parametres-kernel }
+Ce contrôle ne couvre que ce nom de module. Les catégories de la liste sont celles du mémo : un suffixe `intel` n’implique pas qu’un module cryptographique soit inutile sur AMD, et l’absence de LUKS ne prouve pas l’absence d’autres utilisateurs de la cryptographie. Conserver les modules nécessaires aux usages réels.
+
+<a id="parametres-kernel"></a>
+
+## D2 — Paramètres du noyau, SCX et Ananicy
 
 ### Ligne de paramètres retenue
 
 Éditer les options Linux de Limine :
-
 ```
 sudoedit /etc/default/limine
 ```
 
 Puis saisir :
-
 ```
 LINUX_OPTIONS="pci=noaer module_blacklist=thunderbolt init_on_alloc=0 page_alloc.shuffle=0 drm_kms_helper.poll=0 systemd.tpm2_wait=false cryptomgr.notests efi=disable_early_pci_dma nomce nowatchdog no_timer_check noresume zswap.enabled=0 systemd.show_status=false quiet 8250.nr_uarts=0 ipv6.disable=1 amd_iommu=off vt.global_cursor_default=0 consoleblank=0 udev.log_level=0 loglevel=0 systemd.watchdog_sec=0 rootflags=subvol=/@,noatime,commit=60,noacl,compress=zstd:1"
 ```
 
-**Variante personnelle : gérer les options de la racine dès l’initramfs.**  
-Le README associe `rootflags` au masquage de `systemd-remount-fs.service` et au commentaire de la ligne `/` dans `/etc/fstab`. Ce masquage n’est pas une nécessité générale de `rootflags` ; il est conservé ici comme choix explicite de ce setup.
+**Variante personnelle : gérer les options de la racine dès l’initramfs.** Le README associe `rootflags` au masquage de `systemd-remount-fs.service` et au commentaire de la ligne `/` dans `/etc/fstab`. Ce masquage n’est pas une nécessité générale de `rootflags` ; il est conservé ici comme choix explicite de ce setup.
 
 ```fish
 sudo systemctl mask systemd-remount-fs.service
@@ -141,17 +140,17 @@ Dans cette variante, commenter la ligne de la racine :
 ```
 
 Reconstruire l’initramfs et actualiser les entrées Limine :
-
 ```
 sudo limine-mkinitcpio
 ```
-
 Examiner les paramètres reçus et les messages du noyau :
 
 ```fish
 cat /proc/cmdline
 sudo dmesg
 ```
+
+
 
 **Démarrage silencieux :**
 
@@ -189,8 +188,7 @@ rcutree.enable_rcu_lazy=1 rcu_nocbs=0-7
 ipv6.disable=1 amd_iommu=off transparent_hugepage=madvise
 ```
 
-### SCX :
-
+### sched-ext scx
 voir [H-energie.md#tuned-scx](https://gitlab.com/Shogu/CACHYOS-Setup/-/blob/Main/H-energie.md?ref_type=heads#tuned-scx)
 
 ### Ananicy-cpp : installation depuis les sources et dépannage
@@ -200,7 +198,6 @@ Le mémo conserve cette installation depuis les sources à la suite d’une erre
 Exécuter les étapes séparément et lire les chemins de nettoyage avant de les supprimer. Les retours de journal attendus, dont la mention d’environ 1 800 règles, sont des observations du mémo à vérifier.
 
 Installer les outils puis nettoyer l’ancienne installation :
-
 ```
 #paquets de build
 sudo pacman -Syu --noconfirm base-devel cmake nlohmann-json spdlog fmt gcc make git
@@ -211,6 +208,7 @@ sudo rm -f /usr/local/bin/ananicy-cpp /usr/local/lib/systemd/system/ananicy-cpp.
 sudo rm -rf /usr/local/share/ananicy-cpp /etc/ananicy-cpp.conf /etc/ananicy.d /var/lib/ananicy-cpp
 sudo systemctl daemon-reload
 rm -rf ~/ananicy-cpp
+
 ```
 
 Cloner le projet et compiler :
@@ -228,6 +226,7 @@ sudo make install
 #lancement du service
 sudo systemctl daemon-reload
 sudo systemctl enable --now ananicy-cpp
+
 ```
 
 Redémarrer à cette étape, puis reprendre les commandes suivantes dans un nouveau terminal :
@@ -237,6 +236,7 @@ systemctl reboot
 ```
 
 ```fish
+
 #install des règles
 sudo pacman -S --noconfirm cachyos-ananicy-rules
 sudo systemctl restart ananicy-cpp
@@ -244,6 +244,7 @@ sudo systemctl daemon-reload
 
 #suppression des paquets de build inutiles et maintien des paquets nécessaires pour les maj d'ananicy
 sudo pacman -Rns cmake cppdap rhash --noconfirm
+
 ```
 
 Redémarrer à cette étape, puis reprendre les commandes suivantes dans un nouveau terminal :
@@ -253,6 +254,7 @@ systemctl reboot
 ```
 
 ```fish
+
 #relance du service une fois les règles installées
 sudo systemctl daemon-reload
 sudo systemctl restart ananicy-cpp #pas de problème avec le lancement?
@@ -260,6 +262,7 @@ sudo systemctl restart ananicy-cpp #pas de problème avec le lancement?
 #check du service
 sudo systemctl status ananicy-cpp
 journalctl -u ananicy-cpp -f #mention des 1800 règles? pas de problème avec cgroup?
+
 ```
 
 Quitter le suivi du journal avec **Ctrl+C** avant de poursuivre. Le remplacement du lien ci-dessous n’est envisagé que pour le message **Cgroups are not available on this platform (or are not enabled)**, après vérification de `/etc/mtab` :
@@ -283,10 +286,11 @@ ps -eo pid,ni,cgroup:50,comm | grep vivaldi
 
 Les commandes de nettoyage de l’installation Ananicy suppriment les anciens fichiers et règles aux chemins indiqués. Les exécuter seulement si cette réinstallation est voulue. Le remplacement de `/etc/mtab` est une piste de dépannage conditionnelle du mémo, pas une étape systématique.
 
-## D3 — Sélectionner ADIOS avec udev et TuneD {: #adios }
+<a id="adios"></a>
+
+## D3 — Sélectionner ADIOS avec udev et TuneD
 
 En lieu et place de Kyber : override udev avec `sudoedit /etc/udev/rules.d/99-adios.rules` :
-
 ```
 # HDD
 ACTION=="add|change", KERNEL=="sd[a-z]*", ATTR{queue/rotational}=="1", \
@@ -330,7 +334,9 @@ cat /sys/block/nvme0n1/queue/scheduler
 
 ADIOS doit être disponible dans le noyau utilisé ; une règle udev ne l’ajoute pas à un noyau qui en est dépourvu.
 
-## D4 — Pistes split-lock à tester {: #split-lock }
+<a id="split-lock"></a>
+
+## D4 — Pistes split-lock à tester
 
 Le mémo conserve deux pistes à tester, sans gain établi sur ce Zenbook AMD :
 
