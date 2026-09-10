@@ -258,15 +258,59 @@ Régler `pacseek` pour inclure paru à la place de yay si besoin, et EnableAutoS
 gnome-text-editor ~/.config/pacseek/config.json
 ```
 
-### Beeper et Puls
+### Beeper, Puls & LeLivreScolaire
 
 Installer [l’AppImage de Beeper](https://api.beeper.com/desktop/download/linux/x64/stable/com.automattic.beeper.desktop), la déplacer dans .local/bin, éditer le raccourci avec le chemin de l'exécutable et  `StartupWMClass=Beeper` pour faire apparaître l'icône dans le dash. Idem pour Puls : https://github.com/word-sys/puls, puis renommer en `control` et le CC dans /usr/local/bin/control puis rendre exécutable
 
 Les disponibilités et noms de paquets correspondent au mémo : vérifier les dépôts activés et utiliser l’AUR lorsque le paquet n’existe pas dans les dépôts configurés. Le bilan de **900 paquets et 6,5 Go** est une mesure indicative de l’installation d’origine, pas un résultat garanti.
 
-Les lanceurs Beeper et Puls sont des fichiers `.desktop` à éditer avec l’éditeur de menus. Après avoir placé l’exécutable Puls sous `/usr/local/bin/control`, le rendre exécutable :
+Les lanceurs Beeper et Puls sont des fichiers `.desktop` à éditer avec l’éditeur de menus. Après avoir placé l’exécutable Puls sous `/usr/
 
-```fish
+
+Installer l'AppImage `LeLivreScolaire` :
+
+
+1 Déplacer l'AppImage de Téléchargements à /home/USERNAME/.local/Lelivrescolaire.fr.AppImage :
+```
+mv "$HOME/Téléchargements/Lelivrescolaire.fr.AppImage" "$HOME/.local/"
+```
+
+2 Rendre l’AppImage exécutable
+```
+chmod +x "$HOME/.local/Lelivrescolaire.fr.AppImage"
+```
+
+3 Créer le fichier .desktop
+```
+mkdir -p "$HOME/.local/share/applications" && xdg-open "$HOME/.local/share/applications/lelivrescolaire.fr.desktop"
+```
+Y copier ce contenu :
+```
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Lelivrescolaire.fr
+Comment=Consulter les manuels scolaires Lelivrescolaire.fr
+Exec=/home/%u/.local/Lelivrescolaire.fr.AppImage %U
+Icon=application-x-executable
+Terminal=false
+StartupNotify=true
+StartupWMClass=Lelivrescolaire.fr
+MimeType=x-scheme-handler/lls;
+Categories=Education;
+```
+
+4 Valider et enregistrer le protocole lls://
+```
+desktop-file-validate "$HOME/.local/share/applications/lelivrescolaire.fr.desktop" && update-desktop-database "$HOME/.local/share/applications" && xdg-mime default lelivrescolaire.fr.desktop x-scheme-handler/lls
+```
+
+5 Tester
+```
+"$HOME/.local/Lelivrescolaire.fr.AppImage"
+```
+
+
 sudo chmod +x /usr/local/bin/control
 ```
 
