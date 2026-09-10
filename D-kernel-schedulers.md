@@ -1,11 +1,11 @@
-# D — Noyau et ordonnanceurs
+# D — Kernel & schedulers
 
-[Accueil](README.md) · [Précédent](C-boot-systemd.md) · [Suivant](E-btrfs-snapshots.md)
+[Accueil](README.md) · [Précédent](C-boot.md) · [Suivant](E-btrfs-snapshots.md)
 
 - [Blacklister les pilotes inutilisés](#d1--blacklister-les-pilotes-inutilisés)
 - [Paramètres du noyau, SCX et Ananicy](#d2--paramètres-du-noyau-scx-et-ananicy)
 - [Sélectionner ADIOS avec udev et TuneD](#d3--sélectionner-adios-avec-udev-et-tuned)
-- [Pistes split-lock à tester](#d4--pistes-split-lock-à-tester)
+  - [Pistes split-lock à tester](#pistes-split-lock-à-tester)
 
 ## D1 — Blacklister les pilotes inutilisés
 
@@ -108,6 +108,35 @@ lsmod | grep serial8250
 
 Ce contrôle ne couvre que ce nom de module. Les catégories de la liste sont celles du mémo : un suffixe `intel` n’implique pas qu’un module cryptographique soit inutile sur AMD, et l’absence de LUKS ne prouve pas l’absence d’autres utilisateurs de la cryptographie. Conserver les modules nécessaires aux usages réels.
 
+### Pistes split-lock à tester
+
+Le mémo conserve deux pistes à tester, sans gain établi sur ce Zenbook AMD :
+
+- Le paramètre kernel `split_lock_detect=off`, signalé comme non opérationnel lors d’un essai avec le noyau 6.18.
+- Le réglage sysctl ci-dessous, uniquement si l’interface existe sur le noyau et le matériel utilisés.
+
+Vérifier sa présence :
+
+```fish
+sysctl kernel.split_lock_mitigate
+```
+
+Si disponible, éditer :
+
+```fish
+sudoedit /etc/sysctl.d/99-splitlock.conf
+```
+
+```ini
+kernel.split_lock_mitigate=0
+```
+
+Puis recharger :
+
+```fish
+sudo sysctl --system
+```
+
 ## D2 — Paramètres du noyau, SCX et Ananicy
 
 ### Ligne de paramètres retenue
@@ -185,7 +214,7 @@ ipv6.disable=1 amd_iommu=off transparent_hugepage=madvise
 ```
 
 ### sched-ext scx
-voir [H-energie.md#tuned-scx](https://gitlab.com/Shogu/CACHYOS-Setup/-/blob/Main/H-energie.md?ref_type=heads#h1--coordonner-tuned-les-profils-énergétiques-et-scx)
+voir [H-powersave.md#tuned-scx](https://gitlab.com/Shogu/CACHYOS-Setup/-/blob/Main/H-powersave.md?ref_type=heads#h1--coordonner-tuned-les-profils-énergétiques-et-scx)
 
 ### Ananicy-cpp : installation depuis les sources et dépannage
 
@@ -328,33 +357,5 @@ cat /sys/block/nvme0n1/queue/scheduler
 
 ADIOS doit être disponible dans le noyau utilisé ; une règle udev ne l’ajoute pas à un noyau qui en est dépourvu.
 
-## D4 — Pistes split-lock à tester
 
-Le mémo conserve deux pistes à tester, sans gain établi sur ce Zenbook AMD :
-
-- Le paramètre kernel `split_lock_detect=off`, signalé comme non opérationnel lors d’un essai avec le noyau 6.18.
-- Le réglage sysctl ci-dessous, uniquement si l’interface existe sur le noyau et le matériel utilisés.
-
-Vérifier sa présence :
-
-```fish
-sysctl kernel.split_lock_mitigate
-```
-
-Si disponible, éditer :
-
-```fish
-sudoedit /etc/sysctl.d/99-splitlock.conf
-```
-
-```ini
-kernel.split_lock_mitigate=0
-```
-
-Puis recharger :
-
-```fish
-sudo sysctl --system
-```
-
-[Accueil](README.md) · [Précédent](C-boot-systemd.md) · [Suivant](E-btrfs-snapshots.md)
+[Accueil](README.md) · [Précédent](C-boot.md) · [Suivant](E-btrfs-snapshots.md)

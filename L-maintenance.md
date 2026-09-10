@@ -1,4 +1,4 @@
-# L — Maintenance et mises à jour
+# L — Maintenance
 
 [Accueil](README.md) · [Précédent](K-vivaldi.md)
 
@@ -92,12 +92,12 @@ Activer ensuite le thème adw-gtk3 dans Tweaks, selon le nom effectivement insta
 
 Les opérations détaillées restent dans leur rubrique pour éviter de maintenir plusieurs versions de la même procédure :
 
-- [Paquets orphelins et dépendances de compilation](B-logiciels.md#b1--alléger-les-logiciels-installés).
-- [Profils TuneD et sélection SCX](H-energie.md#h1--coordonner-tuned-les-profils-énergétiques-et-scx), ainsi que [le choix ADIOS](D-kernel-schedulers.md#d3--sélectionner-adios-avec-udev-et-tuned) : les modifications sous `/usr/lib` peuvent être remplacées.
+- [Paquets orphelins et dépendances de compilation](B-logiciels-a-supprimer-installer.md#b1--alléger-les-logiciels-installés).
+- [Profils TuneD et sélection SCX](H-powersave.md#h1--coordonner-tuned-les-profils-énergétiques-et-scx), ainsi que [le choix ADIOS](D-kernel-schedulers.md#d3--sélectionner-adios-avec-udev-et-tuned) : les modifications sous `/usr/lib` peuvent être remplacées.
 - [Traductions à ne pas réextraire avec pacman](G-optimisations-systeme.md#g4--nettoyer-les-traductions-et-les-fichiers-de-configuration).
 - [Extensions GNOME](J-gnome.md#j10--installer-et-régler-les-extensions-gnome) : vérifier leur compatibilité après changement de version.
 - [Extensions Nautilus modifiées](J-gnome.md#j12--installer-les-scripts-et-extensions-nautilus) et [traduction du bouton énergétique](J-gnome.md#j13--raccourcir-le-libellé-du-profil-énergétique) : revoir les fichiers modifiés sous `/usr/share`.
-- [Reconstruction de l’initramfs](C-boot-systemd.md#c3--réduire-linitramfs) avec `limine-mkinitcpio` après changement des hooks, modules ou paramètres de démarrage.
+- [Reconstruction de l’initramfs](C-boot.md#c3--réduire-linitramfs) avec `limine-mkinitcpio` après changement des hooks, modules ou paramètres de démarrage.
 - [Restauration des snapshots](E-btrfs-snapshots.md#e2--configurer-et-restaurer-les-snapshots-limine) avec l’outil adapté à Limine.
 
 [Accueil](README.md) · [Précédent](K-vivaldi.md)

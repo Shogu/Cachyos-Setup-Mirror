@@ -1,6 +1,6 @@
-# A — Installation et préparation
+# A — Installation & préparation du setup
 
-[Accueil](README.md) · [Suivant](B-logiciels.md)
+[Accueil](README.md) · [Suivant](B-logiciels-a-supprimer-installer.md)
 
 - [Préparer Fish](#a1--préparer-fish)
 - [Réglages initiaux dans CachyOS Hello](#a2--réglages-initiaux-dans-cachyos-hello)
@@ -50,4 +50,4 @@ sudo efibootmgr -b 0001 -B
 sudo efibootmgr -b 0002 -B
 ```
 
-[Accueil](README.md) · [Suivant](B-logiciels.md)
+[Accueil](README.md) · [Suivant](B-logiciels-a-supprimer-installer.md)

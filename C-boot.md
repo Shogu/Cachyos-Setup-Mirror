@@ -1,6 +1,6 @@
-# C — Démarrage et systemd
+# C — Boot
 
-[Accueil](README.md) · [Précédent](B-logiciels.md) · [Suivant](D-kernel-schedulers.md)
+[Accueil](README.md) · [Précédent](I-reglages-logiciels.md) · [Suivant](D-kernel-schedulers.md)
 
 - [Choisir Plymouth ou le logo firmware](#c1--choisir-plymouth-ou-le-logo-firmware)
 - [Régler le menu Limine](#c2--régler-le-menu-limine)
@@ -248,4 +248,4 @@ NAutoVTs=1
 
 La casse de `NAutoVTs` est importante. Ce paramètre règle l’activation automatique des terminaux virtuels ; il ne garantit pas qu’un seul TTY puisse exister et ne supprime pas le terminal de secours réservé. Appliquer au prochain redémarrage.
 
-[Accueil](README.md) · [Précédent](B-logiciels.md) · [Suivant](D-kernel-schedulers.md)
+[Accueil](README.md) · [Précédent](I-reglages-logiciels.md) · [Suivant](D-kernel-schedulers.md)

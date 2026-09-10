@@ -1,6 +1,6 @@
-# I — Réglages des logiciels
+# I — Réglages logiciels
 
-[Accueil](README.md) · [Précédent](H-energie.md) · [Suivant](J-gnome.md)
+[Accueil](README.md) · [Précédent](B-logiciels-a-supprimer-installer.md) · [Suivant](C-boot.md)
 
 - [Dropbox : client retenu et démarrage différé](#i1--dropbox--client-retenu-et-démarrage-différé)
 - [Intégrer Ptyxis à Nautilus et aux outils CachyOS](#i2--intégrer-ptyxis-à-nautilus-et-aux-outils-cachyos)
@@ -138,4 +138,4 @@ Icône :
 /usr/share/icons/Adwaita/scalable/devices/drive-multidisk.svg
 ```
 
-[Accueil](README.md) · [Précédent](H-energie.md) · [Suivant](J-gnome.md)
+[Accueil](README.md) · [Précédent](B-logiciels-a-supprimer-installer.md) · [Suivant](C-boot.md)

@@ -1,6 +1,6 @@
-# B — Suppression et installation de logiciels
+# B — Logiciels à supprimer/installer
 
-[Accueil](README.md) · [Précédent](A-installation-preparation.md) · [Suivant](C-boot-systemd.md)
+[Accueil](README.md) · [Précédent](A-installation-preparation-du-setup.md) · [Suivant](I-reglages-logiciels.md)
 
 - [Alléger les logiciels installés](#b1--alléger-les-logiciels-installés)
 - [Conserver les firmwares nécessaires](#b2--conserver-les-firmwares-nécessaires)
@@ -270,4 +270,4 @@ Les lanceurs Beeper et Puls sont des fichiers `.desktop` à éditer avec l’éd
 sudo chmod +x /usr/local/bin/control
 ```
 
-[Accueil](README.md) · [Précédent](A-installation-preparation.md) · [Suivant](C-boot-systemd.md)
+[Accueil](README.md) · [Précédent](A-installation-preparation-du-setup.md) · [Suivant](I-reglages-logiciels.md)

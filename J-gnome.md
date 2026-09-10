@@ -1,6 +1,6 @@
 # J — GNOME
 
-[Accueil](README.md) · [Précédent](I-reglages-logiciels.md) · [Suivant](K-vivaldi.md)
+[Accueil](README.md) · [Précédent](H-powersave.md) · [Suivant](K-vivaldi.md)
 
 - [Ajuster le rendu des polices](#j1--ajuster-le-rendu-des-polices)
 - [Régler les actions de session et les rappels](#j2--régler-les-actions-de-session-et-les-rappels)
@@ -347,4 +347,4 @@ nautilus -q
 
 Rouvrir Nautilus et vérifier la présence des deux modèles dans le menu de création de documents.
 
-[Accueil](README.md) · [Précédent](I-reglages-logiciels.md) · [Suivant](K-vivaldi.md)
+[Accueil](README.md) · [Précédent](H-powersave.md) · [Suivant](K-vivaldi.md)

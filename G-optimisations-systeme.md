@@ -1,6 +1,6 @@
 # G — Optimisations système
 
-[Accueil](README.md) · [Précédent](F-reseau.md) · [Suivant](H-energie.md)
+[Accueil](README.md) · [Précédent](F-reseau.md) · [Suivant](H-powersave.md)
 
 - [Alléger les journaux et les stocker en RAM](#g1--alléger-les-journaux-et-les-stocker-en-ram)
 - [Désactiver les coredumps](#g2--désactiver-les-coredumps)
@@ -161,4 +161,4 @@ sudo pacman -S nom-du-paquet
 
 Cette optimisation économise uniquement de l’espace disque. Elle n’améliore pas sensiblement le démarrage ou les performances du système.
 
-[Accueil](README.md) · [Précédent](F-reseau.md) · [Suivant](H-energie.md)
+[Accueil](README.md) · [Précédent](F-reseau.md) · [Suivant](H-powersave.md)

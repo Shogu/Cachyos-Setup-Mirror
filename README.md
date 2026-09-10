@@ -11,15 +11,15 @@ Ce mémo rassemble la configuration personnelle, les procédures et les pistes d
 
 ## Parcours
 
-- [A — Installation et préparation](A-installation-preparation.md)
-- [B — Suppression et installation de logiciels](B-logiciels.md)
-- [C — Démarrage et systemd](C-boot-systemd.md)
-- [D — Noyau et ordonnanceurs](D-kernel-schedulers.md)
+- [A — Installation & préparation du setup](A-installation-preparation-du-setup.md)
+- [B — Logiciels à supprimer/installer](B-logiciels-a-supprimer-installer.md)
+- [I — Réglages logiciels](I-reglages-logiciels.md)
+- [C — Boot](C-boot.md)
+- [D — Kernel & schedulers](D-kernel-schedulers.md)
 - [E — Btrfs et snapshots](E-btrfs-snapshots.md)
 - [F — Réseau](F-reseau.md)
 - [G — Optimisations système](G-optimisations-systeme.md)
-- [H — Énergie et veille](H-energie.md)
-- [I — Réglages des logiciels](I-reglages-logiciels.md)
+- [H — Powersave](H-powersave.md)
 - [J — GNOME](J-gnome.md)
 - [K — Vivaldi](K-vivaldi.md)
-- [L — Maintenance et mises à jour](L-maintenance.md)
+- [L — Maintenance](L-maintenance.md)

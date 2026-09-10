@@ -1,6 +1,6 @@
-# H — Énergie et veille
+# H — Powersave
 
-[Accueil](README.md) · [Précédent](G-optimisations-systeme.md) · [Suivant](I-reglages-logiciels.md)
+[Accueil](README.md) · [Précédent](G-optimisations-systeme.md) · [Suivant](J-gnome.md)
 
 - [Coordonner TuneD, les profils énergétiques et SCX](#h1--coordonner-tuned-les-profils-énergétiques-et-scx)
 - [Configurer le bouton d’alimentation et le capot](#h2--configurer-le-bouton-dalimentation-et-le-capot)
@@ -141,4 +141,4 @@ gsettings set org.gnome.settings-daemon.plugins.power ambient-enabled false
 
 Dans les paramètres d’alimentation GNOME, régler ensuite le délai avant mise en veille à **600 secondes**, soit **10 minutes**, pour le mode d’alimentation souhaité.
 
-[Accueil](README.md) · [Précédent](G-optimisations-systeme.md) · [Suivant](I-reglages-logiciels.md)
+[Accueil](README.md) · [Précédent](G-optimisations-systeme.md) · [Suivant](J-gnome.md)
