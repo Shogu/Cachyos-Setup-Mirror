@@ -2,14 +2,12 @@
 
 [Accueil](README.md) · [Précédent](B-logiciels.md) · [Suivant](D-kernel-schedulers.md)
 
-- [Choisir Plymouth ou le logo firmware](#plymouth)
-- [Régler le menu Limine](#menu-limine)
-- [Réduire l’initramfs](#initramfs)
-- [Masquer les services système et utilisateur inutilisés](#services)
-- [Désactiver les autostarts inutilisés](#autostarts)
-- [Limiter l’activation automatique des TTY](#tty)
-
-<a id="plymouth"></a>
+- [Choisir Plymouth ou le logo firmware](#c1--choisir-plymouth-ou-le-logo-firmware)
+- [Régler le menu Limine](#c2--régler-le-menu-limine)
+- [Réduire l’initramfs](#c3--réduire-linitramfs)
+- [Masquer les services système et utilisateur inutilisés](#c4--masquer-les-services-système-et-utilisateur-inutilisés)
+- [Désactiver les autostarts inutilisés](#c5--désactiver-les-autostarts-inutilisés)
+- [Limiter l’activation automatique des TTY](#c6--limiter-lactivation-automatique-des-tty)
 
 ## C1 — Choisir Plymouth ou le logo firmware
 
@@ -87,8 +85,6 @@ Remplacer `watermark.png` dans `/usr/share/plymouth/themes/cachyos/` par le logo
 sudo limine-mkinitcpio
 ```
 
-<a id="menu-limine"></a>
-
 ## C2 — Régler le menu Limine
 
 Éditer la configuration du menu :
@@ -106,9 +102,7 @@ mouse: no
 
 Le délai visé est de **0,1 seconde**. Utiliser les touches fléchées pendant le démarrage pour tenter de faire apparaître le menu ; vérifier ce comportement avec la version de Limine installée avant de compter dessus pour accéder aux entrées de secours.
 
-La gestion du nombre de snapshots et leur restauration sont regroupées dans [Btrfs et snapshots](E-btrfs-snapshots.md#snapshots-limine).
-
-<a id="initramfs"></a>
+La gestion du nombre de snapshots et leur restauration sont regroupées dans [Btrfs et snapshots](E-btrfs-snapshots.md#e2--configurer-et-restaurer-les-snapshots-limine).
 
 ## C3 — Réduire l’initramfs
 
@@ -154,8 +148,6 @@ sudo systemctl mask systemd-fsck-root.service
 ```
 
 Cela ne remplace pas la vérification distincte de la partition FAT32. Garder un moyen de démarrer un environnement de secours pour restaurer la configuration et reconstruire les images si nécessaire.
-
-<a id="services"></a>
 
 ## C4 — Masquer les services système et utilisateur inutilisés
 
@@ -224,8 +216,6 @@ Contrôler également la session utilisateur :
 systemd-analyze --user blame
 ```
 
-<a id="autostarts"></a>
-
 ## C5 — Désactiver les autostarts inutilisés
 
 Deux entrées sont visées : le bus d’accessibilité et les notifications Evolution.
@@ -241,8 +231,6 @@ sudo mv /etc/xdg/autostart/org.gnome.Evolution-alarm-notify.desktop \
 ```
 
 Ces fichiers peuvent être recréés lors d’une mise à jour des paquets. Ne pas confondre ces entrées avec les services utilisateur masqués dans la section précédente.
-
-<a id="tty"></a>
 
 ## C6 — Limiter l’activation automatique des TTY
 

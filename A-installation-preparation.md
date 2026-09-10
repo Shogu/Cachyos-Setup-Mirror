@@ -2,11 +2,9 @@
 
 [Accueil](README.md) · [Suivant](B-logiciels.md)
 
-- [Préparer Fish](#preparation-fish)
-- [Réglages initiaux dans CachyOS Hello](#cachyos-hello)
-- [Nettoyer les entrées UEFI en NVRAM](#nvram)
-
-<a id="preparation-fish"></a>
+- [Préparer Fish](#a1--préparer-fish)
+- [Réglages initiaux dans CachyOS Hello](#a2--réglages-initiaux-dans-cachyos-hello)
+- [Nettoyer les entrées UEFI en NVRAM](#a3--nettoyer-les-entrées-uefi-en-nvram)
 
 ## A1 — Préparer Fish
 
@@ -22,11 +20,9 @@ Copier le fichier du dépôt à cet emplacement, puis le charger :
 source ~/.config/fish/config.fish
 ```
 
-Le fichier reste unique : aucun découpage en fonctions séparées n’est nécessaire. Voir [les réglages Fish et éditeurs](I-reglages-logiciels.md#fish-editeurs).
+Le fichier reste unique : aucun découpage en fonctions séparées n’est nécessaire. Voir [les réglages Fish et éditeurs](I-reglages-logiciels.md#i3--configurer-fish-gnome-text-editor-et-micro).
 
 Les chemins `/home/ogu`, les UUID, adresses réseau et noms d’interfaces de ce guide sont ceux de cette installation. Les adapter pour une autre machine.
-
-<a id="cachyos-hello"></a>
 
 ## A2 — Réglages initiaux dans CachyOS Hello
 
@@ -36,8 +32,6 @@ Dans **CachyOS Hello** :
 - Ne pas activer l’icône de mise à jour CachyOS dans la zone de notification.
 - Classer les miroirs.
 - Ne pas installer PSD : cette solution ne fait pas partie de la configuration retenue.
-
-<a id="nvram"></a>
 
 ## A3 — Nettoyer les entrées UEFI en NVRAM
 

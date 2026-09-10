@@ -2,11 +2,9 @@
 
 [Accueil](README.md) · [Précédent](A-installation-preparation.md) · [Suivant](C-boot-systemd.md)
 
-- [Alléger les logiciels installés](#suppression-paquets)
-- [Conserver les firmwares nécessaires](#firmwares)
-- [Installer les logiciels et configurer les outils de paquets](#installation-paquets)
-
-<a id="suppression-paquets"></a>
+- [Alléger les logiciels installés](#b1--alléger-les-logiciels-installés)
+- [Conserver les firmwares nécessaires](#b2--conserver-les-firmwares-nécessaires)
+- [Installer les logiciels et configurer les outils de paquets](#b3--installer-les-logiciels-et-configurer-les-outils-de-paquets)
 
 ## B1 — Alléger les logiciels installés
 
@@ -177,8 +175,6 @@ if test (count $orphelins) -gt 0
 end
 ```
 
-<a id="firmwares"></a>
-
 ## B2 — Conserver les firmwares nécessaires
 
 ```
@@ -191,8 +187,6 @@ sudo pacman -R linux-firmware linux-firmware-intel linux-firmware-atheros linux-
 # Marquer les firmwares utiles comme explicitement installés pour éviter qu'ils soient considérés comme orphelins
 sudo pacman -D --asexplicit linux-firmware-amdgpu linux-firmware-cirrus linux-firmware-mediatek
 ```
-
-<a id="installation-paquets"></a>
 
 ## B3 — Installer les logiciels et configurer les outils de paquets
 

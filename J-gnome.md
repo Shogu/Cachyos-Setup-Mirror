@@ -2,23 +2,21 @@
 
 [Accueil](README.md) · [Précédent](I-reglages-logiciels.md) · [Suivant](K-vivaldi.md)
 
-- [Ajuster le rendu des polices](#polices)
-- [Régler les actions de session et les rappels](#session)
-- [Organiser Nautilus et les marque-pages](#nautilus)
-- [Modifier le mot de passe du trousseau](#trousseau)
-- [Installer le fond d’écran et le thème de curseurs](#apparence)
-- [Régler l’échelle et masquer les dossiers](#hidpi)
-- [Régler Xwayland et les fonctions expérimentales de Mutter](#xwayland)
-- [Importer et activer le profil couleur de l’écran](#couleurs)
-- [Renommer et organiser les lanceurs](#menus)
-- [Installer et régler les extensions GNOME](#extensions)
-- [Régler temporairement les permissions avec malcontent](#permissions)
-- [Installer les scripts et extensions Nautilus](#scripts-nautilus)
-- [Raccourcir le libellé du profil énergétique](#libelle-energie)
-- [Créer les raccourcis BIOS, Ptyxis et Ressources](#raccourcis)
-- [Créer des modèles de documents dans Nautilus](#modeles-nautilus)
-
-<a id="polices"></a>
+- [Ajuster le rendu des polices](#j1--ajuster-le-rendu-des-polices)
+- [Régler les actions de session et les rappels](#j2--régler-les-actions-de-session-et-les-rappels)
+- [Organiser Nautilus et les marque-pages](#j3--organiser-nautilus-et-les-marque-pages)
+- [Modifier le mot de passe du trousseau](#j4--modifier-le-mot-de-passe-du-trousseau)
+- [Installer le fond d’écran et le thème de curseurs](#j5--installer-le-fond-décran-et-le-thème-de-curseurs)
+- [Régler l’échelle et masquer les dossiers](#j6--régler-léchelle-et-masquer-les-dossiers)
+- [Régler Xwayland et les fonctions expérimentales de Mutter](#j7--régler-xwayland-et-les-fonctions-expérimentales-de-mutter)
+- [Importer et activer le profil couleur de l’écran](#j8--importer-et-activer-le-profil-couleur-de-lécran)
+- [Renommer et organiser les lanceurs](#j9--renommer-et-organiser-les-lanceurs)
+- [Installer et régler les extensions GNOME](#j10--installer-et-régler-les-extensions-gnome)
+- [Régler temporairement les permissions avec malcontent](#j11--régler-temporairement-les-permissions-avec-malcontent)
+- [Installer les scripts et extensions Nautilus](#j12--installer-les-scripts-et-extensions-nautilus)
+- [Raccourcir le libellé du profil énergétique](#j13--raccourcir-le-libellé-du-profil-énergétique)
+- [Créer les raccourcis BIOS, Ptyxis et Ressources](#j14--créer-les-raccourcis-bios-ptyxis-et-ressources)
+- [Créer des modèles de documents dans Nautilus](#j15--créer-des-modèles-de-documents-dans-nautilus)
 
 ## J1 — Ajuster le rendu des polices
 
@@ -37,8 +35,6 @@ FREETYPE_PROPERTIES="cff:no-stem-darkening=0 autofitter:no-stem-darkening=0"
 Se déconnecter puis se reconnecter pour appliquer le réglage aux nouvelles applications.
 
 Le README proposait aussi une variante « moins grasse », mais reproduisait exactement la même valeur. Il n’y a donc qu’un réglage distinct à reprendre ici ; aucune seconde valeur n’a été inventée.
-
-<a id="session"></a>
 
 ## J2 — Régler les actions de session et les rappels
 
@@ -62,8 +58,6 @@ Désactiver le rappel de don GNOME si la clé existe dans la version installée 
 gsettings set org.gnome.settings-daemon.plugins.housekeeping donation-reminder-enabled false
 ```
 
-<a id="nautilus"></a>
-
 ## J3 — Organiser Nautilus et les marque-pages
 
 Dans Nautilus, créer les marque-pages utiles :
@@ -74,15 +68,11 @@ Dans Nautilus, créer les marque-pages utiles :
 
 Personnaliser les icônes des dossiers Dropbox, MP3, Root, Domestique et Lycée dans Dropbox, ainsi que des extensions GNOME, à partir des icônes **Places** du dossier **Icons & background** du dépôt.
 
-<a id="trousseau"></a>
-
 ## J4 — Modifier le mot de passe du trousseau
 
 Dans **Seahorse**, modifier le mot de passe du trousseau concerné et laisser les champs du nouveau mot de passe vides si c’est le comportement souhaité. Reconnecter ensuite le compte Google dans GNOME si nécessaire.
 
 Cette opération concerne le **trousseau de mots de passe**, pas le mot de passe du compte Linux ni l’activation d’une connexion automatique. Un trousseau sans mot de passe n’a plus cette protection de ses secrets sur disque.
-
-<a id="apparence"></a>
 
 ## J5 — Installer le fond d’écran et le thème de curseurs
 
@@ -104,8 +94,6 @@ sudo -u gdm dbus-launch gsettings set org.gnome.desktop.interface cursor-theme p
 
 Utiliser ensuite **GDM Settings**, notamment pour le fond d’écran de connexion, et importer le fichier **`gdm-settings.ini`** du dépôt. Une fois les réglages effectués, le mémo prévoit de supprimer le paquet de cet outil.
 
-<a id="hidpi"></a>
-
 ## J6 — Régler l’échelle et masquer les dossiers
 
 Dans les paramètres d’affichage, choisir une mise à l’échelle **125 %**. Dans Nautilus :
@@ -115,9 +103,7 @@ Dans les paramètres d’affichage, choisir une mise à l’échelle **125 %**. 
 - Augmenter la taille des icônes de dossiers.
 - Attribuer une icône personnalisée au dossier Dropbox.
 
-La création du dossier caché de modèles est détaillée dans [Modèles Nautilus](#modeles-nautilus).
-
-<a id="xwayland"></a>
+La création du dossier caché de modèles est détaillée dans [Modèles Nautilus](#j15--créer-des-modèles-de-documents-dans-nautilus).
 
 ## J7 — Régler Xwayland et les fonctions expérimentales de Mutter
 
@@ -135,23 +121,17 @@ Conserver les valeurs utiles déjà présentes et activer, si elles existent dan
 
 Les options expérimentales peuvent varier selon la version de Mutter.
 
-<a id="couleurs"></a>
-
 ## J8 — Importer et activer le profil couleur de l’écran
 
 Rappel ajouté conformément au choix exprimé pour ce setup : importer le profil **ICM/ICC de l’écran** dans **Paramètres GNOME → Couleur**, l’associer à l’écran intégré puis l’activer comme profil utilisé. Importer le fichier seul ne garantit pas sa sélection pour l’écran.
 
 Le profil lui-même doit être récupéré parmi les fichiers de configuration ou la sauvegarde personnelle ; aucun profil de calibration n’est inventé ni joint à cette documentation.
 
-<a id="menus"></a>
-
 ## J9 — Renommer et organiser les lanceurs
 
 Avec **Menu Principal / l’éditeur de menus**, renommer les applications dans la vue d’ensemble et masquer les lanceurs inutiles pour viser une seule page d’applications.
 
 Remplacer également l’icône de Ptyxis par celle de [GNOME Terminal](https://upload.wikimedia.org/wikipedia/commons/d/da/GNOME_Terminal_icon_2019.svg).
-
-<a id="extensions"></a>
 
 ## J10 — Installer et régler les extensions GNOME
 
@@ -219,8 +199,6 @@ gsettings set org.gnome.shell disable-extension-version-validation false
 
 Pour les extensions qui changent les profils d’alimentation, choisir une configuration cohérente : éviter que deux extensions imposent simultanément des profils opposés. Le passage automatique secteur/batterie conserve un rôle distinct de l’application des réglages par TuneD.
 
-<a id="permissions"></a>
-
 ## J11 — Régler temporairement les permissions avec malcontent
 
 Installer temporairement `malcontent` pour accéder aux réglages d’applications correspondants dans GNOME Control Center :
@@ -234,8 +212,6 @@ Effectuer les réglages voulus, puis retirer le paquet si cette interface n’es
 ```fish
 sudo pacman -Rns malcontent
 ```
-
-<a id="scripts-nautilus"></a>
 
 ## J12 — Installer les scripts et extensions Nautilus
 
@@ -279,8 +255,6 @@ nautilus -q
 nautilus
 ```
 
-<a id="libelle-energie"></a>
-
 ## J13 — Raccourcir le libellé du profil énergétique
 
 Raccourcir le libellé du bouton de profil énergétique, trop long dans les réglages rapides GNOME.
@@ -316,8 +290,6 @@ rm -i fr.po gnome-shell.mo
 
 Cette personnalisation peut être remplacée par une mise à jour de GNOME Shell.
 
-<a id="raccourcis"></a>
-
 ## J14 — Créer les raccourcis BIOS, Ptyxis et Ressources
 
 Télécharger le script **`reboot_bios.sh`** du dépôt, le placer dans `/home/ogu/.local/bin/` puis le rendre exécutable :
@@ -338,8 +310,6 @@ Dans les paramètres GNOME, affecter :
 - **Ctrl+Alt+Suppr** à Ressources.
 
 Personnaliser les icônes Places des dossiers Dropbox, Nicotine, Téléchargements, `usr`, `root`, Extensions, Icons et des autres dossiers souhaités.
-
-<a id="modeles-nautilus"></a>
 
 ## J15 — Créer des modèles de documents dans Nautilus
 

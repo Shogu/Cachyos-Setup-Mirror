@@ -2,11 +2,9 @@
 
 [Accueil](README.md) · [Précédent](G-optimisations-systeme.md) · [Suivant](I-reglages-logiciels.md)
 
-- [Coordonner TuneD, les profils énergétiques et SCX](#tuned-scx)
-- [Configurer le bouton d’alimentation et le capot](#capot)
-- [Désactiver la luminosité automatique et régler la veille](#luminosite)
-
-<a id="tuned-scx"></a>
+- [Coordonner TuneD, les profils énergétiques et SCX](#h1--coordonner-tuned-les-profils-énergétiques-et-scx)
+- [Configurer le bouton d’alimentation et le capot](#h2--configurer-le-bouton-dalimentation-et-le-capot)
+- [Désactiver la luminosité automatique et régler la veille](#h3--désactiver-la-luminosité-automatique-et-régler-la-veille)
 
 ## H1 — Coordonner TuneD, les profils énergétiques et SCX
 
@@ -114,8 +112,6 @@ cat /sys/devices/system/cpu/cpu0/cpufreq/energy_performance_preference
 
 Les rôles sont distincts : l’extension GNOME peut changer le profil selon secteur/batterie, TuneD applique le profil et son EPP, puis le plugin SCX choisit le scheduler. Le mode `--autopower` d’un scheduler constitue une variante à configurer selon ce scheduler, pas un argument à appliquer à tous.
 
-<a id="capot"></a>
-
 ## H2 — Configurer le bouton d’alimentation et le capot
 
 Éditer la configuration de logind :
@@ -134,8 +130,6 @@ HandleLidSwitchExternalPower=suspend
 ```
 
 Appliquer au prochain redémarrage, puis tester le bouton d’alimentation et la fermeture du capot sur secteur et sur batterie.
-
-<a id="luminosite"></a>
 
 ## H3 — Désactiver la luminosité automatique et régler la veille
 

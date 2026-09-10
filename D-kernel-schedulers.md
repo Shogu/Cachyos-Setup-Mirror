@@ -2,12 +2,10 @@
 
 [Accueil](README.md) · [Précédent](C-boot-systemd.md) · [Suivant](E-btrfs-snapshots.md)
 
-- [Blacklister les pilotes inutilisés](#pilotes)
-- [Paramètres du noyau, SCX et Ananicy](#parametres-kernel)
-- [Sélectionner ADIOS avec udev et TuneD](#adios)
-- [Pistes split-lock à tester](#split-lock)
-
-<a id="pilotes"></a>
+- [Blacklister les pilotes inutilisés](#d1--blacklister-les-pilotes-inutilisés)
+- [Paramètres du noyau, SCX et Ananicy](#d2--paramètres-du-noyau-scx-et-ananicy)
+- [Sélectionner ADIOS avec udev et TuneD](#d3--sélectionner-adios-avec-udev-et-tuned)
+- [Pistes split-lock à tester](#d4--pistes-split-lock-à-tester)
 
 ## D1 — Blacklister les pilotes inutilisés
 
@@ -110,8 +108,6 @@ lsmod | grep serial8250
 
 Ce contrôle ne couvre que ce nom de module. Les catégories de la liste sont celles du mémo : un suffixe `intel` n’implique pas qu’un module cryptographique soit inutile sur AMD, et l’absence de LUKS ne prouve pas l’absence d’autres utilisateurs de la cryptographie. Conserver les modules nécessaires aux usages réels.
 
-<a id="parametres-kernel"></a>
-
 ## D2 — Paramètres du noyau, SCX et Ananicy
 
 ### Ligne de paramètres retenue
@@ -189,7 +185,7 @@ ipv6.disable=1 amd_iommu=off transparent_hugepage=madvise
 ```
 
 ### sched-ext scx
-voir [H-energie.md#tuned-scx](https://gitlab.com/Shogu/CACHYOS-Setup/-/blob/Main/H-energie.md?ref_type=heads#tuned-scx)
+voir [H-energie.md#tuned-scx](https://gitlab.com/Shogu/CACHYOS-Setup/-/blob/Main/H-energie.md?ref_type=heads#h1--coordonner-tuned-les-profils-énergétiques-et-scx)
 
 ### Ananicy-cpp : installation depuis les sources et dépannage
 
@@ -286,8 +282,6 @@ ps -eo pid,ni,cgroup:50,comm | grep vivaldi
 
 Les commandes de nettoyage de l’installation Ananicy suppriment les anciens fichiers et règles aux chemins indiqués. Les exécuter seulement si cette réinstallation est voulue. Le remplacement de `/etc/mtab` est une piste de dépannage conditionnelle du mémo, pas une étape systématique.
 
-<a id="adios"></a>
-
 ## D3 — Sélectionner ADIOS avec udev et TuneD
 
 En lieu et place de Kyber : override udev avec `sudoedit /etc/udev/rules.d/99-adios.rules` :
@@ -333,8 +327,6 @@ cat /sys/block/nvme0n1/queue/scheduler
 ```
 
 ADIOS doit être disponible dans le noyau utilisé ; une règle udev ne l’ajoute pas à un noyau qui en est dépourvu.
-
-<a id="split-lock"></a>
 
 ## D4 — Pistes split-lock à tester
 

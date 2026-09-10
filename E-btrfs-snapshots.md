@@ -2,10 +2,8 @@
 
 [Accueil](README.md) · [Précédent](D-kernel-schedulers.md) · [Suivant](F-reseau.md)
 
-- [Régler les montages Btrfs et FAT32 et le NoCoW](#montages)
-- [Configurer et restaurer les snapshots Limine](#snapshots-limine)
-
-<a id="montages"></a>
+- [Régler les montages Btrfs et FAT32 et le NoCoW](#e1--régler-les-montages-btrfs-et-fat32-et-le-nocow)
+- [Configurer et restaurer les snapshots Limine](#e2--configurer-et-restaurer-les-snapshots-limine)
 
 ## E1 — Régler les montages Btrfs et FAT32 et le NoCoW
 
@@ -45,11 +43,9 @@ sudo chattr -R +C /home/ogu/Musique /home/ogu/Vidéos /home/ogu/Téléchargement
 findmnt --list --notruncate -o TARGET,SOURCE,FSTYPE,OPTIONS
 ```
 
-Si l’option de gestion de la racine uniquement par `rootflags` est retenue, voir [les paramètres du noyau](D-kernel-schedulers.md#parametres-kernel) avant de commenter la ligne `/`.
+Si l’option de gestion de la racine uniquement par `rootflags` est retenue, voir [les paramètres du noyau](D-kernel-schedulers.md#d2--paramètres-du-noyau-scx-et-ananicy) avant de commenter la ligne `/`.
 
 Le NoCoW est intentionnel pour les caches et gros fichiers temporaires. `chattr +C` sur un dossier concerne les nouveaux fichiers qui héritent de l’attribut ; il ne convertit pas rétroactivement toutes les données des fichiers existants. Il désactive aussi compression et sommes de contrôle des données concernées. L’attribut n’exclut pas, à lui seul, un dossier des snapshots : leur périmètre dépend des sous-volumes.
-
-<a id="snapshots-limine"></a>
 
 ## E2 — Configurer et restaurer les snapshots Limine
 

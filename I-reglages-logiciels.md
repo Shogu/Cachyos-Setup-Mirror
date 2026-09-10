@@ -2,14 +2,12 @@
 
 [Accueil](README.md) · [Précédent](H-energie.md) · [Suivant](J-gnome.md)
 
-- [Dropbox : client retenu et démarrage différé](#dropbox)
-- [Intégrer Ptyxis à Nautilus et aux outils CachyOS](#ptyxis)
-- [Configurer Fish, GNOME Text Editor et Micro](#fish-editeurs)
-- [Configurer Ciné ou Celluloid](#video)
-- [Configurer JDownloader et Fragments](#telechargements)
-- [Installer le script de transfert de vidéos](#transfert-videos)
-
-<a id="dropbox"></a>
+- [Dropbox : client retenu et démarrage différé](#i1--dropbox--client-retenu-et-démarrage-différé)
+- [Intégrer Ptyxis à Nautilus et aux outils CachyOS](#i2--intégrer-ptyxis-à-nautilus-et-aux-outils-cachyos)
+- [Configurer Fish, GNOME Text Editor et Micro](#i3--configurer-fish-gnome-text-editor-et-micro)
+- [Configurer Ciné ou Celluloid](#i4--configurer-ciné-ou-celluloid)
+- [Configurer JDownloader et Fragments](#i5--configurer-jdownloader-et-fragments)
+- [Installer le script de transfert de vidéos](#i6--installer-le-script-de-transfert-de-vidéos)
 
 ## I1 — Dropbox : client retenu et démarrage différé
 
@@ -29,8 +27,6 @@ Exec=/usr/bin/sh -c "sleep 30; exec dropbox"
 
 Le reste de l’entrée peut rester inchangé. Si elle remplace une entrée système, conserver le même nom de fichier. Ce délai part du lancement de l’entrée d’autostart par GNOME.
 
-<a id="ptyxis"></a>
-
 ## I2 — Intégrer Ptyxis à Nautilus et aux outils CachyOS
 
 Installer l’intégration du terminal dans Nautilus :
@@ -44,8 +40,6 @@ gsettings set com.github.stunkymonkey.nautilus-open-any-terminal new-tab true
 L’option `new-tab` ouvre un onglet dans la session existante. En cas d’erreur avec GNOME 49, consulter [le ticket du projet](https://github.com/Stunkymonkey/nautilus-open-any-terminal/issues/242).
 
 Pour ajouter Ptyxis aux terminaux proposés par les outils CachyOS, le mémo conserve [ce guide communautaire](https://www.reddit.com/r/cachyos/comments/1rry7qh/guide_add_your_terminal_to_cachyos_tools_like/).
-
-<a id="fish-editeurs"></a>
 
 ## I3 — Configurer Fish, GNOME Text Editor et Micro
 
@@ -75,8 +69,6 @@ Insérer ces valeurs dans l’objet JSON existant, ou utiliser ce contenu si le 
 }
 ```
 
-<a id="video"></a>
-
 ## I4 — Configurer Ciné ou Celluloid
 
 Le mémo préfère **Ciné** à Celluloid. Pour Ciné, créer puis éditer :
@@ -97,8 +89,6 @@ DOWN seek -300
 Pour les options du moteur vidéo, le mémo indique `vo=gpu-next` et `gpu-api=vulkan` dans **Paramètres → Divers → Options supplémentaires**. Adapter leur syntaxe au champ proposé par l’application : options de configuration MPV et arguments de ligne de commande ne se saisissent pas nécessairement de la même manière.
 
 Activer les options **focus** et **toujours afficher les boutons de titre**. Installer les scripts Lua **Visualizer** et **Delete File** pour l’usage musical ; leurs URL ne sont pas précisées dans le README source.
-
-<a id="telechargements"></a>
 
 ## I5 — Configurer JDownloader et Fragments
 
@@ -122,9 +112,7 @@ Dans **Général → Ouvrir l’interface Web → Peers**, renseigner l’URL de
 https://raw.githubusercontent.com/Naunter/BT_BlockLists/master/bt_blocklists.gz
 ```
 
-Aligner le port d’écoute sur les [règles du pare-feu](F-reseau.md#pare-feu).
-
-<a id="transfert-videos"></a>
+Aligner le port d’écoute sur les [règles du pare-feu](F-reseau.md#f1--configurer-ufw-pour-fragments-et-nicotine).
 
 ## I6 — Installer le script de transfert de vidéos
 

@@ -2,12 +2,10 @@
 
 [Accueil](README.md) · [Précédent](F-reseau.md) · [Suivant](H-energie.md)
 
-- [Alléger les journaux et les stocker en RAM](#journald)
-- [Désactiver les coredumps](#coredumps)
-- [Configurer makepkg pour znver4](#makepkg)
-- [Nettoyer les traductions et les fichiers de configuration](#locales)
-
-<a id="journald"></a>
+- [Alléger les journaux et les stocker en RAM](#g1--alléger-les-journaux-et-les-stocker-en-ram)
+- [Désactiver les coredumps](#g2--désactiver-les-coredumps)
+- [Configurer makepkg pour znver4](#g3--configurer-makepkg-pour-znver4)
+- [Nettoyer les traductions et les fichiers de configuration](#g4--nettoyer-les-traductions-et-les-fichiers-de-configuration)
 
 ## G1 — Alléger les journaux et les stocker en RAM
 
@@ -24,8 +22,6 @@ Relancer ensuite le service :
 ```fish
 sudo systemctl restart systemd-journald
 ```
-
-<a id="coredumps"></a>
 
 ## G2 — Désactiver les coredumps
 
@@ -45,8 +41,6 @@ echo '* hard core 0' | sudo tee -a /etc/security/limits.conf
 
 Cette dernière ligne concerne les sessions auxquelles les limites PAM s’appliquent ; elle ne constitue pas à elle seule un réglage global de tous les services systemd.
 
-<a id="makepkg"></a>
-
 ## G3 — Configurer makepkg pour znver4
 
 Éditer la configuration de makepkg :
@@ -61,8 +55,6 @@ CFLAGS="-march=znver4 -mtune=znver4 -pipe -fno-plt -fexceptions \
         -Wp,-D_FORTIFY_SOURCE=3 -Wformat -Werror=format-security \
         -fstack-clash-protection -fcf-protection"
 ```
-
-<a id="locales"></a>
 
 ## G4 — Nettoyer les traductions et les fichiers de configuration
 

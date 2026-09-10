@@ -2,10 +2,8 @@
 
 [Accueil](README.md) · [Précédent](E-btrfs-snapshots.md) · [Suivant](G-optimisations-systeme.md)
 
-- [Configurer UFW pour Fragments et Nicotine](#pare-feu)
-- [Régler le Wi-Fi et TCP Fast Open](#wifi)
-
-<a id="pare-feu"></a>
+- [Configurer UFW pour Fragments et Nicotine](#f1--configurer-ufw-pour-fragments-et-nicotine)
+- [Régler le Wi-Fi et TCP Fast Open](#f2--régler-le-wi-fi-et-tcp-fast-open)
 
 ## F1 — Configurer UFW pour Fragments et Nicotine
 
@@ -31,8 +29,6 @@ sudo ufw status numbered
 Sur cette installation, le mémo rapporte une connexion Nicotine plus rapide en sélectionnant explicitement `wlan0`. Vérifier que c’est bien le nom de l’interface ; ce résultat n’est pas généralisé à toutes les machines.
 
 Régler Nicotine et Fragments pour qu’ils utilisent les ports correspondants à UFW.
-
-<a id="wifi"></a>
 
 ## F2 — Régler le Wi-Fi et TCP Fast Open
 

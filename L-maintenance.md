@@ -2,10 +2,8 @@
 
 [Accueil](README.md) · [Précédent](K-vivaldi.md)
 
-- [Choisir Cachy-update ou Shelly](#mises-a-jour)
-- [Points à revoir après les mises à jour](#suivi)
-
-<a id="mises-a-jour"></a>
+- [Choisir Cachy-update ou Shelly](#l1--choisir-cachy-update-ou-shelly)
+- [Points à revoir après les mises à jour](#l2--points-à-revoir-après-les-mises-à-jour)
 
 ## L1 — Choisir Cachy-update ou Shelly
 
@@ -90,18 +88,16 @@ shelly install adw-gtk-theme
 
 Activer ensuite le thème adw-gtk3 dans Tweaks, selon le nom effectivement installé.
 
-<a id="suivi"></a>
-
 ## L2 — Points à revoir après les mises à jour
 
 Les opérations détaillées restent dans leur rubrique pour éviter de maintenir plusieurs versions de la même procédure :
 
-- [Paquets orphelins et dépendances de compilation](B-logiciels.md#suppression-paquets).
-- [Profils TuneD et sélection SCX](H-energie.md#tuned-scx), ainsi que [le choix ADIOS](D-kernel-schedulers.md#adios) : les modifications sous `/usr/lib` peuvent être remplacées.
-- [Traductions à ne pas réextraire avec pacman](G-optimisations-systeme.md#locales).
-- [Extensions GNOME](J-gnome.md#extensions) : vérifier leur compatibilité après changement de version.
-- [Extensions Nautilus modifiées](J-gnome.md#scripts-nautilus) et [traduction du bouton énergétique](J-gnome.md#libelle-energie) : revoir les fichiers modifiés sous `/usr/share`.
-- [Reconstruction de l’initramfs](C-boot-systemd.md#initramfs) avec `limine-mkinitcpio` après changement des hooks, modules ou paramètres de démarrage.
-- [Restauration des snapshots](E-btrfs-snapshots.md#snapshots-limine) avec l’outil adapté à Limine.
+- [Paquets orphelins et dépendances de compilation](B-logiciels.md#b1--alléger-les-logiciels-installés).
+- [Profils TuneD et sélection SCX](H-energie.md#h1--coordonner-tuned-les-profils-énergétiques-et-scx), ainsi que [le choix ADIOS](D-kernel-schedulers.md#d3--sélectionner-adios-avec-udev-et-tuned) : les modifications sous `/usr/lib` peuvent être remplacées.
+- [Traductions à ne pas réextraire avec pacman](G-optimisations-systeme.md#g4--nettoyer-les-traductions-et-les-fichiers-de-configuration).
+- [Extensions GNOME](J-gnome.md#j10--installer-et-régler-les-extensions-gnome) : vérifier leur compatibilité après changement de version.
+- [Extensions Nautilus modifiées](J-gnome.md#j12--installer-les-scripts-et-extensions-nautilus) et [traduction du bouton énergétique](J-gnome.md#j13--raccourcir-le-libellé-du-profil-énergétique) : revoir les fichiers modifiés sous `/usr/share`.
+- [Reconstruction de l’initramfs](C-boot-systemd.md#c3--réduire-linitramfs) avec `limine-mkinitcpio` après changement des hooks, modules ou paramètres de démarrage.
+- [Restauration des snapshots](E-btrfs-snapshots.md#e2--configurer-et-restaurer-les-snapshots-limine) avec l’outil adapté à Limine.
 
 [Accueil](README.md) · [Précédent](K-vivaldi.md)

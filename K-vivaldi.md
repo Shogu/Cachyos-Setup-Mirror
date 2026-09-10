@@ -2,12 +2,10 @@
 
 [Accueil](README.md) · [Précédent](J-gnome.md) · [Suivant](L-maintenance.md)
 
-- [Synchronisation, cache et réglages internes](#reglages)
-- [Appliquer le thème et les modifications CSS](#theme)
-- [Configurer le panneau latéral et la recherche Google](#panneau-recherche)
-- [Installer les extensions et associer les liens magnet](#extensions)
-
-<a id="reglages"></a>
+- [Synchronisation, cache et réglages internes](#k1--synchronisation-cache-et-réglages-internes)
+- [Appliquer le thème et les modifications CSS](#k2--appliquer-le-thème-et-les-modifications-css)
+- [Configurer le panneau latéral et la recherche Google](#k3--configurer-le-panneau-latéral-et-la-recherche-google)
+- [Installer les extensions et associer les liens magnet](#k4--installer-les-extensions-et-associer-les-liens-magnet)
 
 ## K1 — Synchronisation, cache et réglages internes
 
@@ -44,8 +42,6 @@ Ouvrir les réglages système internes, indiqués dans le mémo comme `vivaldi:s
 
 Pour bloquer la lecture automatique YouTube, le parcours indiqué est **Vivaldi → Paramètres → Confidentialité → Permissions des sites → Lecture automatique → Bloquer**.
 
-<a id="theme"></a>
-
 ## K2 — Appliquer le thème et les modifications CSS
 
 Appliquer le thème personnalisé disponible dans le dépôt.
@@ -56,8 +52,6 @@ Pour les modifications CSS de l’interface :
 2. Activer **Allow for using CSS modifications** si l’option est proposée.
 3. Redémarrer Vivaldi.
 4. Dans **Paramètres → Apparence → Modifications UI personnalisées**, sélectionner le dossier contenant les fichiers CSS du dépôt.
-
-<a id="panneau-recherche"></a>
 
 ## K3 — Configurer le panneau latéral et la recherche Google
 
@@ -83,8 +77,6 @@ URL de recherche inversée d’image:
 Paramètres POST de recherche d’image:
 encoded_image={google:imageThumbnail},image_url={google:imageURL},sbisrc={google:imageSearchSource},original_width={google:imageOriginalWidth},original_height={google:imageOriginalHeight},processed_image_dimensions={google:processedImageDimensions}
 ```
-
-<a id="extensions"></a>
 
 ## K4 — Installer les extensions et associer les liens magnet
 
