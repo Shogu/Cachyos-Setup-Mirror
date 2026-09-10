@@ -2,10 +2,13 @@
 
 [Accueil](README.md) · [Précédent](C-boot-systemd.md) · [Suivant](E-btrfs-snapshots.md)
 
-- [Blacklister les pilotes inutilisés](#d1-blacklister-les-pilotes-inutilisés)
-- [Paramètres du noyau, SCX et Ananicy](#d2-paramètres-du-noyau-scx-et-ananicy)
-- [Sélectionner ADIOS avec udev et TuneD](#d3-sélectionner-adios-avec-udev-et-tuned)
-- [Pistes split-lock à tester](#d4-pistes-split-lock-à-tester)
+## D1 — Blacklister les pilotes inutilisés {: #pilotes }
+
+## D2 — Paramètres du noyau, SCX et Ananicy {: #parametres-kernel }
+
+## D3 — Sélectionner ADIOS avec udev et TuneD {: #adios }
+
+## D4 — Pistes split-lock à tester {: #split-lock }
 
 ## D1 — Blacklister les pilotes inutilisés
 
