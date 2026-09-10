@@ -38,9 +38,10 @@ sudo pacman -Rns speech-dispatcher brltty orca yelp gnome-user-docs
 - `gnome-screenshot` : captures d’écran.
 - `sushi` : prévisualisation rapide dans Nautilus.
 - `cachyos-gnome-settings` : réglages GNOME fournis par CachyOS ; suppression à décider séparément, ce paquet n’est pas inclus dans la commande ci-dessous.
+- `unrar` : archives RAR
 
 ```
-sudo pacman -Rns gnome-remote-desktop gnome-backgrounds gnome-weather totem baobab gnome-usage gedit gnome-screenshot sushi
+sudo pacman -Rns gnome-remote-desktop gnome-backgrounds gnome-weather totem baobab gnome-usage gedit gnome-screenshot sushi unrar
 ```
 
 ### Partage réseau, découverte et montage de périphériques
