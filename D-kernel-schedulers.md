@@ -188,6 +188,9 @@ rcutree.enable_rcu_lazy=1 rcu_nocbs=0-7
 ```
 ipv6.disable=1 amd_iommu=off transparent_hugepage=madvise
 ```
+### SCX : 
+voir https://gitlab.com/Shogu/CACHYOS-Setup/-/blob/Main/H-energie.md?ref_type=heads#tuned-scx
+
 
 ### Ananicy-cpp : installation depuis les sources et dépannage
 
