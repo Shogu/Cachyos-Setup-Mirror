@@ -26,6 +26,8 @@ blacklist iTCO_vendor_support
 blacklist iTCO_wdt
 blacklist wdat_wdt
 blacklist intel_pmc_bxt
+blacklist intel_rapl_msr
+blacklist intel_rapl_common
 
 # ==============================
 # Nvidia
