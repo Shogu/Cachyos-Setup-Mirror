@@ -2,15 +2,12 @@
 
 [Accueil](README.md) · [Précédent](C-boot-systemd.md) · [Suivant](E-btrfs-snapshots.md)
 
+- [Blacklister les pilotes inutilisés](#pilotes)
+- [Paramètres du noyau, SCX et Ananicy](#parametres-kernel)
+- [Sélectionner ADIOS avec udev et TuneD](#adios)
+- [Pistes split-lock à tester](#split-lock)
+
 ## D1 — Blacklister les pilotes inutilisés {: #pilotes }
-
-## D2 — Paramètres du noyau, SCX et Ananicy {: #parametres-kernel }
-
-## D3 — Sélectionner ADIOS avec udev et TuneD {: #adios }
-
-## D4 — Pistes split-lock à tester {: #split-lock }
-
-## D1 — Blacklister les pilotes inutilisés
 
 Créer ou éditer le fichier de blacklist :
 
@@ -113,9 +110,7 @@ Puis
 lsmod | grep serial8250
 ```
 
-
-
-## D2 — Paramètres du noyau, SCX et Ananicy
+## D2 — Paramètres du noyau, SCX et Ananicy {: #parametres-kernel }
 
 ### Ligne de paramètres retenue
 
@@ -288,9 +283,7 @@ ps -eo pid,ni,cgroup:50,comm | grep vivaldi
 
 Les commandes de nettoyage de l’installation Ananicy suppriment les anciens fichiers et règles aux chemins indiqués. Les exécuter seulement si cette réinstallation est voulue. Le remplacement de `/etc/mtab` est une piste de dépannage conditionnelle du mémo, pas une étape systématique.
 
-
-
-## D3 — Sélectionner ADIOS avec udev et TuneD
+## D3 — Sélectionner ADIOS avec udev et TuneD {: #adios }
 
 En lieu et place de Kyber : override udev avec `sudoedit /etc/udev/rules.d/99-adios.rules` :
 
@@ -337,9 +330,7 @@ cat /sys/block/nvme0n1/queue/scheduler
 
 ADIOS doit être disponible dans le noyau utilisé ; une règle udev ne l’ajoute pas à un noyau qui en est dépourvu.
 
-
-
-## D4 — Pistes split-lock à tester
+## D4 — Pistes split-lock à tester {: #split-lock }
 
 Le mémo conserve deux pistes à tester, sans gain établi sur ce Zenbook AMD :
 
