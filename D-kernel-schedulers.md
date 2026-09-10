@@ -103,14 +103,12 @@ Reconstruire l’initramfs pour prendre en compte la configuration embarquée :
 ```fish
 sudo limine-mkinitcpio
 ```
-
-Après redémarrage, le mémo propose ce contrôle ciblé :
+Puis 
 
 ```fish
 lsmod | grep serial8250
 ```
 
-Ce contrôle ne couvre que ce nom de module. Les catégories de la liste sont celles du mémo : un suffixe `intel` n’implique pas qu’un module cryptographique soit inutile sur AMD, et l’absence de LUKS ne prouve pas l’absence d’autres utilisateurs de la cryptographie. Conserver les modules nécessaires aux usages réels.
 
 <a id="parametres-kernel"></a>
 
@@ -152,11 +150,8 @@ cat /proc/cmdline
 sudo dmesg
 ```
 
-La présence d’un argument dans `/proc/cmdline` ne démontre pas à elle seule qu’il a été reconnu ou qu’il améliore les performances.
 
-**Répertoire de paramètres à examiner séparément**
 
-Les groupes suivants reprennent toutes les pistes du mémo. Ils ne constituent pas une seconde ligne à ajouter intégralement à `LINUX_OPTIONS`. Leur présence dans cet inventaire ne signifie pas qu’ils soient actifs, pris en charge ou bénéfiques sur cette machine. En particulier, `rcu_nocbs=0-7` n’est plus appliqué dans le setup courant.
 
 **Démarrage silencieux :**
 
@@ -193,11 +188,6 @@ rcutree.enable_rcu_lazy=1 rcu_nocbs=0-7
 ```
 ipv6.disable=1 amd_iommu=off transparent_hugepage=madvise
 ```
-
-### Variantes sched-ext et EEVDF
-
-Le mémo propose `BPFland` en mode automatique, ou les alternatives `Rusty` et `Cake` à examiner sur leurs projets respectifs. Comparer les résultats avec des mesures récentes et représentatives de l’usage. Le mémo cite un retour Reddit favorable à EEVDF. Le conserver comme retour de test, sans en déduire une supériorité universelle. Pour essayer EEVDF, désactiver SCX selon la variante décrite dans [Énergie](H-energie.md#tuned-scx) :
-https://www.reddit.com/r/cachyos/comments/1q854z9/comment/nyqylbz/?tl=fr&translated=1&force-legacy-sct=1
 
 ### Ananicy-cpp : installation depuis les sources et dépannage
 
