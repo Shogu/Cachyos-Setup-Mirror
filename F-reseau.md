@@ -73,7 +73,7 @@ Dans le profil NetworkManager de la connexion Wi-Fi 5 GHz, le mémo propose :
 Adapter ces valeurs au réseau et vérifier que l’adresse n’est pas attribuée à un autre appareil.
 
 
-## F2 — iwd pour remplacer wpa_supplicant
+## F3 — iwd pour remplacer wpa_supplicant
 
 Installer iwd avec `sudo pacman -S iwd` puis créer le fichier de configuration :
 
