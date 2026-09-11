@@ -75,7 +75,7 @@ Adapter ces valeurs au réseau et vérifier que l’adresse n’est pas attribu�
 
 ## F3 — iwd pour remplacer wpa_supplicant
 
-Installer iwd avec `sudo pacman -S iwd` puis créer le fichier de configuration :
+Installer iwd avec puis créer le fichier de configuration :
 
 ```fish
 sudo pacman -S iwd
