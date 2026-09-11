@@ -4,6 +4,7 @@
 
 - [Configurer UFW pour Fragments et Nicotine](#f1--configurer-ufw-pour-fragments-et-nicotine)
 - [Régler le Wi-Fi et TCP Fast Open](#f2--régler-le-wi-fi-et-tcp-fast-open)
+- [iwd pour remplacer wpa_supplicant](#f3--iwd-pour-remplacer-wpa_supplicant)
 
 ## F1 — Configurer UFW pour Fragments et Nicotine
 
@@ -71,16 +72,15 @@ Dans le profil NetworkManager de la connexion Wi-Fi 5 GHz, le mémo propose :
 
 Adapter ces valeurs au réseau et vérifier que l’adresse n’est pas attribuée à un autre appareil.
 
-### Variante : iwd comme backend de NetworkManager
 
-Le mémo signale une reconnexion lente après veille avec iwd. Cette variante reste donc un essai, pas un remplacement obligatoire de wpa_supplicant.
+## F2 — iwd pour remplacer wpa_supplicant
 
-Installer iwd et créer le fichier de configuration :
+Installer iwd avec `sudo pacman -S iwd` puis créer le fichier de configuration :
 
 ```fish
 sudo pacman -S iwd
 sudo mkdir -p /etc/NetworkManager/conf.d
-sudoedit /etc/NetworkManager/conf.d/20-wifi-backend.conf
+sudoedit /etc/NetworkManager/conf.d/20-wifi-backend-iwd.conf
 ```
 
 ```ini
@@ -88,14 +88,24 @@ sudoedit /etc/NetworkManager/conf.d/20-wifi-backend.conf
 wifi.backend=iwd
 ```
 
-Basculer les services, puis relancer NetworkManager ; la connexion Wi-Fi sera interrompue pendant l’opération :
+Basculer les services, puis relancer NetworkManager :
 
 ```fish
 sudo systemctl enable --now iwd.service
-sudo systemctl disable --now wpa_supplicant.service
-sudo systemctl restart NetworkManager.service
+sudo systemctl mask --now wpa_supplicant.service
+sudo systemctl restart NetworkManager
 ```
 
-Le mémo envisage ensuite `sudo pacman -Rdd wpa_supplicant` si tout fonctionne. Cette suppression forcée est distincte du choix de backend et ignore les dépendances : conserver le paquet pendant les essais facilite le retour arrière.
+Vérifiez que la bascule est effective avec ces deux commandes :
+
+```fish
+systemctl is-active iwd && systemctl is-active wpa_supplicant && nmcli device show | grep -E "(DEVICE|TYPE|WIRED-PROPERTIES)" -A 10
+
+```
+S'assurer que le pilote WI-Fi est bien en powersave automatique (`disable_aspm= N`):
+
+```fish
+systool -vm mt7921e
+```
 
 [Accueil](README.md) · [Précédent](E-btrfs-snapshots.md) · [Suivant](G-optimisations-systeme.md)
