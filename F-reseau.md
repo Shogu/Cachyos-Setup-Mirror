@@ -5,6 +5,7 @@
 - [Configurer UFW pour Fragments et Nicotine](#f1--configurer-ufw-pour-fragments-et-nicotine)
 - [Régler le Wi-Fi et TCP Fast Open](#f2--régler-le-wi-fi-et-tcp-fast-open)
 - [iwd pour remplacer wpa_supplicant](#f3--iwd-pour-remplacer-wpa_supplicant)
+- [Désactiver la géolocalisation par Wi-Fi dans GeoClue](#f4--désactiver-la-géolocalisation-par-wi-fi-dans-GeoClue )
 
 ## F1 — Configurer UFW pour Fragments et Nicotine
 
@@ -35,7 +36,7 @@ Régler Nicotine et Fragments pour qu’ils utilisent les ports correspondants �
 
 ### Domaine réglementaire Wi-Fi
 
-Deux méthodes sont envisagées : garder le service `cachyos-iw-set-regdomain`, ou fixer le pays manuellement. Le mémo propose la seconde pour cette machine utilisée en France.
+Fixer le pays manuellement:
 
 ```fish
 sudo systemctl mask cachyos-iw-set-regdomain.service cachyos-iw-set-regdomain.path
@@ -100,9 +101,45 @@ Vérifiez que la bascule est effective avec ces deux commandes :
 
 ```fish
 systemctl is-active iwd && systemctl is-active wpa_supplicant && nmcli device show | grep -E "(DEVICE|TYPE|WIRED-PROPERTIES)" -A 10
-
 ```
+
 S'assurer que le pilote WI-Fi est bien en powersave automatique (`disable_aspm= N`):
+
+```fish
+systool -vm mt7921e
+```
+
+## F4 — Désactiver la géolocalisation par Wi-Fi dans GeoClue
+
+Cette procédure permet de bloquer le scan des réseaux Wi-Fi environnants par le service **GeoClue** tout en conservant la géolocalisation par adresse IP.
+
+Créer le fichier de configuration:
+
+```fish
+echo -e "[wifi]\nenable=false" | sudo tee /etc/geoclue/conf.d/90-disable-wifi.conf > /dev/null
+```
+
+Redémarrer le service GeoClue
+
+```fish
+sudo systemctl restart geoclue
+```
+
+Vérifier le bon fonctionnement
+
+
+1. Dans un premier onglet Fish, lancez l'agent de sécurité :
+   ```fish
+   /usr/lib/geoclue-2.0/demos/agent
+   ```
+2. Dans un second onglet Fish, demandez votre position actuelle :
+   ```fish
+   /usr/lib/geoclue-2.0/demos/where-am-i
+   ```
+
+Résultat attendu
+* **Description** : `GeoIP (ichnaea)`
+* **Accuracy** : `25000 meters` 
 
 ```fish
 systool -vm mt7921e
