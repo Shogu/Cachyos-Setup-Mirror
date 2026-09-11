@@ -141,8 +141,5 @@ Résultat attendu
 * **Description** : `GeoIP (ichnaea)`
 * **Accuracy** : `25000 meters` 
 
-```fish
-systool -vm mt7921e
-```
 
 [Accueil](README.md) · [Précédent](E-btrfs-snapshots.md) · [Suivant](G-optimisations-systeme.md)
