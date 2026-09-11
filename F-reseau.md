@@ -5,7 +5,7 @@
 - [Configurer UFW pour Fragments et Nicotine](#f1--configurer-ufw-pour-fragments-et-nicotine)
 - [Régler le Wi-Fi et TCP Fast Open](#f2--régler-le-wi-fi-et-tcp-fast-open)
 - [iwd pour remplacer wpa_supplicant](#f3--iwd-pour-remplacer-wpa_supplicant)
-- [Désactiver la géolocalisation par Wi-Fi dans GeoClue](#f4--désactiver-la-géolocalisation-par-wi-fi-dans-GeoClue )
+- [Désactiver la géolocalisation par Wi-Fi dans GeoClue](#f4--désactiver-la-géolocalisation-par-wi-fi-dans-GeoClue)
 
 ## F1 — Configurer UFW pour Fragments et Nicotine
 
