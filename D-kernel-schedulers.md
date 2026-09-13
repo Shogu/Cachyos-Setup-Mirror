@@ -2,12 +2,14 @@
 
 [Accueil](README.md) · [Précédent](C-boot.md) · [Suivant](E-btrfs-snapshots.md)
 
-- [Blacklister les pilotes inutilisés](#d1--blacklister-les-pilotes-inutilisés)
-- [Paramètres du noyau](#d2--paramètres-du-noyau-scx-et-ananicy)
-- [SCX](d3...)
-- [Ananicy](#d4--.....ananicy)
-- [désactiver Split Lock](d5...)
-- [Sélectionner ADIOS avec udev et TuneD](#d6--sélectionner-adios-avec-udev-et-tuned)
+## Sommaire
+
+- [D1 — Blacklister les pilotes inutilisés](#d1--blacklister-les-pilotes-inutilisés)
+- [D2 — Paramètres du noyau](#d2--paramètres-du-noyau)
+- [D3 — SCX](#d3--scx)
+- [D4 — Ananicy-cpp](#d4--ananicy-cpp--installation-depuis-les-sources-et-dépannage)
+- [D5 — Désactiver le Split Lock](#d5--désactiver-le-split-lock)
+- [D6 — Sélectionner ADIOS avec udev et TuneD](#d6--sélectionner-adios-avec-udev-et-tuned)
 
 ## D1 — Blacklister les pilotes inutilisés
 
@@ -18,7 +20,8 @@ sudoedit /etc/modprobe.d/blacklist.conf
 ```
 
 Reprendre la liste personnelle du mémo :
-```
+
+```conf
 # ==============================
 # Intel et watchdog
 # ==============================
@@ -96,6 +99,7 @@ blacklist tpm_vtpm_proxy
 # ==============================
 blacklist amdxdna
 ```
+
 Reconstruire l’initramfs pour prendre en compte la configuration embarquée :
 
 ```fish
@@ -110,19 +114,19 @@ lsmod | grep serial8250
 
 Ce contrôle ne couvre que ce nom de module. Les catégories de la liste sont celles du mémo : un suffixe `intel` n’implique pas qu’un module cryptographique soit inutile sur AMD, et l’absence de LUKS ne prouve pas l’absence d’autres utilisateurs de la cryptographie. Conserver les modules nécessaires aux usages réels.
 
-#
-
 ## D2 — Paramètres du noyau
 
 ### Ligne de paramètres retenue
 
 Éditer les options Linux de Limine :
-```
+
+```fish
 sudoedit /etc/default/limine
 ```
 
 Puis saisir :
-```
+
+```ini
 LINUX_OPTIONS="pci=noaer module_blacklist=thunderbolt init_on_alloc=0 page_alloc.shuffle=0 drm_kms_helper.poll=0 systemd.tpm2_wait=false cryptomgr.notests efi=disable_early_pci_dma nomce nowatchdog no_timer_check noresume zswap.enabled=0 systemd.show_status=false quiet 8250.nr_uarts=0 ipv6.disable=1 amd_iommu=off vt.global_cursor_default=0 consoleblank=0 udev.log_level=0 loglevel=0 systemd.watchdog_sec=0 rootflags=subvol=/@,noatime,commit=60,noacl,compress=zstd:1"
 ```
 
@@ -135,14 +139,16 @@ sudoedit /etc/fstab
 
 Dans cette variante, commenter la ligne de la racine :
 
-```
+```ini
 #UUID=e181248c-3cce-4428-bdc4-b6efd715c470 /              btrfs   subvol=/@,defaults,noatime,commit=60,noacl,compress=zstd:1 0 0
 ```
 
 Reconstruire l’initramfs et actualiser les entrées Limine :
-```
+
+```fish
 sudo limine-mkinitcpio
 ```
+
 Examiner les paramètres reçus et les messages du noyau :
 
 ```fish
@@ -150,59 +156,55 @@ cat /proc/cmdline
 sudo dmesg
 ```
 
-
-
 **Démarrage silencieux :**
 
-```
+```text
 console=tty1 systemd.show_status=false quiet udev.log_level=0 loglevel=0 consoleblank=0 systemd.watchdog_sec=0 vt.global_cursor_default=0
 ```
 
 **Matériel et vérifications :**
 
-```
+```text
 nowatchdog no_timer_check 8250.nr_uarts=0 tpm_crb.disable=1 clearcpuid=rdseed
 ```
 
 **Sécurité et cryptographie :**
 
-```
+```text
 cryptomgr.notests random.trust_cpu=on efi=disable_early_pci_dma nomce
 ```
 
 **Stockage et systèmes de fichiers :**
 
-```
+```text
 noresume  zswap.enabled=0 nvme_core.default_ps_max_latency_us=5500
 ```
 
 **RCU et ordonnancement :**
 
-```
+```text
 rcutree.enable_rcu_lazy=1 rcu_nocbs=0-7
 ```
 
 **Réseau et autres réglages :**
 
-```
+```text
 ipv6.disable=1 amd_iommu=off 
 ```
 
 ## D3 — SCX
-voir [H-powersave.md#tuned-scx](https://gitlab.com/Shogu/CACHYOS-Setup/-/blob/Main/H-powersave.md?ref_type=heads#h1--coordonner-tuned-les-profils-énergétiques-et-scx)
 
-Réinstaller SCX Manager Libadwaita (appli créée par ChatGPT) afin de supprimer complètement les paquets QT.
+Voir [la section « Coordonner TuneD, les profils énergétiques et SCX » de H-powersave.md](H-powersave.md#h1--coordonner-tuned-les-profils-énergétiques-et-scx).
 
+Réinstaller SCX Manager Libadwaita (appli créée par ChatGPT) afin de supprimer complètement les paquets Qt.
 
-
-
-1. Installer les dépendances temporaires
+### Étape 1 — Installer les dépendances temporaires
 
 ```fish
 sudo pacman -S meson ninja
 ```
 
-2. Appliquer les corrections de compatibilité
+### Étape 2 — Appliquer les corrections de compatibilité
 
 Ces commandes sont idempotentes : elles ne modifient rien si l’archive contient déjà les corrections. Elles évitent les incompatibilités rencontrées avec GTK 4.22 et Libadwaita 1.9 :
 
@@ -216,123 +218,41 @@ sed -i 's/adw_application_window_new(app->application)/adw_application_window_ne
 sed -i 's/gtk_window_set_child(GTK_WINDOW(app->window), GTK_WIDGET(toolbar));/adw_application_window_set_content(app->window, GTK_WIDGET(toolbar));/' src/main.c
 ```
 
-3. Compiler et installer dans ~/.local/bin
+### Étape 3 — Compiler et installer dans `~/.local/bin`
 
 ```fish
 ./install.sh
 ```
 
+### Étape 4 — Changer l’icône et le chemin d’exécution dans le menu
 
-4. Changer l'icone et le chemin d'execution dans Menu :
+   - Icône sched-ext : `/home/ogu/.local/Icones/Apps/julia.svg`
+   - Chemin de l’exécutable : `/home/ogu/.local/bin/scx-manager-adwaita`
 
-Icone sched-ext : `/home/ogu/.local/Icones/Apps/julia.svg`
-Chemin de l'executable : `.local/bin/scx-manager-adwaita`
-
-
-
-5. Supprimer l’ancien gestionnaire Qt, les dépendances QT et les dépendances de build 
+### Étape 5 — Supprimer l’ancien gestionnaire Qt, les dépendances Qt et les dépendances de build
 
 ```fish
 sudo pacman -Rns scx-manager qt6-base qt6-translations qt6-svg meson ninja
 ```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-##D4 Ananicy-cpp : installation depuis les sources et dépannage
+## D4 — Ananicy-cpp : installation depuis les sources et dépannage
 
 Le mémo conserve cette installation depuis les sources à la suite d’une erreur rencontrée avec l’installation précédente. La cohabitation avec SCX est à tester sur la configuration utilisée.
 
 Exécuter les étapes séparément et lire les chemins de nettoyage avant de les supprimer. Les retours de journal attendus, dont la mention d’environ 1 800 règles, sont des observations du mémo à vérifier.
 
 Installer les outils puis nettoyer l’ancienne installation :
-```
-#paquets de build
+
+```fish
+# Paquets de build
 sudo pacman -Syu --noconfirm base-devel cmake nlohmann-json spdlog fmt gcc make git
 
-#nettoyage install' précédente au cas où
+# Nettoyage de l’installation précédente, au cas où
 sudo systemctl stop ananicy-cpp || true
 sudo rm -f /usr/local/bin/ananicy-cpp /usr/local/lib/systemd/system/ananicy-cpp.service
 sudo rm -rf /usr/local/share/ananicy-cpp /etc/ananicy-cpp.conf /etc/ananicy.d /var/lib/ananicy-cpp
 sudo systemctl daemon-reload
 rm -rf ~/ananicy-cpp
-
 ```
 
 Cloner le projet et compiler :
@@ -347,10 +267,9 @@ cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local -DUSE_EXTE
 make -j$(nproc)
 sudo make install
 
-#lancement du service
+# Lancement du service
 sudo systemctl daemon-reload
 sudo systemctl enable --now ananicy-cpp
-
 ```
 
 Redémarrer à cette étape, puis reprendre les commandes suivantes dans un nouveau terminal :
@@ -360,15 +279,13 @@ systemctl reboot
 ```
 
 ```fish
-
-#install des règles
+# Installation des règles
 sudo pacman -S --noconfirm cachyos-ananicy-rules
 sudo systemctl restart ananicy-cpp
 sudo systemctl daemon-reload
 
-#suppression des paquets de build inutiles et maintien des paquets nécessaires pour les maj d'ananicy
+# Suppression des paquets de build inutiles ; conservation des paquets nécessaires aux mises à jour d’Ananicy
 sudo pacman -Rns cmake cppdap rhash --noconfirm
-
 ```
 
 Redémarrer à cette étape, puis reprendre les commandes suivantes dans un nouveau terminal :
@@ -378,15 +295,13 @@ systemctl reboot
 ```
 
 ```fish
-
-#relance du service une fois les règles installées
+# Relance du service une fois les règles installées
 sudo systemctl daemon-reload
-sudo systemctl restart ananicy-cpp #pas de problème avec le lancement?
+sudo systemctl restart ananicy-cpp # Pas de problème au lancement ?
 
-#check du service
+# Vérification du service
 sudo systemctl status ananicy-cpp
-journalctl -u ananicy-cpp -f #mention des 1800 règles? pas de problème avec cgroup?
-
+journalctl -u ananicy-cpp -f # Mention des 1 800 règles ? Pas de problème avec cgroup ?
 ```
 
 Quitter le suivi du journal avec **Ctrl+C** avant de poursuivre. Le remplacement du lien ci-dessous n’est envisagé que pour le message **Cgroups are not available on this platform (or are not enabled)**, après vérification de `/etc/mtab` :
@@ -396,22 +311,21 @@ ls -l /etc/mtab
 ```
 
 ```fish
-# Piste de dépannage conditionnelle du mémo.
+# Piste de dépannage conditionnelle du mémo
 sudo ln -sf /proc/self/mounts /etc/mtab
 sudo systemctl restart ananicy-cpp
 
-#check de fonctionnement avec Vivaldi
+# Vérification du fonctionnement avec Vivaldi
 ps -eo pid,ni,policy,cls,pri,comm | grep vivaldi
-# Ou full :
+# Ou version complète :
 ps -eo pid,ni,cgroup:50,comm | grep vivaldi
 
-# En cas d’échec, contrôler les règles installées et les journaux avant de relancer le service.
+# En cas d’échec, contrôler les règles installées et les journaux avant de relancer le service
 ```
 
 Les commandes de nettoyage de l’installation Ananicy suppriment les anciens fichiers et règles aux chemins indiqués. Les exécuter seulement si cette réinstallation est voulue. Le remplacement de `/etc/mtab` est une piste de dépannage conditionnelle du mémo, pas une étape systématique.
 
-
-## D5 : split Lock à désactiver 
+## D5 — Désactiver le Split Lock
 
 ```fish
 sudoedit /etc/sysctl.d/99-splitlock.conf
@@ -425,11 +339,19 @@ Puis recharger :
 
 ```fish
 sudo sysctl --system
+```
 
 ## D6 — Sélectionner ADIOS avec udev et TuneD
 
-En lieu et place de Kyber : override udev avec `sudoedit /etc/udev/rules.d/99-adios.rules` :
+En lieu et place de Kyber, créer ou éditer la règle udev :
+
+```fish
+sudoedit /etc/udev/rules.d/99-adios.rules
 ```
+
+Y saisir :
+
+```udev
 # HDD
 ACTION=="add|change", KERNEL=="sd[a-z]*", ATTR{queue/rotational}=="1", \
     ATTR{queue/scheduler}="bfq"
@@ -472,5 +394,6 @@ cat /sys/block/nvme0n1/queue/scheduler
 
 ADIOS doit être disponible dans le noyau utilisé ; une règle udev ne l’ajoute pas à un noyau qui en est dépourvu.
 
+---
 
 [Accueil](README.md) · [Précédent](C-boot.md) · [Suivant](E-btrfs-snapshots.md)
