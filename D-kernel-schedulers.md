@@ -3,9 +3,11 @@
 [Accueil](README.md) · [Précédent](C-boot.md) · [Suivant](E-btrfs-snapshots.md)
 
 - [Blacklister les pilotes inutilisés](#d1--blacklister-les-pilotes-inutilisés)
-- [Paramètres du noyau, SCX et Ananicy](#d2--paramètres-du-noyau-scx-et-ananicy)
-- [Sélectionner ADIOS avec udev et TuneD](#d3--sélectionner-adios-avec-udev-et-tuned)
-  - [Pistes split-lock à tester](#pistes-split-lock-à-tester)
+- [Paramètres du noyau](#d2--paramètres-du-noyau-scx-et-ananicy)
+- [SCX](d3...)
+- [Ananicy](#d4--.....ananicy)
+- [désactiver Split Lock](d5...)
+- [Sélectionner ADIOS avec udev et TuneD](#d6--sélectionner-adios-avec-udev-et-tuned)
 
 ## D1 — Blacklister les pilotes inutilisés
 
@@ -108,36 +110,9 @@ lsmod | grep serial8250
 
 Ce contrôle ne couvre que ce nom de module. Les catégories de la liste sont celles du mémo : un suffixe `intel` n’implique pas qu’un module cryptographique soit inutile sur AMD, et l’absence de LUKS ne prouve pas l’absence d’autres utilisateurs de la cryptographie. Conserver les modules nécessaires aux usages réels.
 
-### Pistes split-lock à tester
+#
 
-Le mémo conserve deux pistes à tester, sans gain établi sur ce Zenbook AMD :
-
-- Le paramètre kernel `split_lock_detect=off`, signalé comme non opérationnel lors d’un essai avec le noyau 6.18.
-- Le réglage sysctl ci-dessous, uniquement si l’interface existe sur le noyau et le matériel utilisés.
-
-Vérifier sa présence :
-
-```fish
-sysctl kernel.split_lock_mitigate
-```
-
-Si disponible, éditer :
-
-```fish
-sudoedit /etc/sysctl.d/99-splitlock.conf
-```
-
-```ini
-kernel.split_lock_mitigate=0
-```
-
-Puis recharger :
-
-```fish
-sudo sysctl --system
-```
-
-## D2 — Paramètres du noyau, SCX et Ananicy
+## D2 — Paramètres du noyau
 
 ### Ligne de paramètres retenue
 
@@ -210,13 +185,137 @@ rcutree.enable_rcu_lazy=1 rcu_nocbs=0-7
 **Réseau et autres réglages :**
 
 ```
-ipv6.disable=1 amd_iommu=off transparent_hugepage=madvise
+ipv6.disable=1 amd_iommu=off 
 ```
 
-### sched-ext scx
+## D3 — SCX
 voir [H-powersave.md#tuned-scx](https://gitlab.com/Shogu/CACHYOS-Setup/-/blob/Main/H-powersave.md?ref_type=heads#h1--coordonner-tuned-les-profils-énergétiques-et-scx)
 
-### Ananicy-cpp : installation depuis les sources et dépannage
+Réinstaller SCX Manager Libadwaita (appli créée par ChatGPT) afin de supprimer complètement les paquets QT.
+
+
+
+
+1. Installer les dépendances temporaires
+
+```fish
+sudo pacman -S meson ninja
+```
+
+2. Appliquer les corrections de compatibilité
+
+Ces commandes sont idempotentes : elles ne modifient rien si l’archive contient déjà les corrections. Elles évitent les incompatibilités rencontrées avec GTK 4.22 et Libadwaita 1.9 :
+
+```fish
+sed -i '/gtk_editable_set_placeholder_text(GTK_EDITABLE(app->flags_row), "--performance --help");/d' src/main.c
+
+sed -i 's/gtk_css_provider_load_from_data(provider, css, -1);/gtk_css_provider_load_from_string(provider, css);/' src/main.c
+
+sed -i 's/adw_application_window_new(app->application)/adw_application_window_new(GTK_APPLICATION(app->application))/' src/main.c
+
+sed -i 's/gtk_window_set_child(GTK_WINDOW(app->window), GTK_WIDGET(toolbar));/adw_application_window_set_content(app->window, GTK_WIDGET(toolbar));/' src/main.c
+```
+
+3. Compiler et installer dans ~/.local/bin
+
+```fish
+./install.sh
+```
+
+
+4. Changer l'icone et le chemin d'execution dans Menu :
+
+Icone sched-ext : `/home/ogu/.local/Icones/Apps/julia.svg`
+Chemin de l'executable : `.local/bin/scx-manager-adwaita`
+
+
+
+5. Supprimer l’ancien gestionnaire Qt, les dépendances QT et les dépendances de build 
+
+```fish
+sudo pacman -Rns scx-manager qt6-base qt6-translations qt6-svg meson ninja
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+##D4 Ananicy-cpp : installation depuis les sources et dépannage
 
 Le mémo conserve cette installation depuis les sources à la suite d’une erreur rencontrée avec l’installation précédente. La cohabitation avec SCX est à tester sur la configuration utilisée.
 
@@ -311,7 +410,23 @@ ps -eo pid,ni,cgroup:50,comm | grep vivaldi
 
 Les commandes de nettoyage de l’installation Ananicy suppriment les anciens fichiers et règles aux chemins indiqués. Les exécuter seulement si cette réinstallation est voulue. Le remplacement de `/etc/mtab` est une piste de dépannage conditionnelle du mémo, pas une étape systématique.
 
-## D3 — Sélectionner ADIOS avec udev et TuneD
+
+## D5 : split Lock à désactiver 
+
+```fish
+sudoedit /etc/sysctl.d/99-splitlock.conf
+```
+
+```ini
+kernel.split_lock_mitigate=0
+```
+
+Puis recharger :
+
+```fish
+sudo sysctl --system
+
+## D6 — Sélectionner ADIOS avec udev et TuneD
 
 En lieu et place de Kyber : override udev avec `sudoedit /etc/udev/rules.d/99-adios.rules` :
 ```
