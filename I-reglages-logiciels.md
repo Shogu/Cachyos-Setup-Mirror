@@ -6,12 +6,11 @@
 - [Intégrer Ptyxis à Nautilus et aux outils CachyOS](#i2--intégrer-ptyxis-à-nautilus-et-aux-outils-cachyos)
 - [Configurer Fish, GNOME Text Editor et Micro](#i3--configurer-fish-gnome-text-editor-et-micro)
 - [Configurer Ciné ou Celluloid](#i4--configurer-ciné-ou-celluloid)
-- [Configurer JDownloader et Fragments](#i5--configurer-jdownloader-et-fragments)
+- [Installer JDownloader et Fragments](#i5--configurer-jdownloader-et-fragments)
 - [Installer le script de transfert de vidéos](#i6--installer-le-script-de-transfert-de-vidéos)
 
-## I1 — Dropbox : client retenu et démarrage différé
+## I1 — Dropbox
 
-Le README mentionne d’abord Maestral : créer un dossier `Dropbox` dans le dossier personnel puis lancer le script `maestral_install`. Cette méthode est signalée comme ne fonctionnant plus après une mise à jour ; **le choix actuel est de revenir à l’application Dropbox officielle**.
 
 Installer la bibliothèque d’intégration de l’indicateur :
 
@@ -19,13 +18,12 @@ Installer la bibliothèque d’intégration de l’indicateur :
 sudo pacman -S libappindicator-gtk3
 ```
 
-Pour retarder le lancement de Dropbox de 30 secondes, conserver son fichier d’autostart dans `~/.config/autostart/` et remplacer sa ligne `Exec` par :
+Pour retarder le lancement de Dropbox de 10 secondes, conserver son fichier d’autostart dans `~/.config/autostart/` et remplacer sa ligne `Exec` par :
 
 ```ini
-Exec=/usr/bin/sh -c "sleep 30; exec dropbox"
+Exec=/usr/bin/sh -c "sleep 10; exec dropbox"
 ```
 
-Le reste de l’entrée peut rester inchangé. Si elle remplace une entrée système, conserver le même nom de fichier. Ce délai part du lancement de l’entrée d’autostart par GNOME.
 
 ## I2 — Intégrer Ptyxis à Nautilus et aux outils CachyOS
 
@@ -94,15 +92,13 @@ Activer les options **focus** et **toujours afficher les boutons de titre**. Ins
 
 ### JDownloader
 
-Choisir la police **Adwaita Sans** et désactiver les éléments suivants : infobulles, aide, `Update Button Flashing`, bannière, `Premium Alert`, `Donate` et `speed meter visible`.
+Installer l'AppImage libadwaita créée par ChatGPT et créer son lanceur depuis /local/bin.
 
-Dans l’éditeur de texte du lanceur proposé par l’éditeur de menus, ajouter ou corriger :
 
 ```ini
 StartupWMClass=org-jdownloader-update-launcher-JDLauncher
 ```
 
-Ce réglage vise à associer la fenêtre à la bonne icône dans le dock.
 
 ### Fragments
 
