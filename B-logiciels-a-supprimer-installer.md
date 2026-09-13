@@ -194,7 +194,7 @@ sudo pacman -D --asexplicit linux-firmware-amdgpu linux-firmware-cirrus linux-fi
 
 Installer les logiciels suivants :
 ```
-sudo pacman -Syu dconf-editor powertop gst-thumbnailers profile-cleaner seahorse extension-manager fragments papers nicotine+ resources onlyoffice xournal++ jdownloader2 gnome-calendar duf libgda6 shelly inotify-tools libnotify decibels clapper
+sudo pacman -Syu dconf-editor powertop gst-thumbnailers profile-cleaner seahorse extension-manager fragments papers nicotine+ resources onlyoffice xournal++ gnome-calendar duf libgda6 shelly inotify-tools libnotify decibels clapper
 ```
 ### Paru et AUR
 
