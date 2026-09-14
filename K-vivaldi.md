@@ -9,7 +9,7 @@
 
 ## K1 — Synchronisation, cache et réglages internes
 
-Commencer par synchroniser les réglages avec le compte Vivaldi.
+Commencer par synchroniser les réglages avec le compte Vivaldi, puis utiliser `chrome://settings/system`
 
 ### Lanceur : processus et cache
 
@@ -19,7 +19,7 @@ Ajouter au lanceur les arguments du mémo :
 --process-per-site --disk-cache-dir=/run/user/1000/vivaldi-cache
 ```
 
-Le chemin est personnel : vérifier l’UID avec `id -u` avant d’utiliser `1000`. Le cache placé dans `/run/user/1000` est temporaire ; ce réglage ne déplace pas tout le profil du navigateur en RAM.
+Le chemin est personnel : vérifier l’UID avec `id -u` avant d’utiliser `1000`.
 
 ### Options expérimentales
 
