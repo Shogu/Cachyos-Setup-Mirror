@@ -123,9 +123,8 @@ Les options expérimentales peuvent varier selon la version de Mutter.
 
 ## J8 — Importer et activer le profil couleur de l’écran
 
-Rappel ajouté conformément au choix exprimé pour ce setup : importer le profil **ICM/ICC de l’écran** dans **Paramètres GNOME → Couleur**, l’associer à l’écran intégré puis l’activer comme profil utilisé. Importer le fichier seul ne garantit pas sa sélection pour l’écran.
+Importer depuis le repo le profil **ICM/ICC de l’écran** dans **Paramètres GNOME → Couleur**, l’associer à l’écran intégré puis l’activer comme profil utilisé. 
 
-Le profil lui-même doit être récupéré parmi les fichiers de configuration ou la sauvegarde personnelle ; aucun profil de calibration n’est inventé ni joint à cette documentation.
 
 ## J9 — Renommer et organiser les lanceurs
 
