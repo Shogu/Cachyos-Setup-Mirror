@@ -196,7 +196,7 @@ ipv6.disable=1 amd_iommu=off
 
 Voir [la section « Coordonner TuneD, les profils énergétiques et SCX » de H-powersave.md](H-powersave.md#h1--coordonner-tuned-les-profils-énergétiques-et-scx).
 
-Réinstaller SCX Manager Libadwaita (appli créée par ChatGPT) afin de supprimer complètement les paquets Qt.
+Installer SCX Manager Libadwaita (paquet Arch créé par ChatGPT & Claude) afin de supprimer complètement sched-ext et les paquets Qt devenus inutiles.
 
 ### Étape 1 — Installer les dépendances temporaires
 
@@ -206,28 +206,18 @@ sudo pacman -S meson ninja
 
 ### Étape 2 — Appliquer les corrections de compatibilité
 
-Ces commandes sont idempotentes : elles ne modifient rien si l’archive contient déjà les corrections. Elles évitent les incompatibilités rencontrées avec GTK 4.22 et Libadwaita 1.9 :
+Ouvrir yun temrinal da ns le dossier de l'application puis :
 
-```fish
-sed -i '/gtk_editable_set_placeholder_text(GTK_EDITABLE(app->flags_row), "--performance --help");/d' src/main.c
+```
+cd packaging && makepkg -si     # installer
+# pour le supprimmer : pacman -Rns scx-manager-adwaita
 
-sed -i 's/gtk_css_provider_load_from_data(provider, css, -1);/gtk_css_provider_load_from_string(provider, css);/' src/main.c
-
-sed -i 's/adw_application_window_new(app->application)/adw_application_window_new(GTK_APPLICATION(app->application))/' src/main.c
-
-sed -i 's/gtk_window_set_child(GTK_WINDOW(app->window), GTK_WIDGET(toolbar));/adw_application_window_set_content(app->window, GTK_WIDGET(toolbar));/' src/main.c
 ```
 
-### Étape 3 — Compiler et installer dans `~/.local/bin`
+### Étape 3 — Changer l’icône et le chemin d’exécution dans le menu
 
-```fish
-./install.sh
-```
-
-### Étape 4 — Changer l’icône et le chemin d’exécution dans le menu
-
-   - Icône sched-ext : `/home/ogu/.local/Icones/Apps/julia.svg`
-   - Chemin de l’exécutable : `/home/ogu/.local/bin/scx-manager-adwaita`
+   - Icône sched-ext : `/home/ogu/.local/Icones/Apps/coppwr.svg`
+   - Chemin de l’exécutable : `scx-manager-adwaita`
 
 ### Étape 5 — Supprimer l’ancien gestionnaire Qt, les dépendances Qt et les dépendances de build
 
