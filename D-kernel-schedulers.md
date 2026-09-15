@@ -200,8 +200,7 @@ Installer SCX Manager Libadwaita (paquet Arch créé par ChatGPT & Claude) afin 
 
 
 ```fish 
-sudo pacman -U
-
+sudo pacman -U ./scx-manager-adwaita-0.1.1-1-x86_64.pkg.tar.zst
 ```
 
 ### Changer l’icône et le chemin d’exécution dans le menu
@@ -209,12 +208,16 @@ sudo pacman -U
    - Icône : `/home/ogu/.local/Icones/Apps/mixxx.svg`
    - Chemin de l’exécutable : `scx-manager-adwaita`
 
-### upprimer l’ancien gestionnaire Qt, les dépendances Qt et les dépendances de build éventuelles
+### Supprimer l’ancien gestionnaire Qt, les dépendances Qt et les dépendances de build éventuelles
 
 ```fish
 sudo pacman -Rns scx-manager qt6-base qt6-translations qt6-svg meson ninja
 ```
 
+Uninstall : 
+```fish
+sudo pacman -R scx-manager-adwaita
+```
 
 ## D4 — Ananicy-cpp : installation depuis les sources et dépannage
 
