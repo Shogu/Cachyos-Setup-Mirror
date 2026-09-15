@@ -198,32 +198,23 @@ Voir [la section « Coordonner TuneD, les profils énergétiques et SCX » de H-
 
 Installer SCX Manager Libadwaita (paquet Arch créé par ChatGPT & Claude) afin de supprimer complètement sched-ext et les paquets Qt devenus inutiles.
 
-### Étape 1 — Installer les dépendances temporaires
 
-```fish
-sudo pacman -S meson ninja
-```
-
-### Étape 2 — Appliquer les corrections de compatibilité
-
-Ouvrir un terminal dans le dossier de l'application puis :
-
-```fish
-cd packaging && makepkg -si     # installer
-# pour le supprimmer : pacman -Rns scx-manager-adwaita
+```fish 
+sudo pacman -U
 
 ```
 
-### Étape 3 — Changer l’icône et le chemin d’exécution dans le menu
+### Changer l’icône et le chemin d’exécution dans le menu
 
    - Icône : `/home/ogu/.local/Icones/Apps/mixxx.svg`
    - Chemin de l’exécutable : `scx-manager-adwaita`
 
-### Étape 5 — Supprimer l’ancien gestionnaire Qt, les dépendances Qt et les dépendances de build
+### upprimer l’ancien gestionnaire Qt, les dépendances Qt et les dépendances de build éventuelles
 
 ```fish
 sudo pacman -Rns scx-manager qt6-base qt6-translations qt6-svg meson ninja
 ```
+
 
 ## D4 — Ananicy-cpp : installation depuis les sources et dépannage
 
