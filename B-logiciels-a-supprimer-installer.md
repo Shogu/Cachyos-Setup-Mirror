@@ -226,7 +226,7 @@ UpgradeMenu
 
 ```
 ```
-paru -Syu libre-menu-editor archclean isd gapless
+paru -Syu libre-menu-editor archclean gapless
 
 ```
 ### Remplacements de paquets
