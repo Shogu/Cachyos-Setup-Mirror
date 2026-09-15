@@ -206,9 +206,9 @@ sudo pacman -S meson ninja
 
 ### Étape 2 — Appliquer les corrections de compatibilité
 
-Ouvrir yun temrinal da ns le dossier de l'application puis :
+Ouvrir un terminal da ns le dossier de l'application puis :
 
-```
+```fish
 cd packaging && makepkg -si     # installer
 # pour le supprimmer : pacman -Rns scx-manager-adwaita
 
