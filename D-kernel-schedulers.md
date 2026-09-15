@@ -196,12 +196,8 @@ ipv6.disable=1 amd_iommu=off
 
 Voir [la section « Coordonner TuneD, les profils énergétiques et SCX » de H-powersave.md](H-powersave.md#h1--coordonner-tuned-les-profils-énergétiques-et-scx).
 
-Installer SCX Manager Libadwaita (paquet Arch créé par ChatGPT & Claude) afin de supprimer complètement sched-ext et les paquets Qt devenus inutiles.
+Installer SCX Manager Libadwaita (paquet Arch créé par ChatGPT & Claude) afin de supprimer complètement sched-ext et les paquets Qt devenus inutiles. Le reamde donne la marche à suivre.
 
-
-```fish 
-sudo pacman -U ./scx-manager-adwaita-0.1.1-1-x86_64.pkg.tar.zst
-```
 
 ### Changer l’icône et le chemin d’exécution dans le menu
 
