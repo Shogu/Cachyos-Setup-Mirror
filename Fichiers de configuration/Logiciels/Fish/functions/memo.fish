@@ -63,53 +63,52 @@ function memo --description "Liste interactive des alias et fonctions disponible
         set_color brblue; echo -n "  8) stop"; set_color normal; echo " → Arrêt système"
         set_color brblue; echo -n "  9) rm"; set_color normal; echo " → Suppression sécurisée"
         set_color brblue; echo -n " 10) stockage"; set_color normal; echo " → Usage disque (duf)"
-        set_color brblue; echo -n " 11) systemd"; set_color normal; echo " → Outil systemd"
-        set_color brblue; echo -n " 12) lastpackages"; set_color normal; echo " → Derniers paquets"
-        set_color brblue; echo -n " 13) liminestats"; set_color normal; echo " → Snapshots Limine"
-        set_color brblue; echo -n " 14) scrub"; set_color normal; echo " → Scrub Btrfs sur /"
-        set_color brblue; echo -n " 15) bios"; set_color normal; echo " → Redémarrage BIOS/UEFI"
-        set_color brblue; echo -n " 16) boot"; set_color normal; echo " → Infos boot"
-        set_color brblue; echo -n " 17) boot!"; set_color normal; echo " → Lenteurs boot"
-        set_color brblue; echo -n " 18) watts"; set_color normal; echo " → Consommation énergétique"
+        set_color brblue; echo -n " 11) lastpackages"; set_color normal; echo " → Derniers paquets"
+        set_color brblue; echo -n " 12) liminestats"; set_color normal; echo " → Snapshots Limine"
+        set_color brblue; echo -n " 13) scrub"; set_color normal; echo " → Scrub Btrfs sur /"
+        set_color brblue; echo -n " 14) bios"; set_color normal; echo " → Redémarrage BIOS/UEFI"
+        set_color brblue; echo -n " 15) boot"; set_color normal; echo " → Infos boot"
+        set_color brblue; echo -n " 16) boot!"; set_color normal; echo " → Lenteurs boot"
+        set_color brblue; echo -n " 17) watts"; set_color normal; echo " → Consommation énergétique"
         echo
 
         set_color brmagenta
         echo "📦  SHELLY (AUR & Paquets)"
         set_color normal
-        set_color brblue; echo -n " 19) aur"; set_color normal; echo " → Installe paquet AUR"
-        set_color brblue; echo -n " 20) aursearch"; set_color normal; echo " → Recherche AUR"
-        set_color brblue; echo -n " 21) aurremove"; set_color normal; echo " → Supprime paquet AUR"
-        set_color brblue; echo -n " 22) aurlist"; set_color normal; echo " → Liste paquets AUR"
-        set_color brblue; echo -n " 23) add"; set_color normal; echo " → Installe paquet standard"
-        set_color brblue; echo -n " 24) remove"; set_color normal; echo " → Supprime paquet standard"
-        set_color brblue; echo -n " 25) upgrade"; set_color normal; echo " → Met à jour Shelly"
+        set_color brblue; echo -n " 18) aur"; set_color normal; echo " → Installe paquet AUR"
+        set_color brblue; echo -n " 19) aursearch"; set_color normal; echo " → Recherche AUR"
+        set_color brblue; echo -n " 20) aurremove"; set_color normal; echo " → Supprime paquet AUR"
+        set_color brblue; echo -n " 21) aurlist"; set_color normal; echo " → Liste paquets AUR"
+        set_color brblue; echo -n " 22) add"; set_color normal; echo " → Installe paquet standard"
+        set_color brblue; echo -n " 23) remove"; set_color normal; echo " → Supprime paquet standard"
+        set_color brblue; echo -n " 24) upgrade"; set_color normal; echo " → Met à jour Shelly"
         echo
 
         set_color brmagenta
         echo "🐟  FISH"
         set_color normal
-        set_color brblue; echo -n " 26) sourcefish"; set_color normal; echo " → Recharge config Fish"
-        set_color brblue; echo -n " 27) fishedit"; set_color normal; echo " → Édite config Fish"
-        set_color brblue; echo -n " 28) !!"; set_color normal; echo " → Dernière commande"
+        set_color brblue; echo -n " 25) sourcefish"; set_color normal; echo " → Recharge config Fish"
+        set_color brblue; echo -n " 26) fishedit"; set_color normal; echo " → Édite config Fish"
+        set_color brblue; echo -n " 27) !!"; set_color normal; echo " → Dernière commande"
         echo
 
         set_color brmagenta
         echo "👾  PACMAN"
         set_color normal
-        set_color brblue; echo -n " 29) pacsearch"; set_color normal; echo " → Recherche paquet"
-        set_color brblue; echo -n " 30) pacsearch_installed"; set_color normal; echo " → Recherche paquet installé"
-        set_color brblue; echo -n " 31) pacdep"; set_color normal; echo " → Dépendances inverses"
-        set_color brblue; echo -n " 32) pacfiles"; set_color normal; echo " → Fichiers paquet"
-        set_color brblue; echo -n " 33) orphans"; set_color normal; echo " → Supprime paquets orphelins"
-        set_color brblue; echo -n " 34) pacinstall"; set_color normal; echo " → Installe paquet"
-        set_color brblue; echo -n " 35) pacremove"; set_color normal; echo " → Supprime paquet"
-        set_color brblue; echo -n " 36) pacinfo"; set_color normal; echo " → Infos paquet"
-        set_color brblue; echo -n " 37) pacpick"; set_color normal; echo " → Paquet propriétaire fichier"
-        set_color brblue; echo -n " 38) orphans+"; set_color normal; echo " → Dépendances inutiles"
+        set_color brblue; echo -n " 28) pacsearch"; set_color normal; echo " → Recherche paquet"
+        set_color brblue; echo -n " 29) pacsearch_installed"; set_color normal; echo " → Recherche paquet installé"
+        set_color brblue; echo -n " 30) pacdep"; set_color normal; echo " → Dépendances inverses"
+        set_color brblue; echo -n " 31) pacfiles"; set_color normal; echo " → Fichiers paquet"
+        set_color brblue; echo -n " 32) orphans"; set_color normal; echo " → Supprime paquets orphelins"
+        set_color brblue; echo -n " 33) pacinstall"; set_color normal; echo " → Installe paquet"
+        set_color brblue; echo -n " 34) pacremove"; set_color normal; echo " → Supprime paquet"
+        set_color brblue; echo -n " 35) pacinfo"; set_color normal; echo " → Infos paquet"
+        set_color brblue; echo -n " 36) pacpick"; set_color normal; echo " → Paquet propriétaire fichier"
+        set_color brblue; echo -n " 37) orphans+"; set_color normal; echo " → Dépendances inutiles"
         echo
 
         set_color yellow
-        read -P "Choisissez un numéro entre 1 et 38, 'r' pour revenir au menu principal, ou 'q' pour quitter : " choice
+        read -P "Choisissez un numéro entre 1 et 37, 'r' pour revenir au menu principal, ou 'q' pour quitter : " choice
         set_color normal
 
         if test "$choice" = "q"
@@ -129,9 +128,9 @@ function memo --description "Liste interactive des alias et fonctions disponible
             return 1
         end
 
-        if test "$choice" -lt 1 -o "$choice" -gt 38
+        if test "$choice" -lt 1 -o "$choice" -gt 37
             set_color red
-            echo "Numéro hors plage. Veuillez choisir entre 1 et 38."
+            echo "Numéro hors plage. Veuillez choisir entre 1 et 37."
             set_color normal
             return 1
         end
@@ -150,34 +149,33 @@ function memo --description "Liste interactive des alias et fonctions disponible
             case 8; set cmd "stop"
             case 9; set cmd "rm"
             case 10; set cmd "stockage"
-            case 11; set cmd "systemd"
-            case 12; set cmd "lastpackages"
-            case 13; set cmd "liminestats"
-            case 14; set cmd "scrub"
-            case 15; set cmd "bios"
-            case 16; set cmd "boot"
-            case 17; set cmd "boot!"
-            case 18; set cmd "watts"
-            case 19; set cmd "aur"
-            case 20; set cmd "aursearch"
-            case 21; set cmd "aurremove"
-            case 22; set cmd "aurlist"
-            case 23; set cmd "add"
-            case 24; set cmd "remove"
-            case 25; set cmd "upgrade"
-            case 26; set cmd "sourcefish"
-            case 27; set cmd "fishedit"
-            case 28; set cmd "!!"
-            case 29; set cmd "pacsearch"
-            case 30; set cmd "pacsearch_installed"
-            case 31; set cmd "pacdep"
-            case 32; set cmd "pacfiles"
-            case 33; set cmd "orphans"
-            case 34; set cmd "pacinstall"
-            case 35; set cmd "pacremove"
-            case 36; set cmd "pacinfo"
-            case 37; set cmd "pacpick"
-            case 38; set cmd "orphans+"
+            case 11; set cmd "lastpackages"
+            case 12; set cmd "liminestats"
+            case 13; set cmd "scrub"
+            case 14; set cmd "bios"
+            case 15; set cmd "boot"
+            case 16; set cmd "boot!"
+            case 17; set cmd "watts"
+            case 18; set cmd "aur"
+            case 19; set cmd "aursearch"
+            case 20; set cmd "aurremove"
+            case 21; set cmd "aurlist"
+            case 22; set cmd "add"
+            case 23; set cmd "remove"
+            case 24; set cmd "upgrade"
+            case 25; set cmd "sourcefish"
+            case 26; set cmd "fishedit"
+            case 27; set cmd "!!"
+            case 28; set cmd "pacsearch"
+            case 29; set cmd "pacsearch_installed"
+            case 30; set cmd "pacdep"
+            case 31; set cmd "pacfiles"
+            case 32; set cmd "orphans"
+            case 33; set cmd "pacinstall"
+            case 34; set cmd "pacremove"
+            case 35; set cmd "pacinfo"
+            case 36; set cmd "pacpick"
+            case 37; set cmd "orphans+"
         end
 
         echo
