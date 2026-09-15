@@ -206,7 +206,7 @@ sudo pacman -S meson ninja
 
 ### Étape 2 — Appliquer les corrections de compatibilité
 
-Ouvrir un terminal da ns le dossier de l'application puis :
+Ouvrir un terminal dans le dossier de l'application puis :
 
 ```fish
 cd packaging && makepkg -si     # installer
@@ -216,7 +216,7 @@ cd packaging && makepkg -si     # installer
 
 ### Étape 3 — Changer l’icône et le chemin d’exécution dans le menu
 
-   - Icône sched-ext : `/home/ogu/.local/Icones/Apps/coppwr.svg`
+   - Icône : `/home/ogu/.local/Icones/Apps/mixxx.svg`
    - Chemin de l’exécutable : `scx-manager-adwaita`
 
 ### Étape 5 — Supprimer l’ancien gestionnaire Qt, les dépendances Qt et les dépendances de build
