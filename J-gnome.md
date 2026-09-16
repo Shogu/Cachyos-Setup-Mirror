@@ -2,8 +2,8 @@
 
 [Accueil](README.md) · [Précédent](H-powersave.md) · [Suivant](K-vivaldi.md)
 
-1 - [Ajuster le rendu des polices](#j1--ajuster-le-rendu-des-polices)
-2 - [Régler les actions de session et les rappels](#j2--régler-les-actions-de-session-et-les-rappels)
+- [Ajuster le rendu des polices](#j1--ajuster-le-rendu-des-polices)
+- [Régler les actions de session et les rappels](#j2--régler-les-actions-de-session-et-les-rappels)
 - [Organiser Nautilus et les marque-pages](#j3--organiser-nautilus-et-les-marque-pages)
 - [Modifier le mot de passe du trousseau](#j4--modifier-le-mot-de-passe-du-trousseau)
 - [Installer le fond d’écran et le thème de curseurs](#j5--installer-le-fond-décran-et-le-thème-de-curseurs)
