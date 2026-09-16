@@ -8,7 +8,7 @@
 - [Modifier le mot de passe du trousseau](#j4--modifier-le-mot-de-passe-du-trousseau)
 - [Installer le fond d’écran et le thème de curseurs](#j5--installer-le-fond-décran-et-le-thème-de-curseurs)
 - [Régler l’échelle et masquer les dossiers](#j6--régler-léchelle-et-masquer-les-dossiers)
-- [Régler Xwayland et les fonctions expérimentales de Mutter](#j7--régler-xwayland-et-les-fonctions-expérimentales-de-mutter)
+- [Désactiver Xwayland et ajuster les fonctions expérimentales de Mutter](#j7--régler-xwayland-et-les-fonctions-expérimentales-de-mutter)
 - [Importer et activer le profil couleur de l’écran](#j8--importer-et-activer-le-profil-couleur-de-lécran)
 - [Renommer et organiser les lanceurs](#j9--renommer-et-organiser-les-lanceurs)
 - [Installer et régler les extensions GNOME](#j10--installer-et-régler-les-extensions-gnome)
@@ -107,19 +107,57 @@ La création du dossier caché de modèles est détaillée dans [Modèles Nautil
 
 ## J7 — Régler Xwayland et les fonctions expérimentales de Mutter
 
+Désactiver XWayland sur GNOME avec un script (à faire en *bash*):
+
+```fish
+mkdir -p ~/.local/bin
+cat > ~/.local/bin/kill-xwayland.sh << 'EOF'
+#!/bin/bash
+# Attendre que GNOME soit stable
+sleep 10
+
+# Tuer XWayland proprement
+pkill -TERM Xwayland 2>/dev/null
+sleep 2
+# Forcer si résiste
+pkill -9 Xwayland 2>/dev/null
+EOF
+```
+
+Lui donner les permissions :
+```fish
+chmod +x ~/.local/bin/kill-xwayland.sh
+```
+
+Créer un lanceur au boot :
+```fish
+mkdir -p ~/.config/autostart
+cat > ~/.config/autostart/kill-xwayland.desktop << EOF
+[Desktop Entry]
+Type=Application
+Name=Kill XWayland
+Exec=$HOME/.local/bin/kill-xwayland.sh
+X-GNOME-Autostart-enabled=true
+NoDisplay=false
+Hidden=false
+Comment=Désactiver XWayland après login
+EOF
+```
+
+Contrôler au rebbot avec `pgrep Xwayland`
+
+
+*Fonctions experimentalles Mutter :*
 Dans **dconf-editor**, ouvrir :
 
 ```text
 org.gnome.mutter experimental-features
 ```
 
-Conserver les valeurs utiles déjà présentes et activer, si elles existent dans la version installée :
+Conserver les valeurs utiles déjà présentes et activer:
 
-- `autoclose-xwayland` pour la fermeture de Xwayland lorsqu’il n’est plus utilisé ;
 - `scale-monitor-framebuffer` pour la mise à l’échelle fractionnaire ;
-- `xwayland-native-scaling` pour la mise à l’échelle native des applications Xwayland.
 
-Les options expérimentales peuvent varier selon la version de Mutter.
 
 ## J8 — Importer et activer le profil couleur de l’écran
 
