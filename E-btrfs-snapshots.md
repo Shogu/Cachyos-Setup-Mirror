@@ -13,18 +13,17 @@
 sudoedit /etc/fstab
 ```
 
-Pour FS BTRFS et boot en FAT:
+Pour FS BTRFS et boot en FAT: suppression de *defaults*, ajout de *noatime*, *commit=60*, *noacl* :
 ```
 # <file system>             <mount point>  <type>  <options>  <dump>  <pass>
-UUID=BC0B-F121                            /boot          vfat    defaults,noatime,umask=0077 0 2
-UUID=e181248c-3cce-4428-bdc4-b6efd715c470 /              btrfs   subvol=/@,defaults,noatime,commit=60,noacl,compress=zstd:1 0 0
-UUID=e181248c-3cce-4428-bdc4-b6efd715c470 /home          btrfs   subvol=/@home,defaults,noatime,commit=60,noacl,compress=zstd:1 0 0
-UUID=e181248c-3cce-4428-bdc4-b6efd715c470 /root          btrfs   subvol=/@root,defaults,noatime,commit=60,noacl,compress=zstd:1 0 0
-UUID=e181248c-3cce-4428-bdc4-b6efd715c470 /srv           btrfs   subvol=/@srv,defaults,noatime,commit=60,noacl,compress=zstd:1 0 0
-UUID=e181248c-3cce-4428-bdc4-b6efd715c470 /var/cache     btrfs   subvol=/@cache,defaults,noatime,commit=60,noacl,compress=zstd:1 0 0
-UUID=e181248c-3cce-4428-bdc4-b6efd715c470 /var/tmp       btrfs   subvol=/@tmp,defaults,noatime,commit=60,noacl,compress=zstd:1 0 0
-UUID=e181248c-3cce-4428-bdc4-b6efd715c470 /var/log       btrfs   subvol=/@log,defaults,noatime,commit=60,noacl,compress=zstd:1 0 0
-tmpfs                                     /tmp           tmpfs   defaults,noatime,mode=1777 0 0
+UUID=e181248c-3cce-4428-bdc4-b6efd715c470 /             btrfs   subvol=/@,noatime,commit=60,compress=zstd:1 0 0
+UUID=e181248c-3cce-4428-bdc4-b6efd715c470 /home          btrfs   subvol=/@home,noatime,commit=60,noacl,compress=zstd:1 0 0
+UUID=e181248c-3cce-4428-bdc4-b6efd715c470 /root          btrfs   subvol=/@root,noatime,commit=60,noacl,compress=zstd:1 0 0
+UUID=e181248c-3cce-4428-bdc4-b6efd715c470 /srv           btrfs   subvol=/@srv,noatime,commit=60,noacl,compress=zstd:1 0 0
+UUID=e181248c-3cce-4428-bdc4-b6efd715c470 /var/cache     btrfs   subvol=/@cache,noatime,commit=60,noacl,compress=zstd:1 0 0
+UUID=e181248c-3cce-4428-bdc4-b6efd715c470 /var/tmp       btrfs   subvol=/@tmp,noatime,commit=60,noacl,compress=zstd:1 0 0
+UUID=e181248c-3cce-4428-bdc4-b6efd715c470 /var/log       btrfs   subvol=/@log,noatime,commit=60,noacl,compress=zstd:1 0 0
+tmpfs                                     /tmp           tmpfs   noatime,mode=1777 0 0
 ```
 
 Relancer FSTAB avec `sudo systemctl daemon-reload` puis vérifier l'intégrité des lignes FSTAB avec :
@@ -45,7 +44,6 @@ findmnt --list --notruncate -o TARGET,SOURCE,FSTYPE,OPTIONS
 
 Si l’option de gestion de la racine uniquement par `rootflags` est retenue, voir [les paramètres du noyau](D-kernel-schedulers.md#d2--paramètres-du-noyau-scx-et-ananicy) avant de commenter la ligne `/`.
 
-Le NoCoW est intentionnel pour les caches et gros fichiers temporaires. `chattr +C` sur un dossier concerne les nouveaux fichiers qui héritent de l’attribut ; il ne convertit pas rétroactivement toutes les données des fichiers existants. Il désactive aussi compression et sommes de contrôle des données concernées. L’attribut n’exclut pas, à lui seul, un dossier des snapshots : leur périmètre dépend des sous-volumes.
 
 ## E2 — Configurer et restaurer les snapshots Limine
 
@@ -65,7 +63,7 @@ Appliquer :
 sudo limine-snapper-sync
 ```
 
-Le mémo propose d’utiliser Btrfs Assistant pour configurer les services systemd et la planification des snapshots, puis de le retirer si son interface n’est plus nécessaire. Dans la configuration testée, les services systemd et la timeline ont été configurés dans Btrfs Assistant avant sa suppression.
+Le mémo propose d’utiliser Btrfs Assistant pour configurer les services systemd et la planification des snapshots, puis de le retirer si son interface n’est plus nécessaire car BTRFS-assistant peut casser le boot d'apres le developpeur Zesko (Limine-snapper-sync). Dans la configuration testée, les services systemd et la timeline ont été configurés dans Btrfs Assistant avant sa suppression.
 
 Pour restaurer un snapshot démarré depuis Limine, privilégier **`limine-snapper-restore`**. La partition FAT32 de démarrage se trouve hors des snapshots Btrfs : restaurer seulement la racine avec un autre outil peut désynchroniser le noyau et ses modules.
 
