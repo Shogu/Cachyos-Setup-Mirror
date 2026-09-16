@@ -8,7 +8,7 @@
 - [Modifier le mot de passe du trousseau](#j4--modifier-le-mot-de-passe-du-trousseau)
 - [Installer le fond d’écran et le thème de curseurs](#j5--installer-le-fond-décran-et-le-thème-de-curseurs)
 - [Régler l’échelle et masquer les dossiers](#j6--régler-léchelle-et-masquer-les-dossiers)
-- [Désactiver Xwayland et ajuster les fonctions expérimentales de Mutter](#j7--régler-xwayland-et-les-fonctions-expérimentales-de-mutter)
+- [Désactiver Xwayland et ajuster les fonctions expérimentales de Mutter](#j7--désactiver-xwayland-et-ajuster-les-fonctions-expérimentales-de-mutter)
 - [Importer et activer le profil couleur de l’écran](#j8--importer-et-activer-le-profil-couleur-de-lécran)
 - [Renommer et organiser les lanceurs](#j9--renommer-et-organiser-les-lanceurs)
 - [Installer et régler les extensions GNOME](#j10--installer-et-régler-les-extensions-gnome)
