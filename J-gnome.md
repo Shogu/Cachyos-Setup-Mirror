@@ -105,7 +105,7 @@ Dans les paramètres d’affichage, choisir une mise à l’échelle **125 %**. 
 
 La création du dossier caché de modèles est détaillée dans [Modèles Nautilus](#j15--créer-des-modèles-de-documents-dans-nautilus).
 
-## J7 — Régler Xwayland et les fonctions expérimentales de Mutter
+## J7 — Désactiver Xwayland et ajuster les fonctions expérimentales de Mutter
 
 Désactiver XWayland sur GNOME avec un script (à faire en *bash*):
 
