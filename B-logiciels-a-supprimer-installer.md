@@ -304,10 +304,6 @@ desktop-file-validate "$HOME/.local/share/applications/lelivrescolaire.fr.deskto
 ```
 "$HOME/.local/Lelivrescolaire.fr.AppImage"
 ```
-```
 
-
-sudo chmod +x /usr/local/bin/control
-```
 
 [Accueil](README.md) · [Précédent](A-installation-preparation-du-setup.md) · [Suivant](I-reglages-logiciels.md)
