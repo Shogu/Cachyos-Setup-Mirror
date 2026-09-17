@@ -258,14 +258,9 @@ Régler `pacseek` pour inclure paru à la place de yay si besoin, et EnableAutoS
 gnome-text-editor ~/.config/pacseek/config.json
 ```
 
-### Beeper, Puls & LeLivreScolaire
+### Puls & LeLivreScolaire
 
-Installer [l’AppImage de Beeper](https://api.beeper.com/desktop/download/linux/x64/stable/com.automattic.beeper.desktop), la déplacer dans .local/bin, éditer le raccourci avec le chemin de l'exécutable et  `StartupWMClass=Beeper` pour faire apparaître l'icône dans le dash. Idem pour Puls : https://github.com/word-sys/puls, puis renommer en `control` et le CC dans /usr/local/bin/control puis rendre exécutable
-
-Les disponibilités et noms de paquets correspondent au mémo : vérifier les dépôts activés et utiliser l’AUR lorsque le paquet n’existe pas dans les dépôts configurés. Le bilan de **900 paquets et 6,5 Go** est une mesure indicative de l’installation d’origine, pas un résultat garanti.
-
-Les lanceurs Beeper et Puls sont des fichiers `.desktop` à éditer avec l’éditeur de menus. Après avoir placé l’exécutable Puls sous `/usr/
-
+[Puls](https://github.com/word-sys/puls/releases/tag/v0.9.3) : à installer dans `/home/ogu/.local/bin/`
 
 Installer l'AppImage `LeLivreScolaire` :
 
