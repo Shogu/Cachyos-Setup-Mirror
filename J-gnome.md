@@ -325,7 +325,10 @@ Après vérification, supprimer les deux fichiers de travail créés dans le dos
 rm -i fr.po gnome-shell.mo
 ```
 
-Cette personnalisation peut être remplacée par une mise à jour de GNOME Shell.
+Pour empêcher l'écrasement de la traduction : éditer `sudoedit /etc/pacman.conf` et ajouter dans la rubrique `options`:
+```
+NoExtract = usr/share/locale/fr/LC_MESSAGES/gnome-shell.mo
+```
 
 ## J14 — Créer les raccourcis BIOS, Ptyxis et Ressources
 
