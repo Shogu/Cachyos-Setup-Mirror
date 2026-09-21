@@ -1,0 +1,1 @@
+Fork de Tab Copy (extension Chrome) avec remplacement des icones pour des icones Adwaita & simplification du code.
