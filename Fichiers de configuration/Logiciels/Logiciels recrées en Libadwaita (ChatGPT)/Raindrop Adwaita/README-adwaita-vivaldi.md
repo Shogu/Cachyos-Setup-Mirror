@@ -5,6 +5,8 @@ l’icône de l’extension pour enregistrer la page courante dans Raindrop.io.
 
 Elle vise Chromium et Vivaldi uniquement. 
 
+Installation : dézipper l'archive, copier le contenu vers `~/.config/vivaldi/Default/Extensions/`, charger l'extension en `mode developpeur` depuis Vivaldi. 
+
 ## Résultat visible
 
 L’icône de la barre d’outils possède deux états :
