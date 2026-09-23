@@ -1,4 +1,4 @@
-# A — Installation & préparation du setup
+# A — Installation & préparation du setup!
 
 [Accueil](README.md) · [Suivant](B-logiciels-a-supprimer-installer.md)
 
