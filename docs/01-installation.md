@@ -1,4 +1,4 @@
-# 1 — Installation & préparation du setup
+# 1 — Installation & préparation du setup!
 
 [Accueil](../README.md) · [Suivant](02-system-cleanup.md)
 
