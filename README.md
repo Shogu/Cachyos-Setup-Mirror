@@ -3,8 +3,8 @@
 Setup, conseils et réglages personnels pour **CachyOS** sur **ASUS Zenbook 14 OLED UM3406KA**.
 
 <p>
-  <img src="https://gitlab.com/Shogu/CACHYOS-Setup/-/raw/Main/Fichiers%20de%20configuration/Icons%20%26%20background/.user-astronaut.png" alt="Avatar astronaute" width="120">
-  <img src="https://gitlab.com/Shogu/CACHYOS-Setup/-/raw/Main/Fichiers%20de%20configuration/Icons%20%26%20background/icones%20suppl%C3%A9mentaires/Apps/Cachy-Hello.png" alt="Logo CachyOS" width="120">
+  <img src="Ressources/Icons%20%26%20background/.user-astronaut.png" alt="Avatar astronaute" width="120">
+  <img src="Ressources/Icons%20%26%20background/Cachy-Hello.png" alt="Logo CachyOS" width="120">
 </p>
 
 ## Philosophie
