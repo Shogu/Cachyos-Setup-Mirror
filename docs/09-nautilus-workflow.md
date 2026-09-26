@@ -123,14 +123,14 @@ Rouvrir Nautilus et vérifier la présence des deux modèles dans le menu de cr�
 
 `Trieur.path` surveille `~/Téléchargements` ; `Trieur.service` attend **2 secondes**, exécute le script, puis s'arrête. Le script ne parcourt que les fichiers à la racine : dossiers extraits, vidéos et formats inconnus restent en place.
 
-- `Archives/` : zip, 7z, rar, tar, gz, xz, zst…
+- `Archives/` : zip, 7z, rar, tar, gz, xz, zst et paquets Arch `.pkg.tar.*` (y compris les doublons renommés en `.pkg (1).tar.zst`).
 - `Audio/` : mp3, flac, opus, ogg, m4a, wav…
 - `Code/` : md, json, yaml, sh, fish, py, js, conf…
 - `Documents/` : pdf, odt, docx, xlsx, pptx, txt…
 - `Ebooks/` : epub, mobi, azw3, cbz, cbr…
 - `Images/` : jpg, png, webp, avif, svg…
 - `ISOs/` : iso, img et fichiers associés.
-- `Packages/` : AppImage, deb, rpm ; paquets Arch dans `Packages/<pkgname>/`, selon leur fichier `.PKGINFO`. Les doublons renommés par le navigateur (ex. `stethoscope-0.4.0-2-any.pkg (1).tar.zst`) sont reconnus aussi ; un fichier sans métadonnées de paquet valides reste en place.
+- `Packages/` : AppImage, deb et rpm.
 
 ### Installation
 
@@ -183,20 +183,6 @@ move_file() {
     mv -- "$file" "$target"
 }
 
-move_arch_package() {
-    local file="$1"
-    local pkgname
-
-    pkgname="$(
-        bsdtar -xOf "$file" .PKGINFO 2>/dev/null |
-        sed -n 's/^pkgname = //p' |
-        head -n 1
-    )"
-
-    [[ -n "$pkgname" ]] || return
-    move_file "$file" "$DOWNLOADS/Packages/$pkgname"
-}
-
 find "$DOWNLOADS" -maxdepth 1 -type f -print0 |
 while IFS= read -r -d '' file; do
     name="${file##*/}"
@@ -206,7 +192,7 @@ while IFS= read -r -d '' file; do
         *.part|*.crdownload|*.download|*.partial|*.tmp)
             continue ;;
         *.pkg*.tar.zst|*.pkg*.tar.xz|*.pkg*.tar.gz)
-            move_arch_package "$file" ;;
+            move_file "$file" "$DOWNLOADS/Archives" ;;
         *.appimage|*.deb|*.rpm)
             move_file "$file" "$DOWNLOADS/Packages" ;;
         *.iso|*.img|*.iso.sig|*.iso.sha256|*.iso.sha512)
