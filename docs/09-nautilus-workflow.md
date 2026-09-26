@@ -244,6 +244,49 @@ systemctl --user enable --now Trieur.path
 exit
 ```
 
+### Migration d'une installation existante
+
+Dans Fish, corriger le script installé, déplacer les fichiers déjà rangés dans `Ebooks/` vers `Documents/` sans écraser les doublons, puis supprimer `Ebooks/` une fois vide :
+
+```fish
+python3 -c '
+from pathlib import Path
+import shutil
+import subprocess
+
+home = Path.home()
+script = home / ".local/bin/trieur"
+source = script.read_text()
+old = "move_file \"$file\" \"$DOWNLOADS/Ebooks\""
+new = "move_file \"$file\" \"$DOWNLOADS/Documents\""
+if old in source:
+    updated = source.replace(old, new, 1)
+    check = subprocess.run(["bash", "-n"], input=updated, text=True, capture_output=True)
+    if check.returncode:
+        raise SystemExit(check.stderr)
+    script.write_text(updated)
+elif new not in source:
+    raise SystemExit("Règle Ebooks introuvable : script inchangé")
+
+downloads = home / "Téléchargements"
+ebooks = downloads / "Ebooks"
+documents = downloads / "Documents"
+if ebooks.is_dir():
+    documents.mkdir(exist_ok=True)
+    for item in ebooks.iterdir():
+        target = documents / item.name
+        number = 2
+        while target.exists() or target.is_symlink():
+            target = documents / f"{item.stem} ({number}){item.suffix}"
+            number += 1
+        shutil.move(str(item), str(target))
+    ebooks.rmdir()
+print("Ebooks fusionné dans Documents.")
+'
+```
+
+Le service prendra en compte le script modifié au prochain déclenchement.
+
 ### Vérification et gestion
 
 Ces commandes fonctionnent directement dans Fish :
