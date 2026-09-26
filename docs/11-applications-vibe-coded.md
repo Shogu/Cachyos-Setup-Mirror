@@ -16,6 +16,7 @@
 - [11.10 Radar](#1110--radar)
 - [11.11 Pusher](#1111--pusher)
 - [11.12 Nautilus Bookmark Icons](#1112--nautilus-bookmark-icons)
+- [11.13 Stethoscope](#1113--stethoscope)
 
 ## 11.1 — Always on top, always on top
 
@@ -334,6 +335,29 @@ nautilus -q
 ```
 
 La sidebar de Nautilus n’étant pas couverte par une API d’extension officielle, une future version majeure peut nécessiter une adaptation.
+
+---
+
+## 11.13 — Stethoscope
+
+Application GTK4/libadwaita de diagnostic du démarrage actuel. Elle regroupe les erreurs du journal par service et message, permet de parcourir les journaux par catégorie et affiche un résumé du système. La recherche surligne les occurrences ; un bouton icône exporte un rapport texte local. La lecture ne demande pas de droits administrateur. Snapper ne fait pas partie de cette version.
+
+**Paquet fourni : `stethoscope-0.6.4-1-any.pkg.tar.zst`.** Le [README du paquet](../Ressources/Applis vibe codées en Libadwaita/Stethoscope/readme_stethoscope.md) décrit les fonctions et leurs limites.
+
+### Installation
+
+Depuis la racine du dépôt :
+
+```fish
+sudo pacman -U "Ressources/Applis vibe codées en Libadwaita/Stethoscope/stethoscope-0.6.4-1-any.pkg.tar.zst"
+stethoscope
+```
+
+### Désinstallation
+
+```fish
+sudo pacman -Rns stethoscope
+```
 
 ---
 

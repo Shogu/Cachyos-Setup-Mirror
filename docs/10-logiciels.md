@@ -55,6 +55,7 @@
 - **Radar** : installer [l’outil maison de recherche de fichiers](11-applications-vibe-coded.md#1110--radar).
 - **Pusher** : installer [l’interface maison du dépôt GitLab](11-applications-vibe-coded.md#1111--pusher).
 - **Nautilus Bookmark Icons** : installer [l’extension maison de personnalisation des icônes de favoris Nautilus](11-applications-vibe-coded.md#1112--nautilus-bookmark-icons).
+- **Stethoscope** : installer [l’outil maison d’analyse du démarrage et des journaux](11-applications-vibe-coded.md#1113--stethoscope).
 
 Commande des paquets des dépôts (les applications maison se trouvent ci-dessous) :
 
@@ -75,7 +76,8 @@ sudo pacman -U \
   "Ressources/Applis vibe codées en Libadwaita/Pacto/pacto-1.0.0-1-any.pkg.tar.zst" \
   "Ressources/Applis vibe codées en Libadwaita/Radar/radar-1.4.0-1-any.pkg.tar.zst" \
   "Ressources/Applis vibe codées en Libadwaita/Pusher/pusher-1.7.0-1-any.pkg.tar.zst" \
-  "Ressources/Applis vibe codées en Libadwaita/Nautilus Bookmark Icons/nautilus-bookmark-icons-0.1.1-1-any.pkg.tar.zst"
+  "Ressources/Applis vibe codées en Libadwaita/Nautilus Bookmark Icons/nautilus-bookmark-icons-0.1.1-1-any.pkg.tar.zst" \
+  "Ressources/Applis vibe codées en Libadwaita/Stethoscope/stethoscope-0.6.4-1-any.pkg.tar.zst"
 ```
 
 Pour **Grabber** (AppImage) et **SCX Manager** (sources), suivre leurs [instructions d’installation](11-applications-vibe-coded.md). La commande Pacman ci-dessus suppose que chaque paquet a été vérifié pour cette machine.
