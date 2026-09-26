@@ -88,7 +88,7 @@ Ou utiliser la fonction personnelle du fichier Fish :
 scx
 ```
 
-Une alternative consistant à utiliser LAVD en mode automatique avec `--autopower` pour son adaptation énergétique ou à désactiver SCX et repasser sur EEVDF est documentée dans les [archives](archives.md#utiliser-eevdf-sans-scx-alternative-non-retenue).
+Une alternative consistant à utiliser LAVD en mode automatique avec `--autopower` pour son adaptation énergétique ou à désactiver SCX et repasser sur EEVDF est documentée dans les archives : [LAVD automatique](archives.md#utiliser-lavd-en-mode-automatique) et [EEVDF sans SCX](archives.md#utiliser-eevdf-sans-scx-alternative-non-retenue).
 
 Les rôles sont distincts : l'extension GNOME peut changer le profil selon secteur/batterie, TuneD applique le profil et son EPP, puis le plugin SCX choisit le scheduler.
 

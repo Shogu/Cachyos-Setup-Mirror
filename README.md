@@ -33,4 +33,4 @@ Ce setup applique des **optimisations agressives** : allègement système, désa
 12. [Shell & terminal](docs/12-shell-terminal.md)
 13. [Vivaldi](docs/13-vivaldi.md)
 14. [Maintenance](docs/14-maintenance.md)
-15. [Archives](docs/archives.md)
+15. [Archives — alternatives et réglages optionnels](docs/archives.md)
