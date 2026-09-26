@@ -43,6 +43,7 @@ Extensions apportant des fonctions d'interface ou de système considérées comm
 
 - [Caffeine](https://extensions.gnome.org/extension/517/caffeine/)
 - [Copyous](https://extensions.gnome.org/extension/8834/copyous/) : penser à installer la dépendance libgda6 `sudo pacman -S libgda6`
+- [Now Playing Card](https://extensions.gnome.org/extension/10736/now-playing-card/) — dans les préférences, régler **Location** sur **Quick Settings** plutôt que **Panel**.
 
 
 ## 8.4 — Esthétiques
