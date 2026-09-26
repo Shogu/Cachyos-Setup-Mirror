@@ -210,6 +210,21 @@ supplémentaire :
 - avertissements en orange/jaune ;
 - états actifs ou réussis en vert.
 
+### Accès aux journaux sans élévation
+
+Pour lire les journaux système avec son compte, ajouter l’utilisateur au groupe `systemd-journal` :
+
+```bash
+sudo usermod -aG systemd-journal "$USER"
+sudo reboot
+```
+
+Après redémarrage, vérifier la présence du groupe avec `groups ogu`, puis ouvrir l’application et consulter l’onglet **Journal** d’un service.
+
+```bash
+groups ogu
+```
+
 ### Journal
 
 L’onglet **Journal** utilise :

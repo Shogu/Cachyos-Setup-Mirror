@@ -31,7 +31,7 @@ sudo ufw status numbered
 
 Dans Nicotine : sélectionner `wlan0` et le port 2234.
 
-Régler Nicotine et Fragments pour qu'ils utilisent les ports correspondants à UFW — 🔗 voir aussi leur configuration applicative dans [Logiciels](#105--téléchargement--grabber-et-fragments).
+Régler Nicotine et Fragments pour qu'ils utilisent les ports correspondants à UFW — 🔗 voir aussi leur configuration applicative dans [Logiciels](10-logiciels.md#104--téléchargement--grabber-et-fragments).
 
 ## 6.2 — Régler le Wi-Fi et TCP Fast Open
 

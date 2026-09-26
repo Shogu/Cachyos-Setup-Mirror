@@ -197,7 +197,7 @@ Remplacer également l'icône de Ptyxis par celle de [GNOME Terminal](https://up
 
 Dans les paramètres GNOME, affecter :
 
-- La touche **Copilot** à Ptyxis (voir [Shell & terminal](13-shell-terminal.md)).
+- La touche **Copilot** à Ptyxis (voir [Shell & terminal](12-shell-terminal.md)).
 - **Ctrl+Alt+Suppr** à Ressources.
 
 ## 7.12 — Désactiver les autostarts inutilisés

@@ -1,6 +1,6 @@
 # Archives
 
-[Accueil](../README.md) · [Précédent](15-maintenance.md)
+[Accueil](../README.md) · [Précédent](14-maintenance.md)
 
 > **Dans ce chapitre :** alternatives écartées et pistes non retenues, conservées pour mémoire.
 
@@ -74,4 +74,4 @@ Adapter ces valeurs au réseau et vérifier que l'adresse n'est pas attribuée �
 
 ---
 
-[Accueil](../README.md) · [Précédent](15-maintenance.md)
+[Accueil](../README.md) · [Précédent](14-maintenance.md)

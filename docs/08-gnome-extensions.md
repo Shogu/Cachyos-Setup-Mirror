@@ -9,7 +9,7 @@
 - [8.3 Productivité](#83--productivité)
 - [8.4 Esthétiques](#84--esthétiques)
 - [8.5 Optionnelles](#85--optionnelles)
-- [8.6 Obsolètes / à retirer après usage](#86--obsolètes--à-retirer-après-usage)
+- [8.6 Extension maison : Always on top, always on top](#86--extension-maison--always-on-top-always-on-top)
 
 ## 8.1 — Validation des versions d'extensions
 
@@ -51,9 +51,25 @@ Extensions apportant des fonctions d'interface ou de système considérées comm
 - [Just Perfection](https://extensions.gnome.org/extension/3843/just-perfection/) qui permet de réunir en une extension Grand Theft Focus, Hide Worldclocks, Hide Activities Button, Hide Screenshot, Impatience, etc.
 
 
-## 8.5 — à retirer après réglage
+## 8.5 — Optionnelles : à retirer après réglage
 
 - [Privacy Settings](https://extensions.gnome.org/extension/4491/privacy-settings-menu/) — installer, effectuer les réglages voulus, puis la supprimer une fois cela fait.
+
+## 8.6 — Extension maison : Always on top, always on top
+
+Une icône dans la barre supérieure active ou désactive **Toujours au premier plan** pour la fenêtre active. Elle affiche l’icône de la dernière fenêtre épinglée et suit son état, même après un changement de fenêtre. Compatible GNOME Shell 45 à 50 ; sans dépendance ni préférences. [Détails et captures](11-applications-vibe-coded.md#111--always-on-top-always-on-top).
+
+Depuis la racine du dépôt, installer [l’archive fournie](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extension%20Gnome%20ALWAYS%20ON%20TOP%20ALWAYS%20ON%20TOP/always-on-top-always-on-top_localhost.shell-extension.zip) :
+
+```bash
+gnome-extensions install --force "Ressources/Applis vibe codées en Libadwaita/Extension Gnome ALWAYS ON TOP ALWAYS ON TOP/always-on-top-always-on-top_localhost.shell-extension.zip"
+```
+
+Sous Wayland, se déconnecter puis se reconnecter ; ensuite activer l’extension :
+
+```bash
+gnome-extensions enable always-on-top-always-on-top@localhost
+```
 
 ---
 

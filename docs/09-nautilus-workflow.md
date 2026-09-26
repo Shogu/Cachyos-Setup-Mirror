@@ -1,6 +1,6 @@
 # 9 — Nautilus — workflow
 
-[Accueil](../README.md) · [Précédent](08-gnome-extensions.md) · [Suivant](10-installation.md)
+[Accueil](../README.md) · [Précédent](08-gnome-extensions.md) · [Suivant](10-logiciels.md)
 
 > **Dans ce chapitre :** marque-pages, scripts et extensions Nautilus, dossiers masqués, icônes personnalisées et modèles de documents.
 
@@ -45,7 +45,7 @@ nautilus -q
 nautilus
 ```
 
-Pour l'intégration du terminal Ptyxis dans Nautilus (clic droit → ouvrir un terminal), voir [Shell & terminal](13-shell-terminal.md#131--intégrer-ptyxis-à-nautilus-et-aux-outils-cachyos).
+Pour l'intégration du terminal Ptyxis dans Nautilus (clic droit → ouvrir un terminal), voir [Shell & terminal](12-shell-terminal.md#121--intégrer-ptyxis-à-nautilus-et-aux-outils-cachyos).
 
 ## 9.3 — Masquer des dossiers et personnaliser les icônes
 
@@ -95,4 +95,4 @@ Rouvrir Nautilus et vérifier la présence des deux modèles dans le menu de cr�
 
 ---
 
-[Accueil](../README.md) · [Précédent](08-gnome-extensions.md) · [Suivant](10-installation.md)
+[Accueil](../README.md) · [Précédent](08-gnome-extensions.md) · [Suivant](10-logiciels.md)

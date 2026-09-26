@@ -23,7 +23,7 @@ Copier le fichier du dépôt à cet emplacement, puis le charger :
 source ~/.config/fish/config.fish
 ```
 
-Pour les functions : voir [la configuration complète de Fish et des éditeurs](13-shell-terminal.md#112--fish-gnome-text-editor-et-micro).
+Pour les functions : voir [la configuration complète de Fish et des éditeurs](12-shell-terminal.md#122--fish-gnome-text-editor-et-micro).
 
 
 ### Réglages initiaux dans CachyOS Hello

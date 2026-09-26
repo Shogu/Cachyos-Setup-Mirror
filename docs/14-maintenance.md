@@ -1,14 +1,14 @@
-# 15 — Maintenance
+# 14 — Maintenance
 
-[Accueil](../README.md) · [Précédent](14-vivaldi.md) · [Suivant](archives.md)
+[Accueil](../README.md) · [Précédent](13-vivaldi.md) · [Suivant](archives.md)
 
 > **Dans ce chapitre :** choix de l'outil de mise à jour et points à vérifier après chaque mise à jour du système.
 
-- [15.1 Choisir Cachy-update ou Shelly](#151--choisir-cachy-update-ou-shelly)
-- [15.2 Points à revoir après les mises à jour](#152--points-à-revoir-après-les-mises-à-jour)
-- [15.3 Dépannage iwd](#153--dépannage-iwd)
+- [14.1 Choisir Cachy-update ou Shelly](#141--choisir-cachy-update-ou-shelly)
+- [14.2 Points à revoir après les mises à jour](#142--points-à-revoir-après-les-mises-à-jour)
+- [14.3 Dépannage iwd](#143--dépannage-iwd)
 
-## 15.1 — Choisir Cachy-update ou Shelly
+## 14.1 — Choisir Cachy-update ou Shelly
 
 ### Option 1 : conserver Cachy-update
 
@@ -91,7 +91,7 @@ shelly install adw-gtk-theme
 
 Activer ensuite le thème adw-gtk3 dans Tweaks, selon le nom effectivement installé.
 
-## 15.2 — Points à revoir après les mises à jour
+## 14.2 — Points à revoir après les mises à jour
 
 Les opérations détaillées restent dans leur rubrique pour éviter de maintenir plusieurs versions de la même procédure :
 
@@ -104,7 +104,7 @@ Les opérations détaillées restent dans leur rubrique pour éviter de mainteni
 - [Restauration des snapshots](04-filesystems-storage.md#42--configurer-et-restaurer-les-snapshots-limine) avec l'outil adapté à Limine.
 
 
-## 15.3 - Dépannage iwd
+## 14.3 - Dépannage iwd
 
 
 Symptôme : connexion qui échoue avec state change: config → failed (reason 'no-secrets')
@@ -168,4 +168,4 @@ nmcli connection up Xiaomi_03F1_5
 Toujours préférer connection up à une reconnexion via l'interface graphique pour éviter que NetworkManager ne recrée un doublon.
 ---
 
-[Accueil](../README.md) · [Précédent](14-vivaldi.md) · [Suivant](archives.md)
+[Accueil](../README.md) · [Précédent](13-vivaldi.md) · [Suivant](archives.md)

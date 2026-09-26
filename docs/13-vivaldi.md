@@ -1,15 +1,15 @@
-# 14 — Vivaldi
+# 13 — Vivaldi
 
-[Accueil](../README.md) · [Précédent](13-shell-terminal.md) · [Suivant](15-maintenance.md)
+[Accueil](../README.md) · [Précédent](12-shell-terminal.md) · [Suivant](14-maintenance.md)
 
 > **Dans ce chapitre :** synchronisation, thème, panneau latéral et extensions du navigateur Vivaldi.
 
-- [14.1 Synchronisation, cache et réglages internes](#141--synchronisation-cache-et-réglages-internes)
-- [14.2 Appliquer le thème et les modifications CSS](#142--appliquer-le-thème-et-les-modifications-css)
-- [14.3 Configurer le panneau latéral et la recherche Google](#143--configurer-le-panneau-latéral-et-la-recherche-google)
-- [14.4 Installer les extensions et associer les liens magnet](#144--installer-les-extensions-et-associer-les-liens-magnet)
+- [13.1 Synchronisation, cache et réglages internes](#131--synchronisation-cache-et-réglages-internes)
+- [13.2 Appliquer le thème et les modifications CSS](#132--appliquer-le-thème-et-les-modifications-css)
+- [13.3 Configurer le panneau latéral et la recherche Google](#133--configurer-le-panneau-latéral-et-la-recherche-google)
+- [13.4 Installer les extensions et associer les liens magnet](#134--installer-les-extensions-et-associer-les-liens-magnet)
 
-## 14.1 — Synchronisation, cache et réglages internes
+## 13.1 — Synchronisation, cache et réglages internes
 
 Commencer par synchroniser les réglages avec le compte Vivaldi, puis utiliser `chrome://settings/system`.
 
@@ -44,7 +44,7 @@ Ouvrir les réglages système internes, indiqués dans le mémo comme `vivaldi:s
 
 Pour bloquer la lecture automatique YouTube, le parcours indiqué est **Vivaldi → Paramètres → Confidentialité → Permissions des sites → Lecture automatique → Bloquer**.
 
-## 14.2 — Appliquer le thème et les modifications CSS
+## 13.2 — Appliquer le thème et les modifications CSS
 
 Appliquer le thème personnalisé disponible dans le dépôt.
 
@@ -55,7 +55,7 @@ Pour les modifications CSS de l'interface :
 3. Redémarrer Vivaldi.
 4. Dans **Paramètres → Apparence → Modifications UI personnalisées**, sélectionner le dossier contenant les fichiers CSS du dépôt.
 
-## 14.3 — Configurer le panneau latéral et la recherche Google
+## 13.3 — Configurer le panneau latéral et la recherche Google
 
 Ajouter Perplexity et [WhatsApp Web](https://web.whatsapp.com/) au panneau latéral. Le mémo conserve [ce retour sur WhatsApp en panneau Web](https://www.reddit.com/r/vivaldibrowser/comments/1m93s3b/does_anyone_know_how_to_open_whatsapp_as_webpanel/).
 
@@ -82,7 +82,7 @@ Paramètres POST de recherche d'image:
 encoded_image={google:imageThumbnail},image_url={google:imageURL},sbisrc={google:imageSearchSource},original_width={google:imageOriginalWidth},original_height={google:imageOriginalHeight},processed_image_dimensions={google:processedImageDimensions}
 ```
 
-## 14.4 — Installer les extensions et associer les liens magnet
+## 13.4 — Installer les extensions et associer les liens magnet
 
 Les extensions sont regroupées ci-dessous par usage.
 
@@ -122,4 +122,4 @@ gio mime x-scheme-handler/magnet de.haeckerfelix.Fragments.desktop
 
 ---
 
-[Accueil](../README.md) · [Précédent](13-shell-terminal.md) · [Suivant](15-maintenance.md)
+[Accueil](../README.md) · [Précédent](12-shell-terminal.md) · [Suivant](14-maintenance.md)

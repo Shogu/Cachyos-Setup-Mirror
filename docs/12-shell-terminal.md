@@ -1,13 +1,13 @@
-# 13 — Shell & terminal
+# 12 — Shell & terminal
 
-[Accueil](../README.md) · [Précédent](12-applications-vibe-coded.md) · [Suivant](14-vivaldi.md)
+[Accueil](../README.md) · [Précédent](11-applications-vibe-coded.md) · [Suivant](13-vivaldi.md)
 
 > **Dans ce chapitre :** intégration de Ptyxis à Nautilus, configuration de Fish, GNOME Text Editor et Micro.
 
-- [13.1 Intégrer Ptyxis à Nautilus et aux outils CachyOS](#131--intégrer-ptyxis-à-nautilus-et-aux-outils-cachyos)
-- [13.2 Fish, GNOME Text Editor et Micro](#132--fish-gnome-text-editor-et-micro)
+- [12.1 Intégrer Ptyxis à Nautilus et aux outils CachyOS](#121--intégrer-ptyxis-à-nautilus-et-aux-outils-cachyos)
+- [12.2 Fish, GNOME Text Editor et Micro](#122--fish-gnome-text-editor-et-micro)
 
-## 13.1 — Intégrer Ptyxis à Nautilus et aux outils CachyOS
+## 12.1 — Intégrer Ptyxis à Nautilus et aux outils CachyOS
 
 Installer l'intégration du terminal dans Nautilus :
 
@@ -21,7 +21,7 @@ L'option `new-tab` ouvre un onglet dans la session existante. En cas d'erreur av
 
 Pour ajouter Ptyxis aux terminaux proposés par les outils CachyOS, le mémo conserve [ce guide communautaire](https://www.reddit.com/r/cachyos/comments/1rry7qh/guide_add_your_terminal_to_cachyos_tools_like/).
 
-## 13.2 — Fish, GNOME Text Editor et Micro
+## 12.2 — Fish, GNOME Text Editor et Micro
 
 ### Zoxide avec Fish
 
@@ -74,4 +74,4 @@ Insérer ces valeurs dans l'objet JSON existant, ou utiliser ce contenu si le fi
 
 ---
 
-[Accueil](../README.md) · [Précédent](12-applications-vibe-coded.md) · [Suivant](14-vivaldi.md)
+[Accueil](../README.md) · [Précédent](11-applications-vibe-coded.md) · [Suivant](13-vivaldi.md)
