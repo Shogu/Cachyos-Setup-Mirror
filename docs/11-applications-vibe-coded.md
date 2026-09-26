@@ -15,6 +15,7 @@
 - [11.9 Pacto](#119--pacto)
 - [11.10 Radar](#1110--radar)
 - [11.11 Pusher](#1111--pusher)
+- [11.12 Nautilus Bookmark Icons](#1112--nautilus-bookmark-icons)
 
 ## 11.1 — Always on top, always on top
 
@@ -305,6 +306,34 @@ sudo pacman -U ./pusher-1.7.0-1-any.pkg.tar.zst
 ```fish
 sudo pacman -Rns pusher
 ```
+
+---
+
+## 11.12 — Nautilus Bookmark Icons
+
+Petite extension `nautilus-python` pour Nautilus 48–50 permettant de personnaliser l’icône des favoris de la barre latérale. Elle est dérivée du mécanisme de **Nautilus My Computer**, mais ne reprend aucune de ses autres fonctions.
+
+**Paquet fourni : `nautilus-bookmark-icons-0.1.1-1-any.pkg.tar.zst`.**
+
+### Installation
+
+Depuis la racine du dépôt :
+
+```fish
+sudo pacman -U "Ressources/Applis vibe codées en Libadwaita/Nautilus Bookmark Icons/nautilus-bookmark-icons-0.1.1-1-any.pkg.tar.zst"
+nautilus -q
+```
+
+Rouvrir Nautilus puis utiliser **clic droit sur un favori → Changer l’icône**. Le choix est conservé via GSettings ; **Réinitialiser** restaure l’icône native.
+
+### Désinstallation
+
+```fish
+sudo pacman -Rns nautilus-bookmark-icons
+nautilus -q
+```
+
+La sidebar de Nautilus n’étant pas couverte par une API d’extension officielle, une future version majeure peut nécessiter une adaptation.
 
 ---
 

@@ -7,8 +7,9 @@
 - [9.1 Marque-pages](#91--marque-pages)
 - [9.2 Scripts Nautilus et extensions (copy-path, admin)](#92--scripts-nautilus-et-extensions-copy-path-admin)
 - [9.3 Masquer des dossiers et personnaliser les icônes](#93--masquer-des-dossiers-et-personnaliser-les-icônes)
-- [9.4 Modèles de documents](#94--modèles-de-documents)
-- [9.5 Trieur automatique de Téléchargements](#95--trieur-automatique-de-téléchargements)
+- [9.4 Icônes personnalisées des favoris de la sidebar](#94--icônes-personnalisées-des-favoris-de-la-sidebar)
+- [9.5 Modèles de documents](#95--modèles-de-documents)
+- [9.6 Trieur automatique de Téléchargements](#96--trieur-automatique-de-téléchargements)
 
 ## 9.1 — Marque-pages
 
@@ -58,7 +59,29 @@ Dans Nautilus :
 
 Personnaliser les icônes **Places** des dossiers suivants à partir des icônes du dossier **Icons & background** du dépôt : `Dropbox`, MP3, Root, Domestique et Lycée (dans Dropbox), Nicotine, Téléchargements, `usr`, `root`, Extensions, Icons, ainsi que des extensions GNOME et des autres dossiers souhaités.
 
-## 9.4 — Modèles de documents
+## 9.4 — Icônes personnalisées des favoris de la sidebar
+
+Le paquet maison **Nautilus Bookmark Icons** permet de changer l’icône des favoris directement dans la barre latérale de Nautilus. Le choix est persistant via GSettings et l’extension réapplique l’icône lorsque Nautilus reconstruit sa sidebar.
+
+Depuis la racine du dépôt :
+
+```fish
+sudo pacman -U "Ressources/Applis vibe codées en Libadwaita/Nautilus Bookmark Icons/nautilus-bookmark-icons-0.1.1-1-any.pkg.tar.zst"
+nautilus -q
+```
+
+Rouvrir Nautilus, puis faire **clic droit sur un favori → Changer l’icône**. Le bouton **Réinitialiser** restaure l’icône native.
+
+Désinstallation :
+
+```fish
+sudo pacman -Rns nautilus-bookmark-icons
+nautilus -q
+```
+
+> Cette extension touche à la sidebar interne de Nautilus : une future version majeure de Nautilus peut nécessiter une adaptation.
+
+## 9.5 — Modèles de documents
 
 Utiliser un dossier caché **`.Modèles`** pour le menu de création de fichiers de Nautilus.
 
@@ -96,7 +119,7 @@ Rouvrir Nautilus et vérifier la présence des deux modèles dans le menu de cr�
 
 ---
 
-## 9.5 — Trieur automatique de Téléchargements
+## 9.6 — Trieur automatique de Téléchargements
 
 `Trieur.path` surveille `~/Téléchargements` ; `Trieur.service` attend **2 secondes**, exécute le script, puis s'arrête. Le script ne parcourt que les fichiers à la racine : dossiers extraits, vidéos et formats inconnus restent en place.
 
