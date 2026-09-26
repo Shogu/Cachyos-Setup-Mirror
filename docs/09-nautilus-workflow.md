@@ -98,7 +98,7 @@ Rouvrir Nautilus et vérifier la présence des deux modèles dans le menu de cr�
 
 ## 9.5 — Trieur automatique de Téléchargements
 
-`Trieur.path` surveille `~/Téléchargements`. Après un changement, `Trieur.service` attend **2 secondes**, lance `~/.local/bin/trieur` pour classer les fichiers, puis s'arrête. Les vidéos et les formats inconnus restent à la racine.
+`Trieur.path` surveille `~/Téléchargements` ; `Trieur.service` attend **2 secondes**, exécute le script, puis s'arrête. Le script ne parcourt que les fichiers à la racine : dossiers extraits, vidéos et formats inconnus restent en place.
 
 - `Archives/` : zip, 7z, rar, tar, gz, xz, zst…
 - `Audio/` : mp3, flac, opus, ogg, m4a, wav…
@@ -106,17 +106,148 @@ Rouvrir Nautilus et vérifier la présence des deux modèles dans le menu de cr�
 - `Documents/` : pdf, odt, docx, xlsx, pptx, txt…
 - `Ebooks/` : epub, mobi, azw3, cbz, cbr…
 - `Images/` : jpg, png, webp, avif, svg…
-- `ISOs/` : iso, img, signatures et sommes de contrôle des ISO.
-- `Packages/` : AppImage, deb, rpm ; les paquets Arch sont rangés dans `Packages/<pkgname>/` d'après leur fichier `.PKGINFO`.
+- `ISOs/` : iso, img et fichiers associés.
+- `Packages/` : AppImage, deb, rpm ; paquets Arch dans `Packages/<pkgname>/`, selon leur fichier `.PKGINFO`.
 
-Les deux unités se trouvent dans `~/.config/systemd/user/`. Vérifier la surveillance et consulter le journal :
+### Installation
+
+Les blocs suivants utilisent la syntaxe **Bash** (`EOF`, accolades). Depuis Fish, lancer `bash` une fois, exécuter les blocs dans l'ordre, puis revenir à Fish avec `exit`.
+
+```fish
+bash
+```
+
+Créer les dossiers (sans modifier ceux qui existent déjà) :
+
+```bash
+mkdir -p "$HOME/Téléchargements"/{Archives,Audio,Code,Documents,Ebooks,Images,ISOs,Packages}
+mkdir -p "$HOME/.local/bin" "$HOME/.config/systemd/user"
+```
+
+Créer le script :
+
+```bash
+cat > "$HOME/.local/bin/trieur" <<'EOF'
+#!/usr/bin/env bash
+
+DOWNLOADS="$HOME/Téléchargements"
+
+move_file() {
+    local file="$1"
+    local destination="$2"
+    local name target base ext n
+
+    name="${file##*/}"
+    mkdir -p "$destination"
+    target="$destination/$name"
+
+    if [[ -e "$target" ]]; then
+        if [[ "$name" == *.* ]]; then
+            base="${name%.*}"
+            ext=".${name##*.}"
+        else
+            base="$name"
+            ext=""
+        fi
+
+        n=2
+        while [[ -e "$destination/$base ($n)$ext" ]]; do
+            ((n++))
+        done
+        target="$destination/$base ($n)$ext"
+    fi
+
+    mv -- "$file" "$target"
+}
+
+move_arch_package() {
+    local file="$1"
+    local pkgname
+
+    pkgname="$(
+        bsdtar -xOf "$file" .PKGINFO 2>/dev/null |
+        sed -n 's/^pkgname = //p' |
+        head -n 1
+    )"
+
+    [[ -n "$pkgname" ]] || return
+    move_file "$file" "$DOWNLOADS/Packages/$pkgname"
+}
+
+find "$DOWNLOADS" -maxdepth 1 -type f -print0 |
+while IFS= read -r -d '' file; do
+    name="${file##*/}"
+    lower="${name,,}"
+
+    case "$lower" in
+        *.part|*.crdownload|*.download|*.partial|*.tmp)
+            continue ;;
+        *.pkg.tar.zst|*.pkg.tar.xz|*.pkg.tar.gz)
+            move_arch_package "$file" ;;
+        *.appimage|*.deb|*.rpm)
+            move_file "$file" "$DOWNLOADS/Packages" ;;
+        *.iso|*.img|*.iso.sig|*.iso.sha256|*.iso.sha512)
+            move_file "$file" "$DOWNLOADS/ISOs" ;;
+        *.epub|*.mobi|*.azw|*.azw3|*.fb2|*.cbz|*.cbr)
+            move_file "$file" "$DOWNLOADS/Ebooks" ;;
+        *.pdf|*.odt|*.ods|*.odp|*.doc|*.docx|*.xls|*.xlsx|*.ppt|*.pptx|*.rtf|*.txt|*.csv)
+            move_file "$file" "$DOWNLOADS/Documents" ;;
+        *.zip|*.7z|*.rar|*.tar|*.tar.gz|*.tgz|*.tar.xz|*.txz|*.tar.bz2|*.tbz2|*.gz|*.bz2|*.xz|*.zst)
+            move_file "$file" "$DOWNLOADS/Archives" ;;
+        *.md|*.json|*.yaml|*.yml|*.toml|*.sh|*.fish|*.py|*.js|*.ts|*.css|*.html|*.xml|*.ini|*.conf|*.service|*.path|*.desktop)
+            move_file "$file" "$DOWNLOADS/Code" ;;
+        *.jpg|*.jpeg|*.png|*.webp|*.avif|*.gif|*.svg|*.bmp|*.tif|*.tiff|*.heic)
+            move_file "$file" "$DOWNLOADS/Images" ;;
+        *.mp3|*.flac|*.opus|*.ogg|*.oga|*.m4a|*.aac|*.wav|*.wma)
+            move_file "$file" "$DOWNLOADS/Audio" ;;
+        *)
+            continue ;;
+    esac
+done
+EOF
+chmod +x "$HOME/.local/bin/trieur"
+```
+
+Créer les deux unités utilisateur :
+
+```bash
+cat > "$HOME/.config/systemd/user/Trieur.service" <<'EOF'
+[Unit]
+Description=Trieur automatique du dossier Téléchargements
+
+[Service]
+Type=oneshot
+ExecStartPre=/usr/bin/sleep 2
+ExecStart=%h/.local/bin/trieur
+EOF
+
+cat > "$HOME/.config/systemd/user/Trieur.path" <<'EOF'
+[Unit]
+Description=Surveillance du dossier Téléchargements pour Trieur
+
+[Path]
+PathChanged=%h/Téléchargements
+Unit=Trieur.service
+
+[Install]
+WantedBy=default.target
+EOF
+
+systemctl --user daemon-reload
+systemctl --user enable --now Trieur.path
+exit
+```
+
+### Vérification et gestion
+
+Ces commandes fonctionnent directement dans Fish :
 
 ```fish
 systemctl --user status Trieur.path
 journalctl --user -u Trieur.service
 ```
 
-L'état attendu de `Trieur.path` est `active (waiting)`. Pour désactiver ou réactiver la surveillance :
+État attendu : `Trieur.path` est `active (waiting)`. Pour arrêter puis réactiver Trieur :
 
 ```fish
 systemctl --user disable --now Trieur.path
@@ -130,7 +261,7 @@ systemctl --user daemon-reload
 systemctl --user restart Trieur.path
 ```
 
-Attribuer manuellement les icônes de dossiers **Teal** aux huit dossiers créés : Archives, Audio, Code, Documents, Ebooks, Images, ISOs et Packages.
+Attribuer manuellement les icônes **Teal** aux dossiers Archives, Audio, Code, Documents, Ebooks, Images, ISOs et Packages.
 
 ---
 
