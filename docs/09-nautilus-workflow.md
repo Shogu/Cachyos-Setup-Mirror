@@ -2,12 +2,13 @@
 
 [Accueil](../README.md) · [Précédent](08-gnome-extensions.md) · [Suivant](10-logiciels.md)
 
-> **Dans ce chapitre :** marque-pages, scripts et extensions Nautilus, dossiers masqués, icônes personnalisées et modèles de documents.
+> **Dans ce chapitre :** marque-pages, scripts et extensions Nautilus, dossiers masqués, icônes personnalisées, modèles de documents et tri des téléchargements.
 
 - [9.1 Marque-pages](#91--marque-pages)
 - [9.2 Scripts Nautilus et extensions (copy-path, admin)](#92--scripts-nautilus-et-extensions-copy-path-admin)
 - [9.3 Masquer des dossiers et personnaliser les icônes](#93--masquer-des-dossiers-et-personnaliser-les-icônes)
 - [9.4 Modèles de documents](#94--modèles-de-documents)
+- [9.5 Trieur automatique de Téléchargements](#95--trieur-automatique-de-téléchargements)
 
 ## 9.1 — Marque-pages
 
@@ -92,6 +93,44 @@ nautilus -q
 ```
 
 Rouvrir Nautilus et vérifier la présence des deux modèles dans le menu de création de documents.
+
+---
+
+## 9.5 — Trieur automatique de Téléchargements
+
+`Trieur.path` surveille `~/Téléchargements`. Après un changement, `Trieur.service` attend **2 secondes**, lance `~/.local/bin/trieur` pour classer les fichiers, puis s'arrête. Les vidéos et les formats inconnus restent à la racine.
+
+- `Archives/` : zip, 7z, rar, tar, gz, xz, zst…
+- `Audio/` : mp3, flac, opus, ogg, m4a, wav…
+- `Code/` : md, json, yaml, sh, fish, py, js, conf…
+- `Documents/` : pdf, odt, docx, xlsx, pptx, txt…
+- `Ebooks/` : epub, mobi, azw3, cbz, cbr…
+- `Images/` : jpg, png, webp, avif, svg…
+- `ISOs/` : iso, img, signatures et sommes de contrôle des ISO.
+- `Packages/` : AppImage, deb, rpm ; les paquets Arch sont rangés dans `Packages/<pkgname>/` d'après leur fichier `.PKGINFO`.
+
+Les deux unités se trouvent dans `~/.config/systemd/user/`. Vérifier la surveillance et consulter le journal :
+
+```fish
+systemctl --user status Trieur.path
+journalctl --user -u Trieur.service
+```
+
+L'état attendu de `Trieur.path` est `active (waiting)`. Pour désactiver ou réactiver la surveillance :
+
+```fish
+systemctl --user disable --now Trieur.path
+systemctl --user enable --now Trieur.path
+```
+
+Après modification d'une unité :
+
+```fish
+systemctl --user daemon-reload
+systemctl --user restart Trieur.path
+```
+
+Attribuer manuellement les icônes de dossiers **Teal** aux huit dossiers créés : Archives, Audio, Code, Documents, Ebooks, Images, ISOs et Packages.
 
 ---
 
