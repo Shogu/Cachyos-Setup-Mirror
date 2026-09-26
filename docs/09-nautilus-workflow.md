@@ -126,8 +126,7 @@ Rouvrir Nautilus et vérifier la présence des deux modèles dans le menu de cr�
 - `Archives/` : zip, 7z, rar, tar, gz, xz, zst et paquets Arch `.pkg.tar.*` (y compris les doublons renommés en `.pkg (1).tar.zst`).
 - `Audio/` : mp3, flac, opus, ogg, m4a, wav…
 - `Code/` : md, json, yaml, sh, fish, py, js, conf…
-- `Documents/` : pdf, odt, docx, xlsx, pptx, txt…
-- `Ebooks/` : epub, mobi, azw3, cbz, cbr…
+- `Documents/` : pdf, odt, docx, xlsx, pptx, txt et ebooks (epub, mobi, azw3, cbz, cbr…).
 - `Images/` : jpg, png, webp, avif, svg…
 - `ISOs/` : iso, img et fichiers associés.
 - `Packages/` : AppImage, deb et rpm.
@@ -143,11 +142,11 @@ bash
 Créer les dossiers (sans modifier ceux qui existent déjà) :
 
 ```bash
-mkdir -p "$HOME/Téléchargements"/{Archives,Audio,Code,Documents,Ebooks,Images,ISOs,Packages}
+mkdir -p "$HOME/Téléchargements"/{Archives,Audio,Code,Documents,Images,ISOs,Packages}
 mkdir -p "$HOME/.local/bin" "$HOME/.config/systemd/user"
 ```
 
-Créer le script :
+Créer le script (également conservé dans [`Ressources/Scripts/trieur`](../Ressources/Scripts/trieur)) :
 
 ```bash
 cat > "$HOME/.local/bin/trieur" <<'EOF'
@@ -197,9 +196,7 @@ while IFS= read -r -d '' file; do
             move_file "$file" "$DOWNLOADS/Packages" ;;
         *.iso|*.img|*.iso.sig|*.iso.sha256|*.iso.sha512)
             move_file "$file" "$DOWNLOADS/ISOs" ;;
-        *.epub|*.mobi|*.azw|*.azw3|*.fb2|*.cbz|*.cbr)
-            move_file "$file" "$DOWNLOADS/Ebooks" ;;
-        *.pdf|*.odt|*.ods|*.odp|*.doc|*.docx|*.xls|*.xlsx|*.ppt|*.pptx|*.rtf|*.txt|*.csv)
+        *.epub|*.mobi|*.azw|*.azw3|*.fb2|*.cbz|*.cbr|*.pdf|*.odt|*.ods|*.odp|*.doc|*.docx|*.xls|*.xlsx|*.ppt|*.pptx|*.rtf|*.txt|*.csv)
             move_file "$file" "$DOWNLOADS/Documents" ;;
         *.zip|*.7z|*.rar|*.tar|*.tar.gz|*.tgz|*.tar.xz|*.txz|*.tar.bz2|*.tbz2|*.gz|*.bz2|*.xz|*.zst)
             move_file "$file" "$DOWNLOADS/Archives" ;;
@@ -270,7 +267,7 @@ systemctl --user daemon-reload
 systemctl --user restart Trieur.path
 ```
 
-Attribuer manuellement les icônes **Teal** aux dossiers Archives, Audio, Code, Documents, Ebooks, Images, ISOs et Packages.
+Attribuer manuellement les icônes **Teal** aux dossiers Archives, Audio, Code, Documents, Images, ISOs et Packages.
 
 ---
 
