@@ -107,7 +107,7 @@ Rouvrir Nautilus et vérifier la présence des deux modèles dans le menu de cr�
 - `Ebooks/` : epub, mobi, azw3, cbz, cbr…
 - `Images/` : jpg, png, webp, avif, svg…
 - `ISOs/` : iso, img et fichiers associés.
-- `Packages/` : AppImage, deb, rpm ; paquets Arch dans `Packages/<pkgname>/`, selon leur fichier `.PKGINFO`.
+- `Packages/` : AppImage, deb, rpm ; paquets Arch dans `Packages/<pkgname>/`, selon leur fichier `.PKGINFO`. Les doublons renommés par le navigateur (ex. `stethoscope-0.4.0-2-any.pkg (1).tar.zst`) sont reconnus aussi ; un fichier sans métadonnées de paquet valides reste en place.
 
 ### Installation
 
@@ -182,7 +182,7 @@ while IFS= read -r -d '' file; do
     case "$lower" in
         *.part|*.crdownload|*.download|*.partial|*.tmp)
             continue ;;
-        *.pkg.tar.zst|*.pkg.tar.xz|*.pkg.tar.gz)
+        *.pkg*.tar.zst|*.pkg*.tar.xz|*.pkg*.tar.gz)
             move_arch_package "$file" ;;
         *.appimage|*.deb|*.rpm)
             move_file "$file" "$DOWNLOADS/Packages" ;;
