@@ -69,6 +69,10 @@ alias orphans='pacman -Qdtq'
 # === INFORMATIONS SUR LES PAQUETS ===
 #pacinfo (function)
 
+# === Abbréviations ===
+abbr -a -- delete 'trash-put'
+abbr -a -- rm 'rm -I'
+
 ############################################################################################################################
 # ===  Editeurs ===
 set -gx SUDO_EDITOR gnome-text-editor
@@ -84,7 +88,6 @@ set -gx VISUAL gnome-text-editor
 # === SUDO!! ===
 
 abbr -a !! --position anywhere --function last_history_item
-
 
 
 ############################################################################################################################
