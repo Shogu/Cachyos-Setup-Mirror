@@ -5,12 +5,12 @@
 
 Application vibe codée en Libadwaita pour gérer les fichiers de configuration de Fish, notamment `config.fish` et les fonctions.
 
-**Paquet fourni : `fisherman-0.1.0-1-any.pkg.tar.zst`.**
+**Paquet fourni : `fisherman-0.1.8-1-any.pkg.tar.zst`.**
 
 ## Installation
 
 ```fish
-sudo pacman -U ./fisherman-0.1.0-1-any.pkg.tar.zst
+sudo pacman -U ./fisherman-0.1.8-1-any.pkg.tar.zst
 ```
 
 ## Désinstallation

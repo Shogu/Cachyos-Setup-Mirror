@@ -73,7 +73,7 @@ sudo pacman -U \
   "Ressources/Applis vibe codées en Libadwaita/Periscope/periscope-0.2.0-4-final-any.pkg.tar.zst" \
   "Ressources/Applis vibe codées en Libadwaita/Decibel/decibel-49.6.1-1-any.pkg.tar.zst" \
   "Ressources/Applis vibe codées en Libadwaita/systemd-gui/systemd-gui-0.4.0-4-any.pkg.tar.zst" \
-  "Ressources/Applis vibe codées en Libadwaita/Fisherman/fisherman-0.1.7-2-any.pkg.tar.zst" \
+  "Ressources/Applis vibe codées en Libadwaita/Fisherman/fisherman-0.1.8-1-any.pkg.tar.zst" \
   "Ressources/Applis vibe codées en Libadwaita/Pacto/pacto-1.0.0-1-any.pkg.tar.zst" \
   "Ressources/Applis vibe codées en Libadwaita/Radar/radar-1.4.0-1-any.pkg.tar.zst" \
   "Ressources/Applis vibe codées en Libadwaita/Pusher/pusher-1.7.0-1-any.pkg.tar.zst" \
