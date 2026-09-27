@@ -45,6 +45,7 @@
 - `extension-manager` : gestion des extensions GNOME Shell.
 - `resources` : moniteur système GNOME (CPU, RAM, disque, réseau).
 - `duf` : visualisation de l'espace disque en ligne de commande.
+- `trash-cli` : corbeille en ligne de commande, utilisée via l’abréviation Fish `delete`.
 - `libgda6` : bibliothèque d'accès aux données, requise par certaines extensions GNOME.
 - `inotify-tools` : surveillance des évènements du système de fichiers.
 - `libnotify` : notifications système.
@@ -60,7 +61,7 @@
 Commande des paquets des dépôts (les applications maison se trouvent ci-dessous) :
 
 ```
-sudo pacman -Syu dconf-editor powertop gst-thumbnailers profile-cleaner seahorse extension-manager fragments papers nicotine+ resources onlyoffice xournal++ gnome-calendar duf libgda6 shelly inotify-tools libnotify clapper
+sudo pacman -Syu dconf-editor powertop gst-thumbnailers profile-cleaner seahorse extension-manager fragments papers nicotine+ resources onlyoffice xournal++ gnome-calendar duf trash-cli libgda6 shelly inotify-tools libnotify clapper
 ```
 
 
