@@ -68,7 +68,7 @@ Depuis la racine du dépôt, installer les paquets maison fournis ci-dessus :
 
 ```bash
 sudo pacman -U \
-  "Ressources/Applis vibe codées en Libadwaita/Grimoire/grimoire-ogu-0.2.0-9-x86_64.pkg.tar.zst" \
+  "Ressources/Applis vibe codées en Libadwaita/Grimoire/grimoire-ogu-0.2.0-10-x86_64.pkg.tar.zst" \
   "Ressources/Applis vibe codées en Libadwaita/Periscope/periscope-0.2.0-4-final-any.pkg.tar.zst" \
   "Ressources/Applis vibe codées en Libadwaita/Decibel/decibel-49.6.1-1-any.pkg.tar.zst" \
   "Ressources/Applis vibe codées en Libadwaita/systemd-gui/systemd-gui-0.4.0-4-any.pkg.tar.zst" \

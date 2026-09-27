@@ -80,14 +80,14 @@ rm -rf "$HOME/.local/share/jd-adwaita/jdownloader"
 
 Éditeur Markdown local GTK4/libadwaita utilisant GtkSourceView 5 et WebKitGTK 6. Il permet de parcourir des dossiers de documents Markdown, éditer les fichiers et afficher leur rendu.
 
-**Paquet fourni : `grimoire-ogu-0.2.0-9-x86_64.pkg.tar.zst`.**
+**Paquet fourni : `grimoire-ogu-0.2.0-10-x86_64.pkg.tar.zst`.**
 
 ![Interface de Grimoire](../Ressources/screenshots/vibe-coded/grimoire.png)
 
 ### Installation
 
 ```fish
-sudo pacman -U ./grimoire-ogu-0.2.0-9-x86_64.pkg.tar.zst
+sudo pacman -U ./grimoire-ogu-0.2.0-10-x86_64.pkg.tar.zst
 grimoire
 ```
 

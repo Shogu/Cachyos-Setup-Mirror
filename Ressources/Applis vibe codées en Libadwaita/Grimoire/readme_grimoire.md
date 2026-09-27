@@ -4,7 +4,11 @@
 
 ## Version fournie
 
-Le paquet actuellement fourni dans le dépôt est `grimoire-ogu-0.2.0-8-x86_64.pkg.tar.zst`. Les mentions 0.1.x plus bas correspondent à l’historique des évolutions et ne désignent pas le paquet actuel.
+Le paquet actuellement fourni dans le dépôt est `grimoire-ogu-0.2.0-10-x86_64.pkg.tar.zst`. Les mentions 0.1.x plus bas correspondent à l’historique des évolutions et ne désignent pas le paquet actuel.
+
+### Révision 0.2.0-10 — icône
+
+L’icône conserve son dessin original, avec des marges transparentes : dessin de 112 × 112 dans un canevas nominal de 128 × 128. Le paquet fournit le SVG contenant le PNG original intégré et huit tailles PNG (16 à 512 px). Les fonctions de l’application sont inchangées par rapport à la révision 0.2.0-9.
 
 ## Installer sur Arch ou CachyOS
 
@@ -12,11 +16,11 @@ Téléchargez le paquet dans Téléchargements puis exécutez :
 
 ```fish
 cd ~/Téléchargements
-sudo pacman -U ./grimoire-ogu-0.2.0-8-x86_64.pkg.tar.zst
+sudo pacman -U ./grimoire-ogu-0.2.0-10-x86_64.pkg.tar.zst
 grimoire
 ```
 
-Pacman installe les dépendances des dépôts si elles sont absentes. Pas de compilation ni de makepkg nécessaire. Le suffixe `any` est normal : le programme est en Python, sans binaire propre à une architecture. Le paquet s'appelle `grimoire-ogu` pour limiter les collisions de nom avec d'autres projets ; l'application et la commande s'appellent Grimoire et `grimoire`.
+Pacman installe les dépendances des dépôts si elles sont absentes. Pas de compilation ni de makepkg nécessaire. Le paquet fourni cible `x86_64`. Le paquet s'appelle `grimoire-ogu` pour limiter les collisions de nom avec d'autres projets ; l'application et la commande s'appellent Grimoire et `grimoire`.
 
 ## Fonctions
 
