@@ -427,3 +427,15 @@ AppImage.
 ## Icône — 28 septembre 2026
 
 Nouvelle icône simplifiée : machine à pince orange avec symboles YouTube, vidéo et musique, sans rail ni pieds, avec commandes épurées. Toutes les copies de l’icône applicative intégrées à l’AppImage ont été remplacées. Le code applicatif est conservé ; le lanceur ajoute le répertoire d’icônes embarqué au chemin de recherche.
+
+## Intégration GNOME du lanceur et de l’icône
+
+Placer l’AppImage dans son emplacement définitif, fermer Grabber, puis exécuter une fois :
+
+```fish
+chmod +x ./grabber.AppImage
+./grabber.AppImage --install-desktop
+./grabber.AppImage
+```
+
+Cette commande explicite installe une icône persistante et le lanceur `com.ogu.Grabber.desktop` dans le profil utilisateur. Les anciens lanceurs Grabber sont sauvegardés puis actualisés pour conserver les favoris existants ; leurs doublons sont masqués du menu. Aucun privilège administrateur requis. Relancer la commande après avoir déplacé l’AppImage. Le démarrage normal ne crée pas de lanceur.
