@@ -426,4 +426,4 @@ AppImage.
 
 ## Icône — 28 septembre 2026
 
-Nouvelle icône : machine à pince orange avec symboles YouTube, vidéo et musique (variante B). Toutes les copies de l’icône applicative intégrées à l’AppImage ont été remplacées. Le code applicatif est conservé ; le lanceur ajoute le répertoire d’icônes embarqué au chemin de recherche.
+Nouvelle icône simplifiée : machine à pince orange avec symboles YouTube, vidéo et musique, sans rail ni pieds, avec commandes épurées. Toutes les copies de l’icône applicative intégrées à l’AppImage ont été remplacées. Le code applicatif est conservé ; le lanceur ajoute le répertoire d’icônes embarqué au chemin de recherche.
