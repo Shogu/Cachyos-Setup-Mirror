@@ -224,12 +224,12 @@ Une capture de l'interface de Decibel n'a pas été fournie dans cet envoi. Elle
 
 Gestionnaire graphique minimaliste des fichiers de configuration de Fish, notamment `config.fish` et les fonctions Fish.
 
-**Paquet fourni : `fisherman-0.1.8-1-any.pkg.tar.zst`.**
+**Paquet fourni : `fisherman-0.1.8-2-any.pkg.tar.zst`.**
 
 ### Installation
 
 ```fish
-sudo pacman -U ./fisherman-0.1.8-1-any.pkg.tar.zst
+sudo pacman -U ./fisherman-0.1.8-2-any.pkg.tar.zst
 ```
 
 ### Désinstallation

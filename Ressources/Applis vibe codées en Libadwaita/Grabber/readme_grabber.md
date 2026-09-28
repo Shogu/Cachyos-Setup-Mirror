@@ -215,8 +215,8 @@ configuration et le bouton de mise à jour natif puissent fonctionner.
 
 Lancement :
 
-chmod +x grabber-0.10.30-x86_64.AppImage
-./grabber-0.10.30-x86_64.AppImage
+chmod +x grabber.AppImage
+./grabber.AppImage
 Le fichier peut être déplacé : il n'y a pas de chemin enregistré dans le
 runtime et aucun nouveau fichier .desktop n'est généré automatiquement.
 
@@ -249,7 +249,7 @@ Exemple de fichier ~/.local/share/applications/grabber.desktop :
 [Desktop Entry]
 Name=Grabber
 Comment=Interface libadwaita minimale pour JDownloader
-Exec=/chemin/absolu/vers/grabber-0.10.30-x86_64.AppImage
+Exec=/chemin/absolu/vers/grabber.AppImage
 Icon=com.ogu.Grabber
 Terminal=false
 Type=Application
@@ -423,3 +423,7 @@ ajouter la correction importante dans la section correspondante ;
 
 relancer la compilation et les tests avant de construire une nouvelle
 AppImage.
+
+## Icône — 28 septembre 2026
+
+Nouvelle icône : machine à pince orange avec symboles YouTube, vidéo et musique (variante B). Toutes les copies de l’icône applicative intégrées à l’AppImage ont été remplacées. Le code applicatif est conservé ; le lanceur ajoute le répertoire d’icônes embarqué au chemin de recherche.
