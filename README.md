@@ -2,6 +2,8 @@
 
 Setup, conseils et réglages personnels pour **CachyOS** sur **ASUS Zenbook 14 OLED UM3406KA**.
 
+> **Interface 100 % GTK / Adwaita** — ce setup privilégie exclusivement les applications GTK et libadwaita afin de conserver une intégration GNOME cohérente. **Aucune application ni dépendance Qt n’est utilisée.**
+
 <p>
   <img src="https://gitlab.com/Shogu/CACHYOS-Setup/-/raw/Main/Ressources/Icons%20%26%20background/.user-astronaut.png" alt="Avatar astronaute" width="120">
   <img src="https://raw.githubusercontent.com/CachyOS/calamares-config/grub-3.2/etc/calamares/branding/cachyos/logo.png" alt="Logo officiel CachyOS" width="120">
