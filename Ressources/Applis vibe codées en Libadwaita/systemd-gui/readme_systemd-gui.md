@@ -5,7 +5,7 @@ Frontend vibe codé libadwaita pour les services systemd.
 
 Installation :
 ```fish
-sudo pacman -U ./systemd-gui-0.4.0-3-any.pkg.tar.zst
+sudo pacman -U ./systemd-gui-0.4.0-5-any.pkg.tar.zst
 ```
 
 Désinstallation :
@@ -25,9 +25,9 @@ L’application est un frontend graphique : elle conserve `systemctl` et
 systemd. Elle ne constitue pas un service systemd supplémentaire et ne
 modifie pas le contenu des fichiers d’unités.
 
-> Version actuelle du paquet fourni : **0.4.0-3**
+> Version actuelle du paquet fourni : **0.4.0-5**
 > Version applicative documentée : **0.4.0**  
-> Dernière mise à jour de ce document : **21 septembre 2026**
+> Dernière mise à jour de ce document : **28 septembre 2026**
 
 ## Origine du projet
 
@@ -390,7 +390,7 @@ modifie aucun service systemd ni aucun fichier d’unité.
 ### Installer le paquet Pacman
 
 ```bash
-sudo pacman -U ./systemd-gui-0.4.0-3-any.pkg.tar.zst
+sudo pacman -U ./systemd-gui-0.4.0-5-any.pkg.tar.zst
 ```
 
 La révision `0.3.1-3` corrige une erreur de callback dans le chargement
@@ -518,3 +518,7 @@ code, et non les idées encore prévues.
 
 Voir [`LICENSE`](LICENSE).
 
+
+## Révision 0.4.0-5
+
+Nouvelle icône « tableau électrique » en PNG transparent 512 × 512, installée dans hicolor. Le code applicatif de la révision 0.4.0-4 est conservé.

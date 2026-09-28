@@ -174,14 +174,14 @@ Une capture de l'interface SCX Manager n'a pas été fournie dans cet envoi. Ell
 
 Frontend GTK4/libadwaita pour l'administration graphique des services systemd. L'application utilise `systemctl` et `journalctl` comme sources de vérité et permet notamment de rechercher les services, consulter leur état, leur unité et leur journal, et effectuer les actions courantes.
 
-**Paquet fourni : `systemd-gui-0.4.0-4-any.pkg.tar.zst`.**
+**Paquet fourni : `systemd-gui-0.4.0-5-any.pkg.tar.zst`.**
 
 ![Interface de systemd](../Ressources/screenshots/vibe-coded/systemd.png)
 
 ### Installation
 
 ```fish
-sudo pacman -U ./systemd-gui-0.4.0-4-any.pkg.tar.zst
+sudo pacman -U ./systemd-gui-0.4.0-5-any.pkg.tar.zst
 ```
 
 L'application ne doit pas être lancée avec `sudo`.
@@ -270,14 +270,14 @@ sudo pacman -Rns pacto
 
 Application GTK4/libadwaita de recherche et de visualisation de fichiers construite autour de `fzf`. Elle fournit une recherche rapide avec aperçu et filtres.
 
-**Paquet fourni : `radar-1.4.0-1-any.pkg.tar.zst`.**
+**Paquet fourni : `radar-1.4.0-2-any.pkg.tar.zst`.**
 
 ![Interface de Radar](../Ressources/screenshots/vibe-coded/radar.png)
 
 ### Installation
 
 ```fish
-sudo pacman -U ./radar-1.4.0-1-any.pkg.tar.zst
+sudo pacman -U ./radar-1.4.0-2-any.pkg.tar.zst
 ```
 
 ### Désinstallation
