@@ -16,6 +16,7 @@
 - [7.10 Renommer et organiser les lanceurs (Overview)](#710--renommer-et-organiser-les-lanceurs-overview)
 - [7.11 Raccourcis clavier](#711--raccourcis-clavier)
 - [7.12 Désactiver les autostarts inutilisés](#712--désactiver-les-autostarts-inutilisés)
+- [7.13 Setup d’icônes et dossiers GNOME](#713--setup-dicônes-et-dossiers-gnome)
 
 ## 7.1 — Ajuster le rendu des polices
 
@@ -223,6 +224,14 @@ sudo mv /etc/xdg/autostart/org.gnome.Evolution-alarm-notify.desktop \
 Ces fichiers peuvent être recréés lors d'une mise à jour des paquets. Ne pas confondre ces entrées avec les services utilisateur masqués dans [Allégement système](02-system-cleanup.md#24--masquer-les-services-système-et-utilisateur-inutilisés).
 
 🔗 L'autostart du script de désactivation de XWayland est décrit dans [Allégement système](02-system-cleanup.md#29--désactiver-xwayland-au-démarrage).
+
+## 7.13 — Setup d’icônes et dossiers GNOME
+
+Utiliser ce setup d’icônes d’applications et de dossiers afin de conserver une interface GNOME / Adwaita cohérente.
+
+<p align="center">
+  <img src="../Ressources/screenshots/gnome-icons-folders-setup.jpg" alt="Setup d’icônes et dossiers GNOME" width="900">
+</p>
 
 ---
 
