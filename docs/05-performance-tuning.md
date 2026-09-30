@@ -92,6 +92,114 @@ Une alternative consistant à utiliser LAVD en mode automatique avec `--autopowe
 
 Les rôles sont distincts : l'extension GNOME peut changer le profil selon secteur/batterie, TuneD applique le profil et son EPP, puis le plugin SCX choisit le scheduler.
 
+### Conserver le boost CPU AMD avec TuneD / tuned-ppd
+
+Sur CachyOS, le profil `cachyos-powersave` peut désactiver le boost CPU via :
+
+```ini
+boost=0
+```
+
+L’objectif ici est de conserver le profil d’économie d’énergie, mais de réautoriser le boost AMD.
+
+## 1. Modifier le profil TuneD
+
+Ouvrir :
+
+```fish
+sudo nano /usr/lib/tuned/profiles/cachyos-powersave/tuned.conf
+```
+
+Dans la section :
+
+```ini
+[cpu]
+governor=conservative|powersave
+energy_perf_bias=powersave|power
+energy_performance_preference=power
+boost=0
+```
+
+remplacer uniquement :
+
+```ini
+boost=0
+```
+
+par :
+
+```ini
+boost=1
+```
+
+La section doit donc devenir :
+
+```ini
+[cpu]
+governor=conservative|powersave
+energy_perf_bias=powersave|power
+energy_performance_preference=power
+boost=1
+```
+
+Dans `nano` :
+
+- `Ctrl+O` pour enregistrer
+- `Entrée` pour confirmer
+- `Ctrl+X` pour quitter
+
+## 2. Redémarrer TuneD et tuned-ppd
+
+```fish
+sudo systemctl restart tuned tuned-ppd
+```
+
+Puis vérifier qu’ils sont bien actifs :
+
+```fish
+systemctl --no-pager --full status tuned tuned-ppd
+```
+
+## 3. Contrôler que le boost est bien réactivé
+
+```fish
+for p in /sys/devices/system/cpu/cpufreq/policy*
+    echo (basename $p) \
+        "boost="(cat $p/boost 2>/dev/null) \
+        "max="(cat $p/scaling_max_freq 2>/dev/null) \
+        "amd_max="(cat $p/amd_pstate_max_freq 2>/dev/null) \
+        "epp="(cat $p/energy_performance_preference 2>/dev/null)
+end
+```
+
+Résultat attendu :
+
+- `boost=1`
+- `max` doit correspondre à `amd_max`
+- `epp=power` peut rester présent sur le profil d’économie d’énergie
+
+Exemple :
+
+```text
+policy0 boost=1 max=5090910 amd_max=5090910 epp=power
+policy1 boost=1 max=3506494 amd_max=3506494 epp=power
+```
+
+## 4. Vérification rapide après une mise à jour
+
+Une mise à jour du paquet TuneD/CachyOS peut écraser cette modification dans `/usr/lib`.
+
+Pour vérifier rapidement :
+
+```fish
+grep -n '^boost=' /usr/lib/tuned/profiles/cachyos-powersave/tuned.conf
+```
+
+La valeur attendue est :
+
+```text
+boost=1
+```
 
 ## 5.2 — Installer et gérer SCX Manager
 

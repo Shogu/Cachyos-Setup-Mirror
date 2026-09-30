@@ -74,6 +74,9 @@ Supprimer l'AppImage. Pour supprimer également les données persistantes de JDo
 rm -rf "$HOME/.local/share/jd-adwaita/jdownloader"
 ```
 
+
+Penser à régler son icone avec Menu!
+
 ---
 
 ## 11.3 — Grimoire

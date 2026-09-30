@@ -118,10 +118,10 @@ sudo pacman -Rns f2fs-tools xfsprogs sane colord-sane hwinfo && sudo pacman -Rdd
 - `noto-fonts-extra` : variantes supplémentaires Noto.
 - `ttf-meslo-nerd` : police Nerd Font.
 - `cantarell-fonts` : police d'interface GNOME.
-- `noto-fonts`
+- `noto-fonts` & `noto-fonts-emoji`
 
 ```
-sudo pacman -Rns noto-fonts-cjk noto-fonts-extra ttf-meslo-nerd noto-fonts
+sudo pacman -Rns noto-fonts-cjk noto-fonts-extra ttf-meslo-nerd noto-fonts noto-fonts-emoji
 ```
 
 Retirer également Fastfetch:
