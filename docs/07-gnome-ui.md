@@ -230,7 +230,7 @@ Ces fichiers peuvent être recréés lors d'une mise à jour des paquets. Ne pas
 Utiliser ce setup d’icônes d’applications et de dossiers afin de conserver une interface GNOME / Adwaita cohérente.
 
 <p align="center">
-  <img src="../Ressources/screenshots/gnome-icons-folders-setup.jpg" alt="Setup d’icônes et dossiers GNOME" width="900">
+  <img src="../Ressources/screenshots/gnome-icons-folders-setup.png" alt="Setup d’icônes et dossiers GNOME" width="900">
 </p>
 
 ---
