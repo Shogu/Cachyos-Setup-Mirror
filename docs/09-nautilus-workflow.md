@@ -127,7 +127,7 @@ Rouvrir Nautilus et vérifier la présence des deux modèles dans le menu de cr�
 - `Audio/` : mp3, flac, opus, ogg, m4a, wav…
 - `Code/` : md, json, yaml, sh, fish, py, js, conf…
 - `Documents/` : pdf, odt, docx, xlsx, pptx, txt et ebooks (epub, mobi, azw3, cbz, cbr…).
-- `Images/` : jpg, png, webp, avif, svg…
+- `Pictures/` : jpg, png, webp, avif, svg…
 - `ISOs/` : iso, img et fichiers associés.
 - `Packages/` : AppImage, deb et rpm.
 
@@ -142,7 +142,7 @@ bash
 Créer les dossiers (sans modifier ceux qui existent déjà) :
 
 ```bash
-mkdir -p "$HOME/Téléchargements"/{Archives,Audio,Code,Documents,Images,ISOs,Packages}
+mkdir -p "$HOME/Téléchargements"/{Archives,Audio,Code,Documents,Pictures,ISOs,Packages}
 mkdir -p "$HOME/.local/bin" "$HOME/.config/systemd/user"
 ```
 
@@ -203,7 +203,7 @@ while IFS= read -r -d '' file; do
         *.md|*.json|*.yaml|*.yml|*.toml|*.sh|*.fish|*.py|*.js|*.ts|*.css|*.html|*.xml|*.ini|*.conf|*.service|*.path|*.desktop)
             move_file "$file" "$DOWNLOADS/Code" ;;
         *.jpg|*.jpeg|*.png|*.webp|*.avif|*.gif|*.svg|*.bmp|*.tif|*.tiff|*.heic)
-            move_file "$file" "$DOWNLOADS/Images" ;;
+            move_file "$file" "$DOWNLOADS/Pictures" ;;
         *.mp3|*.flac|*.opus|*.ogg|*.oga|*.m4a|*.aac|*.wav|*.wma)
             move_file "$file" "$DOWNLOADS/Audio" ;;
         *)

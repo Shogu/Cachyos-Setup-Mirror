@@ -51,7 +51,7 @@ while IFS= read -r -d '' file; do
         *.md|*.json|*.yaml|*.yml|*.toml|*.sh|*.fish|*.py|*.js|*.ts|*.css|*.html|*.xml|*.ini|*.conf|*.service|*.path|*.desktop)
             move_file "$file" "$DOWNLOADS/Code" ;;
         *.jpg|*.jpeg|*.png|*.webp|*.avif|*.gif|*.svg|*.bmp|*.tif|*.tiff|*.heic)
-            move_file "$file" "$DOWNLOADS/Images" ;;
+            move_file "$file" "$DOWNLOADS/Pictures" ;;
         *.mp3|*.flac|*.opus|*.ogg|*.oga|*.m4a|*.aac|*.wav|*.wma)
             move_file "$file" "$DOWNLOADS/Audio" ;;
         *)
