@@ -193,6 +193,12 @@ Avec **Menu Principal / l'éditeur de menus**, renommer les applications dans la
 
 Remplacer également l'icône de Ptyxis par celle de [GNOME Terminal](https://upload.wikimedia.org/wikipedia/commons/d/da/GNOME_Terminal_icon_2019.svg).
 
+### Setup d’icônes et de dossiers
+
+Utiliser ce setup d’icônes et de dossiers.
+
+<p align="center"><img src="../Ressources/screenshots/gnome-icons-folders-setup.jpg" alt="Setup d’icônes et de dossiers GNOME" width="900"></p>
+
 ## 7.11 — Raccourcis clavier
 
 Dans les paramètres GNOME, affecter :
