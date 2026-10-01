@@ -38,10 +38,8 @@ while IFS= read -r -d '' file; do
     case "$lower" in
         *.part|*.crdownload|*.download|*.partial|*.tmp)
             continue ;;
-        *.pkg*.tar.zst|*.pkg*.tar.xz|*.pkg*.tar.gz)
+        *.pkg*.tar.zst|*.pkg*.tar.xz|*.pkg*.tar.gz|*.appimage)
             move_file "$file" "$DOWNLOADS/Archives" ;;
-        *.appimage|*.deb|*.rpm)
-            move_file "$file" "$DOWNLOADS/Packages" ;;
         *.iso|*.img|*.iso.sig|*.iso.sha256|*.iso.sha512)
             move_file "$file" "$DOWNLOADS/ISOs" ;;
         *.epub|*.mobi|*.azw|*.azw3|*.fb2|*.cbz|*.cbr|*.pdf|*.odt|*.ods|*.odp|*.doc|*.docx|*.xls|*.xlsx|*.ppt|*.pptx|*.rtf|*.txt|*.csv)
