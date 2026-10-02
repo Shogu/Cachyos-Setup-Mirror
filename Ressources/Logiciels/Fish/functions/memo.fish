@@ -1,8 +1,8 @@
-function memo --description "Liste interactive des alias et fonctions disponibles, organisés par catégories"
+function memo --description "Liste interactive des abbr et fonctions disponibles, organisés par catégories"
     echo
     set_color brcyan
     echo "╔═══════════════════════════════════════════════════════════╗"
-    echo "║              📝 MEMO - Alias et Fonctions Disponibles       ║"
+    echo "║              📝 MEMO - Abbr et Fonctions Disponibles        ║"
     echo "╚═══════════════════════════════════════════════════════════╝"
     set_color normal
     echo
@@ -10,7 +10,7 @@ function memo --description "Liste interactive des alias et fonctions disponible
     echo "Sélectionnez une catégorie :"
     echo
     set_color brblue
-    echo "  [1] 📑  ALIAS"
+    echo "  [1] 📑  ABBRÉVIATIONS"
     echo "  [2] ⚙️  FONCTIONS"
     set_color normal
     echo
@@ -38,10 +38,10 @@ function memo --description "Liste interactive des alias et fonctions disponible
     end
 
     if test "$main_choice" = "1"
-        # Affichage des alias
+        # Affichage des abbr
         set_color brcyan
         echo "╔═══════════════════════════════════════════════════════════╗"
-        echo "║                     📑  ALIAS                             ║"
+        echo "║                  📑  ABRÉVIATIONS                         ║"
         echo "╚═══════════════════════════════════════════════════════════╝"
         set_color normal
         echo
@@ -59,29 +59,29 @@ function memo --description "Liste interactive des alias et fonctions disponible
         set_color brmagenta
         echo "⚙️  SYSTÈME"
         set_color normal
-        set_color brblue; echo -n "  7) powertop"; set_color normal; echo " → Powertop (sudo)"
-        set_color brblue; echo -n "  8) stop"; set_color normal; echo " → Arrêt système"
-        set_color brblue; echo -n "  9) rm"; set_color normal; echo " → Suppression sécurisée"
-        set_color brblue; echo -n " 10) stockage"; set_color normal; echo " → Usage disque (duf)"
-        set_color brblue; echo -n " 11) lastpackages"; set_color normal; echo " → Derniers paquets"
-        set_color brblue; echo -n " 12) liminestats"; set_color normal; echo " → Snapshots Limine"
-        set_color brblue; echo -n " 13) scrub"; set_color normal; echo " → Scrub Btrfs sur /"
-        set_color brblue; echo -n " 14) bios"; set_color normal; echo " → Redémarrage BIOS/UEFI"
-        set_color brblue; echo -n " 15) boot"; set_color normal; echo " → Infos boot"
-        set_color brblue; echo -n " 16) boot!"; set_color normal; echo " → Lenteurs boot"
-        set_color brblue; echo -n " 17) watts"; set_color normal; echo " → Consommation énergétique"
+        set_color brblue; echo -n "  7) to"; set_color normal; echo " → z (zoxide)"
+        set_color brblue; echo -n "  8) powertop"; set_color normal; echo " → Powertop (sudo)"
+        set_color brblue; echo -n "  9) stop"; set_color normal; echo " → Arrêt système"
+        set_color brblue; echo -n " 10) rm"; set_color normal; echo " → Suppression sécurisée"
+        set_color brblue; echo -n " 11) stockage"; set_color normal; echo " → Usage disque (duf)"
+        set_color brblue; echo -n " 12) lastpackages"; set_color normal; echo " → Derniers paquets"
+        set_color brblue; echo -n " 13) liminestats"; set_color normal; echo " → Snapshots Limine"
+        set_color brblue; echo -n " 14) scrub"; set_color normal; echo " → Scrub Btrfs sur /"
+        set_color brblue; echo -n " 15) bios"; set_color normal; echo " → Redémarrage BIOS/UEFI"
+        set_color brblue; echo -n " 16) boot"; set_color normal; echo " → Infos boot"
+        set_color brblue; echo -n " 17) boot+"; set_color normal; echo " → Lenteurs boot"
+        set_color brblue; echo -n " 18) watts"; set_color normal; echo " → Consommation énergétique"
         echo
 
         set_color brmagenta
         echo "📦  SHELLY (AUR & Paquets)"
         set_color normal
-        set_color brblue; echo -n " 18) aur"; set_color normal; echo " → Installe paquet AUR"
-        set_color brblue; echo -n " 19) aursearch"; set_color normal; echo " → Recherche AUR"
-        set_color brblue; echo -n " 20) aurremove"; set_color normal; echo " → Supprime paquet AUR"
-        set_color brblue; echo -n " 21) aurlist"; set_color normal; echo " → Liste paquets AUR"
-        set_color brblue; echo -n " 22) add"; set_color normal; echo " → Installe paquet standard"
-        set_color brblue; echo -n " 23) remove"; set_color normal; echo " → Supprime paquet standard"
-        set_color brblue; echo -n " 24) upgrade"; set_color normal; echo " → Met à jour Shelly"
+        set_color brblue; echo -n " 19) aur"; set_color normal; echo " → Installe paquet AUR"
+        set_color brblue; echo -n " 20) aursearch"; set_color normal; echo " → Recherche AUR"
+        set_color brblue; echo -n " 21) aurremove"; set_color normal; echo " → Supprime paquet AUR"
+        set_color brblue; echo -n " 22) aurlist"; set_color normal; echo " → Liste paquets AUR"
+        set_color brblue; echo -n " 23) add"; set_color normal; echo " → Installe paquet standard"
+        set_color brblue; echo -n " 24) remove"; set_color normal; echo " → Supprime paquet standard"
         echo
 
         set_color brmagenta
@@ -89,34 +89,32 @@ function memo --description "Liste interactive des alias et fonctions disponible
         set_color normal
         set_color brblue; echo -n " 25) sourcefish"; set_color normal; echo " → Recharge config Fish"
         set_color brblue; echo -n " 26) fishedit"; set_color normal; echo " → Édite config Fish"
-        set_color brblue; echo -n " 27) !!"; set_color normal; echo " → Dernière commande"
         echo
 
         set_color brmagenta
         echo "👾  PACMAN"
         set_color normal
-        set_color brblue; echo -n " 28) pacsearch"; set_color normal; echo " → Recherche paquet"
-        set_color brblue; echo -n " 29) pacsearch_installed"; set_color normal; echo " → Recherche paquet installé"
-        set_color brblue; echo -n " 30) pacdep"; set_color normal; echo " → Dépendances inverses"
-        set_color brblue; echo -n " 31) pacfiles"; set_color normal; echo " → Fichiers paquet"
-        set_color brblue; echo -n " 32) orphans"; set_color normal; echo " → Supprime paquets orphelins"
-        set_color brblue; echo -n " 33) pacinstall"; set_color normal; echo " → Installe paquet"
-        set_color brblue; echo -n " 34) pacremove"; set_color normal; echo " → Supprime paquet"
-        set_color brblue; echo -n " 35) pacinfo"; set_color normal; echo " → Infos paquet"
-        set_color brblue; echo -n " 36) pacpick"; set_color normal; echo " → Paquet propriétaire fichier"
-        set_color brblue; echo -n " 37) orphans+"; set_color normal; echo " → Dépendances inutiles"
+        set_color brblue; echo -n " 27) pacsearch"; set_color normal; echo " → Recherche paquet"
+        set_color brblue; echo -n " 28) pacsearch_installed"; set_color normal; echo " → Recherche paquet installé"
+        set_color brblue; echo -n " 29) pacdep"; set_color normal; echo " → Dépendances inverses"
+        set_color brblue; echo -n " 30) pacfiles"; set_color normal; echo " → Fichiers paquet"
+        set_color brblue; echo -n " 31) orphans"; set_color normal; echo " → Paquets orphelins"
+        echo
+
+        set_color brmagenta
+        echo "📋  PRESSE-PAPIERS (Wayland)"
+        set_color normal
+        set_color brblue; echo -n " 32) clip"; set_color normal; echo " → En fin de ligne : | wl-copy"
         echo
 
         set_color yellow
-        read -P "Choisissez un numéro entre 1 et 37, 'r' pour revenir au menu principal, ou 'q' pour quitter : " choice
+        read -P "Choisissez un numéro entre 1 et 32, 'r' pour revenir au menu principal, ou 'q' pour quitter : " choice
         set_color normal
 
         if test "$choice" = "q"
             echo "Abandon."
             return 0
         else if test "$choice" = "r"
-            # Revenir au menu dans le même shell : un fish -c séparé ne
-            # partage pas l'état des alias et des fonctions déjà chargés.
             memo
             return 0
         end
@@ -128,15 +126,13 @@ function memo --description "Liste interactive des alias et fonctions disponible
             return 1
         end
 
-        if test "$choice" -lt 1 -o "$choice" -gt 37
+        if test "$choice" -lt 1 -o "$choice" -gt 32
             set_color red
-            echo "Numéro hors plage. Veuillez choisir entre 1 et 37."
+            echo "Numéro hors plage. Veuillez choisir entre 1 et 32."
             set_color normal
             return 1
         end
 
-        # Déclarer cmd avant le switch : une variable locale créée dans un
-        # case peut disparaître à la sortie de ce bloc avec Fish.
         set -l cmd ""
         switch "$choice"
             case 1; set cmd "vim"
@@ -145,37 +141,32 @@ function memo --description "Liste interactive des alias et fonctions disponible
             case 4; set cmd "notepad"
             case 5; set cmd "gedit"
             case 6; set cmd "edit"
-            case 7; set cmd "powertop"
-            case 8; set cmd "stop"
-            case 9; set cmd "rm"
-            case 10; set cmd "stockage"
-            case 11; set cmd "lastpackages"
-            case 12; set cmd "liminestats"
-            case 13; set cmd "scrub"
-            case 14; set cmd "bios"
-            case 15; set cmd "boot"
-            case 16; set cmd "boot!"
-            case 17; set cmd "watts"
-            case 18; set cmd "aur"
-            case 19; set cmd "aursearch"
-            case 20; set cmd "aurremove"
-            case 21; set cmd "aurlist"
-            case 22; set cmd "add"
-            case 23; set cmd "remove"
-            case 24; set cmd "upgrade"
+            case 7; set cmd "to"
+            case 8; set cmd "powertop"
+            case 9; set cmd "stop"
+            case 10; set cmd "rm"
+            case 11; set cmd "stockage"
+            case 12; set cmd "lastpackages"
+            case 13; set cmd "liminestats"
+            case 14; set cmd "scrub"
+            case 15; set cmd "bios"
+            case 16; set cmd "boot"
+            case 17; set cmd "boot+"
+            case 18; set cmd "watts"
+            case 19; set cmd "aur"
+            case 20; set cmd "aursearch"
+            case 21; set cmd "aurremove"
+            case 22; set cmd "aurlist"
+            case 23; set cmd "add"
+            case 24; set cmd "remove"
             case 25; set cmd "sourcefish"
             case 26; set cmd "fishedit"
-            case 27; set cmd "!!"
-            case 28; set cmd "pacsearch"
-            case 29; set cmd "pacsearch_installed"
-            case 30; set cmd "pacdep"
-            case 31; set cmd "pacfiles"
-            case 32; set cmd "orphans"
-            case 33; set cmd "pacinstall"
-            case 34; set cmd "pacremove"
-            case 35; set cmd "pacinfo"
-            case 36; set cmd "pacpick"
-            case 37; set cmd "orphans+"
+            case 27; set cmd "pacsearch"
+            case 28; set cmd "pacsearch_installed"
+            case 29; set cmd "pacdep"
+            case 30; set cmd "pacfiles"
+            case 31; set cmd "orphans"
+            case 32; set cmd "clip"
         end
 
         echo
@@ -183,16 +174,24 @@ function memo --description "Liste interactive des alias et fonctions disponible
         echo "→ Exécution : $cmd"
         set_color normal
         echo
-        # Exécuter la commande dans ce shell permet à Fish de résoudre les
-        # alias et les fonctions autoloadées dans fish_function_path.
-        $cmd
+        # Attention : pour les abbr, il faut que la commande soit tapée
+        # interactivement pour que l'expansion se produise. Ici on exécute
+        # directement le mot-clé, ce qui NE déclenche PAS l'abbr.
+        # Pour que ça marche, on récupère l'expansion via `abbr --query`.
+        set -l expanded (abbr --query "$cmd" 2>/dev/null)
+        if test -n "$expanded"
+            echo "(abbr → $expanded)"
+            eval $expanded
+        else
+            $cmd
+        end
         echo
 
     else if test "$main_choice" = "2"
         # Affichage des fonctions
         set_color brcyan
         echo "╔═══════════════════════════════════════════════════════════╗"
-        echo "║                   ⚙️  FONCTIONS                        ║"
+        echo "║                   ⚙️  FONCTIONS                          ║"
         echo "╚═══════════════════════════════════════════════════════════╝"
         set_color normal
         echo
@@ -219,16 +218,17 @@ function memo --description "Liste interactive des alias et fonctions disponible
         set_color brblue; echo -n "  8) clean"; set_color normal; echo " → Nettoyage système"
         set_color brblue; echo -n "  9) pacstats"; set_color normal; echo " → Statistiques paquets"
         set_color brblue; echo -n " 10) search"; set_color normal; echo " → Recherche fichiers"
+        set_color brblue; echo -n " 11) upgrade"; set_color normal; echo " → Mise à jour Shelly"
         echo
 
         set_color brmagenta
         echo "🔍  LIMINE"
         set_color normal
-        set_color brblue; echo -n " 11) liminevault"; set_color normal; echo " → Commandes Limine"
+        set_color brblue; echo -n " 12) liminevault"; set_color normal; echo " → Commandes Limine"
         echo
 
         set_color yellow
-        read -P "Choisissez un numéro entre 1 et 11, 'r' pour revenir au menu principal, ou 'q' pour quitter : " choice
+        read -P "Choisissez un numéro entre 1 et 12, 'r' pour revenir au menu principal, ou 'q' pour quitter : " choice
         set_color normal
 
         if test "$choice" = "q"
@@ -246,14 +246,13 @@ function memo --description "Liste interactive des alias et fonctions disponible
             return 1
         end
 
-        if test "$choice" -lt 1 -o "$choice" -gt 11
+        if test "$choice" -lt 1 -o "$choice" -gt 12
             set_color red
-            echo "Numéro hors plage. Veuillez choisir entre 1 et 11."
+            echo "Numéro hors plage. Veuillez choisir entre 1 et 12."
             set_color normal
             return 1
         end
 
-        # Exécution de la commande
         set -l cmd ""
         switch "$choice"
             case 1; set cmd "scx"
@@ -266,7 +265,8 @@ function memo --description "Liste interactive des alias et fonctions disponible
             case 8; set cmd "clean"
             case 9; set cmd "pacstats"
             case 10; set cmd "search"
-            case 11; set cmd "liminevault"
+            case 11; set cmd "upgrade"
+            case 12; set cmd "liminevault"
         end
 
         echo
