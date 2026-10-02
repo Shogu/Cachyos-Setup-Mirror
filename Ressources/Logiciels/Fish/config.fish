@@ -72,6 +72,7 @@ alias orphans='pacman -Qdtq'
 # === Abbréviations ===
 abbr -a -- delete 'trash-put'
 abbr -a -- rm 'rm -I'
+abbr --add clip --position anywhere --regex 'clip$' '| wl-copy'
 
 ############################################################################################################################
 # ===  Editeurs ===
