@@ -8,71 +8,63 @@ function fish_greeting
 end
 
 ############################################################################################################################
-# === Alias Editeurs ===
-alias vim='micro'
-alias vi='micro'
-alias nano='micro'
-
-alias notepad='gnome-text-editor'
-alias gedit='gnome-text-editor'
-alias edit='gnome-text-editor'
-
-# === Alias Système ===
-alias to='z'
-alias powertop='sudo powertop'
-alias stop='shutdown now'
-alias rm='rm -I'
-alias stockage='duf'
-alias lastpackages='rip'
-alias liminestats='limine-snapper-info'
-alias scrub='sudo btrfs scrub start -B /'
-alias bios='systemctl reboot --firmware-setup'
-alias boot='systemd-analyze'
-alias boot!='systemd-analyze blame'
-alias watts='echo "scale=2; $(cat /sys/class/power_supply/BAT0/power_now)/1000000" | bc'
-
-# === Alias Shelly ===
-
-# Gestion AUR
-alias aur='shelly install aur'
-alias aursearch='shelly search aur'
-alias aurremove='shelly remove aur --opt-deps'
-alias aurlist='shelly list aur'
-
-# Gestion paquets standards
-alias add='shelly install standard'
-alias remove='shelly remove standard'
-
 
 # Mises à jour Shelly
 alias upgrade='set_color 3584e4; echo "╔══════════════════════╗"; echo "║  MISE À JOUR SHELLY  ║"; echo "╚══════════════════════╝"; set_color normal; echo; shelly upgrade standard; shelly upgrade aur; echo; read -P "Fermer avec ENTREE "'
 
-# === Alias Fish ===
-alias sourcefish='source ~/.config/fish/config.fish'
-alias fishedit='xdg-open ~/.config/fish/config.fish'
-
-# === Alias Pacman ===
-
-# === RECHERCHE DE PAQUETS ===
-alias pacsearch='pacman -Ss'
-alias pacsearch_installed='pacman -Qs'
-
-# === DÉPENDANCES ===
-alias pacdep='pactree -r'
-
-# === RECHERCHE DE FICHIERS DANS UN PAQUET ===
-alias pacfiles='pacman -Ql'
-
-# === RECHERCHE  D'ORPHELINS + DÉPENDANCES INUTILES ===
-alias orphans='pacman -Qdtq'
-
-# === INFORMATIONS SUR LES PAQUETS ===
-#pacinfo (function)
 
 # === Abbréviations ===
+
+# === Éditeurs ===
+abbr --add vim micro
+abbr --add vi micro
+abbr --add nano micro
+
+abbr --add notepad gnome-text-editor
+abbr --add gedit gnome-text-editor
+abbr --add edit gnome-text-editor
+
+# === Système ===
+abbr --add to z
+abbr --add powertop 'sudo powertop'
+abbr --add stop 'shutdown now'
+abbr --add rm 'rm -I'
+abbr --add stockage duf
+abbr --add lastpackages rip
+abbr --add liminestats limine-snapper-info
+abbr --add scrub 'sudo btrfs scrub start -B /'
+abbr --add bios 'systemctl reboot --firmware-setup'
+abbr --add boot 'systemd-analyze'
+abbr --add boot+ 'systemd-analyze blame'
+abbr --add watts 'echo "scale=2; $(cat /sys/class/power_supply/BAT0/power_now)/1000000" | bc'
+
+# === Shelly ===
+abbr --add aur 'shelly install aur'
+abbr --add aursearch 'shelly search aur'
+abbr --add aurremove 'shelly remove aur --opt-deps'
+abbr --add aurlist 'shelly list aur'
+
+abbr --add add 'shelly install standard'
+abbr --add remove 'shelly remove standard'
+
+# === Fish ===
+abbr --add sourcefish 'source ~/.config/fish/config.fish'
+abbr --add fishedit 'xdg-open ~/.config/fish/config.fish'
+
+# === Pacman ===
+abbr --add pacsearch 'pacman -Ss'
+abbr --add pacsearch_installed 'pacman -Qs'
+abbr --add pacdep 'pactree -r'
+abbr --add pacfiles 'pacman -Ql'
+abbr --add orphans 'pacman -Qdtq'
+
+# === Presse-papiers Wayland ===
+abbr --add clip --position anywhere --regex 'clip$' '| wl-copy'
+
+# === Corbeille ===
 abbr -a -- delete 'trash-put'
 abbr -a -- rm 'rm -I'
-abbr --add clip --position anywhere --regex 'clip$' '| wl-copy'
+
 
 ############################################################################################################################
 # ===  Editeurs ===
@@ -97,4 +89,3 @@ abbr -a !! --position anywhere --function last_history_item
 zoxide init fish | source
 
 ############################################################################################################################
-
