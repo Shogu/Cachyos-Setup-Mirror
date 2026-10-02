@@ -2,7 +2,7 @@ function memo --description "Liste interactive des abbr et fonctions disponibles
     echo
     set_color brcyan
     echo "╔═══════════════════════════════════════════════════════════╗"
-    echo "║              📝 MEMO - Abbr et Fonctions Disponibles        ║"
+    echo "║          MEMO  -  Abbr et Fonctions Disponibles           ║"
     echo "╚═══════════════════════════════════════════════════════════╝"
     set_color normal
     echo
@@ -10,8 +10,8 @@ function memo --description "Liste interactive des abbr et fonctions disponibles
     echo "Sélectionnez une catégorie :"
     echo
     set_color brblue
-    echo "  [1] 📑  ABBRÉVIATIONS"
-    echo "  [2] ⚙️  FONCTIONS"
+    echo "  [1]  ABBRÉVIATIONS"
+    echo "  [2]  FONCTIONS"
     set_color normal
     echo
     set_color yellow
@@ -41,12 +41,12 @@ function memo --description "Liste interactive des abbr et fonctions disponibles
         # Affichage des abbr
         set_color brcyan
         echo "╔═══════════════════════════════════════════════════════════╗"
-        echo "║                  📑  ABRÉVIATIONS                         ║"
+        echo "║                    ABRÉVIATIONS                           ║"
         echo "╚═══════════════════════════════════════════════════════════╝"
         set_color normal
         echo
         set_color brmagenta
-        echo "✏️  ÉDITEURS"
+        echo "  ÉDITEURS"
         set_color normal
         set_color brblue; echo -n "  1) vim"; set_color normal; echo " → Micro"
         set_color brblue; echo -n "  2) vi"; set_color normal; echo " → Micro"
@@ -57,7 +57,7 @@ function memo --description "Liste interactive des abbr et fonctions disponibles
         echo
 
         set_color brmagenta
-        echo "⚙️  SYSTÈME"
+        echo "  SYSTÈME"
         set_color normal
         set_color brblue; echo -n "  7) to"; set_color normal; echo " → z (zoxide)"
         set_color brblue; echo -n "  8) powertop"; set_color normal; echo " → Powertop (sudo)"
@@ -74,7 +74,7 @@ function memo --description "Liste interactive des abbr et fonctions disponibles
         echo
 
         set_color brmagenta
-        echo "📦  SHELLY (AUR & Paquets)"
+        echo "  SHELLY (AUR & Paquets)"
         set_color normal
         set_color brblue; echo -n " 19) aur"; set_color normal; echo " → Installe paquet AUR"
         set_color brblue; echo -n " 20) aursearch"; set_color normal; echo " → Recherche AUR"
@@ -85,14 +85,14 @@ function memo --description "Liste interactive des abbr et fonctions disponibles
         echo
 
         set_color brmagenta
-        echo "🐟  FISH"
+        echo "  FISH"
         set_color normal
         set_color brblue; echo -n " 25) sourcefish"; set_color normal; echo " → Recharge config Fish"
         set_color brblue; echo -n " 26) fishedit"; set_color normal; echo " → Édite config Fish"
         echo
 
         set_color brmagenta
-        echo "👾  PACMAN"
+        echo "  PACMAN"
         set_color normal
         set_color brblue; echo -n " 27) pacsearch"; set_color normal; echo " → Recherche paquet"
         set_color brblue; echo -n " 28) pacsearch_installed"; set_color normal; echo " → Recherche paquet installé"
@@ -102,7 +102,7 @@ function memo --description "Liste interactive des abbr et fonctions disponibles
         echo
 
         set_color brmagenta
-        echo "📋  PRESSE-PAPIERS (Wayland)"
+        echo "  PRESSE-PAPIERS (Wayland)"
         set_color normal
         set_color brblue; echo -n " 32) clip"; set_color normal; echo " → En fin de ligne : | wl-copy"
         echo
@@ -174,16 +174,28 @@ function memo --description "Liste interactive des abbr et fonctions disponibles
         echo "→ Exécution : $cmd"
         set_color normal
         echo
-        # Attention : pour les abbr, il faut que la commande soit tapée
-        # interactivement pour que l'expansion se produise. Ici on exécute
-        # directement le mot-clé, ce qui NE déclenche PAS l'abbr.
-        # Pour que ça marche, on récupère l'expansion via `abbr --query`.
+
+        # Cas spécial : clip n'est pas une vraie commande, juste un pipe
+        # en fin de ligne. Impossible de l'exécuter comme ça.
+        if test "$cmd" = "clip"
+            set_color yellow
+            echo "⚠️  'clip' est une abbr de fin de ligne : tape 'commande clip' au lieu de l'exécuter ici."
+            set_color normal
+            return 1
+        end
+
+        # Pour les abbr : on récupère l'expansion via `abbr --query`
+        # Pour les fonctions : on appelle directement
         set -l expanded (abbr --query "$cmd" 2>/dev/null)
         if test -n "$expanded"
             echo "(abbr → $expanded)"
             eval $expanded
-        else
+        else if functions -q "$cmd"
             $cmd
+        else
+            set_color yellow
+            echo "⚠️  '$cmd' n'est ni une abbr ni une fonction connue."
+            set_color normal
         end
         echo
 
@@ -191,12 +203,12 @@ function memo --description "Liste interactive des abbr et fonctions disponibles
         # Affichage des fonctions
         set_color brcyan
         echo "╔═══════════════════════════════════════════════════════════╗"
-        echo "║                   ⚙️  FONCTIONS                          ║"
+        echo "║                       FONCTIONS                           ║"
         echo "╚═══════════════════════════════════════════════════════════╝"
         set_color normal
         echo
         set_color brmagenta
-        echo "📈  SURVEILLANCE"
+        echo "  SURVEILLANCE"
         set_color normal
         set_color brblue; echo -n "  1) scx"; set_color normal; echo " → Scheduler SCX"
         set_color brblue; echo -n "  2) journal"; set_color normal; echo " → Erreurs journalctl"
@@ -205,7 +217,7 @@ function memo --description "Liste interactive des abbr et fonctions disponibles
         echo
 
         set_color brmagenta
-        echo "🚀  BOOT"
+        echo "  BOOT"
         set_color normal
         set_color brblue; echo -n "  5) fstab"; set_color normal; echo " → /etc/fstab"
         set_color brblue; echo -n "  6) mkinitcpio"; set_color normal; echo " → /etc/mkinitcpio.conf"
@@ -213,7 +225,7 @@ function memo --description "Liste interactive des abbr et fonctions disponibles
         echo
 
         set_color brmagenta
-        echo "🧹  MAINTENANCE"
+        echo "  MAINTENANCE"
         set_color normal
         set_color brblue; echo -n "  8) clean"; set_color normal; echo " → Nettoyage système"
         set_color brblue; echo -n "  9) pacstats"; set_color normal; echo " → Statistiques paquets"
@@ -222,7 +234,7 @@ function memo --description "Liste interactive des abbr et fonctions disponibles
         echo
 
         set_color brmagenta
-        echo "🔍  LIMINE"
+        echo "  LIMINE"
         set_color normal
         set_color brblue; echo -n " 12) liminevault"; set_color normal; echo " → Commandes Limine"
         echo
@@ -274,7 +286,14 @@ function memo --description "Liste interactive des abbr et fonctions disponibles
         echo "→ Exécution : $cmd"
         set_color normal
         echo
-        $cmd
+
+        if functions -q "$cmd"
+            $cmd
+        else
+            set_color yellow
+            echo "⚠️  '$cmd' n'est pas une fonction connue."
+            set_color normal
+        end
         echo
     end
 end
