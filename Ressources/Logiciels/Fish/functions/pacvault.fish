@@ -1,8 +1,10 @@
-function pacvault --description "Affiche la liste des alias pacman et leurs fonctions"
+function pacvault --description "Affiche la liste des abbr et fonctions pacman disponibles"
     echo
+    set_color brcyan
     echo "╔═══════════════════════════════════════════════════════════╗"
-    echo "║                  📦 PACVAULT - Mémo Pacman               ║"
+    echo "║                  📦 PACVAULT - Mémo Pacman                ║"
     echo "╚═══════════════════════════════════════════════════════════╝"
+    set_color normal
     echo
 
     set -l vault_labels \
@@ -37,44 +39,87 @@ function pacvault --description "Affiche la liste des alias pacman et leurs fonc
             return 0
         end
 
-        if string match -rq '^[0-9]+$' -- $choice
-            if test $choice -ge 1 -a $choice -le $count
-                switch $choice
-                    case 1
-                        read -P "Nom du paquet: " pkg
-                        if test -n "$pkg"
-                            command pacman -Ss "$pkg"
-                        end
-                    case 2
-                        read -P "Nom du paquet: " pkg
-                        if test -n "$pkg"
-                            command pacman -Qs "$pkg"
-                        end
-                    case 3
-                        read -P "Nom du paquet: " pkg
-                        if test -n "$pkg"
-                            pacinfo "$pkg"
-                        end
-                    case 4
-                        read -P "Terme de recherche: " term
-                        if test -n "$term"
-                            command pacman -Ql "$term"
-                        end
-                    case 5
-                        read -P "Terme de recherche: " term
-                        if test -n "$term"
-                            command pactree -r "$term"
-                        end
-                    case 6
-                        pacpick
-                end
-                echo
-                continue
-            end
+        if not string match -rq '^[0-9]+$' -- $choice
+            set_color red
+            echo "Entrée invalide. Numéro entre 1 et $count, ou q pour quitter."
+            set_color normal
+            continue
         end
 
-        set_color red
-        echo "Entrée invalide. Numéro entre 1 et $count, ou q pour quitter."
-        set_color normal
+        if test $choice -lt 1 -o $choice -gt $count
+            set_color red
+            echo "Entrée invalide. Numéro entre 1 et $count, ou q pour quitter."
+            set_color normal
+            continue
+        end
+
+        switch $choice
+            case 1
+                read -P "Nom du paquet: " pkg
+                if test -n "$pkg"
+                    # pacsearch = abbr → pacman -Ss
+                    set -l exp (abbr --query pacsearch 2>/dev/null)
+                    if test -n "$exp"
+                        eval $exp "$pkg"
+                    else
+                        command pacman -Ss "$pkg"
+                    end
+                end
+            case 2
+                read -P "Nom du paquet: " pkg
+                if test -n "$pkg"
+                    # pacsearch_installed = abbr → pacman -Qs
+                    set -l exp (abbr --query pacsearch_installed 2>/dev/null)
+                    if test -n "$exp"
+                        eval $exp "$pkg"
+                    else
+                        command pacman -Qs "$pkg"
+                    end
+                end
+            case 3
+                read -P "Nom du paquet: " pkg
+                if test -n "$pkg"
+                    # pacinfo = fonction (autoload)
+                    if functions -q pacinfo
+                        pacinfo "$pkg"
+                    else
+                        command pacman -Qi "$pkg"
+                    end
+                end
+            case 4
+                read -P "Terme de recherche: " term
+                if test -n "$term"
+                    # pacfiles = abbr → pacman -Ql
+                    set -l exp (abbr --query pacfiles 2>/dev/null)
+                    if test -n "$exp"
+                        eval $exp "$term"
+                    else
+                        command pacman -Ql "$term"
+                    end
+                end
+            case 5
+                read -P "Terme de recherche: " term
+                if test -n "$term"
+                    # pacdep = abbr → pactree -r
+                    set -l exp (abbr --query pacdep 2>/dev/null)
+                    if test -n "$exp"
+                        eval $exp "$term"
+                    else
+                        command pactree -r "$term"
+                    end
+                end
+            case 6
+                # pacpick = fonction (autoload)
+                if functions -q pacpick
+                    pacpick
+                else
+                    read -P "Fichier: " file
+                    if test -n "$file"
+                        command pacman -Qo "$file"
+                    end
+                end
+        end
+        echo
+        continue
     end
 end
