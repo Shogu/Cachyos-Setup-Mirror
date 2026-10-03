@@ -6,7 +6,7 @@ stages:
 build-notepad:
   stage: build
   before_script:
-    - pacman -Syu --noconfirm --needed git meson ninja gtk4 libadwaita gtksourceview5 libspelling editorconfig-core-c glib2-devel gettext desktop-file-utils appstream zstd
+    - pacman -Syu --noconfirm --needed git meson ninja gtk4 libadwaita gtksourceview5 libspelling editorconfig-core-c glib2-devel gettext desktop-file-utils appstream zstd curl
   script:
     - git clone https://gitlab.gnome.org/GNOME/gnome-text-editor.git /tmp/gnome-text-editor
     - git -C /tmp/gnome-text-editor checkout 65c089a1b75ccf6e50f3e8e339b299a0ee729880
@@ -17,8 +17,10 @@ build-notepad:
     - runuser -u builder -- bash -lc "cd '$CI_PROJECT_DIR/notepad-build' && makepkg -f --noconfirm"
     - mkdir -p "$CI_PROJECT_DIR/out"
     - cp "$CI_PROJECT_DIR"/notepad-build/notepad-0.1.0-2-x86_64.pkg.tar.zst "$CI_PROJECT_DIR/out/"
+    - 'curl --fail-with-body --header "JOB-TOKEN: $CI_JOB_TOKEN" --form "file=@$CI_PROJECT_DIR/out/notepad-0.1.0-2-x86_64.pkg.tar.zst" "$CI_API_V4_URL/projects/$CI_PROJECT_ID/uploads" | tee "$CI_PROJECT_DIR/upload-response.json"'
   artifacts:
     name: "notepad-0.1.0-2"
     paths:
       - out/notepad-0.1.0-2-x86_64.pkg.tar.zst
+      - upload-response.json
     expire_in: 1 day
