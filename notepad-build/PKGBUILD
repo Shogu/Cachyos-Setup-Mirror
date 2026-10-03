@@ -1,0 +1,24 @@
+pkgname=notepad
+pkgver=0.1.0
+pkgrel=1
+pkgdesc="Simplified GNOME-style text editor"
+arch=('x86_64')
+url="https://gitlab.gnome.org/GNOME/gnome-text-editor"
+license=('GPL-3.0-or-later')
+depends=('gtk4' 'libadwaita' 'gtksourceview5' 'libspelling' 'editorconfig-core-c')
+makedepends=('meson' 'ninja' 'glib2-devel' 'gettext' 'desktop-file-utils' 'appstream')
+options=('!debug')
+source=()
+sha256sums=()
+
+build() {
+  cd /tmp/gnome-text-editor
+  arch-meson build -Deditorconfig=enabled
+  meson compile -C build
+}
+
+package() {
+  cd /tmp/gnome-text-editor
+  meson install -C build --destdir "$pkgdir"
+  install -Dm644 COPYING "$pkgdir/usr/share/licenses/$pkgname/COPYING"
+}
