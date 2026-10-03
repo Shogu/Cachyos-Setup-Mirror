@@ -2,7 +2,7 @@
 
 [Accueil](../README.md) · [Précédent](10-logiciels.md) · [Suivant](12-shell-terminal.md)
 
-> **Dans ce chapitre :** applications personnelles développées avec l'aide du Vibe Coding, principalement en GTK4/libadwaita, ainsi que l'extension GNOME « Always on top, always on top ».
+> **Dans ce chapitre :** applications personnelles développées avec l'aide du Vibe Coding, principalement en GTK4/libadwaita, l'extension GNOME « Always on top, always on top », ainsi qu’un build GTK4 upstream utilisé par le setup.
 
 - [11.1 Always on top, always on top](#111--always-on-top-always-on-top)
 - [11.2 Grabber](#112--grabber)
@@ -17,6 +17,8 @@
 - [11.11 Pusher](#1111--pusher)
 - [11.12 Nautilus Bookmark Icons](#1112--nautilus-bookmark-icons)
 - [11.13 Stethoscope](#1113--stethoscope)
+- [11.14 Snapper GTK4](#1114--snapper-gtk4)
+- [11.15 dconf-editor GTK4](#1115--dconf-editor-gtk4)
 
 ## 11.1 — Always on top, always on top
 
@@ -361,6 +363,57 @@ stethoscope
 ```fish
 sudo pacman -Rns stethoscope
 ```
+
+---
+
+## 11.14 — Snapper GTK4
+
+Frontend GTK4/libadwaita pour **Snapper** et l’intégration **Limine**. L’application reprend les opérations du workflow Snapper/Limine dans une interface GNOME native : affichage des snapshots, informations Avant/Après, création, suppression, restauration et réglages de nettoyage automatique.
+
+Le cœur de la restauration n’est pas réimplémenté dans l’interface : Snapper GTK4 s’appuie sur les outils système Snapper/Limine et utilise un helper privilégié via Polkit pour les opérations qui nécessitent les droits administrateur.
+
+**Paquet natif courant du setup : `snapper-gtk4-1.4.0-5-any.pkg.tar.zst`.**
+
+### Fonctions principales
+
+- affichage et filtrage des snapshots, notamment **Tous / Avant / Après** ;
+- création et suppression de snapshots ;
+- restauration à partir d’un snapshot via le workflow Limine/Snapper ;
+- réglage des nettoyages `number`, `timeline` et des paires Avant/Après vides ;
+- activation ou désactivation des minuteurs systemd Snapper correspondants ;
+- lancement manuel du nettoyage selon les limites enregistrées.
+
+### Installation
+
+```fish
+sudo pacman -U ./snapper-gtk4-1.4.0-5-any.pkg.tar.zst
+```
+
+L’application se lance ensuite sans `sudo` :
+
+```fish
+snapper-gtk4
+```
+
+### Désinstallation
+
+```fish
+sudo pacman -Rns snapper-gtk4
+```
+
+---
+
+## 11.15 — dconf-editor GTK4
+
+Le **dconf-editor GTK4** utilisé dans ce setup est une exception dans ce chapitre : il ne s’agit **pas d’une application vibe codée**, mais d’un build compilé depuis les **sources officielles du portage GTK4 en cours**.
+
+Il remplace la version GTK3 fournie par les dépôts. Avant l’installation du build GTK4, supprimer donc le paquet GTK3 :
+
+```fish
+sudo pacman -Rns dconf-editor
+```
+
+Le build GTK4 est ensuite compilé et installé depuis les sources upstream officielles utilisées par le setup. Cette séparation évite de documenter le portage officiel comme un fork maison et empêche la commande générale d’installation des logiciels de réinstaller accidentellement le paquet GTK3.
 
 ---
 

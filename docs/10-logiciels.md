@@ -2,9 +2,11 @@
 
 [Accueil](../README.md) · [Précédent](01-installation.md) · [Suivant](11-applications-vibe-coded.md)
 
-> **Dans ce chapitre :** logiciels installés classés par catégorie, et réglages propres à Dropbox, Fragments et aux lecteurs vidéo.
+> **Dans ce chapitre :** logiciels installés classés par catégorie, builds GTK4 spécifiques au setup, et réglages propres à Dropbox, Fragments et aux lecteurs vidéo.
 
 - [10.1 Logiciels à installer](#101--logiciels-à-installer)
+  - [10.1.1 dconf-editor GTK4](#1011--dconf-editor-gtk4)
+  - [10.1.2 Snapper GTK4](#1012--snapper-gtk4)
 - [10.2 Puls et LeLivreScolaire](#102--puls-et-lelivrescolaire)
 - [10.3 Dropbox](#103--dropbox)
 - [10.4 Téléchargement : Grabber et Fragments](#104--téléchargement--grabber-et-fragments)
@@ -38,7 +40,7 @@
 
 ### Système & outils
 
-- `dconf-editor` : éditeur de la base de registres GNOME (dconf).
+- **dconf-editor GTK4** : build du [portage GTK4 officiel en cours](11-applications-vibe-coded.md#1115--dconf-editor-gtk4), compilé depuis les sources upstream ; il remplace le `dconf-editor` GTK3 des dépôts.
 - `powertop` : diagnostic de consommation énergétique.
 - `profile-cleaner` : nettoyage des profils navigateurs.
 - `seahorse` : gestion du trousseau de mots de passe.
@@ -57,12 +59,37 @@
 - **Pusher** : installer [l’interface maison du dépôt GitLab](11-applications-vibe-coded.md#1111--pusher).
 - **Nautilus Bookmark Icons** : installer [l’extension maison de personnalisation des icônes de favoris Nautilus](11-applications-vibe-coded.md#1112--nautilus-bookmark-icons).
 - **Stethoscope** : installer [l’outil maison d’analyse du démarrage et des journaux](11-applications-vibe-coded.md#1113--stethoscope).
+- **Snapper GTK4** : installer [l’interface GTK4/libadwaita pour Snapper et Limine](11-applications-vibe-coded.md#1114--snapper-gtk4).
 
 Commande des paquets des dépôts (les applications maison se trouvent ci-dessous) :
 
 ```
-sudo pacman -Syu dconf-editor powertop gst-thumbnailers profile-cleaner seahorse extension-manager fragments papers nicotine+ resources onlyoffice xournal++ gnome-calendar duf trash-cli libgda6 shelly inotify-tools libnotify clapper
+sudo pacman -Syu powertop gst-thumbnailers profile-cleaner seahorse extension-manager fragments papers nicotine+ resources onlyoffice xournal++ gnome-calendar duf trash-cli libgda6 shelly inotify-tools libnotify clapper
 ```
+
+### 10.1.1 — dconf-editor GTK4
+
+Le setup n’utilise plus le paquet `dconf-editor` GTK3 des dépôts. Il utilise le **portage GTK4 officiel en cours**, compilé directement depuis les sources upstream. Ce build n’est **pas** une application vibe codée et ne doit pas être confondu avec un fork maison.
+
+Avant d’installer le build GTK4, désinstaller la version GTK3 :
+
+```fish
+sudo pacman -Rns dconf-editor
+```
+
+Compiler ensuite dconf-editor depuis les sources officielles du portage GTK4 utilisées par le setup. Les détails sont rappelés dans [11.15 — dconf-editor GTK4](11-applications-vibe-coded.md#1115--dconf-editor-gtk4).
+
+### 10.1.2 — Snapper GTK4
+
+**Snapper GTK4** est l’interface GTK4/libadwaita utilisée pour gérer les snapshots Snapper/Limine. Le paquet natif courant du setup est `snapper-gtk4-1.4.0-5-any.pkg.tar.zst`.
+
+Installation du paquet local :
+
+```fish
+sudo pacman -U ./snapper-gtk4-1.4.0-5-any.pkg.tar.zst
+```
+
+L’application est détaillée dans [11.14 — Snapper GTK4](11-applications-vibe-coded.md#1114--snapper-gtk4).
 
 
 Depuis la racine du dépôt, installer les paquets maison fournis ci-dessus :
