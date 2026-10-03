@@ -1,6 +1,6 @@
 pkgname=notepad
 pkgver=0.1.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Simplified GNOME-style text editor"
 arch=('x86_64')
 url="https://gitlab.gnome.org/GNOME/gnome-text-editor"
@@ -13,7 +13,7 @@ sha256sums=()
 
 build() {
   cd /tmp/gnome-text-editor
-  arch-meson build -Deditorconfig=enabled
+  arch-meson build -Deditorconfig=enabled -Ddevelopment=false
   meson compile -C build
 }
 
@@ -21,4 +21,5 @@ package() {
   cd /tmp/gnome-text-editor
   meson install -C build --destdir "$pkgdir"
   install -Dm644 COPYING "$pkgdir/usr/share/licenses/$pkgname/COPYING"
+  install -Dm644 README-NOTEPAD.md "$pkgdir/usr/share/doc/$pkgname/README-NOTEPAD.md"
 }
