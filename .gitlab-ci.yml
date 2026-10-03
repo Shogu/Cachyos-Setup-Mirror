@@ -11,17 +11,18 @@ build-notepad:
     - git clone https://gitlab.gnome.org/GNOME/gnome-text-editor.git /tmp/gnome-text-editor
     - git -C /tmp/gnome-text-editor checkout 65c089a1b75ccf6e50f3e8e339b299a0ee729880
     - base64 -d "$CI_PROJECT_DIR/notepad-build/notepad.patch.gz.b64" | gzip -dc | git -C /tmp/gnome-text-editor apply -
+    - base64 -d "$CI_PROJECT_DIR/notepad-build/notepad-final.patch.gz.b64" | gzip -dc | git -C /tmp/gnome-text-editor apply -
     - useradd -m builder
     - chown -R builder:builder "$CI_PROJECT_DIR" /tmp/gnome-text-editor
     - runuser -u builder -- bash -lc "cd '$CI_PROJECT_DIR/notepad-build' && makepkg -f --noconfirm"
     - mkdir -p "$CI_PROJECT_DIR/out"
-    - cp "$CI_PROJECT_DIR"/notepad-build/notepad-0.1.0-1-x86_64.pkg.tar.zst "$CI_PROJECT_DIR/out/"
+    - cp "$CI_PROJECT_DIR"/notepad-build/notepad-0.1.0-2-x86_64.pkg.tar.zst "$CI_PROJECT_DIR/out/"
     - echo __NOTEPAD_PACKAGE_BASE64_BEGIN__
-    - base64 -w0 "$CI_PROJECT_DIR/out/notepad-0.1.0-1-x86_64.pkg.tar.zst"
+    - base64 -w0 "$CI_PROJECT_DIR/out/notepad-0.1.0-2-x86_64.pkg.tar.zst"
     - echo
     - echo __NOTEPAD_PACKAGE_BASE64_END__
   artifacts:
-    name: "notepad-0.1.0-1"
+    name: "notepad-0.1.0-2"
     paths:
-      - out/notepad-0.1.0-1-x86_64.pkg.tar.zst
+      - out/notepad-0.1.0-2-x86_64.pkg.tar.zst
     expire_in: 1 day
