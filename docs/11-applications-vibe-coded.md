@@ -7,7 +7,7 @@
 - [11.1 Always on top, always on top](#111--always-on-top-always-on-top)
 - [11.2 Grabber](#112--grabber)
 - [11.3 Grimoire](#113--grimoire)
-- [11.4 Periscope](#114--periscope)
+- [11.4 Fret](#114--fret)
 - [11.5 SCX Manager](#115--scx-manager)
 - [11.6 systemd](#116--systemd)
 - [11.7 Decibel](#117--decibel)
@@ -106,25 +106,20 @@ sudo pacman -Rns grimoire-ogu
 
 ---
 
-## 11.4 — Periscope
+## 11.4 — Fret
 
 Gestionnaire de fichiers GTK4/libadwaita à deux panneaux, inspiré de Nautilus. Chaque panneau peut afficher un emplacement local ou une URI GVfs telle que FTP, SFTP ou SMB. Les transferts sont effectués directement entre les deux panneaux.
 
-**Paquet fourni : `periscope-0.2.0-4-final-any.pkg.tar.zst`.**
+**Paquet fourni : `fret-0.2.0-1-any.pkg.tar.zst`.**
 
-![Interface de Periscope](../Ressources/screenshots/vibe-coded/periscope.png)
+![Interface de Fret](../Ressources/screenshots/vibe-coded/fret.png)
 
 ### Installation
 
 ```fish
-sudo pacman -U ./periscope-0.2.0-4-final-any.pkg.tar.zst
+sudo pacman -U ./fret-0.2.0-1-any.pkg.tar.zst
 ```
 
-Si Shelly est utilisé pour les mises à jour et qu'un paquet AUR du même nom existe, le README du projet recommande de conserver Periscope hors de cette gestion :
-
-```fish
-shelly mark ignore periscope --add
-```
 
 Pour SMB, installer au besoin :
 
@@ -135,7 +130,7 @@ sudo pacman -S --needed gvfs-smb
 ### Désinstallation
 
 ```fish
-sudo pacman -Rns periscope
+sudo pacman -Rns fret
 ```
 
 ---
@@ -419,7 +414,7 @@ Le build GTK4 est ensuite compilé et installé depuis les sources upstream offi
 
 ### Captures d'écran restantes
 
-Les captures fournies avec cette mise à jour couvrent **Always on top, Grabber, Grimoire, Periscope, systemd, Pacto, Radar et Pusher**. Les trois applications suivantes restent volontairement sans capture afin de ne pas fabriquer une représentation de leur interface : **SCX Manager, Decibel et Fisherman**.
+Les captures fournies avec cette mise à jour couvrent **Always on top, Grabber, Grimoire, Fret, systemd, Pacto, Radar et Pusher**. Les trois applications suivantes restent volontairement sans capture afin de ne pas fabriquer une représentation de leur interface : **SCX Manager, Decibel et Fisherman**.
 
 ---
 

@@ -30,7 +30,7 @@
 - `fragments` : client BitTorrent GNOME.
 - `nicotine+` : client Soulseek (P2P).
 - **Grabber** : installer [l’interface maison de JDownloader](11-applications-vibe-coded.md#112--grabber) (AppImage).
-- **Periscope** : installer [le gestionnaire de fichiers maison à deux panneaux](11-applications-vibe-coded.md#114--periscope).
+- **Fret** : installer [le gestionnaire de fichiers maison à deux panneaux](11-applications-vibe-coded.md#114--fret).
 
 ### Audio & vidéo
 
@@ -97,7 +97,7 @@ Depuis la racine du dépôt, installer les paquets maison fournis ci-dessus :
 ```bash
 sudo pacman -U \
   "Ressources/Applis vibe codées en Libadwaita/Grimoire/grimoire-ogu-0.2.0-10-x86_64.pkg.tar.zst" \
-  "Ressources/Applis vibe codées en Libadwaita/Periscope/periscope-0.2.0-4-final-any.pkg.tar.zst" \
+  "Ressources/Applis vibe codées en Libadwaita/Fret/fret-0.2.0-1-any.pkg.tar.zst" \
   "Ressources/Applis vibe codées en Libadwaita/Decibel/decibel-49.6.1-1-any.pkg.tar.zst" \
   "Ressources/Applis vibe codées en Libadwaita/systemd-gui/systemd-gui-0.4.0-5-any.pkg.tar.zst" \
   "Ressources/Applis vibe codées en Libadwaita/Fisherman/fisherman-0.1.8-1-any.pkg.tar.zst" \

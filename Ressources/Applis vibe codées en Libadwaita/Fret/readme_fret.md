@@ -1,30 +1,29 @@
-Periscope  - appli perso libadwaita type Nautilus pour transfert locaux et ftp, avec contrôle des transferts. Vibe coded. 
+Fret  - appli perso libadwaita type Nautilus pour transfert locaux et ftp, avec contrôle des transferts. Vibe coded. 
 
 
-![Interface de Periscope](../../screenshots/vibe-coded/periscope.png)
+![Interface de Fret](../../screenshots/vibe-coded/fret.png)
 
-Version du paquet actuellement fourni : `0.1.0-10`.
+Version du paquet actuellement fourni : `0.2.0-1`.
 
 Installation : 
 ```fish
-sudo pacman -U ./periscope-0.1.0-10-any.pkg.tar.zst && shelly mark ignore periscope --add #empêche Shelly d'essayer de mettre à jour Periscope à partir des sources d'une appli AUR du même nom
+sudo pacman -U ./fret-0.2.0-1-any.pkg.tar.zst
 ```
 
 
 Désinstallation : 
 ```fish
-sudo pacman -Rns periscope
+sudo pacman -Rns fret
 ```
 
-# Periscope
+# Fret
 
-Periscope est un mini gestionnaire de fichiers GTK4/libadwaita inspiré de
+Fret est un mini gestionnaire de fichiers GTK4/libadwaita inspiré de
 Nautilus, avec deux emplacements indépendants. Chaque emplacement accepte un
 chemin local ou une URI prise en charge par GVfs, notamment `ftp://`, `sftp://`
 et `smb://`.
 
-Le nom final est **Periscope**. Le projet avait d’abord été appelé Torpille ;
-le paquet Arch remplace encore explicitement l’ancien paquet `torpille`.
+Le projet porte désormais le nom **Fret**. Le paquet Arch est prévu pour remplacer proprement les anciennes installations de ce gestionnaire de fichiers.
 
 ## 1. Fonctions de navigation
 
@@ -62,7 +61,7 @@ le paquet Arch remplace encore explicitement l’ancien paquet `torpille`.
 - Clic droit sur une sélection puis « Supprimer les fichiers » : une
   confirmation est demandée et les éléments sont envoyés à la corbeille.
 - La suppression reste possible pendant un transfert. Si une source faisant
-  partie de la file est supprimée, Periscope la signale comme absente dans le
+  partie de la file est supprimée, Fret la signale comme absente dans le
   transfert et continue avec les autres éléments.
 
 ## 3. Affichage des fichiers cachés
@@ -87,7 +86,7 @@ L’ancien réglage d’interface « Récents » a été retiré. Une éventuell
 La configuration est enregistrée dans :
 
 ```text
-~/.config/periscope/locations.json
+~/.config/fret/locations.json
 ```
 
 Les mots de passe présents dans une URI ne sont pas mémorisés dans ce fichier.
@@ -115,12 +114,12 @@ avertissement si une source a disparu ou n’a pas pu être supprimée.
 - Copie locale : les primitives du noyau (`copy_file_range` lorsqu’elles sont
   disponibles) sont utilisées avant le fallback GIO.
 - FTP, SFTP, SMB ou autre changement de système de fichiers : aucun backend ne
-  peut garantir un renommage atomique entre deux serveurs. Periscope réalise
+  peut garantir un renommage atomique entre deux serveurs. Fret réalise
   alors le vrai comportement de déplacement par fichier : copie vers un fichier
   partiel, finalisation, puis suppression immédiate de la source avant de passer
   au fichier suivant.
 - Les fichiers partiels cachés portent le suffixe
-  `.periscope-partial`. Une copie interrompue peut reprendre la taille déjà
+  `.fret-partial`. Une copie interrompue peut reprendre la taille déjà
   présente.
 - Après un déplacement de dossier, seuls les dossiers source devenus vides
   sont retirés. Un dossier non vide n’est jamais supprimé par ce nettoyage.
@@ -170,13 +169,11 @@ Le bouton Œil masque l’interface de navigation et affiche un écran opaque av
 un bouton pour la réafficher. Un transfert en cours continue en arrière-plan ;
 ce mode ne suspend ni ne supprime les données.
 
-L’icône d’application finale est circulaire, sobre et bleue, avec un périscope
-blanc et des vagues. Elle est inspirée de la référence fournie pour Periscope
-et est utilisée par le lanceur, le menu des applications et l’écran opaque.
+L’icône d’application représente un conteneur orange entrouvert laissant apparaître un média vidéo. Elle est utilisée par le lanceur, le menu des applications et la boîte À propos.
 
 ## 9. Dépendances d’exécution — CachyOS / Arch Linux
 
-Periscope est écrit en Python et ne demande aucun paquet de compilation pour
+Fret est écrit en Python et ne demande aucun paquet de compilation pour
 être exécuté :
 
 ```bash
@@ -196,14 +193,14 @@ le permet, car FTP ne chiffre pas les données.
 
 ## 10. Installation utilisateur
 
-Le script installe le code dans `~/.local/share/periscope`, le lanceur dans
+Le script installe le code dans `~/.local/share/fret`, le lanceur dans
 `~/.local/bin`, le fichier `.desktop` et l’icône dans les répertoires de données
 utilisateur. Il vérifie les bindings GTK/libadwaita mais ne lance pas pacman et
 n’installe aucun paquet système.
 
 ```bash
 ./install.sh
-~/.local/bin/periscope
+~/.local/bin/fret
 ```
 
 Pour désinstaller uniquement cette installation utilisateur :
@@ -228,36 +225,26 @@ sudo pacman -S --needed base-devel
 La version actuellement produite est :
 
 ```bash
-sudo pacman -U ./periscope-0.1.0-10-any.pkg.tar.zst
+sudo pacman -U ./fret-0.2.0-1-any.pkg.tar.zst
 ```
 
-Le paquet installe le programme dans `/usr/lib/periscope`, le lanceur dans
-`/usr/bin/periscope`, l’icône, le fichier `.desktop` et ce README dans la
-documentation système. Ses dépendances d’exécution sont déclarées dans le
+Le paquet installe le programme dans `/usr/lib/fret`, le lanceur dans
+`/usr/bin/fret`, l’icône et le fichier `.desktop`. Ses dépendances d’exécution sont déclarées dans le
 `PKGBUILD` : `python`, `python-gobject`, `gtk4`, `libadwaita` et `gvfs`.
 
 Pour retirer l’installation paquetée :
 
 ```bash
-sudo pacman -R periscope
+sudo pacman -R fret
 ```
 
-### Collision avec l’AUR
-
-Un autre paquet AUR nommé `periscope` existe déjà pour un client Nintendo
-Switch. Le nom du paquet local est donc identique, même si les applications
-n’ont pas le même contenu. Avec un helper AUR, il faut refuser ou ignorer la
-mise à jour de cet autre paquet avant d’utiliser le paquet local. Avec pacman,
-une mise à jour explicite du dépôt ne remplace pas l’installation locale sans
-action de l’utilisateur ; l’installation du fichier local se fait avec
-`pacman -U`.
 
 ## 12. Fichiers du projet
 
-- `periscope.py` : application GTK4/libadwaita et moteur de transfert ;
-- `bin/periscope` : lanceur adapté à l’installation utilisateur ou système ;
-- `data/io.github.periscope.Periscope.desktop` : entrée du menu ;
-- `data/io.github.periscope.Periscope.png` : icône finale ;
+- `fret.py` : application GTK4/libadwaita et moteur de transfert ;
+- `bin/fret` : lanceur adapté à l’installation utilisateur ou système ;
+- `data/com.ogu.Fret.desktop` : entrée du menu ;
+- `data/com.ogu.Fret.png` : icône finale ;
 - `install.sh` / `uninstall.sh` : installation et désinstallation utilisateur ;
 - `PKGBUILD` / `build-pkg.sh` : paquet Arch ;
 - `check.sh` : vérifications de syntaxe, scripts, icône et fonctions clés.
@@ -272,8 +259,7 @@ action de l’utilisateur ; l’installation du fichier local se fait avec
    courant et des fichiers restants.
 4. Création des scripts d’installation et de désinstallation, puis indication
    séparée des dépendances d’exécution et des paquets de construction.
-5. Renommage final de Torpille en Periscope, avec migration déclarée dans le
-   paquet Arch et prise en compte de la collision AUR.
+5. Renommage du projet en Fret, avec migration déclarée dans le paquet Arch.
 6. Suppression des mentions gauche/droit, suppression du réglage Récents et
    mémorisation des deux derniers emplacements.
 7. Ajout des favoris persistants et du toggle des fichiers cachés, avec une
@@ -308,7 +294,7 @@ action de l’utilisateur ; l’installation du fichier local se fait avec
 
 ## Maintenance
 
-Après une modification de `periscope.py`, lancer :
+Après une modification de `fret.py`, lancer :
 
 ```bash
 ./check.sh
