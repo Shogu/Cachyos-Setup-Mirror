@@ -146,73 +146,8 @@ mkdir -p "$HOME/Téléchargements"/{Archives,Audio,Code,Documents,Pictures,ISOs,
 mkdir -p "$HOME/.local/bin" "$HOME/.config/systemd/user"
 ```
 
-Créer le script (également conservé dans [`Ressources/Scripts/trieur`](../Ressources/Scripts/trieur)) :
+Copier le script conservé dans [`Ressources/Scripts/trieur`](../Ressources/Scripts/trieur)) :
 
-```bash
-cat > "$HOME/.local/bin/trieur" <<'EOF'
-#!/usr/bin/env bash
-
-DOWNLOADS="$HOME/Téléchargements"
-
-move_file() {
-    local file="$1"
-    local destination="$2"
-    local name target base ext n
-
-    name="${file##*/}"
-    mkdir -p "$destination"
-    target="$destination/$name"
-
-    if [[ -e "$target" ]]; then
-        if [[ "$name" == *.* ]]; then
-            base="${name%.*}"
-            ext=".${name##*.}"
-        else
-            base="$name"
-            ext=""
-        fi
-
-        n=2
-        while [[ -e "$destination/$base ($n)$ext" ]]; do
-            ((n++))
-        done
-        target="$destination/$base ($n)$ext"
-    fi
-
-    mv -- "$file" "$target"
-}
-
-find "$DOWNLOADS" -maxdepth 1 -type f -print0 |
-while IFS= read -r -d '' file; do
-    name="${file##*/}"
-    lower="${name,,}"
-
-    case "$lower" in
-        *.part|*.crdownload|*.download|*.partial|*.tmp)
-            continue ;;
-        *.pkg*.tar.zst|*.pkg*.tar.xz|*.pkg*.tar.gz)
-            move_file "$file" "$DOWNLOADS/Archives" ;;
-        *.appimage|*.deb|*.rpm)
-            move_file "$file" "$DOWNLOADS/Packages" ;;
-        *.iso|*.img|*.iso.sig|*.iso.sha256|*.iso.sha512)
-            move_file "$file" "$DOWNLOADS/ISOs" ;;
-        *.epub|*.mobi|*.azw|*.azw3|*.fb2|*.cbz|*.cbr|*.pdf|*.odt|*.ods|*.odp|*.doc|*.docx|*.xls|*.xlsx|*.ppt|*.pptx|*.rtf|*.txt|*.csv)
-            move_file "$file" "$DOWNLOADS/Documents" ;;
-        *.zip|*.7z|*.rar|*.tar|*.tar.gz|*.tgz|*.tar.xz|*.txz|*.tar.bz2|*.tbz2|*.gz|*.bz2|*.xz|*.zst)
-            move_file "$file" "$DOWNLOADS/Archives" ;;
-        *.md|*.json|*.yaml|*.yml|*.toml|*.sh|*.fish|*.py|*.js|*.ts|*.css|*.html|*.xml|*.ini|*.conf|*.service|*.path|*.desktop)
-            move_file "$file" "$DOWNLOADS/Code" ;;
-        *.jpg|*.jpeg|*.png|*.webp|*.avif|*.gif|*.svg|*.bmp|*.tif|*.tiff|*.heic)
-            move_file "$file" "$DOWNLOADS/Pictures" ;;
-        *.mp3|*.flac|*.opus|*.ogg|*.oga|*.m4a|*.aac|*.wav|*.wma)
-            move_file "$file" "$DOWNLOADS/Audio" ;;
-        *)
-            continue ;;
-    esac
-done
-EOF
-chmod +x "$HOME/.local/bin/trieur"
-```
 
 Créer les deux unités utilisateur :
 
