@@ -59,7 +59,7 @@ abbr --add pacfiles 'pacman -Ql'
 abbr --add orphans 'pacman -Qdtq'
 
 # === Presse-papiers Wayland ===
-abbr --add clip --position anywhere '| wl-copy'
+abbr --add clip --position anywhere '2>&1 | wl-copy'
 
 # === Corbeille ===
 abbr -a -- delete 'trash-put'
