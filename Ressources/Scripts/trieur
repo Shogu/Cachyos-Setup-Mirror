@@ -40,6 +40,8 @@ while IFS= read -r -d '' file; do
             continue ;;
         *.pkg*.tar.zst|*.pkg*.tar.xz|*.pkg*.tar.gz|*.appimage)
             move_file "$file" "$DOWNLOADS/Archives" ;;
+        *.rpm|*.apk|*.deb)
+            move_file "$file" "$DOWNLOADS/Packages" ;;
         *.iso|*.img|*.iso.sig|*.iso.sha256|*.iso.sha512)
             move_file "$file" "$DOWNLOADS/ISOs" ;;
         *.epub|*.mobi|*.azw|*.azw3|*.fb2|*.cbz|*.cbr|*.pdf|*.odt|*.ods|*.odp|*.doc|*.docx|*.xls|*.xlsx|*.ppt|*.pptx|*.rtf|*.txt|*.csv)
