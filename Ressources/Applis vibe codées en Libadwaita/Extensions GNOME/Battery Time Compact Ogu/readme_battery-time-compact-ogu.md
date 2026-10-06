@@ -13,7 +13,7 @@ Fork local de **Battery Time (Percentage) Compact**, ciblé sur GNOME Shell **50
 
 Quand UPower ne fournit pas encore d’estimation de temps, `…` est affiché. Batterie pleine : `∞`.
 
-La v53 renforce la synchronisation : le texte Quick Settings est réappliqué après chaque mise à jour UPower, y compris lorsque la puissance change sans changement d’icône batterie.
+La v53 renforce la synchronisation : GNOME effectue d’abord sa mise à jour native, puis l’extension réapplique le texte personnalisé. Une écoute explicite de `EnergyRate` actualise également les watts lorsque la puissance varie sans autre changement d’état de la batterie.
 
 ## Installation
 
