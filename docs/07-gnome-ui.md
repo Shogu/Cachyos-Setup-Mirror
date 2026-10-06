@@ -102,44 +102,13 @@ Désactiver le rappel de don GNOME si la clé existe dans la version installée 
 gsettings set org.gnome.settings-daemon.plugins.housekeeping donation-reminder-enabled false
 ```
 
-### Raccourcir le libellé du profil énergétique
+### Réglages rapides avec Focus & Boutons
 
-Raccourcir le libellé du bouton de profil énergétique, trop long dans les réglages rapides GNOME.
+Le renommage manuel du fichier de traduction GNOME Shell n’est plus nécessaire. L’extension maison **Focus & Boutons** peut remplacer directement le libellé **Mode puissance** par **Énergie** et réorganiser la rangée système de Quick Settings.
 
-Installer l'outil de traduction et récupérer le fichier français :
+Elle fournit également les boutons scindés **Réglages** et **Power**, la fermeture automatique de Quick Settings et du panneau Calendrier/Notifications, ainsi que les options d’affichage du calendrier.
 
-```fish
-sudo pacman -S gettext
-wget https://gitlab.gnome.org/GNOME/gnome-shell/-/raw/main/po/fr.po -O fr.po
-gnome-text-editor fr.po
-```
-
-Modifier la traduction **Mode puissance** en **Énergie** ou **Profil**, puis compiler :
-
-```fish
-msgfmt fr.po -o gnome-shell.mo
-```
-
-Le lien du mémo vise la branche `main` : pour éviter de remplacer les traductions installées par celles d'une autre version, privilégier le fichier `fr.po` correspondant à la version de GNOME Shell utilisée.
-
-Sauvegarder l'original puis installer le fichier compilé :
-
-```fish
-sudo cp -a /usr/share/locale/fr/LC_MESSAGES/gnome-shell.mo /usr/share/locale/fr/LC_MESSAGES/gnome-shell.mo.bak
-sudo cp gnome-shell.mo /usr/share/locale/fr/LC_MESSAGES/gnome-shell.mo
-```
-
-Après vérification, supprimer les deux fichiers de travail créés dans le dossier courant :
-
-```fish
-rm -i fr.po gnome-shell.mo
-```
-
-Pour empêcher l'écrasement de la traduction : éditer `sudoedit /etc/pacman.conf` et ajouter dans la rubrique `options` :
-
-```
-NoExtract = usr/share/locale/fr/LC_MESSAGES/gnome-shell.mo
-```
+Voir [Extensions GNOME — Focus & Boutons](08-gnome-extensions.md#87--focus--boutons) et [Applications Vibe Coded — Focus & Boutons](11-applications-vibe-coded.md#1118--focus--boutons).
 
 ## 7.7 — Bouton d'alimentation, capot et veille (suspension)
 

@@ -10,6 +10,8 @@
 - [8.4 Esthétiques](#84--esthétiques)
 - [8.5 Optionnelles](#85--optionnelles)
 - [8.6 Extension maison : Always on top, always on top](#86--extension-maison--always-on-top-always-on-top)
+- [8.7 Focus & Boutons](#87--focus--boutons)
+- [8.8 Battery Time Compact — Ogu](#88--battery-time-compact--ogu)
 
 ## 8.1 — Validation des versions d'extensions
 
@@ -29,7 +31,8 @@ gsettings set org.gnome.shell disable-extension-version-validation false
 
 Extensions apportant des fonctions d'interface ou de système considérées comme centrales dans ce setup :
 
-- [Battery Time Percentage Compact](https://extensions.gnome.org/extension/2929/battery-time-percentage-compact/) ou [Battery Time](https://extensions.gnome.org/extension/5425/battery-time/)
+- **Focus & Boutons** — extension maison GNOME 50/51 : auto-fermeture de Quick Settings et du panneau Calendrier/Notifications, boutons Réglages et Power scindés, masquage de Capture d’écran, libellé **Énergie**, carte RDV bleue et masquage des notifications vides. Voir [11.18](11-applications-vibe-coded.md#1118--focus--boutons).
+- **Battery Time Compact — Ogu** — fork local GNOME 50/51 : top bar `temps - pourcentage`, bouton batterie Quick Settings `temps - watts`. Voir [11.19](11-applications-vibe-coded.md#1119--battery-time-compact--ogu).
 - [AutoActivities](https://extensions.gnome.org/extension/5500/auto-activities/)
 - [Power Switching Manager](https://extensions.gnome.org/extension/9178/power-switching-manager/) — supprimer la luminosité automatique dans les réglages GNOME !
 - [Hot Edge](https://extensions.gnome.org/extension/4222/hot-edge/)
@@ -51,7 +54,7 @@ Extensions apportant des fonctions d'interface ou de système considérées comm
 ## 8.4 — Esthétiques
 
 - [Panel Corners](https://extensions.gnome.org/extension/4805/panel-corners/)
-- [Just Perfection](https://extensions.gnome.org/extension/3843/just-perfection/) qui permet de réunir en une extension Grand Theft Focus, Hide Worldclocks, Hide Activities Button, Hide Screenshot, Impatience, etc.
+- [Just Perfection](https://extensions.gnome.org/extension/3843/just-perfection/) pour les réglages d’interface restant utiles ; le masquage du bouton Capture d’écran de Quick Settings est désormais pris en charge par **Focus & Boutons**.
 
 
 ## 8.5 — Optionnelles : à retirer après réglage
@@ -72,6 +75,52 @@ Sous Wayland, se déconnecter puis se reconnecter ; ensuite activer l’extensio
 
 ```bash
 gnome-extensions enable always-on-top-always-on-top@localhost
+```
+
+
+## 8.7 — Focus & Boutons
+
+Extension GNOME Shell maison compatible **GNOME 50 et 51**. Elle regroupe les ajustements de Quick Settings et du panneau Calendrier/Notifications afin d’éviter d’empiler plusieurs petites extensions.
+
+Fonctions principales :
+
+- fermeture automatique de **Quick Settings** et du panneau **Calendrier/Notifications** après sortie du pointeur, avec délai réglable ;
+- bouton **Capture d’écran** masquable sans désactiver les raccourcis GNOME ;
+- bouton **Réglages scindé** : clic principal vers Paramètres GNOME, chevron vers Ajustements, Éditeur dconf et Extensions Manager ;
+- bouton **Power scindé** : clic principal vers Éteindre, chevron vers Suspendre, Redémarrer, Redémarrer la session et Verrouiller la session ;
+- les deux boutons scindés deviennent **bleu Adwaita uniquement pendant l’ouverture de leur menu** ;
+- libellé du profil de puissance raccourci en **Énergie** ;
+- carte des rendez-vous bleue et masquage optionnel de la grande zone Notifications lorsqu’elle est vide ;
+- panneau de préférences pour activer ou désactiver les fonctions.
+
+Depuis la racine du dépôt :
+
+```fish
+gnome-extensions install --force "Ressources/Applis vibe codées en Libadwaita/Extensions GNOME/Focus & Boutons/Focus-et-Boutons-v12.zip"
+gnome-extensions enable focus-et-boutons@ogu
+```
+
+Préférences :
+
+```fish
+gnome-extensions prefs focus-et-boutons@ogu
+```
+
+## 8.8 — Battery Time Compact — Ogu
+
+Fork local de **Battery Time (Percentage) Compact**, adapté à **GNOME 50 et 51**.
+
+- top bar : `9:27 - 56%` ;
+- Quick Settings : `9:27 - 4.2 W` ;
+- le pourcentage reste toujours visible dans la top bar ;
+- la puissance instantanée provient de `UPower.Device.EnergyRate` ;
+- la synchronisation v53 réapplique le texte après chaque actualisation UPower.
+
+Installation :
+
+```fish
+gnome-extensions install --force "Ressources/Applis vibe codées en Libadwaita/Extensions GNOME/Battery Time Compact Ogu/Battery-Time-Compact-Ogu-v53.zip"
+gnome-extensions enable batterytimepercentagecompact@sagrland.de
 ```
 
 ---

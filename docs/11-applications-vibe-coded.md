@@ -2,7 +2,7 @@
 
 [Accueil](../README.md) · [Précédent](10-logiciels.md) · [Suivant](12-shell-terminal.md)
 
-> **Dans ce chapitre :** applications personnelles développées avec l'aide du Vibe Coding, principalement en GTK4/libadwaita, les extensions GNOME maison « Always on top, always on top », **Musicäa** et **Session Keeper**, ainsi qu’un build GTK4 upstream utilisé par le setup.
+> **Dans ce chapitre :** applications personnelles développées avec l'aide du Vibe Coding, principalement en GTK4/libadwaita, les extensions GNOME maison « Always on top, always on top », **Musicäa**, **Session Keeper**, **Focus & Boutons** et le fork **Battery Time Compact — Ogu**, ainsi qu’un build GTK4 upstream utilisé par le setup.
 
 - [11.1 Always on top, always on top](#111--always-on-top-always-on-top)
 - [11.2 Grabber](#112--grabber)
@@ -21,6 +21,8 @@
 - [11.15 dconf-editor GTK4](#1115--dconf-editor-gtk4)
 - [11.16 Musicäa](#1116--musicäa)
 - [11.17 Session Keeper](#1117--session-keeper)
+- [11.18 Focus & Boutons](#1118--focus--boutons)
+- [11.19 Battery Time Compact — Ogu](#1119--battery-time-compact--ogu)
 
 ## 11.1 — Always on top, always on top
 
@@ -509,6 +511,85 @@ gnome-extensions uninstall session-keeper@altlinux.org
 Session Keeper restaure les applications et leurs fenêtres, mais pas leur contenu interne arbitraire. La restauration des onglets, documents ou sessions internes dépend donc de chaque application.
 
 Le [README du dossier Session Keeper](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Session%20Keeper/readme_session-keeper.md) résume l’installation et les fonctions.
+
+---
+
+
+## 11.18 — Focus & Boutons
+
+Extension GNOME Shell maison dédiée à la rationalisation de **Quick Settings** et du panneau **Calendrier/Notifications**. Compatible GNOME Shell **50 et 51**.
+
+**Archive fournie : `Focus-et-Boutons-v12.zip`.** UUID : `focus-et-boutons@ogu`.
+
+### Fonctions principales
+
+- fermeture automatique de Quick Settings lorsque le pointeur en sort, après un délai réglable de 100 à 2000 ms, 350 ms par défaut ;
+- même comportement pour le panneau Calendrier/Notifications ;
+- masquage optionnel du bouton Capture d’écran ;
+- bouton **Réglages scindé** : clic principal vers Paramètres GNOME ; chevron vers Ajustements, Éditeur dconf et Extensions Manager ;
+- bouton **Power scindé** : clic principal vers le dialogue Éteindre ; chevron vers Suspendre, Redémarrer, Redémarrer la session et Verrouiller la session ;
+- coloration **bleu Adwaita temporaire** des deux boutons scindés tant que leur sous-menu est ouvert ;
+- renommage optionnel du profil de puissance en **Énergie** ;
+- carte des rendez-vous en bleu Adwaita ;
+- masquage optionnel de la grande zone Notifications lorsqu’elle est vide ;
+- préférences GSettings appliquées immédiatement.
+
+L’extension ne modifie ni le volume, ni le microphone, ni le sélecteur de sortie audio.
+
+### Installation
+
+Depuis la racine du dépôt :
+
+```fish
+gnome-extensions install --force "Ressources/Applis vibe codées en Libadwaita/Extensions GNOME/Focus & Boutons/Focus-et-Boutons-v12.zip"
+gnome-extensions enable focus-et-boutons@ogu
+```
+
+Préférences :
+
+```fish
+gnome-extensions prefs focus-et-boutons@ogu
+```
+
+### Désinstallation
+
+```fish
+gnome-extensions uninstall focus-et-boutons@ogu
+```
+
+Le [README du dossier Focus & Boutons](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Focus%20%26%20Boutons/readme_focus-et-boutons.md) récapitule les fonctions et l’installation.
+
+---
+
+## 11.19 — Battery Time Compact — Ogu
+
+Fork personnel de **Battery Time (Percentage) Compact** pour GNOME Shell **50 et 51**. Le UUID upstream est conservé afin de remplacer directement l’extension d’origine.
+
+**Archive fournie : `Battery-Time-Compact-Ogu-v53.zip`.** UUID : `batterytimepercentagecompact@sagrland.de`.
+
+### Affichage
+
+- **Top bar** : `9:27 - 56%` — autonomie restante puis pourcentage, sans parenthèses ;
+- **Quick Settings** : `9:27 - 4.2 W` — autonomie restante puis puissance instantanée, sans répétition du pourcentage.
+
+La puissance vient de `UPower.Device.EnergyRate`. La v53 réapplique l’affichage après chaque synchronisation UPower afin d’éviter que GNOME remette temporairement le pourcentage natif dans Quick Settings lorsque seule la puissance varie.
+
+### Installation
+
+```fish
+gnome-extensions install --force "Ressources/Applis vibe codées en Libadwaita/Extensions GNOME/Battery Time Compact Ogu/Battery-Time-Compact-Ogu-v53.zip"
+gnome-extensions enable batterytimepercentagecompact@sagrland.de
+```
+
+### Désinstallation
+
+Réinstaller l’archive upstream pour revenir au comportement d’origine, ou désinstaller l’extension :
+
+```fish
+gnome-extensions uninstall batterytimepercentagecompact@sagrland.de
+```
+
+Le [README du dossier Battery Time Compact — Ogu](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Battery%20Time%20Compact%20Ogu/readme_battery-time-compact-ogu.md) décrit le fork.
 
 ---
 
