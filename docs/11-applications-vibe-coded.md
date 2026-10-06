@@ -2,7 +2,7 @@
 
 [Accueil](../README.md) · [Précédent](10-logiciels.md) · [Suivant](12-shell-terminal.md)
 
-> **Dans ce chapitre :** applications personnelles développées avec l'aide du Vibe Coding, principalement en GTK4/libadwaita, l'extension GNOME « Always on top, always on top », ainsi qu’un build GTK4 upstream utilisé par le setup.
+> **Dans ce chapitre :** applications personnelles développées avec l'aide du Vibe Coding, principalement en GTK4/libadwaita, les extensions GNOME maison « Always on top, always on top » et **Musicäa**, ainsi qu’un build GTK4 upstream utilisé par le setup.
 
 - [11.1 Always on top, always on top](#111--always-on-top-always-on-top)
 - [11.2 Grabber](#112--grabber)
@@ -19,6 +19,7 @@
 - [11.13 Stethoscope](#1113--stethoscope)
 - [11.14 Snapper GTK4](#1114--snapper-gtk4)
 - [11.15 dconf-editor GTK4](#1115--dconf-editor-gtk4)
+- [11.16 Musicäa](#1116--musicäa)
 
 ## 11.1 — Always on top, always on top
 
@@ -409,6 +410,45 @@ sudo pacman -Rns dconf-editor
 ```
 
 Le build GTK4 est ensuite compilé et installé depuis les sources upstream officielles utilisées par le setup. Cette séparation évite de documenter le portage officiel comme un fork maison et empêche la commande générale d’installation des logiciels de réinstaller accidentellement le paquet GTK3.
+
+
+---
+
+## 11.16 — Musicäa
+
+Extension GNOME Shell maison dédiée à **Gapless (G4Music)**. Cette version repart strictement de **Musicäa 0.2.0** et conserve son lecteur enrichi sans modifier sa taille ni son layout.
+
+**Paquet fourni : `Musicäa-0.5.0-1-any.pkg.tar.zst`.**
+
+Par rapport à la 0.2.0, seuls les changements suivants sont conservés :
+
+- l’indicateur à trois barres dans Quick Settings reste visible tant que Gapless est présent : **animé pendant la lecture et figé en pause** ;
+- suppression des notifications automatiques à chaque changement de piste ;
+- suppression du bouton dédié « Ouvrir Gapless » ;
+- comportement natif de la carte GNOME conservé : **cliquer sur le cartouche ouvre Gapless**, tandis que les boutons du lecteur gardent leurs commandes propres.
+
+Aucun travail supplémentaire de radius, de taille de pochette ou de géométrie du lecteur n’est appliqué dans cette révision.
+
+### Installation
+
+Depuis la racine du dépôt :
+
+```fish
+sudo pacman -U "Ressources/Applis vibe codées en Libadwaita/Extensions GNOME/Musicäa/Musicäa-0.5.0-1-any.pkg.tar.zst"
+gnome-extensions enable musicaa@ogu.local
+```
+
+Sous Wayland, si l’extension n’est pas rechargée immédiatement, se déconnecter puis se reconnecter.
+
+### Désinstallation
+
+```fish
+sudo pacman -Rns gnome-shell-extension-musicaa
+```
+
+### Alternative à Now Playing Card
+
+**Now Playing Card** reste l’option générique pour les lecteurs MPRIS. **Musicäa** cible spécifiquement Gapless : le lecteur principal reste dans le panneau Calendrier/Notifications et Quick Settings n’accueille que l’indicateur à trois barres.
 
 ---
 
