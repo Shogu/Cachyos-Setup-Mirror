@@ -45,6 +45,7 @@ Extensions apportant des fonctions d'interface ou de système considérées comm
 - [Copyous](https://extensions.gnome.org/extension/8834/copyous/) : penser à installer la dépendance libgda6 `sudo pacman -S libgda6`
 - [Now Playing Card](https://extensions.gnome.org/extension/10736/now-playing-card/) — solution générique pour les lecteurs MPRIS ; dans les préférences, régler **Location** sur **Quick Settings** plutôt que **Panel**.
 - **Musicäa** — alternative maison dédiée à **Gapless (G4Music)** : conserve le lecteur média GNOME dans le panneau Calendrier/Notifications et ajoute seulement un indicateur à trois barres dans Quick Settings. Choisir **Now Playing Card** pour une solution générique multi-lecteurs, ou **Musicäa** pour une intégration spécifiquement pensée pour Gapless. Voir [Applications Vibe Coded — Musicäa](11-applications-vibe-coded.md#1116--musicäa).
+- **Session Keeper** — extension GNOME Shell de productivité qui sauvegarde en continu la session et restaure rapidement les applications, fenêtres, espaces de travail, disposition et états de fenêtres. Version adaptée à GNOME 50, avec restauration multi-fenêtres et options avancées. Voir [Applications Vibe Coded — Session Keeper](11-applications-vibe-coded.md#1117--session-keeper).
 
 
 ## 8.4 — Esthétiques

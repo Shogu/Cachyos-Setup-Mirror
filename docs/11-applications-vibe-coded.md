@@ -2,7 +2,7 @@
 
 [Accueil](../README.md) · [Précédent](10-logiciels.md) · [Suivant](12-shell-terminal.md)
 
-> **Dans ce chapitre :** applications personnelles développées avec l'aide du Vibe Coding, principalement en GTK4/libadwaita, les extensions GNOME maison « Always on top, always on top » et **Musicäa**, ainsi qu’un build GTK4 upstream utilisé par le setup.
+> **Dans ce chapitre :** applications personnelles développées avec l'aide du Vibe Coding, principalement en GTK4/libadwaita, les extensions GNOME maison « Always on top, always on top », **Musicäa** et **Session Keeper**, ainsi qu’un build GTK4 upstream utilisé par le setup.
 
 - [11.1 Always on top, always on top](#111--always-on-top-always-on-top)
 - [11.2 Grabber](#112--grabber)
@@ -20,6 +20,7 @@
 - [11.14 Snapper GTK4](#1114--snapper-gtk4)
 - [11.15 dconf-editor GTK4](#1115--dconf-editor-gtk4)
 - [11.16 Musicäa](#1116--musicäa)
+- [11.17 Session Keeper](#1117--session-keeper)
 
 ## 11.1 — Always on top, always on top
 
@@ -449,6 +450,65 @@ sudo pacman -Rns gnome-shell-extension-musicaa
 ### Alternative à Now Playing Card
 
 **Now Playing Card** reste l’option générique pour les lecteurs MPRIS. **Musicäa** cible spécifiquement Gapless : le lecteur principal reste dans le panneau Calendrier/Notifications et Quick Settings n’accueille que l’indicateur à trois barres.
+
+---
+
+
+## 11.17 — Session Keeper
+
+Extension GNOME Shell de productivité destinée à sauvegarder automatiquement la session et à restaurer rapidement les applications et fenêtres après une reconnexion ou un redémarrage.
+
+Cette version part de **Session Keeper 1.0.6 d’ALT Linux** et a été adaptée pour **GNOME 50**. Le moteur reste entièrement natif GNOME/Linux : GJS, Mutter, Gio et GLib, sans daemon ni outil externe.
+
+**Archive fournie : `Session-Keeper.zip`.** UUID : `session-keeper@altlinux.org`.
+
+### Fonctions principales
+
+- sauvegarde événementielle différée, sans polling, avec écriture atomique ;
+- restauration déclenchée dès que GNOME a terminé son démarrage, sans délai fixe inutile ;
+- lancement rapide des applications avec faible échelonnement ;
+- restauration de plusieurs fenêtres par application lorsque l’application le permet ;
+- appariement renforcé des fenêtres ;
+- restauration de la position, taille, espace de travail et écran ;
+- restauration des états maximisé, plein écran, minimisé, toujours au-dessus et tous les espaces de travail ;
+- filtrage des dialogues et des fenêtres non relançables ;
+- sauvegarde finale synchrone lors d’une fermeture GNOME propre ;
+- panneau de préférences permettant d’activer ou désactiver les principales fonctions avancées ;
+- interface et textes en français.
+
+Le fichier `metadata.json` contient aussi le mot-clé `productivity` afin que **Manager Extensions** classe automatiquement l’extension dans **Productivité**, sans règle spéciale basée sur son UUID.
+
+### Installation
+
+Depuis la racine du dépôt :
+
+```fish
+gnome-extensions install --force "Ressources/Applis vibe codées en Libadwaita/Extensions GNOME/Session Keeper/Session-Keeper.zip"
+```
+
+Sous Wayland, se déconnecter puis se reconnecter, puis activer l’extension :
+
+```fish
+gnome-extensions enable session-keeper@altlinux.org
+```
+
+Ouvrir les réglages :
+
+```fish
+gnome-extensions prefs session-keeper@altlinux.org
+```
+
+### Désinstallation
+
+```fish
+gnome-extensions uninstall session-keeper@altlinux.org
+```
+
+### Limite
+
+Session Keeper restaure les applications et leurs fenêtres, mais pas leur contenu interne arbitraire. La restauration des onglets, documents ou sessions internes dépend donc de chaque application.
+
+Le [README du dossier Session Keeper](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Session%20Keeper/readme_session-keeper.md) résume l’installation et les fonctions.
 
 ---
 
