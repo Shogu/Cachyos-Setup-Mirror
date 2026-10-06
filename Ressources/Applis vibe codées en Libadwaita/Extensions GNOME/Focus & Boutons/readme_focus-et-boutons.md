@@ -10,11 +10,11 @@ Extension GNOME Shell maison pour **GNOME 50 et 51**.
 - bouton **Réglages scindé** :
   - clic sur la roue dentée : **Paramètres GNOME** ;
   - clic sur le chevron : **Ajustements**, **Éditeur dconf**, **Extensions Manager** ;
-  - bleu Adwaita uniquement tant que le sous-menu est ouvert ;
+  - le bouton complet devient **bleu Adwaita uniquement tant que le sous-menu est ouvert**, puis revient au style normal à sa fermeture ;
 - bouton **Power scindé** :
   - clic principal : dialogue **Éteindre** ;
   - chevron : **Suspendre**, **Redémarrer**, **Redémarrer la session**, **Verrouiller la session** ;
-  - bleu Adwaita uniquement tant que le sous-menu est ouvert ;
+  - le bouton complet devient **bleu Adwaita uniquement tant que le sous-menu est ouvert**, puis revient au style normal à sa fermeture ;
 - libellé **Énergie** ;
 - carte RDV bleu Adwaita ;
 - masquage optionnel de la grande zone Notifications lorsqu’elle est vide ;
