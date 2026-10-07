@@ -12,6 +12,7 @@
 - [8.6 Extension maison : Always on top, always on top](#86--extension-maison--always-on-top-always-on-top)
 - [8.7 Focus & Boutons](#87--focus--boutons)
 - [8.8 Battery Time Compact — Ogu](#88--battery-time-compact--ogu)
+- [8.9 Power Total](#89--power-total)
 
 ## 8.1 — Validation des versions d'extensions
 
@@ -34,11 +35,10 @@ Extensions apportant des fonctions d'interface ou de système considérées comm
 - **Focus & Boutons** — extension maison GNOME 50/51 : auto-fermeture de Quick Settings et du panneau Calendrier/Notifications, boutons Réglages et Power scindés, masquage de Capture d’écran, libellé **Énergie**, carte RDV bleue et masquage des notifications vides. Voir [11.18](11-applications-vibe-coded.md#1118--focus--boutons).
 - **Battery Time Compact — Ogu** — fork local GNOME 50/51 : top bar `temps - pourcentage`, bouton batterie Quick Settings `temps - watts`. Voir [11.19](11-applications-vibe-coded.md#1119--battery-time-compact--ogu).
 - [AutoActivities](https://extensions.gnome.org/extension/5500/auto-activities/)
-- [Power Switching Manager](https://extensions.gnome.org/extension/9178/power-switching-manager/) — supprimer la luminosité automatique dans les réglages GNOME !
+- [Power Total](#89--power-total) — extension maison GNOME 50, catégorie **Système et énergie** : profils secteur/batterie, luminosité, thème et rétroéclairage. Voir [11.20](11-applications-vibe-coded.md#1120--power-total).
 - [Hot Edge](https://extensions.gnome.org/extension/4222/hot-edge/)
 - [Drag'n'Tile](https://extensions.gnome.org/extension/7863/dragntile/)
 - [Quick Close Overview](https://extensions.gnome.org/extension/352/middle-click-to-close-in-overview/)
-- [Auto Power Profile](https://extensions.gnome.org/extension/6583/auto-power-profile/)
 
 
 
@@ -122,6 +122,37 @@ Installation :
 gnome-extensions install --force "Ressources/Applis vibe codées en Libadwaita/Extensions GNOME/Battery Time Compact Ogu/Battery-Time-Compact-Ogu-v53.zip"
 gnome-extensions enable batterytimepercentagecompact@sagrland.de
 ```
+
+## 8.9 — Power Total
+
+Extension GNOME Shell **50**, version **0.1.1**, remplaçant **Auto Power Profile** et **Power Switching Manager** dans ce setup. Classée automatiquement dans **Système et énergie** par Extension Manager Ogu.
+
+Elle regroupe les profils énergétiques sur secteur/batterie et par application, la luminosité de l’écran, le thème clair/sombre et le rétroéclairage du clavier. Chaque module peut être activé séparément. Seul le changement de profil est actif par défaut : **Performance sur secteur**, **Équilibré sur batterie**.
+
+Depuis la racine du dépôt, installer l’archive :
+
+```fish
+gnome-extensions install --force "Ressources/Applis vibe codées en Libadwaita/Extensions GNOME/Power Total/Power-Total.zip"
+```
+
+Se déconnecter puis se reconnecter à GNOME. Désactiver les deux anciennes extensions avant d’activer Power Total :
+
+```fish
+gnome-extensions disable auto-power-profile@dmy3k.github.io
+gnome-extensions disable power-switching-manager@joseruibarros.com
+gnome-extensions enable power-total@ogu
+gnome-extensions prefs power-total@ogu
+```
+
+Si une ancienne extension n’est pas installée, sa commande de désactivation peut signaler qu’elle est introuvable. Le bouton **Importer** des préférences permet de récupérer ses réglages personnalisés ; les modules supplémentaires restent à activer séparément.
+
+Si la gestion de luminosité de Power Total est activée, désactiver la luminosité automatique de GNOME :
+
+```fish
+gsettings set org.gnome.settings-daemon.plugins.power ambient-enabled false
+```
+
+[README et archive Power Total](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Power%20Total/readme_power-total.md). Les contrôles statiques et les tests avec services simulés ne remplacent pas un essai dans une session GNOME réelle.
 
 ---
 

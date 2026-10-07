@@ -90,7 +90,7 @@ scx
 
 Une alternative consistant à utiliser LAVD en mode automatique avec `--autopower` pour son adaptation énergétique ou à désactiver SCX et repasser sur EEVDF est documentée dans les archives : [LAVD automatique](archives.md#utiliser-lavd-en-mode-automatique) et [EEVDF sans SCX](archives.md#utiliser-eevdf-sans-scx-alternative-non-retenue).
 
-Les rôles sont distincts : l'extension GNOME peut changer le profil selon secteur/batterie, TuneD applique le profil et son EPP, puis le plugin SCX choisit le scheduler.
+Les rôles sont distincts : [Power Total](08-gnome-extensions.md#89--power-total) demande le profil selon secteur/batterie ou les applications, TuneD applique le profil et son EPP, puis le plugin SCX choisit le scheduler. Power Total remplace Auto Power Profile et Power Switching Manager dans ce setup ; désactiver ces deux anciennes extensions lors de la migration. Elle utilise l’interface PPD du service existant et ne configure pas directement TuneD ou SCX. Voir [installation et réglages](11-applications-vibe-coded.md#1120--power-total).
 
 ### Conserver le boost CPU AMD avec TuneD / tuned-ppd
 

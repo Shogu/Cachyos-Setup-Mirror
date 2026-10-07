@@ -2,7 +2,7 @@
 
 [Accueil](../README.md) · [Précédent](10-logiciels.md) · [Suivant](12-shell-terminal.md)
 
-> **Dans ce chapitre :** applications personnelles développées avec l'aide du Vibe Coding, principalement en GTK4/libadwaita, les extensions GNOME maison « Always on top, always on top », **Musicäa**, **Session Keeper**, **Focus & Boutons** et le fork **Battery Time Compact — Ogu**, ainsi qu’un build GTK4 upstream utilisé par le setup.
+> **Dans ce chapitre :** applications personnelles développées avec l'aide du Vibe Coding, principalement en GTK4/libadwaita, les extensions GNOME maison « Always on top, always on top », **Musicäa**, **Session Keeper**, **Focus & Boutons**, **Power Total** et le fork **Battery Time Compact — Ogu**, ainsi qu’un build GTK4 upstream utilisé par le setup.
 
 - [11.1 Always on top, always on top](#111--always-on-top-always-on-top)
 - [11.2 Grabber](#112--grabber)
@@ -23,6 +23,7 @@
 - [11.17 Session Keeper](#1117--session-keeper)
 - [11.18 Focus & Boutons](#1118--focus--boutons)
 - [11.19 Battery Time Compact — Ogu](#1119--battery-time-compact--ogu)
+- [11.20 Power Total](#1120--power-total)
 
 ## 11.1 — Always on top, always on top
 
@@ -590,6 +591,51 @@ gnome-extensions uninstall batterytimepercentagecompact@sagrland.de
 ```
 
 Le [README du dossier Battery Time Compact — Ogu](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Battery%20Time%20Compact%20Ogu/readme_battery-time-compact-ogu.md) décrit le fork.
+
+---
+
+## 11.20 — Power Total
+
+Extension GNOME Shell **50** fusionnant **Auto Power Profile** et **Power Switching Manager**. Version **0.1.1**, archive **Power-Total.zip**, UUID `power-total@ogu`. Catégorie dans Extension Manager Ogu : **Système et énergie**.
+
+### Fonctions
+
+- profils d’alimentation sur secteur/batterie et profils par application ;
+- mémorisation optionnelle des changements manuels, économie à batterie faible et protection expérimentale contre un chargeur insuffisant ;
+- luminosité de l’écran, thème clair/sombre et rétroéclairage du clavier selon l’alimentation ;
+- préférences Libadwaita en français, modules indépendants et import des anciens réglages.
+
+Par défaut, seul le changement de profil est activé : **Performance sur secteur**, **Équilibré sur batterie**. Aucun daemon supplémentaire n’est installé. Le service énergétique existant applique les profils ; les autres fonctions dépendent des capacités de GNOME et du matériel.
+
+### Installation
+
+Depuis la racine du dépôt, installer l’archive :
+
+```fish
+gnome-extensions install --force "Ressources/Applis vibe codées en Libadwaita/Extensions GNOME/Power Total/Power-Total.zip"
+```
+
+Se déconnecter puis se reconnecter à GNOME. Désactiver les deux anciennes extensions avant d’activer Power Total :
+
+```fish
+gnome-extensions disable auto-power-profile@dmy3k.github.io
+gnome-extensions disable power-switching-manager@joseruibarros.com
+gnome-extensions enable power-total@ogu
+gnome-extensions prefs power-total@ogu
+```
+
+Si une ancienne extension n’est pas installée, sa commande de désactivation peut signaler qu’elle est introuvable. Le bouton **Importer** des préférences permet de récupérer ses réglages personnalisés ; les modules supplémentaires restent à activer séparément.
+
+### Désinstallation
+
+```fish
+gnome-extensions disable power-total@ogu
+gnome-extensions uninstall power-total@ogu
+```
+
+Le [README du dossier Power Total](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Power%20Total/readme_power-total.md) détaille les réglages et la migration. Voir aussi [Extensions GNOME — Power Total](08-gnome-extensions.md#89--power-total) et [coordination des profils avec TuneD/SCX](05-performance-tuning.md#51--coordonner-tuned-les-profils-énergétiques-et-scx).
+
+Syntaxe, schémas et tests avec services simulés contrôlés ; **fonctionnement en session GNOME réelle restant à vérifier**. Le ZIP inclut les sources et les licences d’origine.
 
 ---
 
