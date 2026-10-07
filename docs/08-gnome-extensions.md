@@ -14,6 +14,7 @@
 - [8.8 Battery Time Compact — Ogu](#88--battery-time-compact--ogu)
 - [8.9 Power Total](#89--power-total)
 - [8.10 UI Management](#810--ui-management)
+- [8.11 Classer les extensions avec Extension Manager](#811--classer-les-extensions-avec-extension-manager)
 
 ## 8.1 — Validation des versions d'extensions
 
@@ -170,6 +171,18 @@ Les préférences sont regroupées en quatre pages : **Visibilité**, **Comporte
 Cette fusion évite de maintenir plusieurs extensions qui modifient des zones proches du Shell et réduit la liste d’extensions sans créer une méga-extension générale : **Focus & Boutons**, **Power Total**, **Session Keeper** et **Musicäa** restent séparées car leurs rôles sont distincts.
 
 Voir aussi [Applications Vibe Coded — UI Management](11-applications-vibe-coded.md#1121--ui-management).
+
+## 8.11 — Classer les extensions avec Extension Manager
+
+Le setup utilise [Extension Manager personnalisé](11-applications-vibe-coded.md#1122--extension-manager), une application GTK4/libadwaita installée avec le paquet `extension-manager-ogu`. L’[installation du paquet local](10-logiciels.md#1013--extension-manager) remplace la version standard.
+
+Dans l’onglet **Installées**, les extensions utilisateur sont regroupées en sept catégories : **Interface et apparence**, **Bureau et fenêtres**, **Barre supérieure et réglages rapides**, **Productivité**, **Système et énergie**, **Multimédia**, **Autres**. Les extensions système restent séparées.
+
+Le classement automatique utilise les UUID connus, puis le nom et la description. Le menu de classement d’une extension permet de choisir une catégorie manuellement ; **Catégorie automatique** rétablit la détection. Les choix manuels sont mémorisés et restent prioritaires. Power Total 0.1.1 est reconnue dans **Système et énergie** grâce à sa description.
+
+Le panneau **Parcourir** conserve le mécanisme de recherche de l’application originelle. Aucun filtre de version GNOME N+1/N−1 n’a été ajouté. L’icône personnalisée Ogu est incluse.
+
+[README Extension Manager](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extension%20Manager/readme_extension-manager.md).
 
 ---
 

@@ -7,6 +7,7 @@
 - [10.1 Logiciels à installer](#101--logiciels-à-installer)
   - [10.1.1 dconf-editor GTK4](#1011--dconf-editor-gtk4)
   - [10.1.2 Snapper GTK4](#1012--snapper-gtk4)
+  - [10.1.3 Extension Manager](#1013--extension-manager)
 - [10.2 Puls et LeLivreScolaire](#102--puls-et-lelivrescolaire)
 - [10.3 Dropbox](#103--dropbox)
 - [10.4 Téléchargement : Grabber et Fragments](#104--téléchargement--grabber-et-fragments)
@@ -44,7 +45,7 @@
 - `powertop` : diagnostic de consommation énergétique.
 - `profile-cleaner` : nettoyage des profils navigateurs.
 - `seahorse` : gestion du trousseau de mots de passe.
-- `extension-manager` : gestion des extensions GNOME Shell.
+- [**Extension Manager**](#1013--extension-manager) : version personnalisée avec classement des extensions GNOME par catégorie et icône Ogu ; paquet local `extension-manager-ogu`.
 - `resources` : moniteur système GNOME (CPU, RAM, disque, réseau).
 - `duf` : visualisation de l'espace disque en ligne de commande.
 - `trash-cli` : corbeille en ligne de commande, utilisée via l’abréviation Fish `delete`.
@@ -64,7 +65,7 @@
 Commande des paquets des dépôts (les applications maison se trouvent ci-dessous) :
 
 ```
-sudo pacman -Syu powertop gst-thumbnailers profile-cleaner seahorse extension-manager fragments papers nicotine+ resources onlyoffice xournal++ gnome-calendar duf trash-cli libgda6 shelly inotify-tools libnotify clapper
+sudo pacman -Syu powertop gst-thumbnailers profile-cleaner seahorse fragments papers nicotine+ resources onlyoffice xournal++ gnome-calendar duf trash-cli libgda6 shelly inotify-tools libnotify clapper
 ```
 
 ### 10.1.1 — dconf-editor GTK4
@@ -109,6 +110,26 @@ sudo pacman -U \
 ```
 
 Pour **Grabber** (AppImage) et **SCX Manager** (sources), suivre leurs [instructions d’installation](11-applications-vibe-coded.md). La commande Pacman ci-dessus suppose que chaque paquet a été vérifié pour cette machine.
+
+### 10.1.3 — Extension Manager
+
+Le setup utilise le paquet local **extension-manager-ogu 0.6.5.ogu2-1** pour disposer du classement par catégories et de l’icône personnalisée. Il remplace le paquet `extension-manager` des dépôts.
+
+Depuis la racine du dépôt :
+
+```fish
+sudo pacman -U "Ressources/Applis vibe codées en Libadwaita/Extension Manager/extension-manager-ogu-0.6.5.ogu2-1-x86_64.pkg.tar.zst"
+```
+
+Si la version des dépôts `extension-manager` est installée, accepter son remplacement proposé par pacman. Le paquet local s’appelle `extension-manager-ogu`, fournit `extension-manager` et entre en conflit avec la version des dépôts.
+
+Fermer complètement l’ancienne instance, puis lancer l’application :
+
+```fish
+extension-manager
+```
+
+Voir [11.22 — Extension Manager](11-applications-vibe-coded.md#1122--extension-manager) pour les fonctions et [8.11 — Classer les extensions avec Extension Manager](08-gnome-extensions.md#811--classer-les-extensions-avec-extension-manager) pour l’utilisation.
 
 ## 10.2 — Puls et LeLivreScolaire
 
