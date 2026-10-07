@@ -2,7 +2,7 @@
 
 [Accueil](../README.md) · [Précédent](10-logiciels.md) · [Suivant](12-shell-terminal.md)
 
-> **Dans ce chapitre :** applications personnelles développées avec l'aide du Vibe Coding, principalement en GTK4/libadwaita, dont le fork **Extension Manager**, les extensions GNOME maison « Always on top, always on top », **Musicäa**, **Session Keeper**, **Focus & Boutons**, **Power Total**, **UI Management** et le fork **Battery Time Compact — Ogu**, ainsi qu’un build GTK4 upstream utilisé par le setup.
+> **Dans ce chapitre :** applications personnelles développées avec l'aide du Vibe Coding, principalement en GTK4/libadwaita, dont le fork **Extension Manager**, les extensions GNOME maison « Always on top, always on top », **Musicäa**, **Mail**, **Focus & Boutons**, **Power Total**, **UI Management** et le fork **Battery Time Compact — Ogu**, ainsi qu’un build GTK4 upstream utilisé par le setup.
 
 - [11.1 Always on top, always on top](#111--always-on-top-always-on-top)
 - [11.2 Grabber](#112--grabber)
@@ -20,7 +20,7 @@
 - [11.14 Snapper GTK4](#1114--snapper-gtk4)
 - [11.15 dconf-editor GTK4](#1115--dconf-editor-gtk4)
 - [11.16 Musicäa](#1116--musicäa)
-- [11.17 Session Keeper](#1117--session-keeper)
+- [11.17 Mail](#1117--mail)
 - [11.18 Focus & Boutons](#1118--focus--boutons)
 - [11.19 Battery Time Compact — Ogu](#1119--battery-time-compact--ogu)
 - [11.20 Power Total](#1120--power-total)
@@ -459,13 +459,13 @@ sudo pacman -Rns gnome-shell-extension-musicaa
 ---
 
 
-## 11.17 — Session Keeper
+## 11.17 — Mail
 
 Extension GNOME Shell de productivité destinée à sauvegarder automatiquement la session et à restaurer rapidement les applications et fenêtres après une reconnexion ou un redémarrage.
 
 Cette version part de **Session Keeper 1.0.6 d’ALT Linux** et a été adaptée pour **GNOME 50**. Le moteur reste entièrement natif GNOME/Linux : GJS, Mutter, Gio et GLib, sans daemon ni outil externe.
 
-**Archive fournie : `Session-Keeper.zip`.** UUID : `session-keeper@altlinux.org`.
+**Archive fournie : `Mail.zip`.** UUID : `session-keeper@altlinux.org`.
 
 ### Fonctions principales
 
@@ -488,7 +488,7 @@ Le fichier `metadata.json` contient aussi le mot-clé `productivity` afin que **
 Depuis la racine du dépôt :
 
 ```fish
-gnome-extensions install --force "Ressources/Applis vibe codées en Libadwaita/Extensions GNOME/Session Keeper/Session-Keeper.zip"
+gnome-extensions install --force "Ressources/Applis vibe codées en Libadwaita/Extensions GNOME/Mail/Mail.zip"
 ```
 
 Sous Wayland, se déconnecter puis se reconnecter, puis activer l’extension :
@@ -511,9 +511,9 @@ gnome-extensions uninstall session-keeper@altlinux.org
 
 ### Limite
 
-Session Keeper restaure les applications et leurs fenêtres, mais pas leur contenu interne arbitraire. La restauration des onglets, documents ou sessions internes dépend donc de chaque application.
+Mail restaure les applications et leurs fenêtres, mais pas leur contenu interne arbitraire. La restauration des onglets, documents ou sessions internes dépend donc de chaque application.
 
-Le [README du dossier Session Keeper](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Session%20Keeper/readme_session-keeper.md) résume l’installation et les fonctions.
+Le [README du dossier Mail](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Mail/readme_mail.md) résume l’installation et les fonctions.
 
 ---
 
@@ -664,7 +664,7 @@ Ne plus installer séparément dans ce setup :
 - Hot Edge ;
 - Quick Close Overview / Middle Click to Close in Overview.
 
-Le but est de réduire le nombre d’extensions et les points de maintenance tout en gardant les fonctions choisies. **UI Management ne remplace pas Focus & Boutons, Power Total, Session Keeper ni Musicäa**, qui restent des extensions spécialisées séparées.
+Le but est de réduire le nombre d’extensions et les points de maintenance tout en gardant les fonctions choisies. **UI Management ne remplace pas Focus & Boutons, Power Total, Mail ni Musicäa**, qui restent des extensions spécialisées séparées.
 
 L’archive produite lors du développement est nommée **`UI-Management-1.zip`**. L’UUID exact n’a pas été consigné dans la documentation de référence ; il n’est donc pas inventé ici.
 

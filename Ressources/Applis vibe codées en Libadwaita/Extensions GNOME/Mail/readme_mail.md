@@ -1,10 +1,10 @@
-# Session Keeper
+# Mail
 
 Extension GNOME Shell de sauvegarde et de restauration de session, adaptée pour **GNOME 50**.
 
-- **Nom :** Session Keeper
+- **Nom :** Mail
 - **UUID :** `session-keeper@altlinux.org`
-- **Archive :** `Session-Keeper.zip`
+- **Archive :** `Mail.zip`
 - **Base upstream :** Session Keeper 1.0.6 d’ALT Linux
 - **Catégorie Manager Extensions :** Productivité
 
@@ -29,7 +29,7 @@ L’extension utilise uniquement les mécanismes natifs **GNOME Shell / GJS / Mu
 Depuis la racine du dépôt :
 
 ```fish
-gnome-extensions install --force "Ressources/Applis vibe codées en Libadwaita/Extensions GNOME/Session Keeper/Session-Keeper.zip"
+gnome-extensions install --force "Ressources/Applis vibe codées en Libadwaita/Extensions GNOME/Mail/Mail.zip"
 ```
 
 Sous Wayland, se déconnecter puis se reconnecter, puis :
