@@ -2,7 +2,7 @@
 
 [Accueil](../README.md) · [Précédent](10-logiciels.md) · [Suivant](12-shell-terminal.md)
 
-> **Dans ce chapitre :** applications personnelles développées avec l'aide du Vibe Coding, principalement en GTK4/libadwaita, les extensions GNOME maison « Always on top, always on top », **Musicäa**, **Session Keeper**, **Focus & Boutons**, **Power Total** et le fork **Battery Time Compact — Ogu**, ainsi qu’un build GTK4 upstream utilisé par le setup.
+> **Dans ce chapitre :** applications personnelles développées avec l'aide du Vibe Coding, principalement en GTK4/libadwaita, les extensions GNOME maison « Always on top, always on top », **Musicäa**, **Session Keeper**, **Focus & Boutons**, **Power Total**, **UI Management** et le fork **Battery Time Compact — Ogu**, ainsi qu’un build GTK4 upstream utilisé par le setup.
 
 - [11.1 Always on top, always on top](#111--always-on-top-always-on-top)
 - [11.2 Grabber](#112--grabber)
@@ -24,6 +24,7 @@
 - [11.18 Focus & Boutons](#1118--focus--boutons)
 - [11.19 Battery Time Compact — Ogu](#1119--battery-time-compact--ogu)
 - [11.20 Power Total](#1120--power-total)
+- [11.21 UI Management](#1121--ui-management)
 
 ## 11.1 — Always on top, always on top
 
@@ -636,6 +637,37 @@ gnome-extensions uninstall power-total@ogu
 Le [README du dossier Power Total](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Power%20Total/readme_power-total.md) détaille les réglages et la migration. Voir aussi [Extensions GNOME — Power Total](08-gnome-extensions.md#89--power-total) et [coordination des profils avec TuneD/SCX](05-performance-tuning.md#51--coordonner-tuned-les-profils-énergétiques-et-scx).
 
 Syntaxe, schémas et tests avec services simulés contrôlés ; **fonctionnement en session GNOME réelle restant à vérifier**. Le ZIP inclut les sources et les licences d’origine.
+
+---
+
+## 11.21 — UI Management
+
+Extension GNOME Shell maison regroupant les fonctions du setup auparavant réparties entre **Just Perfection**, **AutoActivities**, **Hot Edge** et **Quick Close Overview**.
+
+Nom final : **UI Management**. Catégorie Extension Manager : **Bureau et fenêtres**. La description utilisée pour la reconnaissance de catégorie contient **« Gestion du bureau et des fenêtres »**. La version de travail produite est **UI Management 1**, ciblée pour **GNOME Shell 49, 50 et 51**.
+
+### Organisation des préférences
+
+- **Visibilité** — options issues de Just Perfection réellement utilisées ;
+- **Comportement** — comportements Shell retenus ;
+- **Personnaliser** — réglages visuels conservés ;
+- **Automatisation** — fonctions Auto Activities et Hot Edge ;
+- **Quick Close in Overview** reste activable indépendamment dans l’interface.
+
+### Extensions remplacées
+
+Ne plus installer séparément dans ce setup :
+
+- Just Perfection ;
+- AutoActivities ;
+- Hot Edge ;
+- Quick Close Overview / Middle Click to Close in Overview.
+
+Le but est de réduire le nombre d’extensions et les points de maintenance tout en gardant les fonctions choisies. **UI Management ne remplace pas Focus & Boutons, Power Total, Session Keeper ni Musicäa**, qui restent des extensions spécialisées séparées.
+
+L’archive produite lors du développement est nommée **`UI-Management-1.zip`**. L’UUID exact n’a pas été consigné dans la documentation de référence ; il n’est donc pas inventé ici.
+
+Le [README du dossier UI Management](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/UI%20Management/readme_ui-management.md) récapitule la fusion.
 
 ---
 

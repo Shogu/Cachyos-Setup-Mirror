@@ -13,6 +13,7 @@
 - [8.7 Focus & Boutons](#87--focus--boutons)
 - [8.8 Battery Time Compact — Ogu](#88--battery-time-compact--ogu)
 - [8.9 Power Total](#89--power-total)
+- [8.10 UI Management](#810--ui-management)
 
 ## 8.1 — Validation des versions d'extensions
 
@@ -34,11 +35,9 @@ Extensions apportant des fonctions d'interface ou de système considérées comm
 
 - **Focus & Boutons** — extension maison GNOME 50/51 : auto-fermeture de Quick Settings et du panneau Calendrier/Notifications, boutons Réglages et Power scindés, masquage de Capture d’écran, libellé **Énergie**, carte RDV bleue et masquage des notifications vides. Voir [11.18](11-applications-vibe-coded.md#1118--focus--boutons).
 - **Battery Time Compact — Ogu** — fork local GNOME 50/51 : top bar `temps - pourcentage`, bouton batterie Quick Settings `temps - watts`. Voir [11.19](11-applications-vibe-coded.md#1119--battery-time-compact--ogu).
-- [AutoActivities](https://extensions.gnome.org/extension/5500/auto-activities/)
+- **UI Management** — extension maison **GNOME 49/50/51**, classée dans **Bureau et fenêtres**. Elle remplace dans ce setup **Just Perfection**, **AutoActivities**, **Hot Edge** et **Quick Close Overview** en ne conservant que les fonctions réellement utilisées. Voir [8.10](#810--ui-management) et [11.21](11-applications-vibe-coded.md#1121--ui-management).
 - [Power Total](#89--power-total) — extension maison GNOME 50, catégorie **Système et énergie** : profils secteur/batterie, luminosité, thème et rétroéclairage. Voir [11.20](11-applications-vibe-coded.md#1120--power-total).
-- [Hot Edge](https://extensions.gnome.org/extension/4222/hot-edge/)
 - [Drag'n'Tile](https://extensions.gnome.org/extension/7863/dragntile/)
-- [Quick Close Overview](https://extensions.gnome.org/extension/352/middle-click-to-close-in-overview/)
 
 
 
@@ -54,7 +53,8 @@ Extensions apportant des fonctions d'interface ou de système considérées comm
 ## 8.4 — Esthétiques
 
 - [Panel Corners](https://extensions.gnome.org/extension/4805/panel-corners/)
-- [Just Perfection](https://extensions.gnome.org/extension/3843/just-perfection/) pour les réglages d’interface restant utiles ; le masquage du bouton Capture d’écran de Quick Settings est désormais pris en charge par **Focus & Boutons**.
+
+**Just Perfection n’est plus installée séparément dans ce setup** : les options réellement utilisées ont été reprises dans **UI Management**. Le masquage du bouton Capture d’écran de Quick Settings reste, lui, géré par **Focus & Boutons**.
 
 
 ## 8.5 — Optionnelles : à retirer après réglage
@@ -153,6 +153,23 @@ gsettings set org.gnome.settings-daemon.plugins.power ambient-enabled false
 ```
 
 [README et archive Power Total](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Power%20Total/readme_power-total.md). Les contrôles statiques et les tests avec services simulés ne remplacent pas un essai dans une session GNOME réelle.
+
+## 8.10 — UI Management
+
+Extension GNOME Shell maison dédiée à la **gestion du bureau et des fenêtres**, compatible **GNOME Shell 49, 50 et 51** et classée dans **Bureau et fenêtres** par Extension Manager Ogu.
+
+Elle remplace quatre extensions auparavant installées séparément :
+
+- **Just Perfection** — uniquement les options effectivement utilisées dans le setup ;
+- **AutoActivities** ;
+- **Hot Edge** ;
+- **Quick Close Overview** / fermeture rapide d’une fenêtre depuis l’Overview.
+
+Les préférences sont regroupées en quatre pages : **Visibilité**, **Comportement**, **Personnaliser** et **Automatisation**. Les blocs Auto Activities, Hot Edge et Quick Close in Overview restent indépendamment activables.
+
+Cette fusion évite de maintenir plusieurs extensions qui modifient des zones proches du Shell et réduit la liste d’extensions sans créer une méga-extension générale : **Focus & Boutons**, **Power Total**, **Session Keeper** et **Musicäa** restent séparées car leurs rôles sont distincts.
+
+Voir aussi [Applications Vibe Coded — UI Management](11-applications-vibe-coded.md#1121--ui-management).
 
 ---
 
