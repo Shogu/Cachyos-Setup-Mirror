@@ -77,8 +77,8 @@ org.gnome.mutter experimental-features
 Conserver les valeurs utiles déjà présentes et activer :
 
 - `scale-monitor-framebuffer` pour la mise à l'échelle fractionnaire.
+- les deux options XWayland : `auto-close` & `native-scaling` 
 
-🔗 La désactivation de XWayland au démarrage de session est traitée avec le reste de l'allégement système, dans [Allégement système](02-system-cleanup.md#29--désactiver-xwayland-au-démarrage).
 
 ## 7.6 — Actions de session, rappels et libellé du profil énergétique (menu d'alimentation)
 
