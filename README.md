@@ -13,6 +13,17 @@ Setup, conseils et réglages personnels pour **CachyOS** sur **ASUS Zenbook 14 O
 
 
 
+## Focus & Boutons v16
+
+**Focus & Boutons v16 remplace « Redémarrer la session » par « Reconnexion ».**
+
+- **Menu du bouton Power** : l’entrée s’appelle maintenant « Reconnexion ».
+- **Fenêtre de confirmation** : le titre et le bouton affichent « Reconnexion », tant que l’option des préférences est activée.
+- **Préférences** : l’interrupteur s’appelle « Fenêtre « Reconnexion » ».
+- **Sans l’option** : la fenêtre de confirmation revient au texte de GNOME (« Fermer la session »).
+
+**Vérifications rapportées pour cette version :** `node --check` et compilation du schéma. **Aucun test dans un vrai GNOME Shell n’a été effectué.**
+
 ## Philosophie
 
 Ce dépôt est un mémo personnel qui documente la configuration & les procédures retenues pour ce setup CachyOS, sur ce matériel précis.
