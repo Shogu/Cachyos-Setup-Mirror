@@ -30,6 +30,7 @@
 - [11.22 Extension Manager](#1122--extension-manager)
 - [11.23 Amplifaya — moteur headless et interface](#1123--amplifaya--moteur-headless-et-interface)
 - [11.24 Grille](#1124--grille)
+- [11.25 Samizdat](#1125--samizdat)
 
 ## 11.1 — Always on top, always on top
 
@@ -785,6 +786,13 @@ sudo pacman -U ./grille-0.1.0-1-x86_64.pkg.tar.zst
 ```
 
 Les formats pris en charge et la commande de lancement restent à préciser à partir du paquet ou de son README.
+
+
+## 11.25 — Samizdat
+
+**Samizdat** est un traitement de texte simple et léger pour GNOME, écrit en Rust avec **GTK4/libadwaita**. Il ouvre et modifie notamment les documents **DOCX, ODT et Markdown**, avec mise en forme, tableaux, images, recherche et export PDF. Il repose sur le moteur **letters-core** de gtk-office-suite.
+
+Le [README complet](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Samizdat/README.md) détaille les fonctions et limites. Le paquet est à ajouter manuellement par Ogu dans ce dossier ; son nom de fichier et sa version restent à préciser.
 
 
 ---

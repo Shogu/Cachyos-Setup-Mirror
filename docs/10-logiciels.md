@@ -22,6 +22,8 @@
 
 ### Bureautique
 
+- **Samizdat** : installer [le traitement de texte léger GTK4/libadwaita](11-applications-vibe-coded.md#1125--samizdat), pour les documents courants DOCX, ODT et Markdown, avec export PDF.
+
 - **Grille** : [visionneuse simple de fichiers tableurs, codée avec Claude](11-applications-vibe-coded.md#1124--grille).
 
 - `onlyoffice` : suite bureautique (traitement de texte, tableur, présentation).
