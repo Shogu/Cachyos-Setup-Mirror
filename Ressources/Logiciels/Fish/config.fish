@@ -62,13 +62,17 @@ abbr --add orphans 'pacman -Qdtq'
 abbr --add clip --position anywhere '2>&1 | wl-copy'
 
 # === Corbeille ===
-abbr -a -- delete 'trash-put'
-abbr -a -- rm 'rm -I'
+abbr --add -- delete 'trash-put'
+abbr --add -- rm 'rm -I'
 
 # === Dropbox-cli ===
-abbr -a dropbox-sync dropbox-cli status
-abbr -a dropbox-share dropbox-cli sharelink
-abbr -a dropbox-file dropbox-cli filestatus
+abbr --add dropbox-sync dropbox-cli status
+abbr --add dropbox-share dropbox-cli sharelink
+abbr --add dropbox-file dropbox-cli filestatus
+
+
+# === Relancer extensions GNOME après freeze du shell ===
+abbr --add extensions-fix 'gsettings set org.gnome.shell disable-user-extensions false'
 
 ############################################################################################################################
 # ===  Editeurs ===
