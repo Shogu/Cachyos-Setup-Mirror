@@ -4,7 +4,7 @@ Samizdat est un traitement de texte simple pour GNOME, écrit en Rust avec GTK 4
 et libadwaita. Il ouvre, modifie et enregistre des documents Word (DOCX),
 OpenDocument (ODT) et Markdown, et les exporte en PDF.
 
-L'objectif n'est pas de remplacer LibreOffice ou OnlyOffice : c'est un éditeur
+L'objectif n'est pas de remplacer une suite bureautique complète : c'est un éditeur
 léger, rapide à lancer, intégré au bureau GNOME, pour écrire et retoucher des
 documents courants.
 

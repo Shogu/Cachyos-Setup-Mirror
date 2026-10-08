@@ -26,7 +26,6 @@
 
 - **Grille** : [visionneuse simple de fichiers tableurs, codée avec Claude](11-applications-vibe-coded.md#1124--grille).
 
-- `onlyoffice` : suite bureautique (traitement de texte, tableur, présentation).
 - `papers` : visionneuse de documents (PDF) GNOME.
 - `xournal++` : prise de notes et annotation de PDF.
 - `gnome-calendar` : agenda GNOME.
@@ -74,7 +73,7 @@
 Commande des paquets des dépôts (les applications maison se trouvent ci-dessous) :
 
 ```
-sudo pacman -Syu powertop gst-thumbnailers profile-cleaner seahorse fragments papers nicotine+ resources onlyoffice xournal++ gnome-calendar duf trash-cli libgda6 shelly inotify-tools libnotify clapper
+sudo pacman -Syu powertop gst-thumbnailers profile-cleaner seahorse fragments papers nicotine+ resources xournal++ gnome-calendar duf trash-cli libgda6 shelly inotify-tools libnotify clapper
 ```
 
 ### 10.1.1 — dconf-editor GTK4

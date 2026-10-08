@@ -102,7 +102,7 @@ Créer le modèle texte :
 touch "$HOME/.Modèles/notepad.txt"
 ```
 
-Pour **`word.docx`**, ouvrir OnlyOffice, créer un document vierge et l'enregistrer comme `/home/ogu/.Modèles/word.docx`. Un simple `touch word.docx`, proposé dans le mémo, créerait un fichier vide et non un document Word valide.
+Pour **`word.docx`**, ouvrir Samizdat, créer un document vierge et l'enregistrer comme `/home/ogu/.Modèles/word.docx`. Un simple `touch word.docx`, proposé dans le mémo, créerait un fichier vide et non un document Word valide.
 
 Faire pointer XDG vers ce dossier :
 
