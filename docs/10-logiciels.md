@@ -148,6 +148,12 @@ Voir [11.22 — Extension Manager](11-applications-vibe-coded.md#1122--extension
 
 Ces ajouts ont été réalisés avec **Claude**.
 
+**Dépendance pour la visualisation des pièces jointes PDF : `poppler-glib`.** L’installer avant d’utiliser leur aperçu :
+
+```fish
+sudo pacman -Syu --needed poppler-glib
+```
+
 Le paquet Arch compilé avec Claude est à ajouter manuellement dans [le dossier Mail](../Ressources/Logiciels/Mail/). Sa version exacte n’est pas précisée ici.
 
 Depuis le dossier contenant le paquet, installer le fichier correspondant puis lancer Mail :

@@ -10,6 +10,12 @@
 
 Ces ajouts ont été réalisés avec **Claude**.
 
+**Dépendance pour la visualisation des pièces jointes PDF : `poppler-glib`.** L’installer avant d’utiliser leur aperçu :
+
+```fish
+sudo pacman -Syu --needed poppler-glib
+```
+
 ## Paquet et installation
 
 Le paquet Arch compilé avec Claude est à ajouter manuellement dans ce dossier. Sa version exacte n’est pas précisée ici.
