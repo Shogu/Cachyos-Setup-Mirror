@@ -18,7 +18,7 @@
 - [11.10 Radar](#1110--radar)
 - [11.11 Pusher](#1111--pusher)
 - [11.12 Nautilus Bookmark Icons](#1112--nautilus-bookmark-icons)
-- [11.13 Stethoscope](#1113--stethoscope)
+- [11.13 Sismographe](#1113--sismographe)
 - [11.14 Snapper GTK4](#1114--snapper-gtk4)
 - [11.15 dconf-editor GTK4](#1115--dconf-editor-gtk4)
 - [11.16 Musicäa](#1116--musicäa)
@@ -28,6 +28,7 @@
 - [11.20 Power Total](#1120--power-total)
 - [11.21 UI Management](#1121--ui-management)
 - [11.22 Extension Manager](#1122--extension-manager)
+- [11.23 Amplifaya — moteur headless et interface](#1123--amplifaya--moteur-headless-et-interface)
 
 ## 11.1 — Always on top, always on top
 
@@ -347,26 +348,33 @@ La sidebar de Nautilus n’étant pas couverte par une API d’extension officie
 
 ---
 
-## 11.13 — Stethoscope
+## 11.13 — Sismographe
 
-Application GTK4/libadwaita de diagnostic du démarrage actuel. Elle regroupe les erreurs du journal par service et message, permet de parcourir les journaux par catégorie et affiche un résumé du système. La recherche surligne les occurrences ; un bouton icône exporte un rapport texte local. La lecture ne demande pas de droits administrateur. Snapper ne fait pas partie de cette version.
+Application GTK4/libadwaita de diagnostic du système GNOME, remplaçant **Stethoscope**. Elle regroupe les vues Santé, Journaux, Démarrage et Stockage : erreurs par service, plantages, analyse du boot, état SMART, compteurs d’erreurs btrfs et contrôle FAT. Elle permet d’exporter un rapport texte. Les opérations privilégiées passent par polkit ; les outils de stockage sont optionnels.
 
-**Paquet fourni : `stethoscope-0.6.4-1-any.pkg.tar.zst`.** Le [README du paquet](../Ressources/Applis vibe codées en Libadwaita/Stethoscope/readme_stethoscope.md) décrit les fonctions et leurs limites.
-
-### Installation
-
-Depuis la racine du dépôt :
+Depuis la racine du dépôt, retirer l’ancienne application si elle est installée, puis installer le paquet fourni :
 
 ```fish
-sudo pacman -U "Ressources/Applis vibe codées en Libadwaita/Stethoscope/stethoscope-0.6.4-1-any.pkg.tar.zst"
-stethoscope
+if pacman -Q stethoscope >/dev/null 2>&1
+    sudo pacman -Rns stethoscope
+end
+sudo pacman -U "Ressources/Applis vibe codées en Libadwaita/Sismographe/sismographe-1.0.0-1-any.pkg.tar.zst"
+sismographe
 ```
 
-### Désinstallation
+Pour les diagnostics de stockage optionnels :
 
 ```fish
-sudo pacman -Rns stethoscope
+sudo pacman -Syu --needed smartmontools btrfs-progs dosfstools
 ```
+
+Désinstallation :
+
+```fish
+sudo pacman -Rns sismographe
+```
+
+Le paquet fourni et son contenu ont été inspectés ; les diagnostics restent à tester sur la machine cible.
 
 ---
 
@@ -570,19 +578,19 @@ Le [README du dossier Focus & Boutons](../Ressources/Applis%20vibe%20codées%20e
 
 Fork personnel de **Battery Time (Percentage) Compact** pour GNOME Shell **50 et 51**. Le UUID upstream est conservé afin de remplacer directement l’extension d’origine.
 
-**Archive fournie : `Battery-Time-Compact-Ogu-v53.zip`.** UUID : `batterytimepercentagecompact@sagrland.de`.
+**Archive fournie : `Battery-Time-Compact-Ogu-v54.zip`.** UUID : `batterytimepercentagecompact@sagrland.de`.
 
 ### Affichage
 
 - **Top bar** : `9:27 - 56%` — autonomie restante puis pourcentage, sans parenthèses ;
 - **Quick Settings** : `9:27 - 4.2 W` — autonomie restante puis puissance instantanée, sans répétition du pourcentage.
 
-La puissance vient de `UPower.Device.EnergyRate`. La v53 réapplique l’affichage après chaque synchronisation UPower afin d’éviter que GNOME remette temporairement le pourcentage natif dans Quick Settings lorsque seule la puissance varie.
+La puissance vient de `UPower.Device.EnergyRate`. La v54 réapplique l’affichage après chaque synchronisation UPower afin d’éviter que GNOME remette temporairement le pourcentage natif dans Quick Settings lorsque seule la puissance varie.
 
 ### Installation
 
 ```fish
-gnome-extensions install --force "Ressources/Applis vibe codées en Libadwaita/Extensions GNOME/Battery Time Compact Ogu/Battery-Time-Compact-Ogu-v53.zip"
+gnome-extensions install --force "Ressources/Applis vibe codées en Libadwaita/Extensions GNOME/Battery Time Compact Ogu/Battery-Time-Compact-Ogu-v54.zip"
 gnome-extensions enable batterytimepercentagecompact@sagrland.de
 ```
 
@@ -717,6 +725,50 @@ Archive, métadonnées, exécutable, lanceur et icônes contrôlés. **Lancement
 ### Captures d'écran restantes
 
 Les captures fournies avec cette mise à jour couvrent **Always on top, Grabber, Grimoire, Fret, systemd, Pacto, Radar et Pusher**. Les trois applications suivantes restent volontairement sans capture afin de ne pas fabriquer une représentation de leur interface : **SCX Manager, Decibel et Fisherman**.
+
+## 11.23 — Amplifaya — moteur headless et interface
+
+**Amplifaya** est le fork maison allégé de [JamesDSP](https://github.com/Audio4Linux/JDSP4Linux), conçu pour PipeWire et GNOME sans Qt ni icône de notification.
+
+- `amplifaya` : moteur headless en C, plugin LADSPA, commande `amplifayactl` et service systemd utilisateur.
+- `amplifaya-gui` : télécommande facultative GTK4/libadwaita ; fermer la fenêtre laisse le moteur actif.
+- Preset **ClearPenguin** fourni ; Bass Boost, Tone EQ, crossfeed BS2B au casque, élargissement stéréo sur haut-parleurs, post-gain et limiteur.
+- Cette version ne prend pas en charge l’audio Bluetooth et ne reprend pas tous les effets de JamesDSP.
+
+Fermer et désactiver l’ancien traitement global JamesDSP ou EasyEffects avant l’activation, pour éviter un double traitement. Depuis la racine du dépôt :
+
+```fish
+sudo pacman -U "Ressources/Applis vibe codées en Libadwaita/Amplifaya/amplifaya-0.3.0-1-x86_64.pkg.tar.zst" "Ressources/Applis vibe codées en Libadwaita/Amplifaya/amplifaya-gui-0.3.0-1-x86_64.pkg.tar.zst"
+systemctl --user daemon-reload
+systemctl --user enable --now amplifaya.service
+systemctl --user status amplifaya.service
+amplifayactl status
+```
+
+Pour le moteur seul, installer uniquement le premier paquet. Ouvrir l’interface à la demande :
+
+```fish
+amplifaya-gui
+```
+
+Avec un morceau en lecture, vérifier le passage dans le moteur et comparer le traitement :
+
+```fish
+amplifayactl test
+amplifayactl ab
+```
+
+Gestion du moteur :
+
+```fish
+amplifayactl bypass on
+amplifayactl bypass off
+systemctl --user stop amplifaya.service
+systemctl --user start amplifaya.service
+journalctl --user -u amplifaya.service -b
+```
+
+Le README complet installé se trouve dans `/usr/share/doc/amplifaya/README.md`. Les paquets ont été inspectés ; le traitement audio reste à tester sur la machine cible.
 
 ---
 

@@ -38,6 +38,8 @@
 
 ### Audio & vidéo
 
+- **Amplifaya** : installer [le moteur headless et sa télécommande GTK4/libadwaita](11-applications-vibe-coded.md#1123--amplifaya--moteur-headless-et-interface), fork allégé de JamesDSP.
+
 - **Decibel** : installer [le fork maison du lecteur audio GNOME](11-applications-vibe-coded.md#117--decibel), fourni dans le dépôt.
 - `clapper` : lecteur vidéo GNOME.
 - `gst-thumbnailers` : génération des vignettes audio/vidéo dans Nautilus.
@@ -62,7 +64,7 @@
 - **Radar** : installer [l’outil maison de recherche de fichiers](11-applications-vibe-coded.md#1110--radar).
 - **Pusher** : installer [l’interface maison du dépôt GitLab](11-applications-vibe-coded.md#1111--pusher).
 - **Nautilus Bookmark Icons** : installer [l’extension maison de personnalisation des icônes de favoris Nautilus](11-applications-vibe-coded.md#1112--nautilus-bookmark-icons).
-- **Stethoscope** : installer [l’outil maison d’analyse du démarrage et des journaux](11-applications-vibe-coded.md#1113--stethoscope).
+- **Sismographe** : installer [l’outil maison d’analyse du démarrage et des journaux](11-applications-vibe-coded.md#1113--sismographe).
 - **Snapper GTK4** : installer [l’interface GTK4/libadwaita pour Snapper et Limine](11-applications-vibe-coded.md#1114--snapper-gtk4).
 
 Commande des paquets des dépôts (les applications maison se trouvent ci-dessous) :
@@ -98,7 +100,10 @@ L’application est détaillée dans [11.14 — Snapper GTK4](11-applications-vi
 
 Depuis la racine du dépôt, installer les paquets maison fournis ci-dessus :
 
-```bash
+```fish
+if pacman -Q stethoscope >/dev/null 2>&1
+    sudo pacman -Rns stethoscope
+end
 sudo pacman -U \
   "Ressources/Applis vibe codées en Libadwaita/Grimoire/grimoire-ogu-0.2.0-10-x86_64.pkg.tar.zst" \
   "Ressources/Applis vibe codées en Libadwaita/Fret/fret-0.2.0-1-any.pkg.tar.zst" \
@@ -109,7 +114,7 @@ sudo pacman -U \
   "Ressources/Applis vibe codées en Libadwaita/Radar/radar-1.4.0-2-any.pkg.tar.zst" \
   "Ressources/Applis vibe codées en Libadwaita/Pusher/pusher-1.7.0-1-any.pkg.tar.zst" \
   "Ressources/Applis vibe codées en Libadwaita/Nautilus Bookmark Icons/nautilus-bookmark-icons-0.1.1-1-any.pkg.tar.zst" \
-  "Ressources/Applis vibe codées en Libadwaita/Stethoscope/stethoscope-0.6.4-1-any.pkg.tar.zst"
+  "Ressources/Applis vibe codées en Libadwaita/Sismographe/sismographe-1.0.0-1-any.pkg.tar.zst"
 ```
 
 Pour **Grabber** (AppImage) et **SCX Manager** (sources), suivre leurs [instructions d’installation](11-applications-vibe-coded.md). La commande Pacman ci-dessus suppose que chaque paquet a été vérifié pour cette machine.

@@ -35,7 +35,7 @@ gsettings set org.gnome.shell disable-extension-version-validation false
 Extensions apportant des fonctions d'interface ou de système considérées comme centrales dans ce setup :
 
 - **Focus & Boutons** — extension maison GNOME 50/51 : auto-fermeture de Quick Settings et du panneau Calendrier/Notifications, boutons Réglages et Power scindés, masquage de Capture d’écran, libellé **Énergie**, carte RDV bleue et masquage des notifications vides. Voir [11.18](11-applications-vibe-coded.md#1118--focus--boutons).
-- **Battery Time Compact — Ogu** — fork local GNOME 50/51 : top bar `temps - pourcentage`, bouton batterie Quick Settings `temps - watts`. Voir [11.19](11-applications-vibe-coded.md#1119--battery-time-compact--ogu).
+- [**Battery Time Compact — Ogu v54**](#88--battery-time-compact--ogu) — fork local GNOME 50/51 : top bar `temps - pourcentage`, bouton batterie Quick Settings `temps - watts`. Voir [11.19](11-applications-vibe-coded.md#1119--battery-time-compact--ogu).
 - **UI Management** — extension maison **GNOME 49/50/51**, classée dans **Bureau et fenêtres**. Elle remplace dans ce setup **Just Perfection**, **AutoActivities**, **Hot Edge** et **Quick Close Overview** en ne conservant que les fonctions réellement utilisées. Voir [8.10](#810--ui-management) et [11.21](11-applications-vibe-coded.md#1121--ui-management).
 - [Power Total](#89--power-total) — extension maison GNOME 50, catégorie **Système et énergie** : profils secteur/batterie, luminosité, thème et rétroéclairage. Voir [11.20](11-applications-vibe-coded.md#1120--power-total).
 - [Drag'n'Tile](https://extensions.gnome.org/extension/7863/dragntile/)
@@ -109,18 +109,18 @@ gnome-extensions prefs focus-et-boutons@ogu
 
 ## 8.8 — Battery Time Compact — Ogu
 
-Fork local de **Battery Time (Percentage) Compact**, adapté à **GNOME 50 et 51**.
+Fork local de [**Battery Time (Percentage) Compact**](https://github.com/SaGrLand/gnome-shell-battery-time-percentage-compact), adapté à **GNOME 50 et 51**. La v54 remplace l’extension habituellement installée grâce au même UUID ; ne pas installer les deux variantes séparément. Après remplacement d’une version chargée, fermer puis rouvrir la session GNOME sous Wayland.
 
 - top bar : `9:27 - 56%` ;
 - Quick Settings : `9:27 - 4.2 W` ;
 - le pourcentage reste toujours visible dans la top bar ;
 - la puissance instantanée provient de `UPower.Device.EnergyRate` ;
-- la synchronisation v53 réapplique le texte après chaque actualisation UPower.
+- la synchronisation v54 réapplique le texte après chaque actualisation UPower.
 
 Installation :
 
 ```fish
-gnome-extensions install --force "Ressources/Applis vibe codées en Libadwaita/Extensions GNOME/Battery Time Compact Ogu/Battery-Time-Compact-Ogu-v53.zip"
+gnome-extensions install --force "Ressources/Applis vibe codées en Libadwaita/Extensions GNOME/Battery Time Compact Ogu/Battery-Time-Compact-Ogu-v54.zip"
 gnome-extensions enable batterytimepercentagecompact@sagrland.de
 ```
 

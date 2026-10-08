@@ -1,29 +1,19 @@
-# Battery Time Compact — Ogu v53
+# Battery Time Compact — Ogu v54
 
-Fork local de **Battery Time (Percentage) Compact**, ciblé sur GNOME Shell **50 et 51**.
+Fork de [Battery Time (Percentage) Compact](https://github.com/SaGrLand/gnome-shell-battery-time-percentage-compact) pour GNOME Shell 50 et 51, remplaçant directement la version habituelle avec le même UUID.
 
-## Affichage
+- Barre supérieure : `9:27 - 56%`.
+- Quick Settings : `9:27 - 4.2 W`, puissance fournie par `UPower.Device.EnergyRate`.
+- Temps indisponible : `…` ; batterie pleine : `∞`. Si la puissance est nulle ou indisponible, seuls les temps sont affichés dans Quick Settings.
+- Textes réappliqués après les mises à jour natives, sans timer supplémentaire ; restauration à la désactivation.
 
-- **Top bar** : `9:27 - 56%`
-  - pourcentage toujours visible ;
-  - aucune parenthèse.
-- **Quick Settings** : `9:27 - 4.2 W`
-  - aucun pourcentage redondant ;
-  - puissance instantanée issue de `UPower.Device.EnergyRate`.
-
-Quand UPower ne fournit pas encore d’estimation de temps, `…` est affiché. Batterie pleine : `∞`.
-
-La v53 renforce la synchronisation : GNOME effectue d’abord sa mise à jour native, puis l’extension réapplique le texte personnalisé. Une écoute explicite de `EnergyRate` actualise également les watts lorsque la puissance varie sans autre changement d’état de la batterie.
-
-## Installation
+Depuis la racine du dépôt :
 
 ```fish
-gnome-extensions install --force ./Battery-Time-Compact-Ogu-v53.zip
+gnome-extensions install --force "Ressources/Applis vibe codées en Libadwaita/Extensions GNOME/Battery Time Compact Ogu/Battery-Time-Compact-Ogu-v54.zip"
 gnome-extensions enable batterytimepercentagecompact@sagrland.de
 ```
 
-Le UUID d’origine est conservé pour remplacer directement l’extension upstream.
+Fermer puis rouvrir la session GNOME sous Wayland après remplacement d’une version déjà chargée. UUID : `batterytimepercentagecompact@sagrland.de`. Réinstaller le ZIP upstream pour revenir à l’original.
 
-## Retour à la version d’origine
-
-Réinstaller simplement le ZIP officiel avec `gnome-extensions install --force`.
+Archive et code inspectés ; fonctionnement à confirmer dans la session GNOME cible.
