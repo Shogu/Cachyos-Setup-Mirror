@@ -76,8 +76,8 @@ org.gnome.mutter experimental-features
 
 Conserver les valeurs utiles déjà présentes et activer :
 
-- `scale-monitor-framebuffer` pour la mise à l'échelle fractionnaire.
-- les deux options XWayland : `auto-close` & `native-scaling` (!! narive-scaling n'est plus reconnue apr GNOME 50? ) 
+- `scale-monitor-framebuffer` pour la mise à l'échelle fractionnaire (!! Unknown experimental feature 'scale-monitor-framebuffer' - n'est plus reconnue par GNOME 50? ) 
+- les deux options XWayland : `auto-close` & `native-scaling` 
 
 
 ## 7.6 — Actions de session, rappels et libellé du profil énergétique (menu d'alimentation)
