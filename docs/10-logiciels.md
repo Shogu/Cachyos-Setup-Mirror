@@ -2,7 +2,7 @@
 
 [Accueil](../README.md) · [Précédent](01-installation.md) · [Suivant](11-applications-vibe-coded.md)
 
-> **Dans ce chapitre :** logiciels installés classés par catégorie, builds GTK4 spécifiques au setup, et réglages propres à Dropbox, Fragments et aux lecteurs vidéo.
+> **Dans ce chapitre :** logiciels installés classés par catégorie, builds GTK4 spécifiques au setup, Dropbox sans interface, Claude Code, et réglages propres à Fragments et aux lecteurs vidéo.
 
 - [10.1 Logiciels à installer](#101--logiciels-à-installer)
   - [10.1.1 dconf-editor GTK4](#1011--dconf-editor-gtk4)
@@ -14,6 +14,7 @@
 - [10.4 Téléchargement : Grabber et Fragments](#104--téléchargement--grabber-et-fragments)
 - [10.5 Clapper](#105--clapper)
 - [10.6 Applications Vibe Coded](#106--applications-vibe-coded)
+- [10.7 Claude Code](#107--claude-code)
 
 
 ## 10.1 — Logiciels à installer
@@ -225,16 +226,85 @@ desktop-file-validate "$HOME/.local/share/applications/lelivrescolaire.fr.deskto
 
 ## 10.3 — Dropbox
 
-Installer la bibliothèque d'intégration de l'indicateur :
+Utiliser le démon officiel en arrière-plan, sans icône, avec un service systemd utilisateur. Les commandes ci-dessous s’exécutent dans **Fish**.
+
+### Configuration graphique initiale
+
+Installer temporairement l’intégration Nautilus avec **Shelly**, puis ouvrir Dropbox :
 
 ```fish
-sudo pacman -S libappindicator-gtk3
+shelly aur install nautilus-dropbox dropbox-cli
+dropbox-cli start -i
 ```
 
-Pour retarder le lancement de Dropbox de 10 secondes, conserver son fichier d'autostart dans `~/.config/autostart/` et remplacer sa ligne `Exec` par :
+L’extension GNOME **AppIndicator** permet d’afficher l’icône pour lier le compte, choisir le dossier `~/Dropbox`, régler la synchronisation sélective, la bande passante, la synchronisation LAN et les notifications. Les réglages sont conservés dans `~/.dropbox`. Quitter ensuite Dropbox depuis son icône.
 
-```ini
-Exec=/usr/bin/sh -c "sleep 10; exec dropbox"
+### Conserver le démon et retirer l’intégration Nautilus
+
+Marquer `dropbox` comme installé explicitement avant de retirer son intégration, pour conserver cette dépendance :
+
+```fish
+sudo pacman -D --asexplicit dropbox
+sudo pacman -Rns nautilus-dropbox
+shelly aur install dropbox dropbox-cli
+rm -f "$HOME/.config/autostart/dropbox.desktop"
+```
+
+Retirer aussi un éventuel ancien fichier d’autostart personnalisé avec délai : le service ci-dessous remplace ce lancement.
+
+### Service systemd utilisateur
+
+Créer le fichier depuis Fish :
+
+```fish
+mkdir -p "$HOME/.config/systemd/user"
+printf '%s\n' \
+    '[Unit]' \
+    'Description=Dropbox (démon headless)' \
+    '' \
+    '[Service]' \
+    'ExecStart=/usr/bin/dropbox' \
+    'UnsetEnvironment=DISPLAY WAYLAND_DISPLAY' \
+    'Restart=on-failure' \
+    'RestartSec=10' \
+    '' \
+    '[Install]' \
+    'WantedBy=default.target' \
+    > "$HOME/.config/systemd/user/dropbox.service"
+
+systemctl --user daemon-reload
+systemctl --user enable --now dropbox.service
+```
+
+Le démon démarre à l’ouverture de session. `UnsetEnvironment` retire l’accès aux affichages X11 et Wayland pour le lancement sans interface. Aucun `network-online.target` utilisateur n’est ajouté : il ne garantit pas la disponibilité du réseau système ; Dropbox se reconnecte lorsque le réseau devient disponible.
+
+Si le compte n’est pas encore lié, consulter le journal pour obtenir le lien d’autorisation :
+
+```fish
+journalctl --user -u dropbox.service -f
+```
+
+### Vérification
+
+```fish
+systemctl --user status dropbox.service
+dropbox-cli status
+dropbox-cli filestatus "$HOME/Dropbox"
+```
+
+Le service doit être actif et le client indiquer l’état de synchronisation. Pour tester sans écraser un fichier existant :
+
+```fish
+set test_sync (mktemp "$HOME/Dropbox/test-sync-XXXXXX.txt")
+printf '%s\n' 'Test de synchronisation Dropbox' > "$test_sync"
+dropbox-cli filestatus "$test_sync"
+```
+
+Attendre la synchronisation et vérifier le fichier sur le compte Dropbox, puis supprimer uniquement ce fichier de test :
+
+```fish
+rm -- "$test_sync"
+set -e test_sync
 ```
 
 ## 10.4 — Téléchargement : Grabber et Fragments
@@ -266,6 +336,29 @@ Réglage de l'UI uniquement.
 ## 10.6 — Applications Vibe Coded
 
 Les applications personnelles développées avec l'aide du Vibe Coding sont documentées séparément afin de conserver ici uniquement les logiciels et réglages généraux : [11 — Applications Vibe Coded](11-applications-vibe-coded.md).
+
+## 10.7 — Claude Code
+
+[**Claude Code**](https://code.claude.com/docs/en/quickstart) est l’assistant de programmation Anthropic en terminal. Utiliser l’installateur natif officiel pour Linux : il ne nécessite pas Node.js et gère ses mises à jour automatiquement. Cette installation est indépendante de Shelly et des paquets AUR.
+
+Depuis Fish, installer sans `sudo`, ajouter le répertoire au PATH et contrôler la version :
+
+```fish
+sudo pacman -Syu --needed curl bash git
+curl -fsSL https://claude.ai/install.sh | bash
+fish_add_path "$HOME/.local/bin"
+claude --version
+```
+
+Ouvrir ensuite le terminal dans le projet et lancer l’assistant :
+
+```fish
+cd "$HOME/Gitlab/CACHYOS-Setup"
+claude
+```
+
+Au premier lancement, suivre la connexion dans le navigateur avec un abonnement Claude compatible (Pro, Max, Team ou Enterprise), ou un compte Claude Console disposant de crédits API. Dans Claude Code, `/help` affiche l’aide et `/login` permet de changer de compte.
+
 
 ---
 

@@ -32,7 +32,7 @@ Ce setup applique des **optimisations agressives** : allègement système, désa
 7. [GNOME — interface](docs/07-gnome-ui.md)
 8. [Extensions GNOME](docs/08-gnome-extensions.md)
 9. [Nautilus — workflow](docs/09-nautilus-workflow.md)
-10. [Logiciels](docs/10-logiciels.md)
+10. [Logiciels](docs/10-logiciels.md) — [Dropbox sans interface](docs/10-logiciels.md#103--dropbox) · [Claude Code](docs/10-logiciels.md#107--claude-code)
 11. [Applications Vibe Coded](docs/11-applications-vibe-coded.md)
 12. [Shell & terminal](docs/12-shell-terminal.md)
 13. [Vivaldi](docs/13-vivaldi.md)
