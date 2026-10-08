@@ -65,6 +65,10 @@ abbr --add clip --position anywhere '2>&1 | wl-copy'
 abbr -a -- delete 'trash-put'
 abbr -a -- rm 'rm -I'
 
+# === Dropbox-cli ===
+abbr -a dropbox-sync dropbox-cli status
+abbr -a dropbox-share dropbox-cli sharelink
+abbr -a dropbox-file dropbox-cli filestatus
 
 ############################################################################################################################
 # ===  Editeurs ===
