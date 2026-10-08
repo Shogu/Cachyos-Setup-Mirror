@@ -22,6 +22,8 @@
 
 ### Bureautique
 
+- **Grille** : [visionneuse simple de fichiers tableurs, codée avec Claude](11-applications-vibe-coded.md#1124--grille).
+
 - `onlyoffice` : suite bureautique (traitement de texte, tableur, présentation).
 - `papers` : visionneuse de documents (PDF) GNOME.
 - `xournal++` : prise de notes et annotation de PDF.

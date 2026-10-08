@@ -29,6 +29,7 @@
 - [11.21 UI Management](#1121--ui-management)
 - [11.22 Extension Manager](#1122--extension-manager)
 - [11.23 Amplifaya — moteur headless et interface](#1123--amplifaya--moteur-headless-et-interface)
+- [11.24 Grille](#1124--grille)
 
 ## 11.1 — Always on top, always on top
 
@@ -770,6 +771,21 @@ journalctl --user -u amplifaya.service -b
 ```
 
 Le README complet installé se trouve dans `/usr/share/doc/amplifaya/README.md`. Les paquets ont été inspectés ; le traitement audio reste à tester sur la machine cible.
+
+## 11.24 — Grille
+
+**Grille** est une visionneuse simple de fichiers tableurs, codée avec **Claude**.
+
+**Paquet : `grille-0.1.0-1-x86_64.pkg.tar.zst`.** Le paquet n’est pas encore présent dans le dépôt ; il est à ajouter manuellement dans [le dossier Grille](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Grille/).
+
+Depuis le dossier contenant le paquet :
+
+```fish
+sudo pacman -U ./grille-0.1.0-1-x86_64.pkg.tar.zst
+```
+
+Les formats pris en charge et la commande de lancement restent à préciser à partir du paquet ou de son README.
+
 
 ---
 
