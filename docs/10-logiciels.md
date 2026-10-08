@@ -26,7 +26,7 @@
 - `papers` : visionneuse de documents (PDF) GNOME.
 - `xournal++` : prise de notes et annotation de PDF.
 - `gnome-calendar` : agenda GNOME.
-- **[Mail (`mail-postcard`)](#1014--messagerie--mail)** : client compilé avec Claude depuis Postcard, avec recherche et affichage des pièces jointes, contraste entre panneaux et francisation complète.
+- **[Mail (`mail-postcard`)](#1014--messagerie--mail)** : client compilé avec Claude depuis Postcard, avec recherche, aperçu des pièces jointes à droite, vue à trois volets, sélection multiple, clic droit, purge des copies locales à la fermeture, contraste entre panneaux et francisation complète.
 - **Grimoire** : installer [l’éditeur Markdown maison](11-applications-vibe-coded.md#113--grimoire).
 
 ### Téléchargement & partage
@@ -138,7 +138,15 @@ Voir [11.22 — Extension Manager](11-applications-vibe-coded.md#1122--extension
 
 ### 10.1.4 — Messagerie : Mail
 
-**Mail (`mail-postcard`)** est le client de messagerie retenu pour ce setup, compilé avec **Claude** depuis les sources de [Postcard](https://github.com/gxanshu/postcard). Il ne s’agit pas d’une application créée de zéro par vibe coding : la base upstream est conservée, avec quelques ajouts : **recherche et affichage des pièces jointes**, **contraste entre les panneaux** et **francisation complète**.
+**Mail (`mail-postcard`)** est le client de messagerie retenu pour ce setup, compilé avec **Claude** depuis les sources de [Postcard](https://github.com/gxanshu/postcard). Il ne s’agit pas d’une application créée de zéro par vibe coding : la base upstream est conservée, avec quelques ajouts : 
+
+- **Recherche et affichage des pièces jointes**.
+- **Aperçu des pièces jointes à droite** : PDF, images, texte et documents Word/LibreOffice.
+- **Vue à trois volets**, avec sélection multiple et menu au clic droit.
+- **Purge des copies locales à la fermeture**.
+- **Contraste entre les panneaux** et **francisation complète**.
+
+Ces ajouts ont été réalisés avec **Claude**.
 
 Le paquet Arch compilé avec Claude est à ajouter manuellement dans [le dossier Mail](../Ressources/Logiciels/Mail/). Sa version exacte n’est pas précisée ici.
 

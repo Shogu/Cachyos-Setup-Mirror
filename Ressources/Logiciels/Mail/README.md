@@ -1,6 +1,14 @@
 # Mail — mail-postcard
 
-**Mail (`mail-postcard`)** est le client de messagerie retenu pour ce setup, compilé avec **Claude** depuis les sources de [Postcard](https://github.com/gxanshu/postcard). Il ne s’agit pas d’une application créée de zéro par vibe coding : la base upstream est conservée, avec quelques ajouts : **recherche et affichage des pièces jointes**, **contraste entre les panneaux** et **francisation complète**.
+**Mail (`mail-postcard`)** est le client de messagerie retenu pour ce setup, compilé avec **Claude** depuis les sources de [Postcard](https://github.com/gxanshu/postcard). Il ne s’agit pas d’une application créée de zéro par vibe coding : la base upstream est conservée, avec quelques ajouts : 
+
+- **Recherche et affichage des pièces jointes**.
+- **Aperçu des pièces jointes à droite** : PDF, images, texte et documents Word/LibreOffice.
+- **Vue à trois volets**, avec sélection multiple et menu au clic droit.
+- **Purge des copies locales à la fermeture**.
+- **Contraste entre les panneaux** et **francisation complète**.
+
+Ces ajouts ont été réalisés avec **Claude**.
 
 ## Paquet et installation
 
