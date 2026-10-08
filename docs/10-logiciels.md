@@ -8,7 +8,7 @@
   - [10.1.1 dconf-editor GTK4](#1011--dconf-editor-gtk4)
   - [10.1.2 Snapper GTK4](#1012--snapper-gtk4)
   - [10.1.3 Extension Manager](#1013--extension-manager)
-  - [10.1.4 Messagerie : Mail ou Poste](#1014--messagerie--mail-ou-poste)
+  - [10.1.4 Messagerie : Mail](#1014--messagerie--mail)
 - [10.2 Puls et LeLivreScolaire](#102--puls-et-lelivrescolaire)
 - [10.3 Dropbox](#103--dropbox)
 - [10.4 Téléchargement : Grabber et Fragments](#104--téléchargement--grabber-et-fragments)
@@ -26,7 +26,7 @@
 - `papers` : visionneuse de documents (PDF) GNOME.
 - `xournal++` : prise de notes et annotation de PDF.
 - `gnome-calendar` : agenda GNOME.
-- **[Mail ou Poste](#1014--messagerie--mail-ou-poste)** : clients de messagerie concurrents compilés depuis les sources ; préférence pour **Mail**.
+- **[Mail (`mail-postcard`)](#1014--messagerie--mail)** : client compilé avec Claude depuis Postcard, avec recherche et affichage des pièces jointes, contraste entre panneaux et francisation complète.
 - **Grimoire** : installer [l’éditeur Markdown maison](11-applications-vibe-coded.md#113--grimoire).
 
 ### Téléchargement & partage
@@ -136,42 +136,28 @@ extension-manager
 
 Voir [11.22 — Extension Manager](11-applications-vibe-coded.md#1122--extension-manager) pour les fonctions et [8.11 — Classer les extensions avec Extension Manager](08-gnome-extensions.md#811--classer-les-extensions-avec-extension-manager) pour l’utilisation.
 
-### 10.1.4 — Messagerie : Mail ou Poste
+### 10.1.4 — Messagerie : Mail
 
-**Mail et Poste sont deux applications concurrentes, avec une préférence pour Mail dans ce setup.** Elles ne sont **pas vibe codées** : ChatGPT les a compilées à partir des sources des projets d’origine, en adaptant les noms dans le code, l’interface et les paquets Arch.
+**Mail (`mail-postcard`)** est le client de messagerie retenu pour ce setup, compilé avec **Claude** depuis les sources de [Postcard](https://github.com/gxanshu/postcard). Il ne s’agit pas d’une application créée de zéro par vibe coding : la base upstream est conservée, avec quelques ajouts : **recherche et affichage des pièces jointes**, **contraste entre les panneaux** et **francisation complète**.
 
-| Nom affiché | Projet d’origine | Ancien nom | Paquet |
-| --- | --- | --- | --- |
-| **Mail — choix privilégié** | [Postcard 1.13.0](https://github.com/gxanshu/postcard/tree/v1.13.0) | Mails | `mail-postcard-ogu-1.13.0-2-any.pkg.tar.zst` |
-| **Poste — alternative** | [Hylki 1.42.0](https://github.com/hyprlab/hylki/tree/v1.42.0) | Mail | `poste-ogu-1.42.0-3-x86_64.pkg.tar.zst` |
+Le paquet Arch compilé avec Claude est à ajouter manuellement dans [le dossier Mail](../Ressources/Logiciels/Mail/). Sa version exacte n’est pas précisée ici.
 
-Les dossiers [Mail](../Ressources/Logiciels/Mail/) et [Poste](../Ressources/Logiciels/Poste/) sont créés avec leur README uniquement. **Les paquets sont à ajouter manuellement par Ogu.** Aucun paquet ni source de compilation n’est envoyé sur GitLab pour cette intégration.
-
-Après ajout des fichiers, depuis la racine du dépôt, installer le choix privilégié :
+Depuis le dossier contenant le paquet, installer le fichier correspondant puis lancer Mail :
 
 ```fish
-sudo pacman -U "Ressources/Logiciels/Mail/mail-postcard-ogu-1.13.0-2-any.pkg.tar.zst"
+set paquets_mail (find . -maxdepth 1 -type f -name 'mail-postcard*.pkg.tar.zst')
+if test (count $paquets_mail) -eq 1
+    sudo pacman -U "$paquets_mail[1]"
+else
+    printf '%s\n' 'Conserver un seul paquet Mail dans ce dossier avant installation.'
+end
+```
+
+Après une installation réussie :
+
+```fish
 mail-postcard
 ```
-
-Ou l’alternative :
-
-```fish
-sudo pacman -U "Ressources/Logiciels/Poste/poste-ogu-1.42.0-3-x86_64.pkg.tar.zst"
-poste
-```
-
-Pour renommer les deux anciennes applications déjà installées, installer les deux nouveaux paquets ensemble :
-
-```fish
-sudo pacman -U "Ressources/Logiciels/Poste/poste-ogu-1.42.0-3-x86_64.pkg.tar.zst" "Ressources/Logiciels/Mail/mail-postcard-ogu-1.13.0-2-any.pkg.tar.zst"
-```
-
-Accepter les remplacements proposés par pacman : `poste-ogu` remplace l’ancien `mail-ogu` (Hylki), et `mail-postcard-ogu` remplace `mails-ogu` (Postcard). Le nouveau nom technique de Mail évite de réutiliser celui de l’ancienne application concurrente.
-
-Fermer les anciennes instances avant de relancer. Les identifiants techniques et emplacements de données restent ceux des projets d’origine pour conserver l’accès aux comptes et réglages.
-
-Les paquets et leurs métadonnées sont contrôlés ; **le fonctionnement complet en session GNOME avec connexion, envoi et réception reste à tester sur la machine cible**.
 
 ## 10.2 — Puls et LeLivreScolaire
 

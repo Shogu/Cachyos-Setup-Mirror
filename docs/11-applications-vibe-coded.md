@@ -4,7 +4,7 @@
 
 > **Dans ce chapitre :** applications personnelles développées avec l'aide du Vibe Coding, principalement en GTK4/libadwaita, dont le fork **Extension Manager**, les extensions GNOME maison « Always on top, always on top », **Musicäa**, **Session Keeper**, **Focus & Boutons**, **Power Total**, **UI Management** et le fork **Battery Time Compact — Ogu**, ainsi qu’un build GTK4 upstream utilisé par le setup.
 
-**Hors Vibe Coding :** [Mail et Poste](10-logiciels.md#1014--messagerie--mail-ou-poste) sont compilées par ChatGPT depuis les sources de Postcard et Hylki, puis renommées. Ce sont deux concurrentes, avec une préférence pour **Mail**. Leurs dossiers sont dans `Ressources/Logiciels/` ; Ogu y ajoutera les paquets manuellement.
+**Compilation depuis les sources :** [Mail (`mail-postcard`)](10-logiciels.md#1014--messagerie--mail) est compilé avec **Claude** depuis Postcard, avec recherche et affichage des pièces jointes, contraste entre panneaux et francisation complète. La base upstream est conservée ; le paquet est à ajouter manuellement dans `Ressources/Logiciels/Mail/`.
 
 - [11.1 Always on top, always on top](#111--always-on-top-always-on-top)
 - [11.2 Grabber](#112--grabber)
