@@ -101,9 +101,6 @@ L’application est détaillée dans [11.14 — Snapper GTK4](11-applications-vi
 Depuis la racine du dépôt, installer les paquets maison fournis ci-dessus :
 
 ```fish
-if pacman -Q stethoscope >/dev/null 2>&1
-    sudo pacman -Rns stethoscope
-end
 sudo pacman -U \
   "Ressources/Applis vibe codées en Libadwaita/Grimoire/grimoire-ogu-0.2.0-10-x86_64.pkg.tar.zst" \
   "Ressources/Applis vibe codées en Libadwaita/Fret/fret-0.2.0-1-any.pkg.tar.zst" \
