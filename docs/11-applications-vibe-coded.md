@@ -529,7 +529,7 @@ Le [README du dossier Session Keeper](../Ressources/Applis%20vibe%20codées%20en
 
 Extension GNOME Shell maison dédiée à la rationalisation de **Quick Settings** et du panneau **Calendrier/Notifications**. Compatible GNOME Shell **50 et 51**.
 
-**Archive fournie : `Focus-et-Boutons-v12.zip`.** UUID : `focus-et-boutons@ogu`.
+**Version documentée : v14.** UUID : `focus-et-boutons@ogu`. Le dépôt contient encore le paquet v12 ; le ZIP v14 reste à ajouter.
 
 ### Fonctions principales
 
@@ -540,22 +540,26 @@ Extension GNOME Shell maison dédiée à la rationalisation de **Quick Settings*
 - bouton **Power scindé** : clic principal vers le dialogue Éteindre ; chevron vers Suspendre, Redémarrer, Redémarrer la session et Verrouiller la session ;
 - coloration **bleu Adwaita temporaire** des deux boutons scindés tant que leur sous-menu est ouvert ;
 - renommage optionnel du profil de puissance en **Énergie** ;
-- carte des rendez-vous en bleu Adwaita ;
+- retrait du cadenas séparé quand le bouton Power scindé est actif ;
+- masquage optionnel de la liste des sorties audio et de son chevron ; la sortie par défaut reste utilisée ;
+- carte des rendez-vous dans la couleur d’accent du système (bleu par défaut), sans modifier la date ni ajouter de bordure ;
 - masquage optionnel de la grande zone Notifications lorsqu’elle est vide ;
 - préférences GSettings appliquées immédiatement.
 
-L’extension ne modifie ni le volume, ni le microphone, ni le sélecteur de sortie audio.
+L’extension ne modifie ni le volume ni le microphone. Elle peut masquer le sélecteur de sortie audio, mais ne change pas la sortie par défaut.
 
 ### Installation
 
-Depuis la racine du dépôt :
+**Installation v14 :** le ZIP v14 reste à ajouter au dépôt. Après récupération de cette archive, depuis le dossier qui la contient :
 
 ```fish
-gnome-extensions install --force "Ressources/Applis vibe codées en Libadwaita/Extensions GNOME/Focus & Boutons/Focus-et-Boutons-v12.zip"
+gnome-extensions install --force ./Focus-et-Boutons-v14.zip
 gnome-extensions enable focus-et-boutons@ogu
 ```
 
 Préférences :
+
+Sous Wayland, fermer puis rouvrir la session après remplacement d’une version déjà chargée.
 
 ```fish
 gnome-extensions prefs focus-et-boutons@ogu

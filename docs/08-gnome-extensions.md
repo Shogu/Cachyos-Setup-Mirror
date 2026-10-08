@@ -91,17 +91,22 @@ Fonctions principales :
 - bouton **Power scindé** : clic principal vers Éteindre, chevron vers Suspendre, Redémarrer, Redémarrer la session et Verrouiller la session ;
 - les deux boutons scindés deviennent **bleu Adwaita uniquement pendant l’ouverture de leur menu** ;
 - libellé du profil de puissance raccourci en **Énergie** ;
-- carte des rendez-vous bleue et masquage optionnel de la grande zone Notifications lorsqu’elle est vide ;
+- retrait du cadenas séparé quand le bouton Power scindé est actif ;
+- masquage optionnel de la liste des sorties audio et de son chevron ;
+- carte des rendez-vous dans la couleur d’accent du système (bleu par défaut), sans modifier la date ni ajouter de bordure ;
+- masquage complet de la colonne **Aucune notification** quand elle est vide ; réapparition dès qu’une notification existe ;
 - panneau de préférences pour activer ou désactiver les fonctions.
 
-Depuis la racine du dépôt :
+**Installation v14 :** le ZIP v14 reste à ajouter au dépôt. Après récupération de cette archive, depuis le dossier qui la contient :
 
 ```fish
-gnome-extensions install --force "Ressources/Applis vibe codées en Libadwaita/Extensions GNOME/Focus & Boutons/Focus-et-Boutons-v12.zip"
+gnome-extensions install --force ./Focus-et-Boutons-v14.zip
 gnome-extensions enable focus-et-boutons@ogu
 ```
 
 Préférences :
+
+Sous Wayland, fermer puis rouvrir la session après remplacement d’une version déjà chargée.
 
 ```fish
 gnome-extensions prefs focus-et-boutons@ogu
