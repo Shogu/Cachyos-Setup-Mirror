@@ -12,7 +12,6 @@
 - [2.6 Alléger les journaux et les stocker en RAM](#26--alléger-les-journaux-et-les-stocker-en-ram)
 - [2.7 Désactiver les coredumps](#27--désactiver-les-coredumps)
 - [2.8 Nettoyer les traductions et les fichiers de configuration](#28--nettoyer-les-traductions-et-les-fichiers-de-configuration)
-- [2.9 Désactiver Xwayland au démarrage](#29--désactiver-xwayland-au-démarrage)
 
 ## 2.1 — Nettoyer les entrées UEFI en NVRAM
 
@@ -549,51 +548,6 @@ Pour autoriser de nouveau toutes les traductions, supprimer les lignes `NoExtrac
 sudo pacman -S nom-du-paquet
 ```
 
-
-## 2.9 — Désactiver Xwayland au démarrage
-
-Désactiver XWayland sur GNOME avec un script (à faire en *bash*) :
-
-```fish
-mkdir -p ~/.local/bin
-cat > ~/.local/bin/kill-xwayland.sh << 'SCRIPTEOF'
-#!/bin/bash
-# que GNOME soit stable
-sleep 10
-
-# XWayland proprement
-pkill -TERM Xwayland 2>/dev/null
-sleep 2
-# si résiste
-pkill -9 Xwayland 2>/dev/null
-SCRIPTEOF
-```
-
-Lui donner les permissions :
-
-```fish
-chmod +x ~/.local/bin/kill-xwayland.sh
-```
-
-Créer un lanceur au boot :
-
-```fish
-mkdir -p ~/.config/autostart
-cat > ~/.config/autostart/kill-xwayland.desktop << DESKTOPEOF
-[Desktop Entry]
-Type=Application
-Name=Kill XWayland
-Exec=$HOME/.local/bin/kill-xwayland.sh
-X-GNOME-Autostart-enabled=true
-NoDisplay=false
-Hidden=false
-Comment=Désactiver XWayland après login
-DESKTOPEOF
-```
-
-Contrôler au reboot avec `pgrep Xwayland`.
-
-Les fonctions expérimentales de Mutter (mise à l'échelle fractionnaire) sont réglées séparément dans [GNOME — interface](07-gnome-ui.md#75--fonctions-expérimentales-de-mutter).
 
 ---
 
