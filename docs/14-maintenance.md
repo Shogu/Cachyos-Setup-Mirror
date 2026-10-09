@@ -2,160 +2,82 @@
 
 [Accueil](../README.md) · [Précédent](13-vivaldi.md) · [Suivant](archives.md)
 
-> **Dans ce chapitre :** choix de l'outil de mise à jour et points à vérifier après chaque mise à jour du système.
+> **Dans ce chapitre :** tâches ponctuelles de maintenance, vérifications après mise à jour et dépannage réseau. Les réglages permanents sont documentés dans leur rubrique dédiée.
 
-- [14.1 Choisir Cachy-update ou Shelly](#141--choisir-cachy-update-ou-shelly)
-- [14.2 Points à revoir après les mises à jour](#142--points-à-revoir-après-les-mises-à-jour)
-- [14.3 Dépannage iwd](#143--dépannage-iwd)
+- [14.1 Retirer Cachy-update](#141--retirer-cachy-update)
+- [14.2 Dépannage iwd](#142--dépannage-iwd)
 
-## 14.1 — Choisir Cachy-update ou Shelly
+## 14.1 — Retirer Cachy-update
 
-### Option 1 : conserver Cachy-update
-
-Générer puis ouvrir la configuration utilisateur :
+Shelly est l'outil de mise à jour retenu pour ce setup. Pour supprimer Cachy-update, lancer :
 
 ```fish
-arch-update --gen-config
-arch-update --edit-config
+sudo pacman -Rns cachy-update
 ```
 
-Choisir `TrayIconStyle=light` et limiter le nombre de sauvegardes à **1**, au lieu de **3**, dans l'option correspondante du fichier. Modifier le lanceur avec Libre Menu si nécessaire.
+Lire attentivement la liste des paquets proposés par Pacman avant de confirmer. Cette commande retire Cachy-update et les dépendances devenues inutiles ; elle ne désinstalle pas Paru.
 
-### Option 2 : utiliser Shelly
+La configuration de Shelly et son lanceur sont documentés dans [Shell & terminal](12-shell-terminal.md#123--shelly-et-le-lanceur-de-mise-à-jour). Le hook de protection de `/boot` est documenté dans [Boot & kernel](03-boot-kernel.md#37--protéger-les-transactions-noyau-si-boot-nest-pas-monté).
 
-Le mémo propose de supprimer Cachy-update et Paru lorsque Shelly couvre les mises à jour des dépôts et de l'AUR :
+## 14.2 — Dépannage iwd
 
-```fish
-sudo pacman -Rns cachy-update paru
-```
+Symptôme : connexion qui échoue avec `state change: config → failed (reason 'no-secrets')`.
 
-Cette option vient **après** les installations utilisant Paru dans les autres chapitres. Le gain d'espace dépend des dépendances effectivement retirées.
+Log associé : `GDBus.Error:net.connman.iwd.Failed: Operation failed`.
 
-#### Protéger les mises à jour du noyau : vérifier le montage de `/boot`
+Ou côté nmcli : « Des secrets étaient requis, mais aucun n'a été fourni ».
 
-Le hook Pacman ci-dessous interrompt une transaction qui touche au noyau si `/boot` n'est pas monté. Il complète le contrôle effectué par le lanceur Shelly : il protège aussi les mises à jour lancées autrement que depuis ce lanceur.
+1. **Lister les profils et repérer les doublons :**
 
-Installer le hook conservé dans le dépôt :
+   ```fish
+   nmcli connection show
+   ```
 
-```fish
-sudo install -Dm644 "Ressources/Scripts/00-boot-mounted.hook" /etc/pacman.d/hooks/00-boot-mounted.hook
-```
+   NetworkManager peut créer un nouveau profil dupliqué (`Xiaomi_03F1_5 1`, `Xiaomi_03F1_5 2`, etc.) à chaque reconnexion via l'interface graphique quand un profil du même nom existe déjà. Ces doublons n'ont souvent pas de mot de passe correctement enregistré.
 
-Le hook s'exécute avant les transactions d'installation, de mise à niveau ou de suppression qui correspondent à `usr/lib/modules/*/vmlinuz`. Si le montage manque, Pacman interrompt la transaction. Vérifier que le chemin cible correspond bien aux fichiers de noyau fournis par les paquets utilisés sur le système.
+2. **Supprimer les profils liés au SSID concerné.** Adapter la liste selon ce que renvoie `nmcli connection show` :
 
-#### Installer le lanceur Shelly
+   ```fish
+   nmcli connection delete Xiaomi_03F1_5 "Xiaomi_03F1_5 1" "Xiaomi_03F1_5 2"
+   ```
 
-Le script versionné dans `Ressources/Scripts/upgrade.sh` ouvre Ptyxis, vérifie si `/boot` est monté, tente de le monter si nécessaire et annule la mise à jour si cette tentative échoue. Si le montage est disponible, il lance les mises à jour Shelly standard puis AUR.
+3. **Vérifier que le réseau est visible :**
 
-Installer le script depuis la racine du dépôt :
+   ```fish
+   nmcli device wifi rescan
+   nmcli device wifi list
+   ```
 
-```fish
-mkdir -p ~/.local
-install -Dm755 "Ressources/Scripts/upgrade.sh" ~/.local/upgrade.sh
-```
+4. **Recréer le profil proprement, mot de passe fourni en CLI :**
 
-Créer ou conserver un lanceur de bureau pointant vers `/home/ogu/.local/upgrade.sh`. Le mémo apprécie aussi la notification de redémarrage nécessaire proposée par Shelly.
+   ```fish
+   nmcli device wifi connect Xiaomi_03F1_5 password "MOT_DE_PASSE"
+   ```
 
-### Apparence de Shelly
+   Si un profil `Xiaomi_03F1_5` existe encore, même s'il n'apparaît pas dans la liste des réseaux, nmcli peut tenter de le réactiver tel quel et ignorer le mot de passe fourni. Supprimer d'abord les profils existants.
 
-Éditer la configuration :
+5. **Si l'erreur persiste, vérifier le stockage propre à iwd.** Il est distinct des fichiers NetworkManager :
 
-```fish
-gnome-text-editor "$HOME/.config/shelly/config.json"
-```
+   ```fish
+   sudo ls -la /var/lib/iwd/
+   ```
 
-Modifier les valeurs des clés correspondantes, en conservant le reste du JSON :
+   Si une entrée `Xiaomi_03F1_5.psk` corrompue ou obsolète existe, la supprimer puis recréer la connexion :
 
-```json
-{
-  "ProgressBarStyle": "Pacman",
-  "FileSizeDisplay": "Megabytes"
-}
-```
+   ```fish
+   sudo rm "/var/lib/iwd/Xiaomi_03F1_5.psk"
+   sudo systemctl restart iwd NetworkManager
+   nmcli device wifi connect Xiaomi_03F1_5 password "MOT_DE_PASSE"
+   ```
 
-Pour le thème GTK, le mémo propose :
+6. **Reconnecter le profil**, depuis GNOME si le dialogue le propose, ou en CLI :
 
-```fish
-shelly install adw-gtk-theme
-```
+   ```fish
+   nmcli connection up Xiaomi_03F1_5
+   ```
 
-Activer ensuite le thème adw-gtk3 dans Tweaks, selon le nom effectivement installé.
+   Préférer `connection up` à une reconnexion via l'interface graphique pour éviter que NetworkManager ne crée un doublon.
 
-## 14.2 — Points à revoir après les mises à jour
-
-Les opérations détaillées restent dans leur rubrique pour éviter de maintenir plusieurs versions de la même procédure :
-
-- [Paquets orphelins et dépendances de compilation](02-system-cleanup.md#22--alléger-les-logiciels-installés).
-- [Profils TuneD et sélection SCX](05-performance-tuning.md#51--coordonner-tuned-les-profils-énergétiques-et-scx), ainsi que [le choix ADIOS](05-performance-tuning.md#55--sélectionner-adios-avec-udev-et-tuned) : les modifications sous `/usr/lib` peuvent être remplacées.
-- [Traductions à ne pas réextraire avec pacman](02-system-cleanup.md#28--nettoyer-les-traductions-et-les-fichiers-de-configuration).
-- [Extensions GNOME](08-gnome-extensions.md) : vérifier leur compatibilité après changement de version.
-- [Extensions Nautilus modifiées](09-nautilus-workflow.md#92--scripts-nautilus-et-extensions-copy-path-admin) et [traduction du bouton énergétique](07-gnome-ui.md#76--actions-de-session-rappels-et-libellé-du-profil-énergétique-menu-dalimentation) : revoir les fichiers modifiés sous `/usr/share`.
-- [Reconstruction de l'initramfs](03-boot-kernel.md#33--réduire-linitramfs) avec `limine-mkinitcpio` après changement des hooks, modules ou paramètres de démarrage.
-- [Restauration des snapshots](04-filesystems-storage.md#42--configurer-et-restaurer-les-snapshots-limine) avec l'outil adapté à Limine.
-
-
-## 14.3 - Dépannage iwd
-
-
-Symptôme : connexion qui échoue avec state change: config → failed (reason 'no-secrets')
-Log associé : `GDBus.Error:net.connman.iwd.Failed: Operation failed`
-Ou côté nmcli : `« Des secrets étaient requis, mais aucun n'a été fourni »`
-
-
-
-1. Lister les profils et repérer les doublons :
-
-```fish
-nmcli connection show
-```
-
-NetworkManager crée un nouveau profil dupliqué (Xiaomi_03F1_5 1, Xiaomi_03F1_5 2...) à chaque reconnexion via l'interface graphique quand un profil du même nom existe déjà. Ces doublons n'ont souvent pas de mot de passe correctement enregistré.
-
-2. Supprimer TOUS les profils liés au SSID concerné
-
-```fish
-nmcli connection delete Xiaomi_03F1_5 "Xiaomi_03F1_5 1" "Xiaomi_03F1_5 2"
-```
-(adapter la liste des noms selon ce que renvoie `nmcli connection show`)
-
-3. Vérifier que le réseau est bien visible
-
-```fish
-nmcli device wifi rescan
-nmcli device wifi list
-```
-
-4. Recréer le profil proprement, mot de passe fourni en CLI :
-
-```fish
-nmcli device wifi connect Xiaomi_03F1_5 password "MOT_DE_PASSE"
-```
-
-⚠️ Si un profil "Xiaomi_03F1_5" existe encore (même sans le voir dans la liste des réseaux), nmcli tente de le réactiver tel quel et ignore le mot de passe fourni. Toujours supprimer d'abord (étape 3).
-
-5. Si l'erreur persiste malgré une recréation propre : iwd garde son propre stockage de réseaux, séparé des fichiers NetworkManager :
-
-
-```fish
-sudo ls -la /var/lib/iwd/
-```
-
-Si une entrée Xiaomi_03F1_5.psk corrompue/obsolète existe :
-
-```fish
-sudo rm "/var/lib/iwd/Xiaomi_03F1_5.psk"
-sudo systemctl restart iwd NetworkManager
-nmcli device wifi connect Xiaomi_03F1_5 password "MOT_DE_PASSE"
-```
-
-
-7. Reconnexion vi GNOME si le pop-up le propsoe, ou bien avec :
-
-```fish
-nmcli connection up Xiaomi_03F1_5
-```
-
-Toujours préférer connection up à une reconnexion via l'interface graphique pour éviter que NetworkManager ne recrée un doublon.
 ---
 
 [Accueil](../README.md) · [Précédent](13-vivaldi.md) · [Suivant](archives.md)
