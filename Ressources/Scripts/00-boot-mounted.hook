@@ -8,5 +8,5 @@ Target = usr/lib/modules/*/vmlinuz
 [Action]
 Description = Vérification que /boot est monté...
 When = PreTransaction
-Exec = /usr/bin/mountpoint -q /boot
+Exec = /usr/bin/sh -c 'mountpoint -q /boot || { echo "ERREUR : /boot n’est pas monté, transaction annulée." >&2; echo "Monte-le : sudo mount /boot   puis relance la mise à jour." >&2; echo "(Si un noyau a déjà été installé sans /boot : réinstalle-le, puis sudo limine-update.)" >&2; exit 1; }'
 AbortOnFail
