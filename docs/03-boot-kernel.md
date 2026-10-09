@@ -11,6 +11,7 @@
 - [3.5 Limiter l'activation automatique des TTY](#35--limiter-lactivation-automatique-des-tty)
 - [3.6 Sched-ext (SCX)](#36--sched-ext-scx)
 - [3.7 Protéger les transactions noyau si `/boot` n'est pas monté](#37--protéger-les-transactions-noyau-si-boot-nest-pas-monté)
+- [3.8 Alerte avant la mise à jour des paquets sensibles](#38--alerte-avant-la-mise-à-jour-des-paquets-sensibles)
 
 ## 3.1 — Retirer Plymouth ou le logo firmware
 
@@ -236,6 +237,25 @@ Le hook vérifie le montage de `/boot` avant une transaction correspondante et a
 Le déclencheur de type chemin `usr/lib/modules/*/vmlinuz` doit correspondre aux fichiers touchés par les paquets noyau de cette installation. Si le chemin ne correspond pas, le hook risque de ne pas se déclencher : vérifier ce point avec les paquets installés. Le hook est une protection supplémentaire, pas un substitut à la vérification du montage de `/boot`.
 
 Le lanceur Shelly et son contrôle préalable de `/boot` sont documentés dans [Shell & terminal](12-shell-terminal.md#123--shelly-et-le-lanceur-de-mise-à-jour).
+
+
+## 3.8 — Alerte avant la mise à jour des paquets sensibles
+
+Le paquet ZIP [`hook-alerte-pacman.zip`](../Ressources/Scripts/hook-alerte-pacman.zip) contient trois fichiers : le hook Pacman, le script d'alerte et `installer.sh`.
+
+Cette alerte est informative : lors d'une transaction de mise à jour (`Upgrade`) touchant `tuned`, les paquets correspondant à `tuned-*`, les noyaux `linux-cachyos*` ou `linux-lts*`, Pacman appelle le script avant la transaction. Celui-ci affiche un avertissement coloré, signale les paquets concernés et tente d'afficher leurs versions installée et disponible. Il ne bloque pas la mise à jour. Le hook fourni ne surveille pas Limine.
+
+### Installation
+
+Télécharger puis extraire l'archive. Depuis le dossier `hook` extrait, lancer :
+
+```bash
+bash installer.sh
+```
+
+Le script installe le programme dans `/usr/local/bin/alerte-paquets-sensibles` et le hook dans `/etc/pacman.d/hooks/90-alerte-paquets-sensibles.hook`. Il lance ensuite un essai d'affichage avec `tuned` et `linux-cachyos` ; cet essai ne déclenche pas de transaction Pacman.
+
+**À noter :** le contenu a été ajouté au dépôt, mais son installation et son déclenchement sur cette machine n'ont pas été testés ici.
 
 ---
 
