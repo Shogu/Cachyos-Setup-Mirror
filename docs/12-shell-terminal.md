@@ -2,10 +2,11 @@
 
 [Accueil](../README.md) · [Précédent](11-applications-vibe-coded.md) · [Suivant](13-vivaldi.md)
 
-> **Dans ce chapitre :** intégration de Ptyxis à Nautilus, configuration de Fish, GNOME Text Editor et Micro.
+> **Dans ce chapitre :** intégration de Ptyxis à Nautilus, configuration de Fish, GNOME Text Editor, Micro et Shelly.
 
 - [12.1 Intégrer Ptyxis à Nautilus et aux outils CachyOS](#121--intégrer-ptyxis-à-nautilus-et-aux-outils-cachyos)
 - [12.2 Fish, GNOME Text Editor et Micro](#122--fish-gnome-text-editor-et-micro)
+- [12.3 Shelly et le lanceur de mise à jour](#123--shelly-et-le-lanceur-de-mise-à-jour)
 
 ## 12.1 — Intégrer Ptyxis à Nautilus et aux outils CachyOS
 
@@ -44,15 +45,13 @@ zoxide query -l
 zoxide add ~/MonDossier
 ```
 
-
-Configurer Ptyxis et **GNOME Text Editor**, puis installer le fichier **`config.fish` du dépôt** dans `~/.config/fish/config.fish`. Il contient les alias, la désactivation du message d'accueil:
-
+Configurer Ptyxis et **GNOME Text Editor**, puis installer le fichier **`config.fish` du dépôt** dans `~/.config/fish/config.fish`. Il contient les alias et la désactivation du message d'accueil.
 
 ```fish
 source ~/.config/fish/config.fish
 ```
-Ajouter les `functions` (à télécharger dans le dépôt) dans `config/fish/functions`.
 
+Ajouter les `functions` (à télécharger dans le dépôt) dans `~/.config/fish/functions`.
 
 Dans GNOME Text Editor, ajuster les préférences internes et désactiver la correction orthographique ; le mémo l'utilise pour éviter les avertissements observés lors d'un lancement en ligne de commande.
 
@@ -71,6 +70,50 @@ Insérer ces valeurs dans l'objet JSON existant, ou utiliser ce contenu si le fi
   "mkparents": true
 }
 ```
+
+## 12.3 — Shelly et le lanceur de mise à jour
+
+Le setup utilise **Shelly** pour les mises à jour des dépôts officiels et de l'AUR. Les opérations de contrôle après mise à jour restent dans [Maintenance](14-maintenance.md).
+
+### Installer le lanceur personnel
+
+Le script versionné dans `Ressources/Scripts/upgrade.sh` ouvre Ptyxis, vérifie si `/boot` est monté, tente de le monter si nécessaire et annule la mise à jour si cette tentative échoue. Si le montage est disponible, il lance les mises à jour Shelly standard puis AUR.
+
+Depuis la racine du dépôt, installer le script dans le dossier personnel :
+
+```fish
+mkdir -p ~/.local
+install -Dm755 "Ressources/Scripts/upgrade.sh" ~/.local/upgrade.sh
+```
+
+Créer ou conserver un lanceur de bureau qui exécute `/home/ogu/.local/upgrade.sh`. Le chemin est celui du compte utilisé pour ce setup ; l'adapter si le nom du dossier personnel diffère.
+
+Le hook Pacman qui protège également les mises à jour lancées en dehors de ce lanceur est documenté dans [Boot & kernel — protection de `/boot`](03-boot-kernel.md#37--protéger-les-transactions-noyau-si-boot-nest-pas-monté).
+
+### Apparence de Shelly
+
+Éditer la configuration :
+
+```fish
+gnome-text-editor "$HOME/.config/shelly/config.json"
+```
+
+Modifier les valeurs des clés correspondantes, en conservant le reste du JSON :
+
+```json
+{
+  "ProgressBarStyle": "Pacman",
+  "FileSizeDisplay": "Megabytes"
+}
+```
+
+Pour le thème GTK, le mémo propose :
+
+```fish
+shelly install adw-gtk-theme
+```
+
+Activer ensuite le thème adw-gtk3 dans Tweaks, selon le nom effectivement installé.
 
 ---
 
