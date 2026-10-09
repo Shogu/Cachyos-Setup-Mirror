@@ -5,7 +5,8 @@
 > **Dans ce chapitre :** tâches ponctuelles de maintenance, vérifications après mise à jour et dépannage réseau. Les réglages permanents sont documentés dans leur rubrique dédiée.
 
 - [14.1 Retirer Cachy-update](#141--retirer-cachy-update)
-- [14.2 Dépannage iwd](#142--dépannage-iwd)
+- [14.2 Points à revoir après les mises à jour](#142--points-à-revoir-après-les-mises-à-jour)
+- [14.3 Dépannage iwd](#143--dépannage-iwd)
 
 ## 14.1 — Retirer Cachy-update
 
@@ -19,7 +20,19 @@ Lire attentivement la liste des paquets proposés par Pacman avant de confirmer.
 
 La configuration de Shelly et son lanceur sont documentés dans [Shell & terminal](12-shell-terminal.md#123--shelly-et-le-lanceur-de-mise-à-jour). Le hook de protection de `/boot` est documenté dans [Boot & kernel](03-boot-kernel.md#37--protéger-les-transactions-noyau-si-boot-nest-pas-monté).
 
-## 14.2 — Dépannage iwd
+## 14.2 — Points à revoir après les mises à jour
+
+Les procédures détaillées restent dans leur rubrique pour éviter de maintenir plusieurs versions des mêmes instructions :
+
+- [Paquets orphelins et dépendances de compilation](02-system-cleanup.md#22--alléger-les-logiciels-installés).
+- [Profils TuneD et sélection SCX](05-performance-tuning.md#51--coordonner-tuned-les-profils-énergétiques-et-scx), ainsi que [le choix ADIOS](05-performance-tuning.md#55--sélectionner-adios-avec-udev-et-tuned) : les modifications sous `/usr/lib` peuvent être remplacées.
+- [Traductions à ne pas réextraire avec pacman](02-system-cleanup.md#28--nettoyer-les-traductions-et-les-fichiers-de-configuration).
+- [Extensions GNOME](08-gnome-extensions.md) : vérifier leur compatibilité après changement de version.
+- [Extensions Nautilus modifiées](09-nautilus-workflow.md#92--scripts-nautilus-et-extensions-copy-path-admin) et [traduction du bouton énergétique](07-gnome-ui.md#76--actions-de-session-rappels-et-libellé-du-profil-énergétique-menu-dalimentation) : revoir les fichiers modifiés sous `/usr/share`.
+- [Reconstruction de l'initramfs](03-boot-kernel.md#33--réduire-linitramfs) avec `limine-mkinitcpio` après changement des hooks, modules ou paramètres de démarrage.
+- [Restauration des snapshots](04-filesystems-storage.md#42--configurer-et-restaurer-les-snapshots-limine) avec l'outil adapté à Limine.
+
+## 14.3 — Dépannage iwd
 
 Symptôme : connexion qui échoue avec `state change: config → failed (reason 'no-secrets')`.
 
