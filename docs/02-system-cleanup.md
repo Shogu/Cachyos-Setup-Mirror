@@ -489,6 +489,8 @@ NoExtract = !usr/share/locale/en*
 NoExtract = !usr/share/locale/locale.alias
 ```
 
+**Attention : ne pas ajouter de règle `NoExtract` ciblant un fichier de traduction français précis.** Une règle supplémentaire telle que `NoExtract = usr/share/locale/fr/LC_MESSAGES/gnome-shell.mo` bloque explicitement ce fichier, même si les règles précédentes autorisent les traductions françaises. Cela peut laisser des composants GNOME partiellement en anglais après une mise à jour.
+
 Les règles commençant par `!` réautorisent les chemins français et anglais après l'exclusion générale.
 
 ### Afficher les répertoires qui seront supprimés
