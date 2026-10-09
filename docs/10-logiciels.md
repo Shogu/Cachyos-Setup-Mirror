@@ -12,7 +12,7 @@
 - [10.2 Puls et LeLivreScolaire](#102--puls-et-lelivrescolaire)
 - [10.3 Dropbox](#103--dropbox)
 - [10.4 Téléchargement : Grabber et Fragments](#104--téléchargement--grabber-et-fragments)
-- [10.5 Clapper](#105--clapper)
+- [10.5 Showtime](#105--showtime)
 - [10.6 Applications Vibe Coded](#106--applications-vibe-coded)
 - [10.7 Claude Code](#107--claude-code)
 
@@ -44,7 +44,7 @@
 - **Amplifaya** : installer [le moteur headless et sa télécommande GTK4/libadwaita](11-applications-vibe-coded.md#1123--amplifaya--moteur-headless-et-interface), fork allégé de JamesDSP.
 
 - **Decibel** : installer [le fork maison du lecteur audio GNOME](11-applications-vibe-coded.md#117--decibel), fourni dans le dépôt.
-- `clapper` : lecteur vidéo GNOME.
+- [**Showtime**](https://apps.gnome.org/Showtime/) (`showtime`) : lecteur vidéo GNOME GTK4/libadwaita.
 - `gst-thumbnailers` : génération des vignettes audio/vidéo dans Nautilus.
 
 ### Système & outils
@@ -73,7 +73,7 @@
 Commande des paquets des dépôts (les applications maison se trouvent ci-dessous) :
 
 ```
-sudo pacman -Syu powertop gst-thumbnailers profile-cleaner seahorse fragments papers nicotine+ resources xournal++ gnome-calendar duf trash-cli libgda6 shelly inotify-tools libnotify clapper
+sudo pacman -Syu powertop gst-thumbnailers profile-cleaner seahorse fragments papers nicotine+ resources xournal++ gnome-calendar duf trash-cli libgda6 shelly inotify-tools libnotify showtime
 ```
 
 ### 10.1.1 — dconf-editor GTK4
@@ -334,9 +334,18 @@ Aligner le port d'écoute sur les [règles du pare-feu](06-network.md#61--config
 
 Port 2234, réglage sur wlan0, réglage de l'UI.
 
-## 10.5 — Clapper
+## 10.5 — Showtime
 
-Réglage de l'UI uniquement.
+[**Showtime**](https://apps.gnome.org/Showtime/) est le lecteur vidéo GNOME retenu dans ce setup.
+
+Installation et lancement :
+
+```fish
+sudo pacman -Syu --needed showtime
+showtime
+```
+
+Réglage de l’interface selon les préférences.
 
 ## 10.6 — Applications Vibe Coded
 

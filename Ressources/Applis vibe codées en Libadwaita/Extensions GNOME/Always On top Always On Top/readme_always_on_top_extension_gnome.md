@@ -18,7 +18,7 @@ la liste... et son unique boulot, c'est le *always on top*. 😄
     non coché — évoque directement un état binaire off/on).
   - *Actif (fenêtre épinglée)* → l'icône **passe le relais à l'icône de
     l'application épinglée** : mapping prioritaire pour quelques apps
-    (Ptyxis, GNOME Text Editor, Nautilus, Clapper, Grimoire), sinon variante
+    (Ptyxis, GNOME Text Editor, Nautilus, Showtime, Grimoire), sinon variante
     monochrome `-symbolic` de l'icône déclarée par l'app si elle existe, sinon
     repli générique (`application-x-executable-symbolic`).
 - **Cartouche de survol resserrée**, alignée sur la géométrie des icônes de
