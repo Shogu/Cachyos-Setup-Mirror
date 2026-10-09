@@ -31,40 +31,30 @@ sudo pacman -Rns cachy-update paru
 
 Cette option vient **après** les installations utilisant Paru dans les autres chapitres. Le gain d'espace dépend des dépendances effectivement retirées.
 
-Créer le lanceur de mise à jour :
+#### Protéger les mises à jour du noyau : vérifier le montage de `/boot`
+
+Le hook Pacman ci-dessous interrompt une transaction qui touche au noyau si `/boot` n'est pas monté. Il complète le contrôle effectué par le lanceur Shelly : il protège aussi les mises à jour lancées autrement que depuis ce lanceur.
+
+Installer le hook conservé dans le dépôt :
 
 ```fish
-mkdir -p /home/ogu/.local
-gnome-text-editor /home/ogu/.local/upgrade.sh
+sudo install -Dm644 "Ressources/Scripts/00-boot-mounted.hook" /etc/pacman.d/hooks/00-boot-mounted.hook
 ```
 
-Y placer ce script Bash, qui ouvre Ptyxis et exécute les commandes dans Fish :
+Le hook s'exécute avant les transactions d'installation, de mise à niveau ou de suppression qui correspondent à `usr/lib/modules/*/vmlinuz`. Si le montage manque, Pacman interrompt la transaction. Vérifier que le chemin cible correspond bien aux fichiers de noyau fournis par les paquets utilisés sur le système.
 
-```bash
-#!/usr/bin/env bash
-#update-shelly.sh – Lance une mise à jour Shelly dans Ptyxis
+#### Installer le lanceur Shelly
 
-ptyxis --maximize -- fish -c "
-set_color 3584e4
-echo '╔══════════════════════╗'
-echo '║  MISE À JOUR SHELLY  ║'
-echo '╚══════════════════════╝'
-set_color normal
-echo
-shelly upgrade standard
-shelly upgrade aur
-echo
-read -P 'Fermer avec ENTRÉE '
-"
-```
+Le script versionné dans `Ressources/Scripts/upgrade.sh` ouvre Ptyxis, vérifie si `/boot` est monté, tente de le monter si nécessaire et annule la mise à jour si cette tentative échoue. Si le montage est disponible, il lance les mises à jour Shelly standard puis AUR.
 
-Rendre le script exécutable :
+Installer le script depuis la racine du dépôt :
 
 ```fish
-chmod +x /home/ogu/.local/upgrade.sh
+mkdir -p ~/.local
+install -Dm755 "Ressources/Scripts/upgrade.sh" ~/.local/upgrade.sh
 ```
 
-Créer un lanceur pointant vers `/home/ogu/.local/upgrade.sh`. Le mémo apprécie aussi la notification de redémarrage nécessaire proposée par Shelly.
+Créer ou conserver un lanceur de bureau pointant vers `/home/ogu/.local/upgrade.sh`. Le mémo apprécie aussi la notification de redémarrage nécessaire proposée par Shelly.
 
 ### Apparence de Shelly
 
