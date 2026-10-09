@@ -211,9 +211,9 @@ Synchronisation du scheduler sched-ext (SCX) avec TuneD et les profils d'énergi
 
 Sur cette installation, `/boot` contient l'ESP utilisée par Limine. Une transaction qui installe, met à jour ou supprime un noyau alors que `/boot` n'est pas monté peut modifier les fichiers du système sans actualiser l'ESP. Le hook Pacman ci-dessous refuse la transaction si le point de montage manque.
 
-Créer le hook directement dans `/etc/pacman.d/hooks` :
+Créer le hook avec **Bash** (et non en collant la commande dans une session Fish) :
 
-```fish
+```bash
 sudo mkdir -p /etc/pacman.d/hooks
 sudo tee /etc/pacman.d/hooks/00-boot-mounted.hook <<'EOF'
 [Trigger]
@@ -224,14 +224,16 @@ Type = Path
 Target = usr/lib/modules/*/vmlinuz
 
 [Action]
-Description = Vérification que /boot est monté avant une transaction noyau
+Description = Vérification que /boot est monté...
 When = PreTransaction
-Exec = /usr/bin/mountpoint -q /boot
+Exec = /usr/bin/sh -c 'mountpoint -q /boot || { echo "ERREUR : /boot n’est pas monté, transaction annulée." >&2; echo "Monte-le : sudo mount /boot   puis relance la mise à jour." >&2; echo "(Si un noyau a déjà été installé sans /boot : réinstalle-le, puis sudo limine-update.)" >&2; exit 1; }'
 AbortOnFail
 EOF
 ```
 
-Le hook utilise un déclencheur de type chemin sur `usr/lib/modules/*/vmlinuz`. Vérifier que ce chemin correspond bien aux fichiers fournis par les paquets noyau installés sur cette machine : si le paquet ne touche pas ce chemin, le déclencheur ne s'activera pas. Ce fichier est une protection supplémentaire ; il ne remplace pas la vérification du montage avant les mises à jour.
+Le hook vérifie le montage de `/boot` avant une transaction correspondante et affiche un message d'erreur si le point de montage est absent. Si un noyau a déjà été installé alors que l'ESP n'était pas montée, le message conseille de réinstaller le noyau concerné puis d'exécuter `sudo limine-update`.
+
+Le déclencheur de type chemin `usr/lib/modules/*/vmlinuz` doit correspondre aux fichiers touchés par les paquets noyau de cette installation. Si le chemin ne correspond pas, le hook risque de ne pas se déclencher : vérifier ce point avec les paquets installés. Le hook est une protection supplémentaire, pas un substitut à la vérification du montage de `/boot`.
 
 Le lanceur Shelly et son contrôle préalable de `/boot` sont documentés dans [Shell & terminal](12-shell-terminal.md#123--shelly-et-le-lanceur-de-mise-à-jour).
 
