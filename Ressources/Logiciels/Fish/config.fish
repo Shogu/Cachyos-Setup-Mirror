@@ -76,9 +76,9 @@ abbr --add extensions-fix 'gsettings set org.gnome.shell disable-user-extensions
 
 ############################################################################################################################
 # ===  Editeurs ===
-set -gx SUDO_EDITOR gnome-text-editor
-set -gx EDITOR gnome-text-editor
-set -gx VISUAL gnome-text-editor
+set -gx SUDO_EDITOR "gnome-text-editor --standalone"
+set -gx EDITOR "gnome-text-editor --standalone"
+set -gx VISUAL "gnome-text-editor --standalone"
 
 ############################################################################################################################
 # === Fonctions autoloadées ===
