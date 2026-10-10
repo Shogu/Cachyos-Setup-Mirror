@@ -17,9 +17,7 @@ la liste... et son unique boulot, c'est le *always on top*. 😄
   - *Inactif* → icône symbolique **Adwaita native `radio`** (bouton radio
     non coché — évoque directement un état binaire off/on).
   - *Actif (fenêtre épinglée)* → l'icône **passe le relais à l'icône de
-    l'application épinglée** : mapping prioritaire pour quelques apps
-    (Ptyxis, GNOME Text Editor, Nautilus, Showtime, Grimoire), sinon variante
-    monochrome `-symbolic` de l'icône déclarée par l'app si elle existe, sinon
+    l'application épinglée** 
     repli générique (`application-x-executable-symbolic`).
 - **Cartouche de survol resserrée**, alignée sur la géométrie des icônes de
   statut voisines (`stylesheet.css`, classe `aot-indicator`). Le bouton du
@@ -34,7 +32,7 @@ la liste... et son unique boulot, c'est le *always on top*. 😄
   épinglée). S'il y a plusieurs fenêtres épinglées, l'icône montre la plus
   récente.
 - **Icônes 100 % thème**, aucune couleur codée en dur : piochées dans le
-  thème d'icônes système via `Gio.ThemedIcon` (aucun fichier bundlé).
+  thème d'icônes système via `Gio.ThemedIcon` (aucun fichier bundlé). Utilisationd es symbolics antives quand une app est épinglée
 - **Zéro dépendance, zéro préférence, zéro menu.** Un seul fichier
   `extension.js`.
 - **Position simple et stable** dans la zone d'état (droite), sans API interne
