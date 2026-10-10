@@ -31,6 +31,7 @@
 - [11.23 Amplifaya — moteur headless et interface](#1123--amplifaya--moteur-headless-et-interface)
 - [11.24 Grille](#1124--grille)
 - [11.25 Samizdat](#1125--samizdat)
+- [11.26 Icônes UI](#1126--icônes-ui)
 
 ## 11.1 — Always on top, always on top
 
@@ -790,10 +791,51 @@ Les formats pris en charge et la commande de lancement restent à préciser à p
 
 ## 11.25 — Samizdat
 
-**Samizdat** est un traitement de texte simple et léger pour GNOME, écrit en Rust avec **GTK4/libadwaita**. Il ouvre et modifie notamment les documents **DOCX, ODT et Markdown**, avec mise en forme, tableaux, images, recherche et export PDF. Il repose sur le moteur **letters-core** de gtk-office-suite.
+**Samizdat 0.8.0** est un traitement de texte GNOME en Rust, GTK4/libadwaita, basé sur le moteur `letters-core` de gtk-office-suite. Il prend en charge DOCX, ODT, Markdown, texte brut, HTML et la lecture/export PDF.
 
-Le [README complet](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Samizdat/README.md) détaille les fonctions et limites. Le paquet est à ajouter manuellement par Ogu dans ce dossier ; son nom de fichier et sa version restent à préciser.
+La version 0.8.0 ajoute notamment la typographie française automatique, les styles de paragraphes, les listes multiniveaux, les cartouches, la numérotation des lignes, les formes, les frises chronologiques modifiables, les tableaux, le traitement des images, la correction orthographique française, les en-têtes/pieds de page, les colonnes, le plan et le sommaire automatique. Elle comprend aussi le mode concentration, les modèles, les exports DOCX/PDF, les livrets de séquence, les PDF aménagés pour les élèves à besoins particuliers, les onglets/fenêtres, la sauvegarde de secours automatique et les préférences d’interface.
 
+### Modèles fournis
+
+Le paquet 0.8.0 est accompagné de quatre modèles DOCX :
+- `Cours.docx`
+- `Page de garde de séquence.docx`
+- `Bac blanc Français.docx`
+- `Bac blanc Histoire-Géographie.docx`
+
+Le dossier attendu dans le dépôt est `Ressources/Applis vibe codées en Libadwaita/Samizdat/Modeles/`. Les fichiers modèles et le paquet Arch joints doivent être ajoutés manuellement à GitLab ; ils ne sont pas inclus dans ce commit.
+
+### Installation
+
+Depuis le dossier où se trouve le paquet fourni :
+
+```fish
+sudo pacman -U ./samizdat-0.8.0-1-x86_64.pkg.tar.zst
+```
+
+Le [README complet de Samizdat](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Samizdat/README.md) récapitule les fonctionnalités, les raccourcis et les limites connues. Le paquet n’a pas été installé ni testé dans une session GNOME pendant cette mise à jour.
+
+---
+
+## 11.26 — Icônes UI
+
+**Icônes UI** est une petite application Python/GTK4 issue du vibe coding pour gérer les icônes **des applications installées**. Elle présente l’icône actuelle et celle proposée, en couleur et en symbolique ; permet de modifier/importer les icônes, appliquer les changements avec possibilité de restauration, rétablir les lanceurs faits main manquants, et exporter un nouvel `.pyz` qui conserve les imports.
+
+### Lancement
+
+Depuis le dossier contenant le fichier :
+
+```fish
+python3 icones-ogu.pyz
+```
+
+Dépendances éventuelles :
+
+```fish
+sudo pacman -S python-gobject gtk4
+```
+
+L’archive reçue contient `icones-ogu.pyz` et `LISEZMOI.md`. **Elle ne contient pas le gestionnaire d’icônes PLACES pour les dossiers personnels** ; ce dernier doit être documenté séparément après réception de son archive.
 
 ---
 

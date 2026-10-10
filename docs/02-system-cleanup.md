@@ -412,21 +412,72 @@ lsmod | grep serial8250
 ```
 
 
-## 2.6 — Alléger les journaux et les stocker en RAM
+## 2.6 — Conserver les journaux sur disque avec un drop-in journald
 
-Ouvrir la configuration de journald :
+Créer le répertoire des fichiers complémentaires, puis ouvrir le nouveau fichier de configuration :
 
 ```fish
-sudoedit /etc/systemd/journald.conf
+sudo mkdir -p /etc/systemd/journald.conf.d
+sudo gnome-text-editor /etc/systemd/journald.conf.d/99-journald.ogu.conf
 ```
 
-Reprendre le contenu du fichier **`journald.conf.txt` fourni dans le dépôt**, qui définit l'allégement des journaux.
+Coller le contenu suivant dans l’éditeur, puis enregistrer :
 
-Relancer ensuite le service :
+```ini
+[Journal]
+
+# Garder les journaux sur le disque : indispensable pour lire le démarrage précédent après un plantage
+Storage=persistent
+Compress=yes
+
+# Place et durée : environ deux semaines de démarrages, 128 Mo au maximum
+SystemMaxUse=128M
+SystemKeepFree=1G
+SystemMaxFileSize=16M
+MaxRetentionSec=2week
+MaxFileSec=1week
+RuntimeMaxUse=16M
+
+# Plus léger : ne pas stocker les messages de débogage (on peut les rallumer au besoin)
+MaxLevelStore=info
+
+# Un service qui inonde le journal est coupé au-delà de 2 000 messages en 30 s
+RateLimitIntervalSec=30s
+RateLimitBurst=2000
+
+# Pas de copies inutiles ailleurs
+ForwardToSyslog=no
+ForwardToKMsg=no
+ForwardToConsole=no
+ForwardToWall=no
+
+# Pas de messages d'audit du noyau dans le journal
+Audit=no
+```
+
+### Vérifier la configuration
+
+Exécuter les commandes suivantes dans l’ordre :
 
 ```fish
+# 1. Le fichier est-il au bon endroit ?
+ls -l /etc/systemd/journald.conf.d/
+
+# 2. Quels fichiers sont lus, dans quel ordre, et avec quelles valeurs ?
+systemd-analyze cat-config systemd/journald.conf | grep -E '^(# /|\[|[A-Z])'
+
+# 3. Appliquer, puis vérifier que journald n’a rien refusé
 sudo systemctl restart systemd-journald
+journalctl -u systemd-journald -b --since '-2min' | grep -iE 'unknown|invalid|failed|ignoring'
+
+# 4. Place occupée et nombre de démarrages conservés
+journalctl --disk-usage
+journalctl --list-boots | wc -l
 ```
+
+Si le dernier `grep` ne retourne aucune ligne, cela signifie qu’il n’a trouvé aucun des messages d’erreur recherchés dans cette fenêtre de journal ; ce n’est pas à lui seul une preuve que chaque valeur produit l’effet attendu. Vérifier également l’espace occupé et la liste des démarrages.
+
+Le fichier historique `Ressources/Fichiers système/journald.conf` n’est plus utilisé : la configuration doit être gérée par le drop-in `/etc/systemd/journald.conf.d/99-journald.ogu.conf`.
 
 ## 2.7 — Désactiver les coredumps
 

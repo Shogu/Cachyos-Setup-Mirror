@@ -202,6 +202,25 @@ Utiliser ce setup d’icônes d’applications et de dossiers afin de conserver 
   <img src="../Ressources/screenshots/gnome-icons-folders-setup.png" alt="Setup d’icônes et dossiers GNOME" width="900">
 </p>
 
+
+### Icônes UI — icônes des applications
+
+Le petit outil Python **Icônes UI** gère les icônes couleur et symboliques des applications installées. Il permet d’importer ou modifier une icône, d’appliquer les changements, de restaurer l’état précédent et d’exporter un nouvel ensemble d’icônes incluant les imports.
+
+Depuis le dossier contenant `icones-ogu.pyz`, lancer :
+
+```fish
+python3 icones-ogu.pyz
+```
+
+Python 3, GTK4 et PyGObject sont nécessaires. Sur CachyOS GNOME, ils sont normalement déjà présents ; sinon :
+
+```fish
+sudo pacman -S python-gobject gtk4
+```
+
+**Important :** cette archive gère les icônes des applications, pas les icônes **PLACES** des dossiers personnels. Le gestionnaire PLACES est une application distincte ; son archive n’a pas encore été fournie.
+
 ---
 
 [Accueil](../README.md) · [Précédent](06-network.md) · [Suivant](08-gnome-extensions.md)
