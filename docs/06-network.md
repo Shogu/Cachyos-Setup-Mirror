@@ -61,7 +61,7 @@ sudo systemctl mask cachyos-iw-set-regdomain.service
 Créer le réglage client et serveur, avec une commande compatible Fish :
 
 ```fish
-printf '%s\n' '# TCP Fast Open : client + serveur' 'net.ipv4.tcp_fastopen = 3' | sudo tee /etc/sysctl.d/99-tcp-fastopen.conf
+printf '%s\\n' '# TCP Fast Open : client + serveur' 'net.ipv4.tcp_fastopen = 3' | sudo tee /etc/sysctl.d/99-tcp-fastopen.conf
 sudo sysctl --system
 sysctl net.ipv4.tcp_fastopen
 ```
@@ -110,7 +110,7 @@ Cette procédure permet de bloquer le scan des réseaux Wi-Fi environnants par l
 Créer le fichier de configuration :
 
 ```fish
-echo -e "[wifi]\nenable=false" | sudo tee /etc/geoclue/conf.d/90-disable-wifi.conf > /dev/null
+echo -e "[wifi]\\nenable=false" | sudo tee /etc/geoclue/conf.d/90-disable-wifi.conf > /dev/null
 ```
 
 Redémarrer le service GeoClue :
@@ -135,6 +135,27 @@ Résultat attendu :
 - **Description** : `GeoIP (ichnaea)`
 - **Accuracy** : `25000 meters`
 
----
+### Exclure Avahi de GeoClue
 
-[Accueil](../README.md) · [Précédent](05-performance-tuning.md) · [Suivant](07-gnome-ui.md)
+Pour conserver GeoClue (notamment pour les fonctions GNOME qui s'appuient sur la localisation) sans activer sa source `network-nmea`, modifier le fichier principal :
+
+```fish
+sudo gnome-text-editor /etc/geoclue/geoclue.conf
+```
+
+Dans la section **[network-nmea] uniquement**, remplacer `enable=true` par :
+
+```ini
+[network-nmea]
+enable=false
+```
+
+Ne pas modifier les paramètres `enable` des autres sections.
+
+Réinitialiser un éventuel état d'échec, puis redémarrer GeoClue :
+
+```fish
+sudo systemctl reset-failed geoclue.service
+sudo systemctl restart geoclue.service
+```
+
