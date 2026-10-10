@@ -12,6 +12,7 @@
 - [3.6 Sched-ext (SCX)](#36--sched-ext-scx)
 - [3.7 Protéger les transactions noyau si `/boot` n'est pas monté](#37--protéger-les-transactions-noyau-si-boot-nest-pas-monté)
 - [3.8 Alerte avant la mise à jour des paquets sensibles](#38--alerte-avant-la-mise-à-jour-des-paquets-sensibles)
+- [3.9 TTY de secours et langue temporaire](#39--tty-de-secours-et-langue-temporaire)
 
 ## 3.1 — Retirer Plymouth ou le logo firmware
 
@@ -256,6 +257,43 @@ bash installer.sh
 Le script installe le programme dans `/usr/local/bin/alerte-paquets-sensibles` et le hook dans `/etc/pacman.d/hooks/90-alerte-paquets-sensibles.hook`. Il lance ensuite un essai d'affichage avec `tuned` et `linux-cachyos` ; cet essai ne déclenche pas de transaction Pacman.
 
 **À noter :** le contenu a été ajouté au dépôt, mais son installation et son déclenchement sur cette machine n'ont pas été testés ici.
+
+
+## 3.9 — TTY de secours et langue temporaire
+
+### Ouvrir un terminal de secours depuis GNOME
+
+Si GNOME ne répond plus correctement ou si un terminal texte est nécessaire, essayer :
+
+- **Ctrl + Alt + F4** : raccourci confirmé fonctionnel sur cette configuration.
+- Si nécessaire, essayer aussi **Ctrl + Alt + F3**, **F5** ou **F6**.
+- Pour revenir à la session graphique, essayer **Ctrl + Alt + F1** ou **Ctrl + Alt + F2** : le numéro dépend de la façon dont la session graphique et les TTY sont lancés.
+
+Une fois sur un TTY, se connecter avec son identifiant et son mot de passe. L’absence de demande de connexion sur un autre TTY ne signifie pas nécessairement que le raccourci clavier est bloqué : le service `getty` peut ne pas y être lancé.
+
+### Passer temporairement les messages en français
+
+Dans le shell du TTY ou dans un chroot, si la locale française est déjà installée, exécuter :
+
+```bash
+export LANG=fr_FR.UTF-8
+export LANGUAGE=fr_FR:fr
+export LC_ALL=fr_FR.UTF-8
+```
+
+Ces variables ne modifient que le shell courant et les programmes lancés depuis celui-ci. Elles ne changent pas la configuration permanente. Pour ne définir la langue que pour une seule commande, préfixer celle-ci par les variables, par exemple :
+
+```bash
+LANG=fr_FR.UTF-8 LANGUAGE=fr_FR:fr LC_ALL=fr_FR.UTF-8 pacman -Syu
+```
+
+Vérifier au besoin que la locale existe :
+
+```bash
+locale -a
+```
+
+Si `fr_FR.UTF-8` n'apparaît pas dans la liste, ces variables ne suffiront pas : la locale doit être disponible dans le système concerné. Dans un chroot, cela concerne le système du chroot lui-même. Ne pas confondre ce réglage temporaire avec la configuration permanente de `/etc/locale.conf`.
 
 ---
 
