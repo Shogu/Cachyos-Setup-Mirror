@@ -4,7 +4,7 @@ Archive fournie : `copyous-gnome51.zip` (à ajouter manuellement à ce dossier).
 
 Le fork apporte un correctif de transition GNOME 51 et un mode **Cumul** du multi-copiage, activable ou désactivable par un toggle dans le menu de l’extension.
 
-La métadonnée `shell-version` de l’archive reçue ne déclare actuellement que GNOME 48, 49 et 50. Avant de présenter l’archive comme compatible GNOME 51, ajouter `"51"` à cette liste, puis vérifier l’extension en session GNOME 51.
+La copie préparée pour le dépôt ajoute `"51"` à `shell-version` dans `metadata.json`. Cette correction de métadonnées ne constitue pas un test fonctionnel : le comportement doit encore être vérifié en session GNOME 51.
 
 Installation :
 
