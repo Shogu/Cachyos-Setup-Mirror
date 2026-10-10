@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
-<defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff6a5c"/><stop offset="1" stop-color="#d8201e"/></linearGradient><filter id="b" x="-30%" y="-30%" width="160%" height="170%"><feGaussianBlur stdDeviation="1.8"/></filter><filter id="k" x="-30%" y="-30%" width="160%" height="170%"><feGaussianBlur stdDeviation="1.5"/></filter></defs>
-<circle cx="64" cy="68" r="54" fill="#000" opacity=".32" filter="url(#b)"/><circle cx="64" cy="64" r="54" fill="url(#bg)"/><circle cx="64" cy="64" r="53.5" fill="none" stroke="#fff" stroke-opacity=".35"/>
-<circle cx="64" cy="64" r="34" fill="#fff"/><g fill="none" stroke="#d8201e" stroke-width="5"><circle cx="64" cy="64" r="24"/><ellipse cx="64" cy="64" rx="10" ry="24"/></g><path d="M40 64 H88" stroke="#d8201e" stroke-width="5"/></svg>

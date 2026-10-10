@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
-<defs><linearGradient id="d" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#deddda"/></linearGradient><linearGradient id="lb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffa348"/><stop offset="1" stop-color="#e66100"/></linearGradient><filter id="b" x="-30%" y="-30%" width="160%" height="170%"><feGaussianBlur stdDeviation="1.8"/></filter><filter id="k" x="-30%" y="-30%" width="160%" height="170%"><feGaussianBlur stdDeviation="1.5"/></filter></defs>
-<circle cx="64" cy="68" r="54" fill="#000" opacity=".35" filter="url(#b)"/><circle cx="64" cy="64" r="54" fill="url(#d)"/><circle cx="64" cy="64" r="53.5" fill="none" stroke="#000" stroke-opacity=".18"/>
-<g fill="none" stroke="#000" stroke-opacity=".1" stroke-width="1.4"><circle cx="64" cy="64" r="46"/><circle cx="64" cy="64" r="40"/><circle cx="64" cy="64" r="34"/></g>
-<circle cx="64" cy="64" r="27" fill="url(#lb)"/><g transform="translate(64 64) scale(0.34) translate(-66 -63.5)" fill="#fff"><circle cx="46" cy="88" r="11"/><circle cx="86" cy="80" r="11"/><rect x="53" y="36" width="6" height="52"/><rect x="93" y="28" width="6" height="52"/><path d="M53 36 L99 28 V44 L53 52 Z"/></g></svg>
