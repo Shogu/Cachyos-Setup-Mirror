@@ -477,7 +477,6 @@ journalctl --list-boots | wc -l
 
 Si le dernier `grep` ne retourne aucune ligne, cela signifie qu’il n’a trouvé aucun des messages d’erreur recherchés dans cette fenêtre de journal ; ce n’est pas à lui seul une preuve que chaque valeur produit l’effet attendu. Vérifier également l’espace occupé et la liste des démarrages.
 
-Le fichier historique `Ressources/Fichiers système/journald.conf` n’est plus utilisé : la configuration doit être gérée par le drop-in `/etc/systemd/journald.conf.d/99-journald.ogu.conf`.
 
 ## 2.7 — Désactiver les coredumps
 
