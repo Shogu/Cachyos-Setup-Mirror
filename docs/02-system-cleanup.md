@@ -9,7 +9,7 @@
 - [2.3 Conserver les firmwares nécessaires](#23--conserver-les-firmwares-nécessaires)
 - [2.4 Masquer les services système et utilisateur inutilisés](#24--masquer-les-services-système-et-utilisateur-inutilisés)
 - [2.5 Blacklister les pilotes inutilisés](#25--blacklister-les-pilotes-inutilisés)
-- [2.6 Alléger les journaux et les stocker en RAM](#26--alléger-les-journaux-et-les-stocker-en-ram)
+- [2.6 Conserver les journaux sur disque avec un drop-in journald](#26--conserver-les-journaux-sur-disque-avec-un-drop-in-journald)
 - [2.7 Désactiver les coredumps](#27--désactiver-les-coredumps)
 - [2.8 Nettoyer les traductions et les fichiers de configuration](#28--nettoyer-les-traductions-et-les-fichiers-de-configuration)
 
@@ -56,15 +56,31 @@ sudo pacman -Rns speech-dispatcher brltty orca yelp gnome-user-docs && sudo pacm
 - `gnome-usage` : vue d'usage CPU, RAM et disque.
 - `gedit` : éditeur de texte GNOME.
 - `gnome-screenshot` : captures d'écran.
-- `sushi` : prévisualisation rapide dans Nautilus.
 - `cachyos-gnome-settings` : réglages GNOME fournis par CachyOS 
 - `cachyos-v3-mirrorlist` : paquets V3
 - `chwd` : détecteur de nouveau matériel
 - `unrar` : archives RAR
 
 ```
-sudo pacman -Rns gnome-remote-desktop gnome-backgrounds gnome-weather totem baobab gnome-usage gedit gnome-screenshot sushi unrar chwd cachyos-v3-mirrorlist
+sudo pacman -Rns gnome-remote-desktop gnome-backgrounds gnome-weather totem baobab gnome-usage gedit gnome-screenshot unrar chwd cachyos-v3-mirrorlist
 ```
+
+
+### Conserver pacman-contrib sans installer pacdiff
+
+Garder le paquet **`pacman-contrib`**, mais empêcher l’installation de l’exécutable `pacdiff`, de sa page de manuel et de sa complétion Zsh. Dans la section `[options]` de `/etc/pacman.conf`, ajouter cette règle `NoExtract` (en conservant les autres règles existantes) :
+
+```ini
+NoExtract = usr/bin/pacdiff usr/share/man/man8/pacdiff.8.gz usr/share/zsh/site-functions/_pacdiff
+```
+
+Réinstaller ensuite le paquet pour appliquer la règle aux fichiers qu’il fournit :
+
+```fish
+sudo pacman -S pacman-contrib
+```
+
+Cette méthode conserve les autres outils de `pacman-contrib` ; elle ne désinstalle pas le paquet.
 
 ### Partage réseau, découverte et montage de périphériques
 

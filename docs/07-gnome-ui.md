@@ -42,6 +42,8 @@ Dans les paramètres d'affichage, choisir une mise à l'échelle **125 %**.
 
 Le masquage des dossiers Nautilus (Modèles, Bureau, fichiers de fond d'écran) et la personnalisation des icônes de dossiers sont traités dans [Nautilus — workflow](09-nautilus-workflow.md#93--masquer-des-dossiers-et-personnaliser-les-icônes).
 
+Pour prévisualiser rapidement les fichiers dans Nautilus avec la barre d’espace, installer **GNOME Sushi** (`sushi`). L’installation est documentée dans [10 — Logiciels](10-logiciels.md#101--logiciels-à-installer). Sushi n’est pas à inclure dans la liste des paquets optionnels à supprimer.
+
 ## 7.3 — Fond d'écran, thème de curseurs et GDM
 
 Installer le [fond d'écran Fedora 34 nocturne](https://fedoraproject.org/w/uploads/d/de/F34_default_wallpaper_night.jpg), ou le fond **cosmos_dark_blue** du dépôt.

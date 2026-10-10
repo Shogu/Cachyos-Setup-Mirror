@@ -49,6 +49,8 @@
 
 ### Système & outils
 
+- `sushi` : prévisualisation rapide des fichiers dans Nautilus avec la barre d’espace.
+
 - **dconf-editor GTK4** : build du [portage GTK4 officiel en cours](11-applications-vibe-coded.md#1115--dconf-editor-gtk4), compilé depuis les sources upstream ; il remplace le `dconf-editor` GTK3 des dépôts.
 - `powertop` : diagnostic de consommation énergétique.
 - `profile-cleaner` : nettoyage des profils navigateurs.
@@ -74,7 +76,7 @@
 Commande des paquets des dépôts (les applications maison se trouvent ci-dessous) :
 
 ```
-sudo pacman -Syu powertop gst-thumbnailers profile-cleaner seahorse fragments papers nicotine+ resources xournal++ gnome-calendar duf trash-cli libgda6 shelly inotify-tools libnotify showtime
+sudo pacman -Syu powertop gst-thumbnailers profile-cleaner seahorse fragments papers nicotine+ resources xournal++ gnome-calendar duf trash-cli libgda6 shelly inotify-tools libnotify showtime sushi
 ```
 
 ### 10.1.1 — dconf-editor GTK4
