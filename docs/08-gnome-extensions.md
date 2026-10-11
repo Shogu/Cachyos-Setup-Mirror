@@ -34,10 +34,10 @@ gsettings set org.gnome.shell disable-extension-version-validation false
 
 Extensions apportant des fonctions d'interface ou de système considérées comme centrales dans ce setup :
 
-- **Focus & Boutons** — extension maison GNOME 50/51 : auto-fermeture de Quick Settings et du panneau Calendrier/Notifications, boutons Réglages et Power scindés, masquage de Capture d’écran, libellé **Énergie**, carte RDV bleue et masquage des notifications vides. Voir [11.18](11-applications-vibe-coded.md#1118--focus--boutons).
-- [**Battery Time Compact — Ogu v54**](#88--battery-time-compact--ogu) — fork local GNOME 50/51 : top bar `temps - pourcentage`, bouton batterie Quick Settings `temps - watts`. Voir [11.19](11-applications-vibe-coded.md#1119--battery-time-compact--ogu).
-- **UI Management** — extension maison **GNOME 49/50/51**, classée dans **Bureau et fenêtres**. Elle remplace dans ce setup **Just Perfection**, **AutoActivities**, **Hot Edge** et **Quick Close Overview** en ne conservant que les fonctions réellement utilisées. Voir [8.10](#810--ui-management) et [11.21](11-applications-vibe-coded.md#1121--ui-management).
-- [Power Total](#89--power-total) — extension maison GNOME 50, catégorie **Système et énergie** : profils secteur/batterie, luminosité, thème et rétroéclairage. Voir [11.20](11-applications-vibe-coded.md#1120--power-total).
+- **Focus & Boutons** — extension maison GNOME 50/51 : auto-fermeture de Quick Settings et du panneau Calendrier/Notifications, boutons Réglages et Power scindés, masquage de Capture d’écran, libellé **Énergie**, carte RDV bleue et masquage des notifications vides. Voir [11.18](11-applications-vibe-coded.md#1117--focus--boutons).
+- [**Battery Time Compact — Ogu v54**](#88--battery-time-compact--ogu) — fork local GNOME 50/51 : top bar `temps - pourcentage`, bouton batterie Quick Settings `temps - watts`. Voir [11.19](11-applications-vibe-coded.md#1118--battery-time-compact--ogu).
+- **UI Management** — extension maison **GNOME 49/50/51**, classée dans **Bureau et fenêtres**. Elle remplace dans ce setup **Just Perfection**, **AutoActivities**, **Hot Edge** et **Quick Close Overview** en ne conservant que les fonctions réellement utilisées. Voir [8.10](#810--ui-management) et [11.21](11-applications-vibe-coded.md#1120--ui-management).
+- [Power Total](#89--power-total) — extension maison GNOME 50, catégorie **Système et énergie** : profils secteur/batterie, luminosité, thème et rétroéclairage. Voir [11.20](11-applications-vibe-coded.md#1119--power-total).
 - [Drag'n'Tile](https://extensions.gnome.org/extension/7863/dragntile/)
 
 
@@ -53,7 +53,7 @@ Extensions apportant des fonctions d'interface ou de système considérées comm
   ```
   Le ZIP original reçu ne déclarait que GNOME 48, 49 et 50. La copie préparée pour le dépôt ajoute `51` à `shell-version` dans `metadata.json`. Cette correction de métadonnées ne remplace pas un test fonctionnel en session GNOME 51.
 - [Now Playing Card](https://extensions.gnome.org/extension/10736/now-playing-card/) — solution générique pour les lecteurs MPRIS ; dans les préférences, régler **Location** sur **Quick Settings** plutôt que **Panel**.
-- **Session Keeper** — extension GNOME Shell de productivité qui sauvegarde en continu la session et restaure rapidement les applications, fenêtres, espaces de travail, disposition et états de fenêtres. Version adaptée à GNOME 50, avec restauration multi-fenêtres et options avancées. Voir [Applications Vibe Coded — Session Keeper](11-applications-vibe-coded.md#1117--session-keeper).
+- **Session Keeper** — extension GNOME Shell de productivité qui sauvegarde en continu la session et restaure rapidement les applications, fenêtres, espaces de travail, disposition et états de fenêtres. Version adaptée à GNOME 50, avec restauration multi-fenêtres et options avancées. Voir [Applications Vibe Coded — Session Keeper](11-applications-vibe-coded.md#1116--session-keeper).
 
 
 ## 8.4 — Esthétiques
@@ -179,11 +179,11 @@ Elle remplace quatre extensions auparavant installées séparément :
 Les préférences sont regroupées en quatre pages : **Visibilité**, **Comportement**, **Personnaliser** et **Automatisation**. Les blocs Auto Activities, Hot Edge et Quick Close in Overview restent indépendamment activables.
 
 
-Voir aussi [Applications Vibe Coded — UI Management](11-applications-vibe-coded.md#1121--ui-management).
+Voir aussi [Applications Vibe Coded — UI Management](11-applications-vibe-coded.md#1120--ui-management).
 
 ## 8.11 — Classer les extensions avec Extension Manager
 
-Le setup utilise [Extension Manager personnalisé](11-applications-vibe-coded.md#1122--extension-manager), une application GTK4/libadwaita installée avec le paquet `extension-manager-ogu`. L’[installation du paquet local](10-logiciels.md#1013--extension-manager) remplace la version standard.
+Le setup utilise [Extension Manager personnalisé](11-applications-vibe-coded.md#1121--extension-manager), une application GTK4/libadwaita installée avec le paquet `extension-manager-ogu`. L’[installation du paquet local](10-logiciels.md#1013--extension-manager) remplace la version standard.
 
 Dans l’onglet **Installées**, les extensions utilisateur sont regroupées en sept catégories : **Interface et apparence**, **Bureau et fenêtres**, **Barre supérieure et réglages rapides**, **Productivité**, **Système et énergie**, **Multimédia**, **Autres**. Les extensions système restent séparées.
 

@@ -21,7 +21,6 @@
 - [11.13 Sismographe](#1113--sismographe)
 - [11.14 Snapper GTK4](#1114--snapper-gtk4)
 - [11.15 dconf-editor GTK4](#1115--dconf-editor-gtk4)
-- [11.16 ](#1116--musicäa)
 - [11.16 Session Keeper](#1116--session-keeper)
 - [11.17 Focus & Boutons](#1117--focus--boutons)
 - [11.18 Battery Time Compact — Ogu](#1118--battery-time-compact--ogu)

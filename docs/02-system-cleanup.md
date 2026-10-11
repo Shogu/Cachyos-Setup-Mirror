@@ -315,7 +315,7 @@ systemctl --user mask org.gnome.SettingsDaemon.PrintNotifications.target
 
 ```fish
 mkdir -p ~/.config/autostart
-printf '[Desktop Entry]\\nType=Application\\nHidden=true\\n' > ~/.config/autostart/org.gnome.Evolution-alarm-notify.desktop
+printf '[Desktop Entry]\nType=Application\nHidden=true\n' > ~/.config/autostart/org.gnome.Evolution-alarm-notify.desktop
 pkill -f evolution-alarm-notify
 ```
 
