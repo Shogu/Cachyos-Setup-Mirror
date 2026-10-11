@@ -2,7 +2,7 @@
 
 [Accueil](../README.md) · [Précédent](10-logiciels.md) · [Suivant](12-shell-terminal.md)
 
-> **Dans ce chapitre :** applications personnelles développées avec l'aide du Vibe Coding, principalement en GTK4/libadwaita, dont le fork **Extension Manager**, les extensions GNOME maison « Always on top, always on top », **Musicäa**, **Session Keeper**, **Focus & Boutons**, **Power Total**, **UI Management** et le fork **Battery Time Compact — Ogu**, ainsi qu’un build GTK4 upstream utilisé par le setup.
+> **Dans ce chapitre :** applications personnelles développées avec l'aide du Vibe Coding, principalement en GTK4/libadwaita, dont le fork **Extension Manager**, les extensions GNOME maison « Always on top, always on top », **Session Keeper**, **Focus & Boutons**, **Power Total**, **UI Management** et le fork **Battery Time Compact — Ogu**, ainsi qu’un build GTK4 upstream utilisé par le setup.
 
 **Compilation depuis les sources :** [Mail (`mail-postcard`)](10-logiciels.md#1014--messagerie--mail) est compilé avec **Claude** depuis Postcard, avec recherche et affichage des pièces jointes, aperçu des pièces jointes dans le panneau de droite (PDF, images, texte et documents Word/LibreOffice), vue à trois volets avec sélection multiple et menu au clic droit, et purge des copies locales à la fermeture, contraste entre panneaux et francisation complète. La base upstream est conservée ; le paquet est à ajouter manuellement dans `Ressources/Logiciels/Mail/`.
 
@@ -21,19 +21,19 @@
 - [11.13 Sismographe](#1113--sismographe)
 - [11.14 Snapper GTK4](#1114--snapper-gtk4)
 - [11.15 dconf-editor GTK4](#1115--dconf-editor-gtk4)
-- [11.16 Musicäa](#1116--musicäa)
-- [11.17 Session Keeper](#1117--session-keeper)
-- [11.18 Focus & Boutons](#1118--focus--boutons)
-- [11.19 Battery Time Compact — Ogu](#1119--battery-time-compact--ogu)
-- [11.20 Power Total](#1120--power-total)
-- [11.21 UI Management](#1121--ui-management)
-- [11.22 Extension Manager](#1122--extension-manager)
-- [11.23 Amplifaya — moteur headless et interface](#1123--amplifaya--moteur-headless-et-interface)
-- [11.24 Grille](#1124--grille)
-- [11.25 Samizdat](#1125--samizdat)
-- [11.26 Icônes UI](#1126--icônes-ui)
-- [11.27 PLACES — Dossiers Ogu](#1127--places--dossiers-ogu)
-- [11.28 Disquaire](#1128--disquaire)
+- [11.16 ](#1116--musicäa)
+- [11.16 Session Keeper](#1116--session-keeper)
+- [11.17 Focus & Boutons](#1117--focus--boutons)
+- [11.18 Battery Time Compact — Ogu](#1118--battery-time-compact--ogu)
+- [11.19 Power Total](#1119--power-total)
+- [11.20 UI Management](#1120--ui-management)
+- [11.21 Extension Manager](#1121--extension-manager)
+- [11.22 Amplifaya — moteur headless et interface](#1122--amplifaya--moteur-headless-et-interface)
+- [11.23 Grille](#1123--grille)
+- [11.24 Samizdat](#1124--samizdat)
+- [11.25 Icônes UI](#1125--icônes-ui)
+- [11.26 PLACES — Dossiers Ogu](#1126--places--dossiers-ogu)
+- [11.27 Disquaire](#1127--disquaire)
 
 ## 11.1 — Always on top, always on top
 
@@ -432,46 +432,7 @@ Le build GTK4 est ensuite compilé et installé depuis les sources upstream offi
 
 ---
 
-## 11.16 — Musicäa
-
-Extension GNOME Shell maison dédiée à **Gapless (G4Music)**. Cette version repart strictement de **Musicäa 0.2.0** et conserve son lecteur enrichi sans modifier sa taille ni son layout.
-
-**Paquet fourni : `Musicäa-0.5.0-1-any.pkg.tar.zst`.**
-
-Par rapport à la 0.2.0, seuls les changements suivants sont conservés :
-
-- l’indicateur à trois barres dans Quick Settings reste visible tant que Gapless est présent : **animé pendant la lecture et figé en pause** ;
-- suppression des notifications automatiques à chaque changement de piste ;
-- suppression du bouton dédié « Ouvrir Gapless » ;
-- comportement natif de la carte GNOME conservé : **cliquer sur le cartouche ouvre Gapless**, tandis que les boutons du lecteur gardent leurs commandes propres.
-
-Aucun travail supplémentaire de radius, de taille de pochette ou de géométrie du lecteur n’est appliqué dans cette révision.
-
-### Installation
-
-Depuis la racine du dépôt :
-
-```fish
-sudo pacman -U "Ressources/Applis vibe codées en Libadwaita/Extensions GNOME/Musicäa/Musicäa-0.5.0-1-any.pkg.tar.zst"
-gnome-extensions enable musicaa@ogu.local
-```
-
-Sous Wayland, si l’extension n’est pas rechargée immédiatement, se déconnecter puis se reconnecter.
-
-### Désinstallation
-
-```fish
-sudo pacman -Rns gnome-shell-extension-musicaa
-```
-
-### Alternative à Now Playing Card
-
-**Now Playing Card** reste l’option générique pour les lecteurs MPRIS. **Musicäa** cible spécifiquement Gapless : le lecteur principal reste dans le panneau Calendrier/Notifications et Quick Settings n’accueille que l’indicateur à trois barres.
-
----
-
-
-## 11.17 — Session Keeper
+## 11.16 — Session Keeper
 
 Extension GNOME Shell de productivité destinée à sauvegarder automatiquement la session et à restaurer rapidement les applications et fenêtres après une reconnexion ou un redémarrage.
 
@@ -530,7 +491,7 @@ Le [README du dossier Session Keeper](../Ressources/Applis%20vibe%20codées%20en
 ---
 
 
-## 11.18 — Focus & Boutons
+## 11.17 — Focus & Boutons
 
 Extension GNOME Shell maison dédiée à la rationalisation de **Quick Settings** et du panneau **Calendrier/Notifications**. Compatible GNOME Shell **50 et 51**.
 
@@ -580,7 +541,7 @@ Le [README du dossier Focus & Boutons](../Ressources/Applis%20vibe%20codées%20e
 
 ---
 
-## 11.19 — Battery Time Compact — Ogu
+## 11.18 — Battery Time Compact — Ogu
 
 Fork personnel de **Battery Time (Percentage) Compact** pour GNOME Shell **50 et 51**. Le UUID upstream est conservé afin de remplacer directement l’extension d’origine.
 
@@ -612,7 +573,7 @@ Le [README du dossier Battery Time Compact — Ogu](../Ressources/Applis%20vibe%
 
 ---
 
-## 11.20 — Power Total
+## 11.19 — Power Total
 
 Extension GNOME Shell **50** fusionnant **Auto Power Profile** et **Power Switching Manager**. Version **0.1.1**, archive **Power-Total.zip**, UUID `power-total@ogu`. Catégorie dans Extension Manager Ogu : **Système et énergie**.
 
@@ -657,7 +618,7 @@ Syntaxe, schémas et tests avec services simulés contrôlés ; **fonctionnement
 
 ---
 
-## 11.21 — UI Management
+## 11.20 — UI Management
 
 Extension GNOME Shell maison regroupant les fonctions du setup auparavant réparties entre **Just Perfection**, **AutoActivities**, **Hot Edge** et **Quick Close Overview**.
 
@@ -680,7 +641,7 @@ Ne plus installer séparément dans ce setup :
 - Hot Edge ;
 - Quick Close Overview / Middle Click to Close in Overview.
 
-Le but est de réduire le nombre d’extensions et les points de maintenance tout en gardant les fonctions choisies. **UI Management ne remplace pas Focus & Boutons, Power Total, Session Keeper ni Musicäa**, qui restent des extensions spécialisées séparées.
+Le but est de réduire le nombre d’extensions et les points de maintenance tout en gardant les fonctions choisies. **UI Management ne remplace pas Focus & Boutons, Power Total, Session Keeper ni **, qui restent des extensions spécialisées séparées.
 
 L’archive produite lors du développement est nommée **`UI-Management-1.zip`**. L’UUID exact n’a pas été consigné dans la documentation de référence ; il n’est donc pas inventé ici.
 
@@ -688,7 +649,7 @@ Le [README du dossier UI Management](../Ressources/Applis%20vibe%20codées%20en%
 
 ---
 
-## 11.22 — Extension Manager
+## 11.21 — Extension Manager
 
 Fork de l’application **Extension Manager** de Matt Jakeman, enrichi avec l’aide du Vibe Coding. Interface native **GTK4/libadwaita**, paquet Arch **x86_64** `extension-manager-ogu`, version **0.6.5.ogu2-1**.
 
@@ -732,7 +693,7 @@ Archive, métadonnées, exécutable, lanceur et icônes contrôlés. **Lancement
 
 Les captures fournies avec cette mise à jour couvrent **Always on top, Grabber, Grimoire, Fret, systemd, Pacto, Radar et Pusher**. Les trois applications suivantes restent volontairement sans capture afin de ne pas fabriquer une représentation de leur interface : **SCX Manager, Decibel et Fisherman**.
 
-## 11.23 — Amplifaya — moteur headless et interface
+## 11.22 — Amplifaya — moteur headless et interface
 
 **Amplifaya** est le fork maison allégé de [JamesDSP](https://github.com/Audio4Linux/JDSP4Linux), conçu pour PipeWire et GNOME sans Qt ni icône de notification.
 
@@ -776,7 +737,7 @@ journalctl --user -u amplifaya.service -b
 
 Le README complet installé se trouve dans `/usr/share/doc/amplifaya/README.md`. Les paquets ont été inspectés ; le traitement audio reste à tester sur la machine cible.
 
-## 11.24 — Grille
+## 11.23 — Grille
 
 **Grille** est une visionneuse simple de fichiers tableurs, codée avec **Claude**.
 
@@ -791,7 +752,7 @@ sudo pacman -U ./grille-0.1.0-1-x86_64.pkg.tar.zst
 Les formats pris en charge et la commande de lancement restent à préciser à partir du paquet ou de son README.
 
 
-## 11.25 — Samizdat
+## 11.24 — Samizdat
 
 **Samizdat 0.8.0** est un traitement de texte GNOME en Rust, GTK4/libadwaita, basé sur le moteur `letters-core` de gtk-office-suite. Il prend en charge DOCX, ODT, Markdown, texte brut, HTML et la lecture/export PDF.
 
@@ -819,7 +780,7 @@ Le [README complet de Samizdat](../Ressources/Applis%20vibe%20codées%20en%20Lib
 
 ---
 
-## 11.26 — Icônes UI
+## 11.25 — Icônes UI
 
 **Icônes UI** est une petite application Python/GTK4 issue du vibe coding pour gérer les icônes **des applications installées**. Elle présente l’icône actuelle et celle proposée, en couleur et en symbolique ; permet de modifier/importer les icônes, appliquer les changements avec possibilité de restauration, rétablir les lanceurs faits main manquants, et exporter un nouvel `.pyz` qui conserve les imports.
 
@@ -837,11 +798,11 @@ Dépendances éventuelles :
 sudo pacman -S python-gobject gtk4
 ```
 
-L’outil Icônes UI et le gestionnaire d’icônes des dossiers personnels sont deux applications distinctes. Voir [11.27 — PLACES / Dossiers Ogu](#1127--places--dossiers-ogu) pour le second.
+L’outil Icônes UI et le gestionnaire d’icônes des dossiers personnels sont deux applications distinctes. Voir [11.26 — PLACES / Dossiers Ogu](#1126--places--dossiers-ogu) pour le second.
 
 ---
 
-## 11.27 — PLACES — Dossiers Ogu
+## 11.26 — PLACES — Dossiers Ogu
 
 **Dossiers Ogu** est le gestionnaire personnel d’icônes et de dossiers, distinct d’**Icônes UI**, qui ne gère que les icônes des applications installées. L’application regroupe dans un fichier Python autonome le plan des dossiers, leurs icônes et les dossiers à masquer.
 
@@ -876,7 +837,7 @@ Les icônes utilisées et le fichier `correspondances.txt` sont documentés dans
 
 ---
 
-## 11.28 — Disquaire
+## 11.27 — Disquaire
 
 **Disquaire** est un éditeur de tags MP3 et FLAC pour GNOME, conçu pour ne conserver que sept champs : **artiste, titre, album, date, genre, pochette et paroles**. Les autres tags sont supprimés à l’enregistrement.
 

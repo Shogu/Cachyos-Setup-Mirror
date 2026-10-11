@@ -49,4 +49,4 @@ Après migration, les extensions suivantes ne doivent plus être listées comme 
 - Hot Edge
 - Quick Close Overview
 
-**Focus & Boutons**, **Power Total**, **Session Keeper** et **Musicäa** restent séparées.
+**Focus & Boutons**, **Power Total**, **Session Keeper** restent séparées.

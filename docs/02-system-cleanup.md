@@ -305,6 +305,22 @@ systemctl --user mask org.gnome.SettingsDaemon.Smartcard.service
 systemctl --user mask gsd-wwan.service
 ```
 
+Pour désactiver aussi la cible de notifications d’impression, y compris après une mise à jour majeure de GNOME :
+
+```fish
+systemctl --user mask org.gnome.SettingsDaemon.PrintNotifications.target
+```
+
+**Après une mise à jour de version de GNOME :** il arrive que le service de notification d’alarme d’Evolution et son autostart réapparaissent. Pour empêcher le lancement automatique dans la session utilisateur :
+
+```fish
+mkdir -p ~/.config/autostart
+printf '[Desktop Entry]\\nType=Application\\nHidden=true\\n' > ~/.config/autostart/org.gnome.Evolution-alarm-notify.desktop
+pkill -f evolution-alarm-notify
+```
+
+Le fichier `.desktop` utilisateur avec `Hidden=true` neutralise l’entrée d’autostart système correspondante ; `pkill` arrête le processus déjà lancé pour la session en cours. Ces réglages sont à réappliquer/vérifier après un changement de version de GNOME.
+
 **Evolution** :
 
 ```

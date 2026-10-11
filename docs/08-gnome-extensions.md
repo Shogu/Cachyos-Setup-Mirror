@@ -53,7 +53,6 @@ Extensions apportant des fonctions d'interface ou de système considérées comm
   ```
   Le ZIP original reçu ne déclarait que GNOME 48, 49 et 50. La copie préparée pour le dépôt ajoute `51` à `shell-version` dans `metadata.json`. Cette correction de métadonnées ne remplace pas un test fonctionnel en session GNOME 51.
 - [Now Playing Card](https://extensions.gnome.org/extension/10736/now-playing-card/) — solution générique pour les lecteurs MPRIS ; dans les préférences, régler **Location** sur **Quick Settings** plutôt que **Panel**.
-- **Musicäa** — alternative maison dédiée à **Gapless (G4Music)** : conserve le lecteur média GNOME dans le panneau Calendrier/Notifications et ajoute seulement un indicateur à trois barres dans Quick Settings. Choisir **Now Playing Card** pour une solution générique multi-lecteurs, ou **Musicäa** pour une intégration spécifiquement pensée pour Gapless. Voir [Applications Vibe Coded — Musicäa](11-applications-vibe-coded.md#1116--musicäa).
 - **Session Keeper** — extension GNOME Shell de productivité qui sauvegarde en continu la session et restaure rapidement les applications, fenêtres, espaces de travail, disposition et états de fenêtres. Version adaptée à GNOME 50, avec restauration multi-fenêtres et options avancées. Voir [Applications Vibe Coded — Session Keeper](11-applications-vibe-coded.md#1117--session-keeper).
 
 
@@ -179,7 +178,6 @@ Elle remplace quatre extensions auparavant installées séparément :
 
 Les préférences sont regroupées en quatre pages : **Visibilité**, **Comportement**, **Personnaliser** et **Automatisation**. Les blocs Auto Activities, Hot Edge et Quick Close in Overview restent indépendamment activables.
 
-Cette fusion évite de maintenir plusieurs extensions qui modifient des zones proches du Shell et réduit la liste d’extensions sans créer une méga-extension générale : **Focus & Boutons**, **Power Total**, **Session Keeper** et **Musicäa** restent séparées car leurs rôles sont distincts.
 
 Voir aussi [Applications Vibe Coded — UI Management](11-applications-vibe-coded.md#1121--ui-management).
 
