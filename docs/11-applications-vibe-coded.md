@@ -6,6 +6,16 @@
 
 **Compilation depuis les sources :** [Mail (`mail-postcard`)](10-logiciels.md#1014--messagerie--mail) est compilé avec **Claude** depuis Postcard, avec recherche et affichage des pièces jointes, aperçu des pièces jointes dans le panneau de droite (PDF, images, texte et documents Word/LibreOffice), vue à trois volets avec sélection multiple et menu au clic droit, et purge des copies locales à la fermeture, contraste entre panneaux et francisation complète. La base upstream est conservée ; le paquet est à ajouter manuellement dans `Ressources/Logiciels/Mail/`.
 
+## Organisation des ressources
+
+Les dossiers sont classés par usage principal. Les extensions GNOME Shell restent regroupées dans [Extensions GNOME](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/).
+
+- **01 — Multimédia** : Amplifaya, Decibel, Disquaire.
+- **02 — Bureautique et rédaction** : Grimoire, Grille, Samizdat.
+- **03 — Fichiers et téléchargements** : Fret, Grabber, Nautilus Bookmark Icons, PLACES.
+- **04 — Bureau et personnalisation** : Extension Manager, Icônes UI.
+- **05 — Système et utilitaires** : dconf-editor GTK4, Fisherman, Pacto, Pusher, Radar, SCX Manager, Sismographe, Snapper GTK4, systemd-gui.
+
 - [11.1 Always on top, always on top](#111--always-on-top-always-on-top)
 - [11.2 Grabber](#112--grabber)
 - [11.3 Grimoire](#113--grimoire)
@@ -335,7 +345,7 @@ Petite extension `nautilus-python` pour Nautilus 48–50 permettant de personnal
 Depuis la racine du dépôt :
 
 ```fish
-sudo pacman -U "Ressources/Applis vibe codées en Libadwaita/Nautilus Bookmark Icons/nautilus-bookmark-icons-0.1.1-1-any.pkg.tar.zst"
+sudo pacman -U "Ressources/Applis vibe codées en Libadwaita/03-Fichiers-et-telechargements/Nautilus Bookmark Icons/nautilus-bookmark-icons-0.1.1-1-any.pkg.tar.zst"
 nautilus -q
 ```
 
@@ -359,7 +369,7 @@ Application GTK4/libadwaita de diagnostic du système GNOME. Elle regroupe les v
 Depuis la racine du dépôt, installer le paquet fourni :
 
 ```fish
-sudo pacman -U "Ressources/Applis vibe codées en Libadwaita/Sismographe/sismographe-1.0.0-1-any.pkg.tar.zst"
+sudo pacman -U "Ressources/Applis vibe codées en Libadwaita/05-Systeme-et-utilitaires/Sismographe/sismographe-1.0.0-1-any.pkg.tar.zst"
 sismographe
 ```
 
@@ -665,7 +675,7 @@ Fork de l’application **Extension Manager** de Matt Jakeman, enrichi avec l’
 Depuis la racine du dépôt :
 
 ```fish
-sudo pacman -U "Ressources/Applis vibe codées en Libadwaita/Extension Manager/extension-manager-ogu-0.6.5.ogu2-1-x86_64.pkg.tar.zst"
+sudo pacman -U "Ressources/Applis vibe codées en Libadwaita/04-Bureau-et-personnalisation/Extension Manager/extension-manager-ogu-0.6.5.ogu2-1-x86_64.pkg.tar.zst"
 ```
 
 Si la version des dépôts `extension-manager` est installée, accepter son remplacement proposé par pacman. Le paquet local s’appelle `extension-manager-ogu`, fournit `extension-manager` et entre en conflit avec la version des dépôts.
@@ -704,7 +714,7 @@ Les captures fournies avec cette mise à jour couvrent **Always on top, Grabber,
 Fermer et désactiver l’ancien traitement global JamesDSP ou EasyEffects avant l’activation, pour éviter un double traitement. Depuis la racine du dépôt :
 
 ```fish
-sudo pacman -U "Ressources/Applis vibe codées en Libadwaita/Amplifaya/amplifaya-0.3.0-1-x86_64.pkg.tar.zst" "Ressources/Applis vibe codées en Libadwaita/Amplifaya/amplifaya-gui-0.3.0-1-x86_64.pkg.tar.zst"
+sudo pacman -U "Ressources/Applis vibe codées en Libadwaita/01-Multimedia/Amplifaya/amplifaya-0.3.0-1-x86_64.pkg.tar.zst" "Ressources/Applis vibe codées en Libadwaita/01-Multimedia/Amplifaya/amplifaya-gui-0.3.0-1-x86_64.pkg.tar.zst"
 systemctl --user daemon-reload
 systemctl --user enable --now amplifaya.service
 systemctl --user status amplifaya.service
@@ -765,7 +775,7 @@ Le paquet 0.8.0 est accompagné de quatre modèles DOCX :
 - `Bac blanc Français.docx`
 - `Bac blanc Histoire-Géographie.docx`
 
-Le dossier attendu dans le dépôt est `Ressources/Applis vibe codées en Libadwaita/Samizdat/Modeles/`. Les fichiers modèles et le paquet Arch joints doivent être ajoutés manuellement à GitLab ; ils ne sont pas inclus dans ce commit.
+Le dossier attendu dans le dépôt est `Ressources/Applis vibe codées en Libadwaita/02-Bureautique-et-redaction/Samizdat/Modeles/`. Les fichiers modèles et le paquet Arch joints doivent être ajoutés manuellement à GitLab ; ils ne sont pas inclus dans ce commit.
 
 ### Installation
 
