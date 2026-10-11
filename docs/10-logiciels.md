@@ -118,7 +118,7 @@ sudo pacman -U \
   "Ressources/Applis vibe codées en Libadwaita/Radar/radar-1.4.0-2-any.pkg.tar.zst" \
   "Ressources/Applis vibe codées en Libadwaita/Pusher/pusher-1.7.0-1-any.pkg.tar.zst" \
   "Ressources/Applis vibe codées en Libadwaita/Nautilus Bookmark Icons/nautilus-bookmark-icons-0.1.1-1-any.pkg.tar.zst" \
-  "Ressources/Applis vibe codées en Libadwaita/Sismographe/sismographe-1.0.0-1-any.pkg.tar.zst" \\
+  "Ressources/Applis vibe codées en Libadwaita/Sismographe/sismographe-1.0.0-1-any.pkg.tar.zst" \
   "Ressources/Applis vibe codées en Libadwaita/Disquaire/disquaire-1.0.0-1-any.pkg.tar.zst"
 ```
 
