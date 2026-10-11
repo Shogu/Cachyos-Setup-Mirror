@@ -18,48 +18,48 @@ Les dossiers sont classés par usage principal. Les extensions GNOME Shell reste
 
 ## 01 — Multimédia
 
-- [11.22 — Amplifaya — moteur headless et interface](#1122-amplifaya-moteur-headless-et-interface)
-- [11.7 — Decibel](#117-decibel)
-- [11.27 — Disquaire](#1127-disquaire)
+- [11.22 — Amplifaya — moteur headless et interface](#1122--amplifaya--moteur-headless-et-interface)
+- [11.7 — Decibel](#117--decibel)
+- [11.27 — Disquaire](#1127--disquaire)
 
 ## 02 — Bureautique et rédaction
 
-- [11.3 — Grimoire](#113-grimoire)
-- [11.23 — Grille](#1123-grille)
-- [11.24 — Samizdat](#1124-samizdat)
+- [11.3 — Grimoire](#113--grimoire)
+- [11.23 — Grille](#1123--grille)
+- [11.24 — Samizdat](#1124--samizdat)
 
 ## 03 — Fichiers et téléchargements
 
-- [11.4 — Fret](#114-fret)
-- [11.2 — Grabber](#112-grabber)
-- [11.12 — Nautilus Bookmark Icons](#1112-nautilus-bookmark-icons)
-- [11.26 — PLACES — Dossiers Ogu](#1126-places-dossiers-ogu)
+- [11.4 — Fret](#114--fret)
+- [11.2 — Grabber](#112--grabber)
+- [11.12 — Nautilus Bookmark Icons](#1112--nautilus-bookmark-icons)
+- [11.26 — PLACES — Dossiers Ogu](#1126--places--dossiers-ogu)
 
 ## 04 — Bureau et personnalisation
 
-- [11.21 — Extension Manager](#1121-extension-manager)
-- [11.25 — Icônes UI](#1125-icônes-ui)
+- [11.21 — Extension Manager](#1121--extension-manager)
+- [11.25 — Icônes UI](#1125--icônes-ui)
 
 ## 05 — Système et utilitaires
 
-- [11.15 — dconf-editor GTK4](#1115-dconf-editor-gtk4)
-- [11.8 — Fisherman](#118-fisherman)
-- [11.9 — Pacto](#119-pacto)
-- [11.11 — Pusher](#1111-pusher)
-- [11.10 — Radar](#1110-radar)
-- [11.5 — SCX Manager](#115-scx-manager)
-- [11.6 — systemd](#116-systemd)
-- [11.13 — Sismographe](#1113-sismographe)
-- [11.14 — Snapper GTK4](#1114-snapper-gtk4)
+- [11.15 — dconf-editor GTK4](#1115--dconf-editor-gtk4)
+- [11.8 — Fisherman](#118--fisherman)
+- [11.9 — Pacto](#119--pacto)
+- [11.11 — Pusher](#1111--pusher)
+- [11.10 — Radar](#1110--radar)
+- [11.5 — SCX Manager](#115--scx-manager)
+- [11.6 — systemd](#116--systemd)
+- [11.13 — Sismographe](#1113--sismographe)
+- [11.14 — Snapper GTK4](#1114--snapper-gtk4)
 
 ## Extensions GNOME Shell
 
-- [11.1 — Always on top, always on top](#111-always-on-top-always-on-top)
-- [11.16 — Session Keeper](#1116-session-keeper)
-- [11.17 — Focus & Boutons](#1117-focus-boutons)
-- [11.18 — Battery Time Compact — Ogu](#1118-battery-time-compact-ogu)
-- [11.19 — Power Total](#1119-power-total)
-- [11.20 — UI Management](#1120-ui-management)
+- [11.1 — Always on top, always on top](#111--always-on-top-always-on-top)
+- [11.16 — Session Keeper](#1116--session-keeper)
+- [11.17 — Focus & Boutons](#1117--focus--boutons)
+- [11.18 — Battery Time Compact — Ogu](#1118--battery-time-compact--ogu)
+- [11.19 — Power Total](#1119--power-total)
+- [11.20 — UI Management](#1120--ui-management)
 
 ## 01 — Multimédia
 
