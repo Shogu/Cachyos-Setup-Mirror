@@ -1,0 +1,27 @@
+#!/bin/bash
+# Appelé par pacman (hook PreTransaction) : reçoit sur l'entrée standard
+# la liste des paquets surveillés qui vont être mis à jour.
+mapfile -t pkgs
+((${#pkgs[@]})) || exit 0
+
+R=$'\e[1;97;41m'; J=$'\e[1;33m'; G=$'\e[1m'; N=$'\e[0m'
+ligne=$(printf '═%.0s' {1..64})
+
+printf '\a\n%s\n' "$J$ligne$N"
+printf '%s%-64s%s\n' "$R" "  ⚠  ATTENTION : MISE À JOUR DE PAQUETS SENSIBLES" "$N"
+printf '%s\n' "$J$ligne$N"
+for p in "${pkgs[@]}"; do
+    old=$(pacman -Q "$p" 2>/dev/null | awk '{print $2}')
+    new=$(pacman -Si "$p" 2>/dev/null | awk -F': ' '/^Version/{print $2; exit}')
+    printf '   %s%-30s%s %s → %s%s%s\n' "$G" "$p" "$N" "${old:-?}" "$J" "${new:-?}" "$N"
+done
+printf '%s\n' "$J$ligne$N"
+case " ${pkgs[*]} " in *" linux-"*)
+    printf '   %s• Noyau mis à jour : redémarrage nécessaire ensuite.%s\n' "$G" "$N"
+    printf '   %s• Vérifie que l’entrée Limine du nouveau noyau est bien créée.%s\n' "$G" "$N" ;;
+esac
+case " ${pkgs[*]} " in *" tuned"*)
+    printf '   %s• tuned mis à jour : vérifie ton profil avec « tuned-adm active ».%s\n' "$G" "$N" ;;
+esac
+printf '%s\n\n' "$J$ligne$N"
+exit 0
