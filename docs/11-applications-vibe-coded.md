@@ -16,64 +16,265 @@ Les dossiers sont classés par usage principal. Les extensions GNOME Shell reste
 - **04 — Bureau et personnalisation** : Extension Manager, Icônes UI.
 - **05 — Système et utilitaires** : dconf-editor GTK4, Fisherman, Pacto, Pusher, Radar, SCX Manager, Sismographe, Snapper GTK4, systemd-gui.
 
-- [11.1 Always on top, always on top](#111--always-on-top-always-on-top)
-- [11.2 Grabber](#112--grabber)
-- [11.3 Grimoire](#113--grimoire)
-- [11.4 Fret](#114--fret)
-- [11.5 SCX Manager](#115--scx-manager)
-- [11.6 systemd](#116--systemd)
-- [11.7 Decibel](#117--decibel)
-- [11.8 Fisherman](#118--fisherman)
-- [11.9 Pacto](#119--pacto)
-- [11.10 Radar](#1110--radar)
-- [11.11 Pusher](#1111--pusher)
-- [11.12 Nautilus Bookmark Icons](#1112--nautilus-bookmark-icons)
-- [11.13 Sismographe](#1113--sismographe)
-- [11.14 Snapper GTK4](#1114--snapper-gtk4)
-- [11.15 dconf-editor GTK4](#1115--dconf-editor-gtk4)
-- [11.16 Session Keeper](#1116--session-keeper)
-- [11.17 Focus & Boutons](#1117--focus--boutons)
-- [11.18 Battery Time Compact — Ogu](#1118--battery-time-compact--ogu)
-- [11.19 Power Total](#1119--power-total)
-- [11.20 UI Management](#1120--ui-management)
-- [11.21 Extension Manager](#1121--extension-manager)
-- [11.22 Amplifaya — moteur headless et interface](#1122--amplifaya--moteur-headless-et-interface)
-- [11.23 Grille](#1123--grille)
-- [11.24 Samizdat](#1124--samizdat)
-- [11.25 Icônes UI](#1125--icônes-ui)
-- [11.26 PLACES — Dossiers Ogu](#1126--places--dossiers-ogu)
-- [11.27 Disquaire](#1127--disquaire)
+## 01 — Multimédia
 
-## 11.1 — Always on top, always on top
+- [11.22 — Amplifaya — moteur headless et interface](#1122-amplifaya-moteur-headless-et-interface)
+- [11.7 — Decibel](#117-decibel)
+- [11.27 — Disquaire](#1127-disquaire)
 
-Extension GNOME Shell minimaliste ajoutant une icône dans la barre supérieure pour activer ou désactiver le mode natif **Toujours au premier plan** de la fenêtre active.
+## 02 — Bureautique et rédaction
 
-L'extension est compatible GNOME Shell 45 à 50, sans dépendance ni panneau de préférences.
+- [11.3 — Grimoire](#113-grimoire)
+- [11.23 — Grille](#1123-grille)
+- [11.24 — Samizdat](#1124-samizdat)
 
-![Always on top — état inactif](../Ressources/screenshots/vibe-coded/always-on-top-off.png)
+## 03 — Fichiers et téléchargements
 
-![Always on top — fenêtre épinglée](../Ressources/screenshots/vibe-coded/always-on-top-on.png)
+- [11.4 — Fret](#114-fret)
+- [11.2 — Grabber](#112-grabber)
+- [11.12 — Nautilus Bookmark Icons](#1112-nautilus-bookmark-icons)
+- [11.26 — PLACES — Dossiers Ogu](#1126-places-dossiers-ogu)
+
+## 04 — Bureau et personnalisation
+
+- [11.21 — Extension Manager](#1121-extension-manager)
+- [11.25 — Icônes UI](#1125-icônes-ui)
+
+## 05 — Système et utilitaires
+
+- [11.15 — dconf-editor GTK4](#1115-dconf-editor-gtk4)
+- [11.8 — Fisherman](#118-fisherman)
+- [11.9 — Pacto](#119-pacto)
+- [11.11 — Pusher](#1111-pusher)
+- [11.10 — Radar](#1110-radar)
+- [11.5 — SCX Manager](#115-scx-manager)
+- [11.6 — systemd](#116-systemd)
+- [11.13 — Sismographe](#1113-sismographe)
+- [11.14 — Snapper GTK4](#1114-snapper-gtk4)
+
+## Extensions GNOME Shell
+
+- [11.1 — Always on top, always on top](#111-always-on-top-always-on-top)
+- [11.16 — Session Keeper](#1116-session-keeper)
+- [11.17 — Focus & Boutons](#1117-focus-boutons)
+- [11.18 — Battery Time Compact — Ogu](#1118-battery-time-compact-ogu)
+- [11.19 — Power Total](#1119-power-total)
+- [11.20 — UI Management](#1120-ui-management)
+
+## 01 — Multimédia
+
+### 11.22 — Amplifaya — moteur headless et interface
+
+**Amplifaya** est le fork maison allégé de [JamesDSP](https://github.com/Audio4Linux/JDSP4Linux), conçu pour PipeWire et GNOME sans Qt ni icône de notification.
+
+- `amplifaya` : moteur headless en C, plugin LADSPA, commande `amplifayactl` et service systemd utilisateur.
+- `amplifaya-gui` : télécommande facultative GTK4/libadwaita ; fermer la fenêtre laisse le moteur actif.
+- Preset **ClearPenguin** fourni ; Bass Boost, Tone EQ, crossfeed BS2B au casque, élargissement stéréo sur haut-parleurs, post-gain et limiteur.
+- Cette version ne prend pas en charge l’audio Bluetooth et ne reprend pas tous les effets de JamesDSP.
+
+Fermer et désactiver l’ancien traitement global JamesDSP ou EasyEffects avant l’activation, pour éviter un double traitement. Depuis la racine du dépôt :
+
+```fish
+sudo pacman -U "Ressources/Applis vibe codées en Libadwaita/01-Multimedia/Amplifaya/amplifaya-0.3.0-1-x86_64.pkg.tar.zst" "Ressources/Applis vibe codées en Libadwaita/01-Multimedia/Amplifaya/amplifaya-gui-0.3.0-1-x86_64.pkg.tar.zst"
+systemctl --user daemon-reload
+systemctl --user enable --now amplifaya.service
+systemctl --user status amplifaya.service
+amplifayactl status
+```
+
+Pour le moteur seul, installer uniquement le premier paquet. Ouvrir l’interface à la demande :
+
+```fish
+amplifaya-gui
+```
+
+Avec un morceau en lecture, vérifier le passage dans le moteur et comparer le traitement :
+
+```fish
+amplifayactl test
+amplifayactl ab
+```
+
+Gestion du moteur :
+
+```fish
+amplifayactl bypass on
+amplifayactl bypass off
+systemctl --user stop amplifaya.service
+systemctl --user start amplifaya.service
+journalctl --user -u amplifaya.service -b
+```
+
+Le README complet installé se trouve dans `/usr/share/doc/amplifaya/README.md`. Les paquets ont été inspectés ; le traitement audio reste à tester sur la machine cible.
+
+### 11.7 — Decibel
+
+Fork personnalisé de **Decibels**, le lecteur audio GNOME. Les modifications apportées permettent notamment de supprimer un titre avec `Suppr` et d'éviter l'ouverture d'une seconde fenêtre lorsqu'un fichier audio est ouvert pendant une lecture : le nouveau morceau remplace celui de la fenêtre existante.
+
+**Paquet fourni : `decibel-49.6.1-1-any.pkg.tar.zst`.**
 
 ### Installation
 
-Depuis le dossier contenant l'extension :
-
 ```fish
-gnome-extensions install --force "always-on-top-always-on-top_localhost.shell-extension.zip"
-gnome-extensions enable always-on-top-always-on-top@localhost
+sudo pacman -U ./decibel-49.6.1-1-any.pkg.tar.zst
 ```
-
-Sous X11, recharger GNOME Shell avec `Alt+F2`, puis `r`. Sous Wayland, se déconnecter puis se reconnecter.
 
 ### Désinstallation
 
 ```fish
-gnome-extensions uninstall always-on-top-always-on-top@localhost
+sudo pacman -Rns decibel
+```
+
+### Capture
+
+Une capture de l'interface de Decibel n'a pas été fournie dans cet envoi. Elle pourra être ajoutée sous `../Ressources/screenshots/vibe-coded/decibel.png`.
+
+---
+
+### 11.27 — Disquaire
+
+**Disquaire** est un éditeur de tags MP3 et FLAC pour GNOME, conçu pour ne conserver que sept champs : **artiste, titre, album, date, genre, pochette et paroles**. Les autres tags sont supprimés à l’enregistrement.
+
+### Fonctions
+
+- arborescence des dossiers et recherche dans la liste ;
+- modification groupée de plusieurs morceaux ;
+- aperçu, remplacement et glisser-déposer des pochettes ;
+- lecture intégrée ou ouverture dans le lecteur choisi ;
+- renommage, déplacement et mise à la corbeille ;
+- conversion FLAC vers MP3 à 320 kb/s et 44,1 kHz, avec mise à la corbeille du FLAC d’origine.
+
+Les fichiers comportant des tags supplémentaires sont signalés par un point bleu. Les modifications ne sont écrites sur le disque qu’à l’enregistrement. En édition groupée, un champ « Valeurs différentes » n’est modifié que si une nouvelle valeur est saisie ; plusieurs artistes ou genres se séparent par un point-virgule.
+
+### Installation
+
+Le paquet Arch fourni est `disquaire-1.0.0-1-any.pkg.tar.zst`. Depuis le dossier qui le contient :
+
+```fish
+sudo pacman -U ./disquaire-1.0.0-1-any.pkg.tar.zst
+```
+
+Le paquet doit être conservé dans le dossier [Disquaire](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Disquaire/), avec son [README](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Disquaire/README.md).
+
+### Raccourcis
+
+| Raccourci | Action |
+|---|---|
+| Ctrl+S | Enregistrer la sélection |
+| Ctrl+Maj+S | Tout enregistrer |
+| F2 | Renommer le fichier |
+| F5 | Rafraîchir la liste |
+| Ctrl+F | Rechercher |
+| Ctrl+P | Lire / pause |
+| Ctrl+A / Échap | Tout cocher / tout décocher |
+
+Dépendances déclarées : Python, PyGObject, Mutagen, GTK4, libadwaita, GStreamer, ses greffons de base et usuels, et FFmpeg. La licence est GPL-3.0-or-later.
+
+---
+
+[Accueil](../README.md) · [Précédent](10-logiciels.md) · [Suivant](12-shell-terminal.md)
+
+## 02 — Bureautique et rédaction
+
+### 11.3 — Grimoire
+
+Éditeur Markdown local GTK4/libadwaita utilisant GtkSourceView 5 et WebKitGTK 6. Il permet de parcourir des dossiers de documents Markdown, éditer les fichiers et afficher leur rendu.
+
+**Paquet fourni : `grimoire-ogu-0.2.0-10-x86_64.pkg.tar.zst`.**
+
+![Interface de Grimoire](../Ressources/screenshots/vibe-coded/grimoire.png)
+
+### Installation
+
+```fish
+sudo pacman -U ./grimoire-ogu-0.2.0-10-x86_64.pkg.tar.zst
+grimoire
+```
+
+> Si le copier-coller remplace le nom de commande, utiliser simplement `grimoire`.
+
+### Désinstallation
+
+```fish
+sudo pacman -Rns grimoire-ogu
 ```
 
 ---
 
-## 11.2 — Grabber
+### 11.23 — Grille
+
+**Grille** est une visionneuse simple de fichiers tableurs, codée avec **Claude**.
+
+**Paquet : `grille-0.1.0-1-x86_64.pkg.tar.zst`.** Le paquet n’est pas encore présent dans le dépôt ; il est à ajouter manuellement dans [le dossier Grille](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Grille/).
+
+Depuis le dossier contenant le paquet :
+
+```fish
+sudo pacman -U ./grille-0.1.0-1-x86_64.pkg.tar.zst
+```
+
+Les formats pris en charge et la commande de lancement restent à préciser à partir du paquet ou de son README.
+
+### 11.24 — Samizdat
+
+**Samizdat 0.8.0** est un traitement de texte GNOME en Rust, GTK4/libadwaita, basé sur le moteur `letters-core` de gtk-office-suite. Il prend en charge DOCX, ODT, Markdown, texte brut, HTML et la lecture/export PDF.
+
+La version 0.8.0 ajoute notamment la typographie française automatique, les styles de paragraphes, les listes multiniveaux, les cartouches, la numérotation des lignes, les formes, les frises chronologiques modifiables, les tableaux, le traitement des images, la correction orthographique française, les en-têtes/pieds de page, les colonnes, le plan et le sommaire automatique. Elle comprend aussi le mode concentration, les modèles, les exports DOCX/PDF, les livrets de séquence, les PDF aménagés pour les élèves à besoins particuliers, les onglets/fenêtres, la sauvegarde de secours automatique et les préférences d’interface.
+
+### Modèles fournis
+
+Le paquet 0.8.0 est accompagné de quatre modèles DOCX :
+- `Cours.docx`
+- `Page de garde de séquence.docx`
+- `Bac blanc Français.docx`
+- `Bac blanc Histoire-Géographie.docx`
+
+Le dossier attendu dans le dépôt est `Ressources/Applis vibe codées en Libadwaita/02-Bureautique-et-redaction/Samizdat/Modeles/`. Les fichiers modèles et le paquet Arch joints doivent être ajoutés manuellement à GitLab ; ils ne sont pas inclus dans ce commit.
+
+### Installation
+
+Depuis le dossier où se trouve le paquet fourni :
+
+```fish
+sudo pacman -U ./samizdat-0.8.0-1-x86_64.pkg.tar.zst
+```
+
+Le [README complet de Samizdat](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Samizdat/README.md) récapitule les fonctionnalités, les raccourcis et les limites connues. Le paquet n’a pas été installé ni testé dans une session GNOME pendant cette mise à jour.
+
+---
+
+## 03 — Fichiers et téléchargements
+
+### 11.4 — Fret
+
+Gestionnaire de fichiers GTK4/libadwaita à deux panneaux, inspiré de Nautilus. Chaque panneau peut afficher un emplacement local ou une URI GVfs telle que FTP, SFTP ou SMB. Les transferts sont effectués directement entre les deux panneaux.
+
+**Paquet fourni : `fret-0.2.0-1-any.pkg.tar.zst`.**
+
+![Interface de Fret](../Ressources/screenshots/vibe-coded/fret.png)
+
+### Installation
+
+```fish
+sudo pacman -U ./fret-0.2.0-1-any.pkg.tar.zst
+```
+
+
+Pour SMB, installer au besoin :
+
+```fish
+sudo pacman -S --needed gvfs-smb
+```
+
+### Désinstallation
+
+```fish
+sudo pacman -Rns fret
+```
+
+---
+
+### 11.2 — Grabber
 
 Frontend GTK4/libadwaita minimaliste pour JDownloader 2. Il permet de récupérer des liens, sélectionner les fichiers utiles, les ajouter à la file de téléchargement et suivre les téléchargements. L'AppImage embarque son propre Java et JDownloader.
 
@@ -105,61 +306,247 @@ Penser à régler son icone avec Menu!
 
 ---
 
-## 11.3 — Grimoire
+### 11.12 — Nautilus Bookmark Icons
 
-Éditeur Markdown local GTK4/libadwaita utilisant GtkSourceView 5 et WebKitGTK 6. Il permet de parcourir des dossiers de documents Markdown, éditer les fichiers et afficher leur rendu.
+Petite extension `nautilus-python` pour Nautilus 48–50 permettant de personnaliser l’icône des favoris de la barre latérale. Elle est dérivée du mécanisme de **Nautilus My Computer**, mais ne reprend aucune de ses autres fonctions.
 
-**Paquet fourni : `grimoire-ogu-0.2.0-10-x86_64.pkg.tar.zst`.**
-
-![Interface de Grimoire](../Ressources/screenshots/vibe-coded/grimoire.png)
+**Paquet fourni : `nautilus-bookmark-icons-0.1.1-1-any.pkg.tar.zst`.**
 
 ### Installation
 
+Depuis la racine du dépôt :
+
 ```fish
-sudo pacman -U ./grimoire-ogu-0.2.0-10-x86_64.pkg.tar.zst
-grimoire
+sudo pacman -U "Ressources/Applis vibe codées en Libadwaita/03-Fichiers-et-telechargements/Nautilus Bookmark Icons/nautilus-bookmark-icons-0.1.1-1-any.pkg.tar.zst"
+nautilus -q
 ```
 
-> Si le copier-coller remplace le nom de commande, utiliser simplement `grimoire`.
+Rouvrir Nautilus puis utiliser **clic droit sur un favori → Changer l’icône**. Le choix est conservé via GSettings ; **Réinitialiser** restaure l’icône native.
 
 ### Désinstallation
 
 ```fish
-sudo pacman -Rns grimoire-ogu
+sudo pacman -Rns nautilus-bookmark-icons
+nautilus -q
 ```
+
+La sidebar de Nautilus n’étant pas couverte par une API d’extension officielle, une future version majeure peut nécessiter une adaptation.
 
 ---
 
-## 11.4 — Fret
+### 11.26 — PLACES — Dossiers Ogu
 
-Gestionnaire de fichiers GTK4/libadwaita à deux panneaux, inspiré de Nautilus. Chaque panneau peut afficher un emplacement local ou une URI GVfs telle que FTP, SFTP ou SMB. Les transferts sont effectués directement entre les deux panneaux.
+**Dossiers Ogu** est le gestionnaire personnel d’icônes et de dossiers, distinct d’**Icônes UI**, qui ne gère que les icônes des applications installées. L’application regroupe dans un fichier Python autonome le plan des dossiers, leurs icônes et les dossiers à masquer.
 
-**Paquet fourni : `fret-0.2.0-1-any.pkg.tar.zst`.**
+### Fonctions
 
-![Interface de Fret](../Ressources/screenshots/vibe-coded/fret.png)
+- choisir une icône parmi les vignettes, ou revenir à l’icône standard de Fichiers ;
+- ajouter ou retirer une ligne du plan ;
+- importer des icônes, renommées selon la convention du gestionnaire ;
+- créer les dossiers manquants et appliquer les icônes ;
+- masquer les dossiers cochés en les renommant avec un point initial, puis mettre à jour `~/.config/user-dirs.dirs` ;
+- restaurer l’état antérieur à la dernière application ;
+- exporter un nouvel `.pyz` autonome avec le plan et les icônes à jour ;
+- relancer Nautilus pour actualiser l’affichage.
+
+Les dossiers Dropbox ne sont pas créés par l’application : attendre que Dropbox ait terminé sa synchronisation avant de lancer l’outil.
+
+### Lancement
+
+Depuis le dossier contenant `dossiers-ogu.pyz` :
+
+```fish
+python3 dossiers-ogu.pyz
+```
+
+Python 3, GTK4 et PyGObject sont nécessaires. Sur CachyOS GNOME, ils sont normalement déjà présents ; sinon :
+
+```fish
+sudo pacman -S python-gobject gtk4
+```
+
+Les icônes utilisées et le fichier `correspondances.txt` sont documentés dans le [LISEZMOI du gestionnaire](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/PLACES/LISEZMOI-dossiers.md). Le fichier `dossiers-ogu.pyz` et le tableau de correspondances sont à conserver dans le dossier PLACES du dépôt.
+
+---
+
+## 04 — Bureau et personnalisation
+
+### 11.21 — Extension Manager
+
+Fork de l’application **Extension Manager** de Matt Jakeman, enrichi avec l’aide du Vibe Coding. Interface native **GTK4/libadwaita**, paquet Arch **x86_64** `extension-manager-ogu`, version **0.6.5.ogu2-1**.
+
+### Fonctions
+
+- classement automatique des extensions installées dans sept catégories ;
+- changement de catégorie par le menu de chaque extension, avec mémorisation et retour au classement automatique ;
+- extensions système conservées dans un groupe séparé ;
+- icône personnalisée Ogu ;
+- panneau **Parcourir** et recherche repris de l’application originelle, sans filtre supplémentaire GNOME N+1/N−1.
 
 ### Installation
 
+Depuis la racine du dépôt :
+
 ```fish
-sudo pacman -U ./fret-0.2.0-1-any.pkg.tar.zst
+sudo pacman -U "Ressources/Applis vibe codées en Libadwaita/04-Bureau-et-personnalisation/Extension Manager/extension-manager-ogu-0.6.5.ogu2-1-x86_64.pkg.tar.zst"
 ```
 
+Si la version des dépôts `extension-manager` est installée, accepter son remplacement proposé par pacman. Le paquet local s’appelle `extension-manager-ogu`, fournit `extension-manager` et entre en conflit avec la version des dépôts.
 
-Pour SMB, installer au besoin :
+Fermer complètement l’ancienne instance, puis lancer l’application :
 
 ```fish
-sudo pacman -S --needed gvfs-smb
+extension-manager
 ```
 
 ### Désinstallation
 
 ```fish
-sudo pacman -Rns fret
+sudo pacman -R extension-manager-ogu
+```
+
+Le [README du dossier Extension Manager](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extension%20Manager/readme_extension-manager.md) détaille les fonctions, les dépendances et le retour à la version des dépôts. Voir aussi [le classement dans le chapitre Extensions GNOME](08-gnome-extensions.md#811--classer-les-extensions-avec-extension-manager).
+
+Archive, métadonnées, exécutable, lanceur et icônes contrôlés. **Lancement et recherche en session GNOME réelle non testés lors de cette intégration.** Le paquet joint est conservé à l’identique ; aucun paquet de sources supplémentaire n’est ajouté.
+
+---
+
+### Captures d'écran restantes
+
+Les captures fournies avec cette mise à jour couvrent **Always on top, Grabber, Grimoire, Fret, systemd, Pacto, Radar et Pusher**. Les trois applications suivantes restent volontairement sans capture afin de ne pas fabriquer une représentation de leur interface : **SCX Manager, Decibel et Fisherman**.
+
+### 11.25 — Icônes UI
+
+**Icônes UI** est une petite application Python/GTK4 issue du vibe coding pour gérer les icônes **des applications installées**. Elle présente l’icône actuelle et celle proposée, en couleur et en symbolique ; permet de modifier/importer les icônes, appliquer les changements avec possibilité de restauration, rétablir les lanceurs faits main manquants, et exporter un nouvel `.pyz` qui conserve les imports.
+
+### Lancement
+
+Depuis le dossier contenant le fichier :
+
+```fish
+python3 icones-ogu.pyz
+```
+
+Dépendances éventuelles :
+
+```fish
+sudo pacman -S python-gobject gtk4
+```
+
+L’outil Icônes UI et le gestionnaire d’icônes des dossiers personnels sont deux applications distinctes. Voir [11.26 — PLACES / Dossiers Ogu](#1126--places--dossiers-ogu) pour le second.
+
+---
+
+## 05 — Système et utilitaires
+
+### 11.15 — dconf-editor GTK4
+
+Le **dconf-editor GTK4** utilisé dans ce setup est une exception dans ce chapitre : il ne s’agit **pas d’une application vibe codée**, mais d’un build compilé depuis les **sources officielles du portage GTK4 en cours**.
+
+Il remplace la version GTK3 fournie par les dépôts. Avant l’installation du build GTK4, supprimer donc le paquet GTK3 :
+
+```fish
+sudo pacman -Rns dconf-editor
+```
+
+Le build GTK4 est ensuite compilé et installé depuis les sources upstream officielles utilisées par le setup. Cette séparation évite de documenter le portage officiel comme un fork maison et empêche la commande générale d’installation des logiciels de réinstaller accidentellement le paquet GTK3.
+
+
+---
+
+### 11.8 — Fisherman
+
+![Interface de Fisherman](../Ressources/screenshots/vibe-coded/fisherman.png)
+
+Gestionnaire graphique minimaliste des fichiers de configuration de Fish, notamment `config.fish` et les fonctions Fish.
+
+**Paquet fourni : `fisherman-0.1.8-2-any.pkg.tar.zst`.**
+
+### Installation
+
+```fish
+sudo pacman -U ./fisherman-0.1.8-2-any.pkg.tar.zst
+```
+
+### Désinstallation
+
+```fish
+sudo pacman -Rns fisherman
+```
+
+### Capture
+
+Une capture de l'interface de Fisherman n'a pas été fournie dans cet envoi. Elle pourra être ajoutée sous `../Ressources/screenshots/vibe-coded/fisherman.png`.
+
+---
+
+### 11.9 — Pacto
+
+Application GTK4/libadwaita destinée à la gestion des fichiers `.pacnew` et `.pacsave` : collecte, tri, comparaison, édition, remplacement et suppression.
+
+**Paquet fourni : `pacto-1.0.0-1-any.pkg.tar.zst`.**
+
+![Interface de Pacto](../Ressources/screenshots/vibe-coded/pacto.png)
+
+### Installation
+
+```fish
+sudo pacman -U ./pacto-1.0.0-1-any.pkg.tar.zst
+```
+
+### Désinstallation
+
+```fish
+sudo pacman -Rns pacto
 ```
 
 ---
 
-## 11.5 — SCX Manager
+### 11.11 — Pusher
+
+Application GTK4/libadwaita minimaliste destinée à la gestion graphique du dépôt GitLab personnel. Elle regroupe les opérations courantes autour du dépôt local et de son envoi vers le dépôt distant.
+
+**Paquet fourni : `pusher-1.7.0-1-any.pkg.tar.zst`.**
+
+![Interface de Pusher](../Ressources/screenshots/vibe-coded/pusher.png)
+
+### Installation
+
+```fish
+sudo pacman -U ./pusher-1.7.0-1-any.pkg.tar.zst
+```
+
+### Désinstallation
+
+```fish
+sudo pacman -Rns pusher
+```
+
+---
+
+### 11.10 — Radar
+
+Application GTK4/libadwaita de recherche et de visualisation de fichiers construite autour de `fzf`. Elle fournit une recherche rapide avec aperçu et filtres.
+
+**Paquet fourni : `radar-1.4.0-2-any.pkg.tar.zst`.**
+
+![Interface de Radar](../Ressources/screenshots/vibe-coded/radar.png)
+
+### Installation
+
+```fish
+sudo pacman -U ./radar-1.4.0-2-any.pkg.tar.zst
+```
+
+### Désinstallation
+
+```fish
+sudo pacman -Rns radar
+```
+
+---
+
+### 11.5 — SCX Manager
 
 Réécriture native GTK4/libadwaita de SCX Manager pour GNOME. L'application permet de consulter et piloter `scx_loader`, le service D-Bus qui gère les planificateurs Linux `sched-ext`.
 
@@ -192,7 +579,7 @@ Une capture de l'interface SCX Manager n'a pas été fournie dans cet envoi. Ell
 
 ---
 
-## 11.6 — systemd
+### 11.6 — systemd
 
 ![Interface de systemd-gui](../Ressources/screenshots/vibe-coded/systemd.png)
 
@@ -218,151 +605,7 @@ sudo pacman -Rns systemd-gui
 
 ---
 
-## 11.7 — Decibel
-
-Fork personnalisé de **Decibels**, le lecteur audio GNOME. Les modifications apportées permettent notamment de supprimer un titre avec `Suppr` et d'éviter l'ouverture d'une seconde fenêtre lorsqu'un fichier audio est ouvert pendant une lecture : le nouveau morceau remplace celui de la fenêtre existante.
-
-**Paquet fourni : `decibel-49.6.1-1-any.pkg.tar.zst`.**
-
-### Installation
-
-```fish
-sudo pacman -U ./decibel-49.6.1-1-any.pkg.tar.zst
-```
-
-### Désinstallation
-
-```fish
-sudo pacman -Rns decibel
-```
-
-### Capture
-
-Une capture de l'interface de Decibel n'a pas été fournie dans cet envoi. Elle pourra être ajoutée sous `../Ressources/screenshots/vibe-coded/decibel.png`.
-
----
-
-## 11.8 — Fisherman
-
-![Interface de Fisherman](../Ressources/screenshots/vibe-coded/fisherman.png)
-
-Gestionnaire graphique minimaliste des fichiers de configuration de Fish, notamment `config.fish` et les fonctions Fish.
-
-**Paquet fourni : `fisherman-0.1.8-2-any.pkg.tar.zst`.**
-
-### Installation
-
-```fish
-sudo pacman -U ./fisherman-0.1.8-2-any.pkg.tar.zst
-```
-
-### Désinstallation
-
-```fish
-sudo pacman -Rns fisherman
-```
-
-### Capture
-
-Une capture de l'interface de Fisherman n'a pas été fournie dans cet envoi. Elle pourra être ajoutée sous `../Ressources/screenshots/vibe-coded/fisherman.png`.
-
----
-
-## 11.9 — Pacto
-
-Application GTK4/libadwaita destinée à la gestion des fichiers `.pacnew` et `.pacsave` : collecte, tri, comparaison, édition, remplacement et suppression.
-
-**Paquet fourni : `pacto-1.0.0-1-any.pkg.tar.zst`.**
-
-![Interface de Pacto](../Ressources/screenshots/vibe-coded/pacto.png)
-
-### Installation
-
-```fish
-sudo pacman -U ./pacto-1.0.0-1-any.pkg.tar.zst
-```
-
-### Désinstallation
-
-```fish
-sudo pacman -Rns pacto
-```
-
----
-
-## 11.10 — Radar
-
-Application GTK4/libadwaita de recherche et de visualisation de fichiers construite autour de `fzf`. Elle fournit une recherche rapide avec aperçu et filtres.
-
-**Paquet fourni : `radar-1.4.0-2-any.pkg.tar.zst`.**
-
-![Interface de Radar](../Ressources/screenshots/vibe-coded/radar.png)
-
-### Installation
-
-```fish
-sudo pacman -U ./radar-1.4.0-2-any.pkg.tar.zst
-```
-
-### Désinstallation
-
-```fish
-sudo pacman -Rns radar
-```
-
----
-
-## 11.11 — Pusher
-
-Application GTK4/libadwaita minimaliste destinée à la gestion graphique du dépôt GitLab personnel. Elle regroupe les opérations courantes autour du dépôt local et de son envoi vers le dépôt distant.
-
-**Paquet fourni : `pusher-1.7.0-1-any.pkg.tar.zst`.**
-
-![Interface de Pusher](../Ressources/screenshots/vibe-coded/pusher.png)
-
-### Installation
-
-```fish
-sudo pacman -U ./pusher-1.7.0-1-any.pkg.tar.zst
-```
-
-### Désinstallation
-
-```fish
-sudo pacman -Rns pusher
-```
-
----
-
-## 11.12 — Nautilus Bookmark Icons
-
-Petite extension `nautilus-python` pour Nautilus 48–50 permettant de personnaliser l’icône des favoris de la barre latérale. Elle est dérivée du mécanisme de **Nautilus My Computer**, mais ne reprend aucune de ses autres fonctions.
-
-**Paquet fourni : `nautilus-bookmark-icons-0.1.1-1-any.pkg.tar.zst`.**
-
-### Installation
-
-Depuis la racine du dépôt :
-
-```fish
-sudo pacman -U "Ressources/Applis vibe codées en Libadwaita/03-Fichiers-et-telechargements/Nautilus Bookmark Icons/nautilus-bookmark-icons-0.1.1-1-any.pkg.tar.zst"
-nautilus -q
-```
-
-Rouvrir Nautilus puis utiliser **clic droit sur un favori → Changer l’icône**. Le choix est conservé via GSettings ; **Réinitialiser** restaure l’icône native.
-
-### Désinstallation
-
-```fish
-sudo pacman -Rns nautilus-bookmark-icons
-nautilus -q
-```
-
-La sidebar de Nautilus n’étant pas couverte par une API d’extension officielle, une future version majeure peut nécessiter une adaptation.
-
----
-
-## 11.13 — Sismographe
+### 11.13 — Sismographe
 
 Application GTK4/libadwaita de diagnostic du système GNOME. Elle regroupe les vues Santé, Journaux, Démarrage et Stockage : erreurs par service, plantages, analyse du boot, état SMART, compteurs d’erreurs btrfs et contrôle FAT. Elle permet d’exporter un rapport texte. Les opérations privilégiées passent par polkit ; les outils de stockage sont optionnels.
 
@@ -389,7 +632,7 @@ Le paquet fourni et son contenu ont été inspectés ; les diagnostics restent �
 
 ---
 
-## 11.14 — Snapper GTK4
+### 11.14 — Snapper GTK4
 
 Frontend GTK4/libadwaita pour **Snapper** et l’intégration **Limine**. L’application reprend les opérations du workflow Snapper/Limine dans une interface GNOME native : affichage des snapshots, informations Avant/Après, création, suppression, restauration et réglages de nettoyage automatique.
 
@@ -426,22 +669,38 @@ sudo pacman -Rns snapper-gtk4
 
 ---
 
-## 11.15 — dconf-editor GTK4
+## Extensions GNOME Shell
 
-Le **dconf-editor GTK4** utilisé dans ce setup est une exception dans ce chapitre : il ne s’agit **pas d’une application vibe codée**, mais d’un build compilé depuis les **sources officielles du portage GTK4 en cours**.
+### 11.1 — Always on top, always on top
 
-Il remplace la version GTK3 fournie par les dépôts. Avant l’installation du build GTK4, supprimer donc le paquet GTK3 :
+Extension GNOME Shell minimaliste ajoutant une icône dans la barre supérieure pour activer ou désactiver le mode natif **Toujours au premier plan** de la fenêtre active.
+
+L'extension est compatible GNOME Shell 45 à 50, sans dépendance ni panneau de préférences.
+
+![Always on top — état inactif](../Ressources/screenshots/vibe-coded/always-on-top-off.png)
+
+![Always on top — fenêtre épinglée](../Ressources/screenshots/vibe-coded/always-on-top-on.png)
+
+### Installation
+
+Depuis le dossier contenant l'extension :
 
 ```fish
-sudo pacman -Rns dconf-editor
+gnome-extensions install --force "always-on-top-always-on-top_localhost.shell-extension.zip"
+gnome-extensions enable always-on-top-always-on-top@localhost
 ```
 
-Le build GTK4 est ensuite compilé et installé depuis les sources upstream officielles utilisées par le setup. Cette séparation évite de documenter le portage officiel comme un fork maison et empêche la commande générale d’installation des logiciels de réinstaller accidentellement le paquet GTK3.
+Sous X11, recharger GNOME Shell avec `Alt+F2`, puis `r`. Sous Wayland, se déconnecter puis se reconnecter.
 
+### Désinstallation
+
+```fish
+gnome-extensions uninstall always-on-top-always-on-top@localhost
+```
 
 ---
 
-## 11.16 — Session Keeper
+### 11.16 — Session Keeper
 
 Extension GNOME Shell de productivité destinée à sauvegarder automatiquement la session et à restaurer rapidement les applications et fenêtres après une reconnexion ou un redémarrage.
 
@@ -499,8 +758,7 @@ Le [README du dossier Session Keeper](../Ressources/Applis%20vibe%20codées%20en
 
 ---
 
-
-## 11.17 — Focus & Boutons
+### 11.17 — Focus & Boutons
 
 Extension GNOME Shell maison dédiée à la rationalisation de **Quick Settings** et du panneau **Calendrier/Notifications**. Compatible GNOME Shell **50 et 51**.
 
@@ -550,7 +808,7 @@ Le [README du dossier Focus & Boutons](../Ressources/Applis%20vibe%20codées%20e
 
 ---
 
-## 11.18 — Battery Time Compact — Ogu
+### 11.18 — Battery Time Compact — Ogu
 
 Fork personnel de **Battery Time (Percentage) Compact** pour GNOME Shell **50 et 51**. Le UUID upstream est conservé afin de remplacer directement l’extension d’origine.
 
@@ -582,7 +840,7 @@ Le [README du dossier Battery Time Compact — Ogu](../Ressources/Applis%20vibe%
 
 ---
 
-## 11.19 — Power Total
+### 11.19 — Power Total
 
 Extension GNOME Shell **50** fusionnant **Auto Power Profile** et **Power Switching Manager**. Version **0.1.1**, archive **Power-Total.zip**, UUID `power-total@ogu`. Catégorie dans Extension Manager Ogu : **Système et énergie**.
 
@@ -627,7 +885,7 @@ Syntaxe, schémas et tests avec services simulés contrôlés ; **fonctionnement
 
 ---
 
-## 11.20 — UI Management
+### 11.20 — UI Management
 
 Extension GNOME Shell maison regroupant les fonctions du setup auparavant réparties entre **Just Perfection**, **AutoActivities**, **Hot Edge** et **Quick Close Overview**.
 
@@ -657,234 +915,3 @@ L’archive produite lors du développement est nommée **`UI-Management-1.zip`*
 Le [README du dossier UI Management](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/UI%20Management/readme_ui-management.md) récapitule la fusion.
 
 ---
-
-## 11.21 — Extension Manager
-
-Fork de l’application **Extension Manager** de Matt Jakeman, enrichi avec l’aide du Vibe Coding. Interface native **GTK4/libadwaita**, paquet Arch **x86_64** `extension-manager-ogu`, version **0.6.5.ogu2-1**.
-
-### Fonctions
-
-- classement automatique des extensions installées dans sept catégories ;
-- changement de catégorie par le menu de chaque extension, avec mémorisation et retour au classement automatique ;
-- extensions système conservées dans un groupe séparé ;
-- icône personnalisée Ogu ;
-- panneau **Parcourir** et recherche repris de l’application originelle, sans filtre supplémentaire GNOME N+1/N−1.
-
-### Installation
-
-Depuis la racine du dépôt :
-
-```fish
-sudo pacman -U "Ressources/Applis vibe codées en Libadwaita/04-Bureau-et-personnalisation/Extension Manager/extension-manager-ogu-0.6.5.ogu2-1-x86_64.pkg.tar.zst"
-```
-
-Si la version des dépôts `extension-manager` est installée, accepter son remplacement proposé par pacman. Le paquet local s’appelle `extension-manager-ogu`, fournit `extension-manager` et entre en conflit avec la version des dépôts.
-
-Fermer complètement l’ancienne instance, puis lancer l’application :
-
-```fish
-extension-manager
-```
-
-### Désinstallation
-
-```fish
-sudo pacman -R extension-manager-ogu
-```
-
-Le [README du dossier Extension Manager](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extension%20Manager/readme_extension-manager.md) détaille les fonctions, les dépendances et le retour à la version des dépôts. Voir aussi [le classement dans le chapitre Extensions GNOME](08-gnome-extensions.md#811--classer-les-extensions-avec-extension-manager).
-
-Archive, métadonnées, exécutable, lanceur et icônes contrôlés. **Lancement et recherche en session GNOME réelle non testés lors de cette intégration.** Le paquet joint est conservé à l’identique ; aucun paquet de sources supplémentaire n’est ajouté.
-
----
-
-### Captures d'écran restantes
-
-Les captures fournies avec cette mise à jour couvrent **Always on top, Grabber, Grimoire, Fret, systemd, Pacto, Radar et Pusher**. Les trois applications suivantes restent volontairement sans capture afin de ne pas fabriquer une représentation de leur interface : **SCX Manager, Decibel et Fisherman**.
-
-## 11.22 — Amplifaya — moteur headless et interface
-
-**Amplifaya** est le fork maison allégé de [JamesDSP](https://github.com/Audio4Linux/JDSP4Linux), conçu pour PipeWire et GNOME sans Qt ni icône de notification.
-
-- `amplifaya` : moteur headless en C, plugin LADSPA, commande `amplifayactl` et service systemd utilisateur.
-- `amplifaya-gui` : télécommande facultative GTK4/libadwaita ; fermer la fenêtre laisse le moteur actif.
-- Preset **ClearPenguin** fourni ; Bass Boost, Tone EQ, crossfeed BS2B au casque, élargissement stéréo sur haut-parleurs, post-gain et limiteur.
-- Cette version ne prend pas en charge l’audio Bluetooth et ne reprend pas tous les effets de JamesDSP.
-
-Fermer et désactiver l’ancien traitement global JamesDSP ou EasyEffects avant l’activation, pour éviter un double traitement. Depuis la racine du dépôt :
-
-```fish
-sudo pacman -U "Ressources/Applis vibe codées en Libadwaita/01-Multimedia/Amplifaya/amplifaya-0.3.0-1-x86_64.pkg.tar.zst" "Ressources/Applis vibe codées en Libadwaita/01-Multimedia/Amplifaya/amplifaya-gui-0.3.0-1-x86_64.pkg.tar.zst"
-systemctl --user daemon-reload
-systemctl --user enable --now amplifaya.service
-systemctl --user status amplifaya.service
-amplifayactl status
-```
-
-Pour le moteur seul, installer uniquement le premier paquet. Ouvrir l’interface à la demande :
-
-```fish
-amplifaya-gui
-```
-
-Avec un morceau en lecture, vérifier le passage dans le moteur et comparer le traitement :
-
-```fish
-amplifayactl test
-amplifayactl ab
-```
-
-Gestion du moteur :
-
-```fish
-amplifayactl bypass on
-amplifayactl bypass off
-systemctl --user stop amplifaya.service
-systemctl --user start amplifaya.service
-journalctl --user -u amplifaya.service -b
-```
-
-Le README complet installé se trouve dans `/usr/share/doc/amplifaya/README.md`. Les paquets ont été inspectés ; le traitement audio reste à tester sur la machine cible.
-
-## 11.23 — Grille
-
-**Grille** est une visionneuse simple de fichiers tableurs, codée avec **Claude**.
-
-**Paquet : `grille-0.1.0-1-x86_64.pkg.tar.zst`.** Le paquet n’est pas encore présent dans le dépôt ; il est à ajouter manuellement dans [le dossier Grille](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Grille/).
-
-Depuis le dossier contenant le paquet :
-
-```fish
-sudo pacman -U ./grille-0.1.0-1-x86_64.pkg.tar.zst
-```
-
-Les formats pris en charge et la commande de lancement restent à préciser à partir du paquet ou de son README.
-
-
-## 11.24 — Samizdat
-
-**Samizdat 0.8.0** est un traitement de texte GNOME en Rust, GTK4/libadwaita, basé sur le moteur `letters-core` de gtk-office-suite. Il prend en charge DOCX, ODT, Markdown, texte brut, HTML et la lecture/export PDF.
-
-La version 0.8.0 ajoute notamment la typographie française automatique, les styles de paragraphes, les listes multiniveaux, les cartouches, la numérotation des lignes, les formes, les frises chronologiques modifiables, les tableaux, le traitement des images, la correction orthographique française, les en-têtes/pieds de page, les colonnes, le plan et le sommaire automatique. Elle comprend aussi le mode concentration, les modèles, les exports DOCX/PDF, les livrets de séquence, les PDF aménagés pour les élèves à besoins particuliers, les onglets/fenêtres, la sauvegarde de secours automatique et les préférences d’interface.
-
-### Modèles fournis
-
-Le paquet 0.8.0 est accompagné de quatre modèles DOCX :
-- `Cours.docx`
-- `Page de garde de séquence.docx`
-- `Bac blanc Français.docx`
-- `Bac blanc Histoire-Géographie.docx`
-
-Le dossier attendu dans le dépôt est `Ressources/Applis vibe codées en Libadwaita/02-Bureautique-et-redaction/Samizdat/Modeles/`. Les fichiers modèles et le paquet Arch joints doivent être ajoutés manuellement à GitLab ; ils ne sont pas inclus dans ce commit.
-
-### Installation
-
-Depuis le dossier où se trouve le paquet fourni :
-
-```fish
-sudo pacman -U ./samizdat-0.8.0-1-x86_64.pkg.tar.zst
-```
-
-Le [README complet de Samizdat](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Samizdat/README.md) récapitule les fonctionnalités, les raccourcis et les limites connues. Le paquet n’a pas été installé ni testé dans une session GNOME pendant cette mise à jour.
-
----
-
-## 11.25 — Icônes UI
-
-**Icônes UI** est une petite application Python/GTK4 issue du vibe coding pour gérer les icônes **des applications installées**. Elle présente l’icône actuelle et celle proposée, en couleur et en symbolique ; permet de modifier/importer les icônes, appliquer les changements avec possibilité de restauration, rétablir les lanceurs faits main manquants, et exporter un nouvel `.pyz` qui conserve les imports.
-
-### Lancement
-
-Depuis le dossier contenant le fichier :
-
-```fish
-python3 icones-ogu.pyz
-```
-
-Dépendances éventuelles :
-
-```fish
-sudo pacman -S python-gobject gtk4
-```
-
-L’outil Icônes UI et le gestionnaire d’icônes des dossiers personnels sont deux applications distinctes. Voir [11.26 — PLACES / Dossiers Ogu](#1126--places--dossiers-ogu) pour le second.
-
----
-
-## 11.26 — PLACES — Dossiers Ogu
-
-**Dossiers Ogu** est le gestionnaire personnel d’icônes et de dossiers, distinct d’**Icônes UI**, qui ne gère que les icônes des applications installées. L’application regroupe dans un fichier Python autonome le plan des dossiers, leurs icônes et les dossiers à masquer.
-
-### Fonctions
-
-- choisir une icône parmi les vignettes, ou revenir à l’icône standard de Fichiers ;
-- ajouter ou retirer une ligne du plan ;
-- importer des icônes, renommées selon la convention du gestionnaire ;
-- créer les dossiers manquants et appliquer les icônes ;
-- masquer les dossiers cochés en les renommant avec un point initial, puis mettre à jour `~/.config/user-dirs.dirs` ;
-- restaurer l’état antérieur à la dernière application ;
-- exporter un nouvel `.pyz` autonome avec le plan et les icônes à jour ;
-- relancer Nautilus pour actualiser l’affichage.
-
-Les dossiers Dropbox ne sont pas créés par l’application : attendre que Dropbox ait terminé sa synchronisation avant de lancer l’outil.
-
-### Lancement
-
-Depuis le dossier contenant `dossiers-ogu.pyz` :
-
-```fish
-python3 dossiers-ogu.pyz
-```
-
-Python 3, GTK4 et PyGObject sont nécessaires. Sur CachyOS GNOME, ils sont normalement déjà présents ; sinon :
-
-```fish
-sudo pacman -S python-gobject gtk4
-```
-
-Les icônes utilisées et le fichier `correspondances.txt` sont documentés dans le [LISEZMOI du gestionnaire](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/PLACES/LISEZMOI-dossiers.md). Le fichier `dossiers-ogu.pyz` et le tableau de correspondances sont à conserver dans le dossier PLACES du dépôt.
-
----
-
-## 11.27 — Disquaire
-
-**Disquaire** est un éditeur de tags MP3 et FLAC pour GNOME, conçu pour ne conserver que sept champs : **artiste, titre, album, date, genre, pochette et paroles**. Les autres tags sont supprimés à l’enregistrement.
-
-### Fonctions
-
-- arborescence des dossiers et recherche dans la liste ;
-- modification groupée de plusieurs morceaux ;
-- aperçu, remplacement et glisser-déposer des pochettes ;
-- lecture intégrée ou ouverture dans le lecteur choisi ;
-- renommage, déplacement et mise à la corbeille ;
-- conversion FLAC vers MP3 à 320 kb/s et 44,1 kHz, avec mise à la corbeille du FLAC d’origine.
-
-Les fichiers comportant des tags supplémentaires sont signalés par un point bleu. Les modifications ne sont écrites sur le disque qu’à l’enregistrement. En édition groupée, un champ « Valeurs différentes » n’est modifié que si une nouvelle valeur est saisie ; plusieurs artistes ou genres se séparent par un point-virgule.
-
-### Installation
-
-Le paquet Arch fourni est `disquaire-1.0.0-1-any.pkg.tar.zst`. Depuis le dossier qui le contient :
-
-```fish
-sudo pacman -U ./disquaire-1.0.0-1-any.pkg.tar.zst
-```
-
-Le paquet doit être conservé dans le dossier [Disquaire](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Disquaire/), avec son [README](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Disquaire/README.md).
-
-### Raccourcis
-
-| Raccourci | Action |
-|---|---|
-| Ctrl+S | Enregistrer la sélection |
-| Ctrl+Maj+S | Tout enregistrer |
-| F2 | Renommer le fichier |
-| F5 | Rafraîchir la liste |
-| Ctrl+F | Rechercher |
-| Ctrl+P | Lire / pause |
-| Ctrl+A / Échap | Tout cocher / tout décocher |
-
-Dépendances déclarées : Python, PyGObject, Mutagen, GTK4, libadwaita, GStreamer, ses greffons de base et usuels, et FFmpeg. La licence est GPL-3.0-or-later.
-
----
-
-[Accueil](../README.md) · [Précédent](10-logiciels.md) · [Suivant](12-shell-terminal.md)
