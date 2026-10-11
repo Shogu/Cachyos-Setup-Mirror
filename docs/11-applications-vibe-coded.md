@@ -65,47 +65,32 @@ Les dossiers sont classés par usage principal. Les extensions GNOME Shell reste
 
 ### 11.22 — Amplifaya — moteur headless et interface
 
-**Amplifaya** est le fork maison allégé de [JamesDSP](https://github.com/Audio4Linux/JDSP4Linux), conçu pour PipeWire et GNOME sans Qt ni icône de notification.
+**Amplifaya** est un moteur audio PipeWire sans interface au démarrage ni Qt, construit sur le cœur DSP de [JamesDSP](https://github.com/Audio4Linux/JDSP4Linux). Le profil **ClearPenguin** est chargé par défaut. Le moteur headless en C fournit la commande `amplifayactl` et le service systemd utilisateur ; l'interface GTK4/libadwaita est facultative et peut être lancée avec `amplifaya-gui`.
 
-- `amplifaya` : moteur headless en C, plugin LADSPA, commande `amplifayactl` et service systemd utilisateur.
-- `amplifaya-gui` : télécommande facultative GTK4/libadwaita ; fermer la fenêtre laisse le moteur actif.
-- Preset **ClearPenguin** fourni ; Bass Boost, Tone EQ, crossfeed BS2B au casque, élargissement stéréo sur haut-parleurs, post-gain et limiteur.
-- Cette version ne prend pas en charge l’audio Bluetooth et ne reprend pas tous les effets de JamesDSP.
+Depuis la version 0.4.0, le moteur force le volume matériel de la carte son à 100 % au démarrage et lors d'un changement de sortie, puis reporte le volume total sur le curseur GNOME. Le paquet `amplifaya-full` réunit le moteur et l'interface ; le paquet `amplifaya` seul permet de fonctionner sans interface. La commande `amplifayactl test` vérifie le traitement audio en cours de lecture, et `amplifayactl ab` compare le son traité à la source en restaurant l'état initial ensuite.
 
-Fermer et désactiver l’ancien traitement global JamesDSP ou EasyEffects avant l’activation, pour éviter un double traitement. Depuis la racine du dépôt :
+- Traitements disponibles : Bass Boost, égaliseur, limiteur, crossfeed BS2B au casque et élargissement stéréo sur haut-parleurs.
+- Pas de prise en charge Bluetooth ; tous les effets de JamesDSP ne sont pas repris.
+- L'interface utilise environ 100 Mo lorsqu'elle est ouverte ; le moteur seul environ 2 Mo.
+
+Désactive l'ancien traitement global JamesDSP ou EasyEffects avant d'activer Amplifaya, pour éviter un double traitement. Installation du paquet complet depuis le répertoire contenant les paquets :
 
 ```fish
-sudo pacman -U "Ressources/Applis vibe codées en Libadwaita/01-Multimedia/Amplifaya/amplifaya-0.3.0-1-x86_64.pkg.tar.zst" "Ressources/Applis vibe codées en Libadwaita/01-Multimedia/Amplifaya/amplifaya-gui-0.3.0-1-x86_64.pkg.tar.zst"
+sudo pacman -U ./amplifaya-full-0.4.0-1-x86_64.pkg.tar.zst
 systemctl --user daemon-reload
-systemctl --user enable --now amplifaya.service
-systemctl --user status amplifaya.service
+systemctl --user restart amplifaya.service
 amplifayactl status
 ```
 
-Pour le moteur seul, installer uniquement le premier paquet. Ouvrir l’interface à la demande :
+Pour le moteur seul, installe `amplifaya-0.4.0-1-x86_64.pkg.tar.zst`. Pour ouvrir l'interface à la demande :
 
 ```fish
 amplifaya-gui
 ```
 
-Avec un morceau en lecture, vérifier le passage dans le moteur et comparer le traitement :
+Commandes utiles : `amplifayactl test`, `amplifayactl ab`, `amplifayactl bypass on|off`, `amplifayactl bass on|off`, `amplifayactl wide on|off`, `amplifayactl outputs`, `amplifayactl output NOM`, `amplifayactl stop` et `amplifayactl start`. Journaux : `journalctl --user -u amplifaya.service -b`.
 
-```fish
-amplifayactl test
-amplifayactl ab
-```
-
-Gestion du moteur :
-
-```fish
-amplifayactl bypass on
-amplifayactl bypass off
-systemctl --user stop amplifaya.service
-systemctl --user start amplifaya.service
-journalctl --user -u amplifaya.service -b
-```
-
-Le README complet installé se trouve dans `/usr/share/doc/amplifaya/README.md`. Les paquets ont été inspectés ; le traitement audio reste à tester sur la machine cible.
+La documentation complète et l'historique des versions sont dans [le README Amplifaya](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/01-Multimedia/Amplifaya/readme_amplifaya.md).
 
 ### 11.7 — Decibel
 
