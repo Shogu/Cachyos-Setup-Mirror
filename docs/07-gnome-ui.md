@@ -221,7 +221,7 @@ Python 3, GTK4 et PyGObject sont nécessaires. Sur CachyOS GNOME, ils sont norma
 sudo pacman -S python-gobject gtk4
 ```
 
-**Important :** cette archive gère les icônes des applications, pas les icônes **PLACES** des dossiers personnels. Le gestionnaire PLACES est une application distincte ; son archive n’a pas encore été fournie.
+**Important :** cette application gère les icônes des applications, pas les icônes des dossiers personnels. Pour ces dernières, utiliser le gestionnaire distinct [PLACES — Dossiers Ogu](11-applications-vibe-coded.md#1127--places--dossiers-ogu), dont le fichier `dossiers-ogu.pyz` est à conserver dans `Ressources/Applis vibe codées en Libadwaita/PLACES/`.
 
 ---
 

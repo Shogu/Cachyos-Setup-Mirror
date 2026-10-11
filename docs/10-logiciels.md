@@ -44,6 +44,7 @@
 - **Amplifaya** : installer [le moteur headless et sa télécommande GTK4/libadwaita](11-applications-vibe-coded.md#1123--amplifaya--moteur-headless-et-interface), fork allégé de JamesDSP.
 
 - **Decibel** : installer [le fork maison du lecteur audio GNOME](11-applications-vibe-coded.md#117--decibel), fourni dans le dépôt.
+- **Disquaire** : installer [l’éditeur de tags MP3/FLAC](11-applications-vibe-coded.md#1128--disquaire), qui ne conserve que les sept champs retenus.
 - [**Showtime**](https://apps.gnome.org/Showtime/) (`showtime`) : lecteur vidéo GNOME GTK4/libadwaita.
 - `gst-thumbnailers` : génération des vignettes audio/vidéo dans Nautilus.
 
@@ -117,7 +118,8 @@ sudo pacman -U \
   "Ressources/Applis vibe codées en Libadwaita/Radar/radar-1.4.0-2-any.pkg.tar.zst" \
   "Ressources/Applis vibe codées en Libadwaita/Pusher/pusher-1.7.0-1-any.pkg.tar.zst" \
   "Ressources/Applis vibe codées en Libadwaita/Nautilus Bookmark Icons/nautilus-bookmark-icons-0.1.1-1-any.pkg.tar.zst" \
-  "Ressources/Applis vibe codées en Libadwaita/Sismographe/sismographe-1.0.0-1-any.pkg.tar.zst"
+  "Ressources/Applis vibe codées en Libadwaita/Sismographe/sismographe-1.0.0-1-any.pkg.tar.zst" \\
+  "Ressources/Applis vibe codées en Libadwaita/Disquaire/disquaire-1.0.0-1-any.pkg.tar.zst"
 ```
 
 Pour **Grabber** (AppImage) et **SCX Manager** (sources), suivre leurs [instructions d’installation](11-applications-vibe-coded.md). La commande Pacman ci-dessus suppose que chaque paquet a été vérifié pour cette machine.

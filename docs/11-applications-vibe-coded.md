@@ -32,6 +32,8 @@
 - [11.24 Grille](#1124--grille)
 - [11.25 Samizdat](#1125--samizdat)
 - [11.26 Icônes UI](#1126--icônes-ui)
+- [11.27 PLACES — Dossiers Ogu](#1127--places--dossiers-ogu)
+- [11.28 Disquaire](#1128--disquaire)
 
 ## 11.1 — Always on top, always on top
 
@@ -835,7 +837,83 @@ Dépendances éventuelles :
 sudo pacman -S python-gobject gtk4
 ```
 
-L’archive reçue contient `icones-ogu.pyz` et `LISEZMOI.md`. **Elle ne contient pas le gestionnaire d’icônes PLACES pour les dossiers personnels** ; ce dernier doit être documenté séparément après réception de son archive.
+L’outil Icônes UI et le gestionnaire d’icônes des dossiers personnels sont deux applications distinctes. Voir [11.27 — PLACES / Dossiers Ogu](#1127--places--dossiers-ogu) pour le second.
+
+---
+
+## 11.27 — PLACES — Dossiers Ogu
+
+**Dossiers Ogu** est le gestionnaire personnel d’icônes et de dossiers, distinct d’**Icônes UI**, qui ne gère que les icônes des applications installées. L’application regroupe dans un fichier Python autonome le plan des dossiers, leurs icônes et les dossiers à masquer.
+
+### Fonctions
+
+- choisir une icône parmi les vignettes, ou revenir à l’icône standard de Fichiers ;
+- ajouter ou retirer une ligne du plan ;
+- importer des icônes, renommées selon la convention du gestionnaire ;
+- créer les dossiers manquants et appliquer les icônes ;
+- masquer les dossiers cochés en les renommant avec un point initial, puis mettre à jour `~/.config/user-dirs.dirs` ;
+- restaurer l’état antérieur à la dernière application ;
+- exporter un nouvel `.pyz` autonome avec le plan et les icônes à jour ;
+- relancer Nautilus pour actualiser l’affichage.
+
+Les dossiers Dropbox ne sont pas créés par l’application : attendre que Dropbox ait terminé sa synchronisation avant de lancer l’outil.
+
+### Lancement
+
+Depuis le dossier contenant `dossiers-ogu.pyz` :
+
+```fish
+python3 dossiers-ogu.pyz
+```
+
+Python 3, GTK4 et PyGObject sont nécessaires. Sur CachyOS GNOME, ils sont normalement déjà présents ; sinon :
+
+```fish
+sudo pacman -S python-gobject gtk4
+```
+
+Les icônes utilisées et le fichier `correspondances.txt` sont documentés dans le [LISEZMOI du gestionnaire](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/PLACES/LISEZMOI-dossiers.md). Le fichier `dossiers-ogu.pyz` et le tableau de correspondances sont à conserver dans le dossier PLACES du dépôt.
+
+---
+
+## 11.28 — Disquaire
+
+**Disquaire** est un éditeur de tags MP3 et FLAC pour GNOME, conçu pour ne conserver que sept champs : **artiste, titre, album, date, genre, pochette et paroles**. Les autres tags sont supprimés à l’enregistrement.
+
+### Fonctions
+
+- arborescence des dossiers et recherche dans la liste ;
+- modification groupée de plusieurs morceaux ;
+- aperçu, remplacement et glisser-déposer des pochettes ;
+- lecture intégrée ou ouverture dans le lecteur choisi ;
+- renommage, déplacement et mise à la corbeille ;
+- conversion FLAC vers MP3 à 320 kb/s et 44,1 kHz, avec mise à la corbeille du FLAC d’origine.
+
+Les fichiers comportant des tags supplémentaires sont signalés par un point bleu. Les modifications ne sont écrites sur le disque qu’à l’enregistrement. En édition groupée, un champ « Valeurs différentes » n’est modifié que si une nouvelle valeur est saisie ; plusieurs artistes ou genres se séparent par un point-virgule.
+
+### Installation
+
+Le paquet Arch fourni est `disquaire-1.0.0-1-any.pkg.tar.zst`. Depuis le dossier qui le contient :
+
+```fish
+sudo pacman -U ./disquaire-1.0.0-1-any.pkg.tar.zst
+```
+
+Le paquet doit être conservé dans le dossier [Disquaire](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Disquaire/), avec son [README](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Disquaire/README.md).
+
+### Raccourcis
+
+| Raccourci | Action |
+|---|---|
+| Ctrl+S | Enregistrer la sélection |
+| Ctrl+Maj+S | Tout enregistrer |
+| F2 | Renommer le fichier |
+| F5 | Rafraîchir la liste |
+| Ctrl+F | Rechercher |
+| Ctrl+P | Lire / pause |
+| Ctrl+A / Échap | Tout cocher / tout décocher |
+
+Dépendances déclarées : Python, PyGObject, Mutagen, GTK4, libadwaita, GStreamer, ses greffons de base et usuels, et FFmpeg. La licence est GPL-3.0-or-later.
 
 ---
 
