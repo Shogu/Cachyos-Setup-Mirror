@@ -132,11 +132,12 @@ sudo pacman -Rns f2fs-tools xfsprogs sane colord-sane hwinfo && sudo pacman -Rdd
 - `noto-fonts-cjk` : polices chinois, japonais, coréen.
 - `noto-fonts-extra` : variantes supplémentaires Noto.
 - `ttf-meslo-nerd` : police Nerd Font.
+- `ttf-carlito` : police de substitution métriquement compatible avec Calibri ; à supprimer si elle n'est pas utilisée.
 - `cantarell-fonts` : police d'interface GNOME.
-- `noto-fonts` & `noto-fonts-emoji`
+- `noto-fonts` et `noto-fonts-emoji`.
 
-```
-sudo pacman -Rns noto-fonts-cjk noto-fonts-extra ttf-meslo-nerd noto-fonts noto-fonts-emoji
+```fish
+sudo pacman -Rns noto-fonts-cjk noto-fonts-extra ttf-meslo-nerd ttf-carlito noto-fonts noto-fonts-emoji
 ```
 
 Retirer également Fastfetch:
