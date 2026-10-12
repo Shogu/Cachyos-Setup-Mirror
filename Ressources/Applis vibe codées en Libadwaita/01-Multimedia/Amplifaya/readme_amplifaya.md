@@ -54,7 +54,31 @@ Pour installer le moteur et l'interface en un seul paquet :
 sudo pacman -U ./amplifaya-full-0.4.0-1-x86_64.pkg.tar.zst
 systemctl --user daemon-reload
 systemctl --user restart amplifaya.service
+amplifayactl status
 ```
+
+### Vérification après installation
+
+Lance un morceau (MP3 ou autre) et laisse-le jouer pendant toute la vérification. Exécute les commandes suivantes dans un terminal :
+
+```fish
+pactl get-sink-volume alsa_output.pci-0000_63_00.6.analog-stereo
+pactl get-sink-volume amplifaya
+pactl get-default-sink
+journalctl --user -u amplifaya -b --no-pager | grep carte
+amplifayactl test
+amplifayactl ab
+```
+
+Sur la configuration testée, le résultat attendu est :
+- la carte physique est à **100 %** ;
+- le volume de la sortie `amplifaya` est proche de 100 % selon le niveau GNOME ;
+- la sortie par défaut est `amplifaya` ;
+- le journal contient une ligne du type `carte … mise a 100 % (etait 54%), volume Amplifaya ajuste a 54%` ;
+- `amplifayactl test` confirme que le son est bien modifié par Amplifaya ;
+- `amplifayactl ab` alterne quatre fois entre Amplifaya actif et le son d'origine (bypass), puis restaure l'état de départ.
+
+Le nom `alsa_output.pci-0000_63_00.6.analog-stereo` dépend du matériel. Si le tien diffère, repère le nom exact avec `pactl list short sinks` et remplace-le dans la première commande.
 
 Pour le moteur seul, installe plutôt `amplifaya-0.4.0-1-x86_64.pkg.tar.zst`.
 

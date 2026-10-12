@@ -82,6 +82,21 @@ systemctl --user restart amplifaya.service
 amplifayactl status
 ```
 
+### Vérification après installation
+
+Lance un morceau (MP3 ou autre) et laisse-le jouer pendant toute la vérification. Ces commandes contrôlent le volume matériel, le volume de la sortie Amplifaya, la sortie par défaut, le journal du moteur et enfin le traitement audio réel :
+
+```fish
+pactl get-sink-volume alsa_output.pci-0000_63_00.6.analog-stereo
+pactl get-sink-volume amplifaya
+pactl get-default-sink
+journalctl --user -u amplifaya -b --no-pager | grep carte
+amplifayactl test
+amplifayactl ab
+```
+
+Résultat attendu sur la configuration testée : la carte physique est à **100 %**, la sortie par défaut est `amplifaya`, le journal indique que la carte a été mise à 100 % et que le volume Amplifaya a été ajusté. `amplifayactl test` doit confirmer que le son est modifié. `amplifayactl ab` alterne quatre fois entre le traitement Amplifaya et le son d'origine, puis restaure l'état initial. Les noms de sink peuvent varier d'une machine à l'autre : si la carte physique n'a pas le nom indiqué, repère son nom exact avec `pactl list short sinks` et adapte la première commande.
+
 Pour le moteur seul, installe `amplifaya-0.4.0-1-x86_64.pkg.tar.zst`. Pour ouvrir l'interface à la demande :
 
 ```fish
