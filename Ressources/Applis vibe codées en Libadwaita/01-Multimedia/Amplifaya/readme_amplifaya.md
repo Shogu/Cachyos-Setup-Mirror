@@ -87,14 +87,14 @@ amplifaya-gui
 
 ## Compilation depuis les sources
 
-Le bundle de développement de la version 0.4.0 contient le code source, le `PKGBUILD` et un fichier `BUILDING.txt`. Sur Arch Linux ou CachyOS, après extraction complète du bundle :
+Le bundle de développement de la version 0.4.0 contient le code source, le `PKGBUILD` et un fichier `BUILDING.txt`. **Attention : le `PKGBUILD` fourni dans cette archive construit encore trois variantes** (`amplifaya`, `amplifaya-gui` et `amplifaya-full`). Il doit être adapté avant compilation pour ne produire que le paquet unifié `amplifaya-full`, conformément à la distribution actuelle. Ne suis donc pas la consigne du `BUILDING.txt` d'origine telle quelle.
+
+Le paquet unifié final doit contenir le moteur, le service systemd utilisateur, le preset ClearPenguin et l'interface GTK4/libadwaita. Une fois le `PKGBUILD` adapté, la compilation sur Arch Linux ou CachyOS se fait depuis le répertoire des sources :
 
 ```fish
-cd amplifaya-0.4.0-source-build
 makepkg -s
 ```
 
-Le bundle fourni initialement peut encore contenir un ancien `PKGBUILD` multi-paquets. Pour respecter la distribution actuelle, ne produire et n'installer que le paquet unifié `amplifaya-full` ; ne pas installer les anciennes variantes moteur/GUI séparées. Le paquet unifié doit inclure le moteur, le service utilisateur, le preset ClearPenguin et l'interface GTK4/libadwaita.
 
 ## Commandes utiles
 
