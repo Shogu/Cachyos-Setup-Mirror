@@ -67,13 +67,13 @@ Les dossiers sont classés par usage principal. Les extensions GNOME Shell reste
 
 **Amplifaya** est un moteur audio PipeWire sans interface au démarrage ni Qt, construit sur le cœur DSP de [JamesDSP](https://github.com/Audio4Linux/JDSP4Linux). Le profil **ClearPenguin** est chargé par défaut. Le moteur headless en C fournit la commande `amplifayactl` et le service systemd utilisateur ; l'interface GTK4/libadwaita est facultative et peut être lancée avec `amplifaya-gui`.
 
-Depuis la version 0.4.0, le moteur force le volume matériel de la carte son à 100 % au démarrage et lors d'un changement de sortie, puis reporte le volume total sur le curseur GNOME. Le paquet `amplifaya-full` réunit le moteur et l'interface ; le paquet `amplifaya` seul permet de fonctionner sans interface. La commande `amplifayactl test` vérifie le traitement audio en cours de lecture, et `amplifayactl ab` compare le son traité à la source en restaurant l'état initial ensuite.
+Depuis la version 0.4.0, le moteur force le volume matériel de la carte son à 100 % au démarrage et lors d'un changement de sortie, puis reporte le volume total sur le curseur GNOME. Un seul paquet unifié, `amplifaya-full`, installe le moteur et l'interface. Le moteur fonctionne en arrière-plan sans ouvrir l'interface, qui reste disponible à la demande avec `amplifaya-gui`. La commande `amplifayactl test` vérifie le traitement audio en cours de lecture, et `amplifayactl ab` compare le son traité à la source en restaurant l'état initial ensuite.
 
 - Traitements disponibles : Bass Boost, égaliseur, limiteur, crossfeed BS2B au casque et élargissement stéréo sur haut-parleurs.
 - Pas de prise en charge Bluetooth ; tous les effets de JamesDSP ne sont pas repris.
 - L'interface utilise environ 100 Mo lorsqu'elle est ouverte ; le moteur seul environ 2 Mo.
 
-Désactive l'ancien traitement global JamesDSP ou EasyEffects avant d'activer Amplifaya, pour éviter un double traitement. Installation du paquet complet depuis le répertoire contenant les paquets :
+Désactive l'ancien traitement global JamesDSP ou EasyEffects avant d'activer Amplifaya, pour éviter un double traitement. Installation du paquet unifié depuis le répertoire qui le contient :
 
 ```fish
 sudo pacman -U ./amplifaya-full-0.4.0-1-x86_64.pkg.tar.zst
@@ -97,7 +97,7 @@ amplifayactl ab
 
 Résultat attendu sur la configuration testée : la carte physique est à **100 %**, la sortie par défaut est `amplifaya`, le journal indique que la carte a été mise à 100 % et que le volume Amplifaya a été ajusté. `amplifayactl test` doit confirmer que le son est modifié. `amplifayactl ab` alterne quatre fois entre le traitement Amplifaya et le son d'origine, puis restaure l'état initial. Les noms de sink peuvent varier d'une machine à l'autre : si la carte physique n'a pas le nom indiqué, repère son nom exact avec `pactl list short sinks` et adapte la première commande.
 
-Pour le moteur seul, installe `amplifaya-0.4.0-1-x86_64.pkg.tar.zst`. Pour ouvrir l'interface à la demande :
+L'interface est incluse dans ce même paquet et peut être ouverte à la demande :
 
 ```fish
 amplifaya-gui
