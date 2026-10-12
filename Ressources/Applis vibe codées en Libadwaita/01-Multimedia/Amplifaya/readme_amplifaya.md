@@ -85,6 +85,17 @@ Depuis la racine du dépôt, le paquet unifié se trouve dans `Ressources/Applis
 amplifaya-gui
 ```
 
+## Compilation depuis les sources
+
+Le bundle de développement de la version 0.4.0 contient le code source, le `PKGBUILD` et un fichier `BUILDING.txt`. Sur Arch Linux ou CachyOS, après extraction complète du bundle :
+
+```fish
+cd amplifaya-0.4.0-source-build
+makepkg -s
+```
+
+Le bundle fourni initialement peut encore contenir un ancien `PKGBUILD` multi-paquets. Pour respecter la distribution actuelle, ne produire et n'installer que le paquet unifié `amplifaya-full` ; ne pas installer les anciennes variantes moteur/GUI séparées. Le paquet unifié doit inclure le moteur, le service utilisateur, le preset ClearPenguin et l'interface GTK4/libadwaita.
+
 ## Commandes utiles
 
 | Commande | Effet |

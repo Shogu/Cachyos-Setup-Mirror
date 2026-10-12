@@ -133,7 +133,17 @@ Une capture de l'interface de Decibel n'a pas été fournie dans cet envoi. Elle
 
 ### 11.27 — Disquaire
 
-**Disquaire** est un éditeur de tags MP3 et FLAC pour GNOME, conçu pour ne conserver que sept champs : **artiste, titre, album, date, genre, pochette et paroles**. Les autres tags sont supprimés à l’enregistrement.
+**Disquaire 1.5.2** est un éditeur GTK4/libadwaita de tags MP3 et FLAC pour GNOME. Il conserve sept champs — artiste, titre, album, année, genre, pochette et paroles — et supprime les autres tags à l'enregistrement.
+
+La version 1.5.2 ajoute notamment la recherche de tags dans toute la discothèque, l'édition groupée, la mise en forme et le renommage cohérents artiste/titre, la réserve de pochettes par genre, la recherche floue de doublons, la conversion FLAC vers MP3 320 kb/s et l'annulation des dernières opérations. La recherche globale utilise un cache dans `~/.cache/disquaire/index.json`.
+
+Installation du paquet :
+
+```fish
+sudo pacman -U ./disquaire-1.5.2-1-any.pkg.tar.zst
+```
+
+Le README complet, les dépendances et les instructions de compilation sont dans [README Disquaire](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/01-Multimedia/Disquaire/README.md). Le dossier d'application est [Disquaire](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/01-Multimedia/Disquaire/).
 
 ### Fonctions
 
