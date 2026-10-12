@@ -134,7 +134,6 @@ sudo pacman -Rns f2fs-tools xfsprogs sane colord-sane hwinfo && sudo pacman -Rdd
 - `ttf-meslo-nerd` : police Nerd Font.
 - `ttf-carlito` : police de substitution métriquement compatible avec Calibri ; à supprimer si elle n'est pas utilisée.
 - `ttf-opensans` : police Open Sans ; retirée de cette installation car elle n'est pas nécessaire à l'environnement GNOME utilisé ici.
-- `ttf-opensans` : police Open Sans ; retirée de cette installation car elle n'est pas nécessaire à l'environnement GNOME utilisé ici.
 - `cantarell-fonts` : police d'interface GNOME.
 - `noto-fonts` et `noto-fonts-emoji`.
 
@@ -287,7 +286,7 @@ sudo systemctl mask flatpak-system-helper.service
 Après redémarrage, examiner les durées de démarrage :
 
 ```
-systemd-analyze blame | grep -v '\\.device$'
+systemd-analyze blame | grep -v '\.device$'
 ```
 
 Puis lister les services activés :
@@ -314,11 +313,11 @@ Pour désactiver aussi la cible de notifications d’impression, y compris aprè
 systemctl --user mask org.gnome.SettingsDaemon.PrintNotifications.target
 ```
 
-**Après une mise à jour de version de GNOME :** il arrive que le service de notification d'alarme d'Evolution et son autostart réapparaissent. Pour empêcher le lancement automatique dans la session utilisateur :
+**Après une mise à jour de version de GNOME :** il arrive que le service de notification d’alarme d’Evolution et son autostart réapparaissent. Pour empêcher le lancement automatique dans la session utilisateur :
 
 ```fish
 mkdir -p ~/.config/autostart
-printf '[Desktop Entry]\\nType=Application\\nHidden=true\\n' > ~/.config/autostart/org.gnome.Evolution-alarm-notify.desktop
+printf '[Desktop Entry]\nType=Application\nHidden=true\n' > ~/.config/autostart/org.gnome.Evolution-alarm-notify.desktop
 pkill -f evolution-alarm-notify
 ```
 
@@ -499,7 +498,7 @@ Exécuter les commandes suivantes dans l’ordre :
 ls -l /etc/systemd/journald.conf.d/
 
 # 2. Quels fichiers sont lus, dans quel ordre, et avec quelles valeurs ?
-systemd-analyze cat-config systemd/journald.conf | grep -E '^(# /|\\[|[A-Z])'
+systemd-analyze cat-config systemd/journald.conf | grep -E '^(# /|\[|[A-Z])'
 
 # 3. Appliquer, puis vérifier que journald n’a rien refusé
 sudo systemctl restart systemd-journald
@@ -545,8 +544,8 @@ Pacman permet d'empêcher leur réinstallation avec la directive `NoExtract`.
 ```bash
 mkdir -p "$HOME/Sauvegardes"
 
-sudo tar -C /usr/share \\
-  -caf "$HOME/Sauvegardes/locales-avant-nettoyage.tar.zst" \\
+sudo tar -C /usr/share \
+  -caf "$HOME/Sauvegardes/locales-avant-nettoyage.tar.zst" \
   locale
 ```
 
@@ -581,12 +580,12 @@ Les règles commençant par `!` réautorisent les chemins français et anglais a
 ### Afficher les répertoires qui seront supprimés
 
 ```bash
-sudo find /usr/share/locale \\
-  -mindepth 1 \\
-  -maxdepth 1 \\
-  -type d \\
-  ! -name 'fr*' \\
-  ! -name 'en*' \\
+sudo find /usr/share/locale \
+  -mindepth 1 \
+  -maxdepth 1 \
+  -type d \
+  ! -name 'fr*' \
+  ! -name 'en*' \
   -print
 ```
 
@@ -595,23 +594,23 @@ Examiner complètement la liste avant de continuer.
 ### Supprimer les locales inutilisées
 
 ```bash
-sudo find /usr/share/locale \\
-  -mindepth 1 \\
-  -maxdepth 1 \\
-  -type d \\
-  ! -name 'fr*' \\
-  ! -name 'en*' \\
+sudo find /usr/share/locale \
+  -mindepth 1 \
+  -maxdepth 1 \
+  -type d \
+  ! -name 'fr*' \
+  ! -name 'en*' \
   -exec rm -rf -- {} +
 ```
 
 ### Vérifier le résultat
 
 ```bash
-find /usr/share/locale \\
-  -mindepth 1 \\
-  -maxdepth 1 \\
-  -type d \\
-  -printf '%f\\n' |
+find /usr/share/locale \
+  -mindepth 1 \
+  -maxdepth 1 \
+  -type d \
+  -printf '%f\n' |
   sort
 ```
 
@@ -625,7 +624,7 @@ localectl status
 ### Restaurer en cas de problème
 
 ```bash
-sudo tar -C /usr/share \\
+sudo tar -C /usr/share \
   -xaf "$HOME/Sauvegardes/locales-avant-nettoyage.tar.zst"
 ```
 
