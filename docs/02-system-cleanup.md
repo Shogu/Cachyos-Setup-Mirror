@@ -134,6 +134,7 @@ sudo pacman -Rns f2fs-tools xfsprogs sane colord-sane hwinfo && sudo pacman -Rdd
 - `ttf-meslo-nerd` : police Nerd Font.
 - `ttf-carlito` : police de substitution métriquement compatible avec Calibri ; à supprimer si elle n'est pas utilisée.
 - `ttf-opensans` : police Open Sans ; retirée de cette installation car elle n'est pas nécessaire à l'environnement GNOME utilisé ici.
+- `ttf-opensans` : police Open Sans ; retirée de cette installation car elle n'est pas nécessaire à l'environnement GNOME utilisé ici.
 - `cantarell-fonts` : police d'interface GNOME.
 - `noto-fonts` et `noto-fonts-emoji`.
 
