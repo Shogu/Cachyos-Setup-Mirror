@@ -10,8 +10,8 @@
 - [3.4 Paramètres du noyau](#34--paramètres-du-noyau)
 - [3.5 Limiter l'activation automatique des TTY](#35--limiter-lactivation-automatique-des-tty)
 - [3.6 Sched-ext (SCX)](#36--sched-ext-scx)
-- [3.7 Protéger les transactions noyau si `/boot` n'est pas monté](#37--protéger-les-transactions-noyau-si-boot-nest-pas-monté)
-- [3.8 Alerte avant la mise à jour des paquets sensibles](#38--alerte-avant-la-mise-à-jour-des-paquets-sensibles)
+- [3.7 Hook Pacman — protéger les transactions noyau si `/boot` n'est pas monté](#37--hook-pacman--protéger-les-transactions-noyau-si-boot-nest-pas-monté)
+- [3.8 Hook Pacman — alerte avant la mise à jour des paquets sensibles](#38--hook-pacman--alerte-avant-la-mise-à-jour-des-paquets-sensibles)
 - [3.9 TTY de secours et langue temporaire](#39--tty-de-secours-et-langue-temporaire)
 
 ## 3.1 — Retirer Plymouth ou le logo firmware
@@ -209,7 +209,7 @@ NAutoVTs=1
 
 Synchronisation du scheduler sched-ext (SCX) avec TuneD et les profils d'énergie, traités dans [Optimisations & performance](05-performance-tuning.md#51--coordonner-tuned-les-profils-énergétiques-et-scx).
 
-## 3.7 — Protéger les transactions noyau si `/boot` n'est pas monté
+## 3.7 — Hook Pacman : protéger les transactions noyau si `/boot` n'est pas monté
 
 Sur cette installation, `/boot` contient l'ESP utilisée par Limine. Une transaction qui installe, met à jour ou supprime un noyau alors que `/boot` n'est pas monté peut modifier les fichiers du système sans actualiser l'ESP. Le hook Pacman ci-dessous refuse la transaction si le point de montage manque.
 
@@ -240,7 +240,7 @@ Le déclencheur de type chemin `usr/lib/modules/*/vmlinuz` doit correspondre aux
 Le lanceur Shelly et son contrôle préalable de `/boot` sont documentés dans [Shell & terminal](12-shell-terminal.md#123--shelly-et-le-lanceur-de-mise-à-jour).
 
 
-## 3.8 — Alerte avant la mise à jour des paquets sensibles
+## 3.8 — Hook Pacman : alerte avant la mise à jour des paquets sensibles
 
 Le paquet ZIP [`hook-alerte-pacman.zip`](../Ressources/Scripts/hook-alerte-pacman.zip) contient trois fichiers : le hook Pacman, le script d'alerte et `installer.sh`.
 
