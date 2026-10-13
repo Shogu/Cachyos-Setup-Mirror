@@ -38,7 +38,7 @@ Dans **CachyOS Hello** :
 ## 1.2 — Installation de paquets
 
 ```fish
-paru -Syu libre-menu-editor archclean gapless
+paru -Syu libre-menu-editor gapless
 ```
 
 Pour les applications GTK4/libadwaita spécifiques au setup, notamment **Snapper GTK4** et le build **dconf-editor GTK4**, voir [10 — Logiciels](10-logiciels.md) et [11 — Applications Vibe Coded](11-applications-vibe-coded.md).

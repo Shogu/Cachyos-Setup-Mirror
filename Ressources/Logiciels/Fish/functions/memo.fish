@@ -227,10 +227,9 @@ function memo --description "Liste interactive des abbr et fonctions disponibles
         set_color brmagenta
         echo "  MAINTENANCE"
         set_color normal
-        set_color brblue; echo -n "  8) clean"; set_color normal; echo " → Nettoyage système"
-        set_color brblue; echo -n "  9) pacstats"; set_color normal; echo " → Statistiques paquets"
-        set_color brblue; echo -n " 10) search"; set_color normal; echo " → Recherche fichiers"
-        set_color brblue; echo -n " 11) upgrade"; set_color normal; echo " → Mise à jour Shelly"
+        set_color brblue; echo -n "  8) pacstats"; set_color normal; echo " → Statistiques paquets"
+        set_color brblue; echo -n "  9) search"; set_color normal; echo " → Recherche fichiers"
+        set_color brblue; echo -n " 10) upgrade"; set_color normal; echo " → Mise à jour Shelly"
         echo
 
         set_color brmagenta
@@ -240,7 +239,7 @@ function memo --description "Liste interactive des abbr et fonctions disponibles
         echo
 
         set_color yellow
-        read -P "Choisissez un numéro entre 1 et 12, 'r' pour revenir au menu principal, ou 'q' pour quitter : " choice
+        read -P "Choisissez un numéro entre 1 et 11, 'r' pour revenir au menu principal, ou 'q' pour quitter : " choice
         set_color normal
 
         if test "$choice" = "q"
@@ -258,7 +257,7 @@ function memo --description "Liste interactive des abbr et fonctions disponibles
             return 1
         end
 
-        if test "$choice" -lt 1 -o "$choice" -gt 12
+        if test "$choice" -lt 1 -o "$choice" -gt 11
             set_color red
             echo "Numéro hors plage. Veuillez choisir entre 1 et 12."
             set_color normal
@@ -274,11 +273,10 @@ function memo --description "Liste interactive des abbr et fonctions disponibles
             case 5; set cmd "fstab"
             case 6; set cmd "mkinitcpio"
             case 7; set cmd "fwupdate"
-            case 8; set cmd "clean"
-            case 9; set cmd "pacstats"
-            case 10; set cmd "search"
-            case 11; set cmd "upgrade"
-            case 12; set cmd "liminevault"
+            case 8; set cmd "pacstats"
+            case 9; set cmd "search"
+            case 10; set cmd "upgrade"
+            case 11; set cmd "liminevault"
         end
 
         echo
