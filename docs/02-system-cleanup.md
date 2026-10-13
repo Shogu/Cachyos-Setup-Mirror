@@ -2,7 +2,7 @@
 
 [Accueil](../README.md) · [Précédent](01-installation.md) · [Suivant](03-boot-kernel.md)
 
-> **Dans ce chapitre :** nettoyage du système après installation — NVRAM, paquets superflus, services et pilotes désactivés, journaux, traductions, et désactivation de XWayland au démarrage.
+> **Dans ce chapitre :** nettoyage du système après installation — NVRAM, paquets superflus, services et pilotes désactivés, journaux, traductions.
 
 - [2.1 Nettoyer les entrées UEFI en NVRAM](#21--nettoyer-les-entrées-uefi-en-nvram)
 - [2.2 Alléger les logiciels installés](#22--alléger-les-logiciels-installés)
