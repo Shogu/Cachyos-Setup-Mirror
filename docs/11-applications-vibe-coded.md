@@ -415,6 +415,18 @@ L’outil Icônes UI et le gestionnaire d’icônes des dossiers personnels sont
 
 ## 05 — Système et utilitaires
 
+### 11.28 — Vidange
+
+**Vidange** est une application GTK4/libadwaita en Python pour le nettoyage de CachyOS sous GNOME 51. L'interface est en français et l'application ne tourne jamais en root.
+
+Elle rassemble la vérification des paquets orphelins, le nettoyage du cache pacman, des journaux systemd et de certains caches utilisateur, navigateurs et dossiers de développement. Elle estime l'espace récupérable et présente un récapitulatif des opérations.
+
+Les tâches bloquantes s'exécutent en arrière-plan. Les opérations privilégiées passent par un helper dédié via Polkit, avec validation stricte des paramètres ; aucune commande arbitraire ni aucun chemin ne doit être accepté. Le backend reste indépendant de GTK et les réglages sont stockés dans ~/.config/vidange/settings.json.
+
+Le paquet Arch compilé sera ajouté manuellement au dossier [Vidange](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/05-Systeme-et-utilitaires/Vidange/). Le README du dossier présente l'application ; le fichier CLAUDE.md détaille les contraintes techniques et les procédures de vérification.
+
+---
+
 ### 11.15 — dconf-editor GTK4
 
 Le **dconf-editor GTK4** utilisé dans ce setup est une exception dans ce chapitre : il ne s’agit **pas d’une application vibe codée**, mais d’un build compilé depuis les **sources officielles du portage GTK4 en cours**.
