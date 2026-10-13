@@ -14,7 +14,7 @@ Les dossiers sont classés par usage principal. Les extensions GNOME Shell reste
 - **02 — Bureautique et rédaction** : Grimoire, Grille, Samizdat.
 - **03 — Fichiers et téléchargements** : Fret, Grabber, Nautilus Bookmark Icons, PLACES.
 - **04 — Bureau et personnalisation** : Extension Manager, Icônes UI.
-- **05 — Système et utilitaires** : dconf-editor GTK4, Fisherman, Pacto, Pusher, Radar, SCX Manager, Sismographe, Snapper GTK4, systemd-gui.
+- **05 — Système et utilitaires** : dconf-editor GTK4, Fisherman, Pacto, Pusher, Radar, SCX Manager, Sismographe, Snapper GTK4, systemd-gui, Vidange.
 
 ## 01 — Multimédia
 
@@ -42,6 +42,7 @@ Les dossiers sont classés par usage principal. Les extensions GNOME Shell reste
 
 ## 05 — Système et utilitaires
 
+- [11.28 — Vidange](#1128--vidange)
 - [11.15 — dconf-editor GTK4](#1115--dconf-editor-gtk4)
 - [11.8 — Fisherman](#118--fisherman)
 - [11.9 — Pacto](#119--pacto)
@@ -133,56 +134,21 @@ Une capture de l'interface de Decibel n'a pas été fournie dans cet envoi. Elle
 
 ### 11.27 — Disquaire
 
-**Disquaire 1.5.2** est un éditeur GTK4/libadwaita de tags MP3 et FLAC pour GNOME. Il conserve sept champs — artiste, titre, album, année, genre, pochette et paroles — et supprime les autres tags à l'enregistrement.
+**Disquaire 1.5.2** est un éditeur GTK4/libadwaita de tags MP3 et FLAC pour GNOME. Il conserve sept champs — artiste, titre, album, date, genre, pochette et paroles — et supprime les autres tags à l'enregistrement.
 
-La version 1.5.2 ajoute notamment la recherche de tags dans toute la discothèque, l'édition groupée, la mise en forme et le renommage cohérents artiste/titre, la réserve de pochettes par genre, la recherche floue de doublons, la conversion FLAC vers MP3 320 kb/s et l'annulation des dernières opérations. La recherche globale utilise un cache dans `~/.cache/disquaire/index.json`.
+La version 1.5.2 comprend la recherche de tags dans toute la discothèque, l'édition groupée, la mise en forme et le renommage cohérents artiste/titre, la réserve de pochettes par genre, la recherche floue de doublons, la conversion FLAC vers MP3 320 kb/s et l'annulation des dernières opérations. La recherche globale utilise un cache dans ~/.cache/disquaire/index.json.
 
-Installation du paquet :
+Autres fonctions : arborescence et recherche des dossiers, création et déplacement par glisser-déposer, pochettes depuis folder.jpg ou une recherche en ligne, lecture intégrée, corbeille et restauration des dernières opérations. Les fichiers comportant des tags supplémentaires sont signalés ; les modifications ne sont écrites sur le disque qu'à l'enregistrement.
 
-```fish
+Le paquet compilé disquaire-1.5.2-1-any.pkg.tar.zst est déjà présent dans le dossier Disquaire. Pour l'installer depuis ce dossier :
+
+~~~fish
 sudo pacman -U ./disquaire-1.5.2-1-any.pkg.tar.zst
-```
+~~~
 
-Le README complet, les dépendances et les instructions de compilation sont dans [README Disquaire](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/01-Multimedia/Disquaire/README.md). Le dossier d'application est [Disquaire](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/01-Multimedia/Disquaire/).
-
-### Fonctions
-
-- arborescence des dossiers et recherche dans la liste ;
-- modification groupée de plusieurs morceaux ;
-- aperçu, remplacement et glisser-déposer des pochettes ;
-- lecture intégrée ou ouverture dans le lecteur choisi ;
-- renommage, déplacement et mise à la corbeille ;
-- conversion FLAC vers MP3 à 320 kb/s et 44,1 kHz, avec mise à la corbeille du FLAC d’origine.
-
-Les fichiers comportant des tags supplémentaires sont signalés par un point bleu. Les modifications ne sont écrites sur le disque qu’à l’enregistrement. En édition groupée, un champ « Valeurs différentes » n’est modifié que si une nouvelle valeur est saisie ; plusieurs artistes ou genres se séparent par un point-virgule.
-
-### Installation
-
-Le paquet Arch fourni est `disquaire-1.0.0-1-any.pkg.tar.zst`. Depuis le dossier qui le contient :
-
-```fish
-sudo pacman -U ./disquaire-1.0.0-1-any.pkg.tar.zst
-```
-
-Le paquet doit être conservé dans le dossier [Disquaire](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Disquaire/), avec son [README](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Disquaire/README.md).
-
-### Raccourcis
-
-| Raccourci | Action |
-|---|---|
-| Ctrl+S | Enregistrer la sélection |
-| Ctrl+Maj+S | Tout enregistrer |
-| F2 | Renommer le fichier |
-| F5 | Rafraîchir la liste |
-| Ctrl+F | Rechercher |
-| Ctrl+P | Lire / pause |
-| Ctrl+A / Échap | Tout cocher / tout décocher |
-
-Dépendances déclarées : Python, PyGObject, Mutagen, GTK4, libadwaita, GStreamer, ses greffons de base et usuels, et FFmpeg. La licence est GPL-3.0-or-later.
+Le [README complet de Disquaire](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/01-Multimedia/Disquaire/README.md) décrit les fonctions, les raccourcis, les dépendances et la compilation.
 
 ---
-
-[Accueil](../README.md) · [Précédent](10-logiciels.md) · [Suivant](12-shell-terminal.md)
 
 ## 02 — Bureautique et rédaction
 
@@ -536,16 +502,16 @@ sudo pacman -Rns pusher
 
 ### 11.10 — Radar
 
-Application GTK4/libadwaita de recherche et de visualisation de fichiers construite autour de `fzf`. Elle fournit une recherche rapide avec aperçu et filtres.
+Application GTK4/libadwaita de recherche et de visualisation de fichiers, avec moteur de recherche floue maison, filtres et aperçu de nombreux formats. La version 1.6.0 ajoute notamment l'aperçu des tableaux ODS/XLSX, le contenu des archives sans extraction et l'ouverture via l'application par défaut.
 
-**Paquet fourni : `radar-1.4.0-2-any.pkg.tar.zst`.**
+Le paquet radar-1.6.0-1-any.pkg.tar.zst est à ajouter manuellement au dossier Radar.
 
 ![Interface de Radar](../Ressources/screenshots/vibe-coded/radar.png)
 
 ### Installation
 
 ```fish
-sudo pacman -U ./radar-1.4.0-2-any.pkg.tar.zst
+sudo pacman -U ./radar-1.6.0-1-any.pkg.tar.zst
 ```
 
 ### Désinstallation

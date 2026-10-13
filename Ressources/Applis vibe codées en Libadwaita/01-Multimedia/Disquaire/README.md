@@ -2,7 +2,7 @@
 
 Éditeur de tags MP3 et FLAC pour GNOME, qui ne garde que l'essentiel.
 
-Disquaire conserve sept éléments : **artiste, titre, album, année, genre, pochette et paroles**. Tout le reste est supprimé à l'enregistrement. La date ne garde que l'année (« 2014-03-01 » devient « 2014 »).
+Disquaire conserve sept éléments : **artiste, titre, album, date, genre, pochette et paroles**. Tout le reste est supprimé à l'enregistrement.
 
 ## Fonctions
 
