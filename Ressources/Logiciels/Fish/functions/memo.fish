@@ -235,7 +235,7 @@ function memo --description "Liste interactive des abbr et fonctions disponibles
         set_color brmagenta
         echo "  LIMINE"
         set_color normal
-        set_color brblue; echo -n " 12) liminevault"; set_color normal; echo " → Commandes Limine"
+        set_color brblue; echo -n " 11) liminevault"; set_color normal; echo " → Commandes Limine"
         echo
 
         set_color yellow
@@ -259,7 +259,7 @@ function memo --description "Liste interactive des abbr et fonctions disponibles
 
         if test "$choice" -lt 1 -o "$choice" -gt 11
             set_color red
-            echo "Numéro hors plage. Veuillez choisir entre 1 et 12."
+            echo "Numéro hors plage. Veuillez choisir entre 1 et 11."
             set_color normal
             return 1
         end
