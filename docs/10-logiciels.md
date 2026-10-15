@@ -261,7 +261,7 @@ shelly aur install dropbox dropbox-cli
 
 ### Démarrage automatique par XDG
 
-Créer le fichier `~/.config/autostart/dropbox.desktop` :
+Dropbox crée sa propre entrée. Autrement, créer le fichier `~/.config/autostart/dropbox.desktop` :
 
 ```fish
 mkdir -p "$HOME/.config/autostart"
@@ -283,7 +283,6 @@ EOF
 desktop-file-validate "$HOME/.config/autostart/dropbox.desktop"
 ```
 
-Si Dropbox remplace ce fichier par sa propre entrée, conserver le fichier généré par le client s’il contient un lanceur valide pour Dropbox.
 
 Se déconnecter puis se reconnecter à GNOME pour vérifier le démarrage automatique. Pour tester immédiatement le lanceur :
 
