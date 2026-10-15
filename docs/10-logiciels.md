@@ -236,7 +236,7 @@ desktop-file-validate "$HOME/.local/share/applications/lelivrescolaire.fr.deskto
 
 ## 10.3 — Dropbox
 
-Utiliser le démon officiel en arrière-plan, sans icône, avec un service systemd utilisateur. Les commandes ci-dessous s’exécutent dans **Fish**.
+Utiliser le client officiel Dropbox en arrière-plan, sans dépendre d’un service systemd utilisateur. Sur cette machine, le lancement automatique par **XDG Autostart** fonctionne correctement : Dropbox démarre dans la session GNOME, puis `dropbox-cli status` confirme la synchronisation. Les commandes ci-dessous s’exécutent dans **Fish**.
 
 ### Configuration graphique initiale
 
@@ -257,56 +257,72 @@ Marquer `dropbox` comme installé explicitement avant de retirer son intégratio
 sudo pacman -D --asexplicit dropbox
 sudo pacman -Rns nautilus-dropbox
 shelly aur install dropbox dropbox-cli
-rm -f "$HOME/.config/autostart/dropbox.desktop"
 ```
 
-Retirer aussi un éventuel ancien fichier d’autostart personnalisé avec délai : le service ci-dessous remplace ce lancement.
+### Démarrage automatique par XDG
 
-### Service systemd utilisateur
-
-Créer le fichier depuis Fish :
+Le client Dropbox peut fournir ou recréer son propre fichier d’autostart. Utiliser `~/.config/autostart/dropbox.desktop` plutôt qu’un service systemd personnalisé :
 
 ```fish
-mkdir -p "$HOME/.config/systemd/user"
-printf '%s\n' \
-    '[Unit]' \
-    'Description=Dropbox (démon headless)' \
-    '' \
-    '[Service]' \
-    'ExecStart=/usr/bin/dropbox' \
-    'UnsetEnvironment=DISPLAY WAYLAND_DISPLAY' \
-    'Restart=on-failure' \
-    'RestartSec=10' \
-    '' \
-    '[Install]' \
-    'WantedBy=default.target' \
-    > "$HOME/.config/systemd/user/dropbox.service"
+mkdir -p "$HOME/.config/autostart"
 
+cat > "$HOME/.config/autostart/dropbox.desktop" <<'EOF'
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Dropbox
+Comment=Synchronisation Dropbox
+Exec=/usr/bin/dropbox
+Icon=dropbox
+Terminal=false
+StartupNotify=false
+X-GNOME-Autostart-enabled=true
+Categories=Network;
+EOF
+
+desktop-file-validate "$HOME/.config/autostart/dropbox.desktop"
+```
+
+Si Dropbox remplace ce fichier par sa propre entrée lors du premier lancement, conserver le fichier généré par le client s’il contient un lanceur valide pour Dropbox. Ne pas supprimer le fichier d’autostart après cette étape.
+
+Pour abandonner une ancienne installation utilisant le service systemd décrit dans une version précédente de cette procédure, désactiver et supprimer uniquement cette unité utilisateur :
+
+```fish
+systemctl --user disable --now dropbox.service
+rm -f "$HOME/.config/systemd/user/dropbox.service"
 systemctl --user daemon-reload
-systemctl --user enable --now dropbox.service
+systemctl --user reset-failed dropbox.service
 ```
 
-Le démon démarre à l’ouverture de session. `UnsetEnvironment` retire l’accès aux affichages X11 et Wayland pour le lancement sans interface. Aucun `network-online.target` utilisateur n’est ajouté : il ne garantit pas la disponibilité du réseau système ; Dropbox se reconnecte lorsque le réseau devient disponible.
+Cette suppression ne touche ni au compte Dropbox ni aux données de `~/.dropbox` ou du dossier synchronisé. Si une sauvegarde manuelle de l’unité existe (par exemple `dropbox.service.bak`), elle peut être conservée quelque temps puis supprimée séparément.
 
-Si le compte n’est pas encore lié, consulter le journal pour obtenir le lien d’autorisation :
+Se déconnecter puis se reconnecter à GNOME pour vérifier le démarrage automatique. On peut aussi tester immédiatement le lanceur :
 
 ```fish
-journalctl --user -u dropbox.service -f
+/usr/bin/dropbox
 ```
 
 ### Vérification
 
 ```fish
-systemctl --user status dropbox.service
 dropbox-cli status
-dropbox-cli filestatus "$HOME/Dropbox"
+pgrep -a -f '[d]ropbox'
 ```
 
-Le service doit être actif et le client indiquer l’état de synchronisation. Pour tester sans écraser un fichier existant :
+Le client doit indiquer l’état de synchronisation, idéalement **« À jour »**. Vérifier aussi que l’ancien service ne tourne pas :
+
+```fish
+systemctl --user is-enabled dropbox.service
+systemctl --user is-active dropbox.service
+```
+
+Après suppression de l’unité, ces commandes peuvent signaler que le service n’est pas trouvé ; c’est normal.
+
+Pour tester sans écraser un fichier existant :
 
 ```fish
 set test_sync (mktemp "$HOME/Dropbox/test-sync-XXXXXX.txt")
-printf '%s\n' 'Test de synchronisation Dropbox' > "$test_sync"
+printf '%s\\n' 'Test de synchronisation Dropbox' > "$test_sync"
 dropbox-cli filestatus "$test_sync"
 ```
 
