@@ -236,7 +236,7 @@ desktop-file-validate "$HOME/.local/share/applications/lelivrescolaire.fr.deskto
 
 ## 10.3 — Dropbox
 
-Utiliser le client officiel Dropbox en arrière-plan, sans dépendre d’un service systemd utilisateur. Sur cette machine, le lancement automatique par **XDG Autostart** fonctionne correctement : Dropbox démarre dans la session GNOME, puis `dropbox-cli status` confirme la synchronisation. Les commandes ci-dessous s’exécutent dans **Fish**.
+Utiliser le client officiel Dropbox en arrière-plan, avec un démarrage automatique par **XDG Autostart**. Cette méthode fonctionne dans la session GNOME : Dropbox démarre à l’ouverture de session et `dropbox-cli status` permet de vérifier la synchronisation. Les commandes ci-dessous s’exécutent dans **Fish**.
 
 ### Configuration graphique initiale
 
@@ -261,7 +261,7 @@ shelly aur install dropbox dropbox-cli
 
 ### Démarrage automatique par XDG
 
-Le client Dropbox peut fournir ou recréer son propre fichier d’autostart. Utiliser `~/.config/autostart/dropbox.desktop` plutôt qu’un service systemd personnalisé :
+Créer le fichier `~/.config/autostart/dropbox.desktop` :
 
 ```fish
 mkdir -p "$HOME/.config/autostart"
@@ -283,20 +283,9 @@ EOF
 desktop-file-validate "$HOME/.config/autostart/dropbox.desktop"
 ```
 
-Si Dropbox remplace ce fichier par sa propre entrée lors du premier lancement, conserver le fichier généré par le client s’il contient un lanceur valide pour Dropbox. Ne pas supprimer le fichier d’autostart après cette étape.
+Si Dropbox remplace ce fichier par sa propre entrée, conserver le fichier généré par le client s’il contient un lanceur valide pour Dropbox.
 
-Pour abandonner une ancienne installation utilisant le service systemd décrit dans une version précédente de cette procédure, désactiver et supprimer uniquement cette unité utilisateur :
-
-```fish
-systemctl --user disable --now dropbox.service
-rm -f "$HOME/.config/systemd/user/dropbox.service"
-systemctl --user daemon-reload
-systemctl --user reset-failed dropbox.service
-```
-
-Cette suppression ne touche ni au compte Dropbox ni aux données de `~/.dropbox` ou du dossier synchronisé. Si une sauvegarde manuelle de l’unité existe (par exemple `dropbox.service.bak`), elle peut être conservée quelque temps puis supprimée séparément.
-
-Se déconnecter puis se reconnecter à GNOME pour vérifier le démarrage automatique. On peut aussi tester immédiatement le lanceur :
+Se déconnecter puis se reconnecter à GNOME pour vérifier le démarrage automatique. Pour tester immédiatement le lanceur :
 
 ```fish
 /usr/bin/dropbox
@@ -309,14 +298,7 @@ dropbox-cli status
 pgrep -a -f '[d]ropbox'
 ```
 
-Le client doit indiquer l’état de synchronisation, idéalement **« À jour »**. Vérifier aussi que l’ancien service ne tourne pas :
-
-```fish
-systemctl --user is-enabled dropbox.service
-systemctl --user is-active dropbox.service
-```
-
-Après suppression de l’unité, ces commandes peuvent signaler que le service n’est pas trouvé ; c’est normal.
+Le client doit indiquer l’état de synchronisation, idéalement **« À jour »**.
 
 Pour tester sans écraser un fichier existant :
 
