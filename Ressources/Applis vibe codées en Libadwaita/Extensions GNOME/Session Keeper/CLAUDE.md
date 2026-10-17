@@ -4,7 +4,7 @@ Adaptation de Session Keeper 1.0.6 (ALT Linux) : sauvegarde continue (événemen
 
 ## Technique
 
-- ZIP `Session-Keeper.zip`, **UUID upstream conservé** `session-keeper@altlinux.org`, version 131, gettext `session-keeper`, schéma `org.gnome.shell.extensions.session-keeper`.
+- Paquet Arch fourni : `gnome-shell-extension-session-keeper-1.2.2-1-any.pkg.tar.zst`. **UUID upstream conservé** `session-keeper@altlinux.org`, version 131, gettext `session-keeper`, schéma `org.gnome.shell.extensions.session-keeper`.
 - `extension.js` + `services/sessionManager.js` (~45 Ko, cœur), `services/notificationService.js`, `utils/` (sessionStore — écriture atomique, permissions privées ; bootTracker ; loginSessionTracker ; log), `models/sessionModes.js`, `ui/sessionOnClose.js`, `ui/prefs/generalPage.js` + `debugPage.js`.
 - API natives uniquement : GNOME Shell, GJS, Mutter, Gio, GLib. Flush synchrone à la fermeture propre de session.
 - **`shell-version` = `["50"]` seulement : ne se charge pas sous GNOME 51** (système actuel).

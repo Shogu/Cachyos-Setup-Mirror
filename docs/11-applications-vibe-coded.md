@@ -694,7 +694,7 @@ Extension GNOME Shell de productivité destinée à sauvegarder automatiquement 
 
 Cette version part de **Session Keeper 1.0.6 d’ALT Linux** et a été adaptée pour **GNOME 50**. Le moteur reste entièrement natif GNOME/Linux : GJS, Mutter, Gio et GLib, sans daemon ni outil externe.
 
-**Archive fournie : `Session-Keeper.zip`.** UUID : `session-keeper@altlinux.org`.
+**Paquet Arch fourni :** `gnome-shell-extension-session-keeper-1.2.2-1-any.pkg.tar.zst`. UUID : `session-keeper@altlinux.org`.
 
 ### Fonctions principales
 
@@ -714,10 +714,10 @@ Le fichier `metadata.json` contient aussi le mot-clé `productivity` afin que **
 
 ### Installation
 
-Depuis la racine du dépôt :
+Depuis la racine du dépôt, installer le paquet Arch fourni :
 
 ```fish
-gnome-extensions install --force "Ressources/Applis vibe codées en Libadwaita/Extensions GNOME/Session Keeper/Session-Keeper.zip"
+sudo pacman -U "./Ressources/Applis vibe codées en Libadwaita/Extensions GNOME/Session Keeper/gnome-shell-extension-session-keeper-1.2.2-1-any.pkg.tar.zst"
 ```
 
 Sous Wayland, se déconnecter puis se reconnecter, puis activer l’extension :
