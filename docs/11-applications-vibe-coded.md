@@ -153,35 +153,35 @@ Le [README complet de Disquaire](../Ressources/Applis%20vibe%20codées%20en%20Li
 
 ### 11.29 — Showtime — sauts proportionnels dans la vidéo
 
-Showtime est le lecteur vidéo GNOME. Ce dépôt documente un correctif local de \`showtime/widgets/window.py\` pour rendre les déplacements à la recherche proportionnels à la durée totale de la vidéo :
+Showtime est le lecteur vidéo GNOME. Ce dépôt documente un correctif local de `showtime/widgets/window.py` pour rendre les déplacements à la recherche proportionnels à la durée totale de la vidéo :
 
 - **Flèches gauche / droite** : saut d'environ **1 %** de la durée totale par pression.
 - **Flèches haut / bas** : saut d'environ **5 %** de la durée totale par pression.
 - Le déplacement est calculé selon la durée du média : le saut s'adapte donc automatiquement aux vidéos courtes ou longues.
 
 Le fichier Python corrigé devra être déposé manuellement dans :
-\`Ressources/Applis vibe codées en Libadwaita/01-Multimedia/Showtime/window.py\`.
+`Ressources/Applis vibe codées en Libadwaita/01-Multimedia/Showtime/window.py`.
 
 ### Installation du correctif
 
 Depuis la racine du dépôt, une fois le fichier corrigé ajouté à ce dossier :
 
-\`\`\`fish
+```fish
 sudo cp "Ressources/Applis vibe codées en Libadwaita/01-Multimedia/Showtime/window.py" (pacman -Ql showtime | string match -r '\S+/widgets/window\.py$')
-\`\`\`
+```
 
-Cette commande remplace le fichier \`window.py\` installé par le paquet Showtime. Elle nécessite les droits administrateur et peut être écrasée lors d'une mise à jour du paquet : conserver le fichier dans le dépôt pour pouvoir réappliquer le correctif après mise à jour.
+Cette commande remplace le fichier `window.py` installé par le paquet Showtime. Elle nécessite les droits administrateur et peut être écrasée lors d'une mise à jour du paquet : conserver le fichier dans le dépôt pour pouvoir réappliquer le correctif après mise à jour.
 
 ### Vérification
 
-Après la copie, vérifier le fichier réellement installé et rechercher le marqueur \`sauts\` :
+Après la copie, vérifier le fichier réellement installé et rechercher le marqueur `sauts` :
 
-\`\`\`fish
+```fish
 cat /usr/lib/python3.14/site-packages/showtime/widgets/window.py
 grep -n -i "sauts" /usr/lib/python3.14/site-packages/showtime/widgets/window.py
-\`\`\`
+```
 
-La seconde commande doit afficher les lignes contenant le marqueur « sauts ». Si le chemin d'installation change avec la version de Python ou du paquet, retrouver le chemin exact avec \`pacman -Ql showtime | string match -r '\S+/widgets/window\.py$'\`.
+La seconde commande doit afficher les lignes contenant le marqueur « sauts ». Si le chemin d'installation change avec la version de Python ou du paquet, retrouver le chemin exact avec `pacman -Ql showtime | string match -r '\S+/widgets/window\.py$'`.
 
 **Important :** le fichier corrigé n'est pas encore inclus dans ce commit ; il sera ajouté par Ogu dans le dossier indiqué ci-dessus. Les commandes décrivent la procédure prévue, mais le correctif n'a pas été installé ni testé ici.
 
