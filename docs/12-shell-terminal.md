@@ -45,13 +45,28 @@ zoxide query -l
 zoxide add ~/MonDossier
 ```
 
-Configurer Ptyxis et **GNOME Text Editor**, puis installer le fichier **`config.fish` du dépôt** dans `~/.config/fish/config.fish`. Il contient les alias et la désactivation du message d'accueil.
+Configurer Ptyxis et **GNOME Text Editor**, puis installer les fichiers Fish du dépôt dans les emplacements correspondants :
+
+- `Ressources/Logiciels/Fish/config.fish` → `~/.config/fish/config.fish` : alias, abréviations, éditeurs et configuration générale ;
+- `Ressources/Logiciels/Fish/functions/` → `~/.config/fish/functions/` : fonctions personnelles autoloadées ;
+- `Ressources/Logiciels/Fish/conf.d/shelly-local.fish` → `~/.config/fish/conf.d/shelly-local.fish` : autocomplétion des chemins de fichiers locaux pour `shelly install standard`, notamment après `./` ou `../`. Cela facilite la sélection d’un paquet local dans un flux d’installation équivalent à `pacman -U`, sans remplacer ni exécuter `pacman -U`.
+
+Créer les répertoires puis copier les fichiers depuis la racine du dépôt :
+
+```fish
+mkdir -p ~/.config/fish/{conf.d,functions}
+cp "Ressources/Logiciels/Fish/config.fish" ~/.config/fish/config.fish
+cp "Ressources/Logiciels/Fish/conf.d/shelly-local.fish" ~/.config/fish/conf.d/shelly-local.fish
+cp Ressources/Logiciels/Fish/functions/*.fish ~/.config/fish/functions/
+```
+
+Recharger la configuration :
 
 ```fish
 source ~/.config/fish/config.fish
 ```
 
-Ajouter les `functions` (à télécharger dans le dépôt) dans `~/.config/fish/functions`.
+La complétion `shelly-local.fish` est chargée automatiquement par Fish au démarrage. Pour la tester dans une nouvelle commande, saisir `shelly install standard ./` puis appuyer sur **Tab** : Fish doit proposer les fichiers et paquets locaux correspondants.
 
 Dans GNOME Text Editor, ajuster les préférences internes et désactiver la correction orthographique ; le mémo l'utilise pour éviter les avertissements observés lors d'un lancement en ligne de commande.
 
