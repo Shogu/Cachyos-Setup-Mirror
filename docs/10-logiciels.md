@@ -347,7 +347,95 @@ sudo pacman -Syu --needed showtime
 showtime
 ```
 
-Réglage de l’interface selon les préférences.
+### Astuce d’interface — sauts proportionnels dans la vidéo
+
+Un petit correctif local de `window.py` modifie la recherche au clavier : les flèches **gauche/droite** déplacent la lecture d’environ **1 %** de la durée totale, et les flèches **haut/bas** d’environ **5 %**. Les sauts s’adaptent ainsi à la longueur de la vidéo. Il s’agit d’une astuce de personnalisation de Showtime, pas d’une application vibe coded.
+
+Le fichier corrigé à conserver dans le dépôt est :
+`Ressources/Logiciels/Players/Showtime/window.py`.
+
+Depuis la racine du dépôt, après avoir placé ce fichier :
+
+```fish
+sudo cp "Ressources/Logiciels/Players/Showtime/window.py" (pacman -Ql showtime | string match -r '\\S+/widgets/window\\.py
+## 10.6 — Applications Vibe Coded
+
+Les applications personnelles développées avec l'aide du Vibe Coding sont documentées séparément afin de conserver ici uniquement les logiciels et réglages généraux : [11 — Applications Vibe Coded](11-applications-vibe-coded.md).
+
+## 10.7 — Claude Code
+
+[**Claude Code**](https://code.claude.com/docs/en/quickstart) est l’assistant de programmation Anthropic en terminal. Utiliser l’installateur natif officiel pour Linux : il ne nécessite pas Node.js et gère ses mises à jour automatiquement. Cette installation est indépendante de Shelly et des paquets AUR.
+
+Depuis Fish, installer sans `sudo`, ajouter le répertoire au PATH et contrôler la version :
+
+```fish
+sudo pacman -Syu --needed curl bash git
+curl -fsSL https://claude.ai/install.sh | bash
+fish_add_path "$HOME/.local/bin"
+claude --version
+```
+
+Ouvrir ensuite le terminal dans le projet et lancer l’assistant :
+
+```fish
+cd "$HOME/Gitlab/CACHYOS-Setup"
+claude
+```
+
+Au premier lancement, suivre la connexion dans le navigateur avec un abonnement Claude compatible (Pro, Max, Team ou Enterprise), ou un compte Claude Console disposant de crédits API. Dans Claude Code, `/help` affiche l’aide et `/login` permet de changer de compte.
+
+
+---
+
+[Accueil](../README.md) · [Précédent](01-installation.md) · [Suivant](11-applications-vibe-coded.md)
+)
+```
+
+Vérifier le fichier installé et rechercher le marqueur `sauts` :
+
+```fish
+cat /usr/lib/python3.14/site-packages/showtime/widgets/window.py
+grep -n -i "sauts" /usr/lib/python3.14/site-packages/showtime/widgets/window.py
+```
+
+Si le chemin change avec la version de Python ou du paquet, retrouver le chemin installé avec :
+
+```fish
+pacman -Ql showtime | string match -r '\\S+/widgets/window\\.py
+## 10.6 — Applications Vibe Coded
+
+Les applications personnelles développées avec l'aide du Vibe Coding sont documentées séparément afin de conserver ici uniquement les logiciels et réglages généraux : [11 — Applications Vibe Coded](11-applications-vibe-coded.md).
+
+## 10.7 — Claude Code
+
+[**Claude Code**](https://code.claude.com/docs/en/quickstart) est l’assistant de programmation Anthropic en terminal. Utiliser l’installateur natif officiel pour Linux : il ne nécessite pas Node.js et gère ses mises à jour automatiquement. Cette installation est indépendante de Shelly et des paquets AUR.
+
+Depuis Fish, installer sans `sudo`, ajouter le répertoire au PATH et contrôler la version :
+
+```fish
+sudo pacman -Syu --needed curl bash git
+curl -fsSL https://claude.ai/install.sh | bash
+fish_add_path "$HOME/.local/bin"
+claude --version
+```
+
+Ouvrir ensuite le terminal dans le projet et lancer l’assistant :
+
+```fish
+cd "$HOME/Gitlab/CACHYOS-Setup"
+claude
+```
+
+Au premier lancement, suivre la connexion dans le navigateur avec un abonnement Claude compatible (Pro, Max, Team ou Enterprise), ou un compte Claude Console disposant de crédits API. Dans Claude Code, `/help` affiche l’aide et `/login` permet de changer de compte.
+
+
+---
+
+[Accueil](../README.md) · [Précédent](01-installation.md) · [Suivant](11-applications-vibe-coded.md)
+
+```
+
+Voir le [README du correctif Showtime](../Ressources/Logiciels/Players/Showtime/README.md). Une mise à jour de Showtime peut écraser le fichier modifié ; il faudra alors réappliquer le correctif.
 
 ## 10.6 — Applications Vibe Coded
 
