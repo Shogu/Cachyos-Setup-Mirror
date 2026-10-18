@@ -23,150 +23,6 @@ Les dossiers sont classés par usage principal. Les extensions GNOME Shell reste
 - [11.27 — Disquaire](#1127--disquaire)
 - [11.29 — Showtime — sauts proportionnels dans la vidéo](#1129--showtime--sauts-proportionnels-dans-la-vidéo)
 
-### 11.29 — Showtime — sauts proportionnels dans la vidéo
-
-Showtime est le lecteur vidéo GNOME. Ce dépôt documente un correctif local de `showtime/widgets/window.py` pour rendre les déplacements à la recherche proportionnels à la durée totale de la vidéo :
-
-- **Flèches gauche / droite** : saut d'environ **1 %** de la durée totale par pression.
-- **Flèches haut / bas** : saut d'environ **5 %** de la durée totale par pression.
-- Le déplacement est calculé selon la durée du média : le saut s'adapte donc automatiquement aux vidéos courtes ou longues.
-
-Le fichier Python corrigé devra être déposé manuellement dans :
-`Ressources/Applis vibe codées en Libadwaita/01-Multimedia/Showtime/window.py`.
-
-### Installation du correctif
-
-Depuis la racine du dépôt, une fois le fichier corrigé ajouté à ce dossier :
-
-```fish
-sudo cp "Ressources/Applis vibe codées en Libadwaita/01-Multimedia/Showtime/window.py" (pacman -Ql showtime | string match -r '\\S+/widgets/window\\.py
-
-- [11.3 — Grimoire](#113--grimoire)
-- [11.23 — Grille](#1123--grille)
-- [11.24 — Samizdat](#1124--samizdat)
-
-## 03 — Fichiers et téléchargements
-
-- [11.4 — Fret](#114--fret)
-- [11.2 — Grabber](#112--grabber)
-- [11.12 — Nautilus Bookmark Icons](#1112--nautilus-bookmark-icons)
-- [11.26 — PLACES — Dossiers Ogu](#1126--places--dossiers-ogu)
-
-## 04 — Bureau et personnalisation
-
-- [11.21 — Extension Manager](#1121--extension-manager)
-- [11.25 — Icônes UI](#1125--icônes-ui)
-
-## 05 — Système et utilitaires
-
-- [11.28 — Vidange](#1128--vidange)
-- [11.15 — dconf-editor GTK4](#1115--dconf-editor-gtk4)
-- [11.8 — Fisherman](#118--fisherman)
-- [11.9 — Pacto](#119--pacto)
-- [11.11 — Pusher](#1111--pusher)
-- [11.10 — Radar](#1110--radar)
-- [11.5 — SCX Manager](#115--scx-manager)
-- [11.6 — systemd](#116--systemd)
-- [11.13 — Sismographe](#1113--sismographe)
-- [11.14 — Snapper GTK4](#1114--snapper-gtk4)
-
-## Extensions GNOME Shell
-
-- [11.1 — Always on top, always on top](#111--always-on-top-always-on-top)
-- [11.16 — Session Keeper](#1116--session-keeper)
-- [11.17 — Focus & Boutons](#1117--focus--boutons)
-- [11.18 — Battery Time Compact — Ogu](#1118--battery-time-compact--ogu)
-- [11.19 — Power Total](#1119--power-total)
-- [11.20 — UI Management](#1120--ui-management)
-
-## 01 — Multimédia
-
-### 11.22 — Amplifaya — moteur headless et interface
-
-**Amplifaya** est un moteur audio PipeWire sans interface au démarrage ni Qt, construit sur le cœur DSP de [JamesDSP](https://github.com/Audio4Linux/JDSP4Linux). Le profil **ClearPenguin** est chargé par défaut. Le moteur headless en C fournit la commande `amplifayactl` et le service systemd utilisateur ; l'interface GTK4/libadwaita est facultative et peut être lancée avec `amplifaya-gui`.
-
-Depuis la version 0.4.0, le moteur force le volume matériel de la carte son à 100 % au démarrage et lors d'un changement de sortie, puis reporte le volume total sur le curseur GNOME. Un seul paquet unifié, `amplifaya-full`, installe le moteur et l'interface. Le moteur fonctionne en arrière-plan sans ouvrir l'interface, qui reste disponible à la demande avec `amplifaya-gui`. La commande `amplifayactl test` vérifie le traitement audio en cours de lecture, et `amplifayactl ab` compare le son traité à la source en restaurant l'état initial ensuite.
-
-- Traitements disponibles : Bass Boost, égaliseur, limiteur, crossfeed BS2B au casque et élargissement stéréo sur haut-parleurs.
-- Pas de prise en charge Bluetooth ; tous les effets de JamesDSP ne sont pas repris.
-- L'interface utilise environ 100 Mo lorsqu'elle est ouverte ; le moteur seul environ 2 Mo.
-
-Désactive l'ancien traitement global JamesDSP ou EasyEffects avant d'activer Amplifaya, pour éviter un double traitement. Installation du paquet unifié depuis le répertoire qui le contient :
-
-```fish
-sudo pacman -U ./amplifaya-full-0.4.0-1-x86_64.pkg.tar.zst
-systemctl --user daemon-reload
-systemctl --user restart amplifaya.service
-amplifayactl status
-```
-
-### Vérification après installation
-
-Lance un morceau (MP3 ou autre) et laisse-le jouer pendant toute la vérification. Ces commandes contrôlent le volume matériel, le volume de la sortie Amplifaya, la sortie par défaut, le journal du moteur et enfin le traitement audio réel :
-
-```fish
-pactl get-sink-volume alsa_output.pci-0000_63_00.6.analog-stereo
-pactl get-sink-volume amplifaya
-pactl get-default-sink
-journalctl --user -u amplifaya -b --no-pager | grep carte
-amplifayactl test
-amplifayactl ab
-```
-
-Résultat attendu sur la configuration testée : la carte physique est à **100 %**, la sortie par défaut est `amplifaya`, le journal indique que la carte a été mise à 100 % et que le volume Amplifaya a été ajusté. `amplifayactl test` doit confirmer que le son est modifié. `amplifayactl ab` alterne quatre fois entre le traitement Amplifaya et le son d'origine, puis restaure l'état initial. Les noms de sink peuvent varier d'une machine à l'autre : si la carte physique n'a pas le nom indiqué, repère son nom exact avec `pactl list short sinks` et adapte la première commande.
-
-L'interface est incluse dans ce même paquet et peut être ouverte à la demande :
-
-```fish
-amplifaya-gui
-```
-
-Commandes utiles : `amplifayactl test`, `amplifayactl ab`, `amplifayactl bypass on|off`, `amplifayactl bass on|off`, `amplifayactl wide on|off`, `amplifayactl outputs`, `amplifayactl output NOM`, `amplifayactl stop` et `amplifayactl start`. Journaux : `journalctl --user -u amplifaya.service -b`.
-
-La documentation complète et l'historique des versions sont dans [le README Amplifaya](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/01-Multimedia/Amplifaya/readme_amplifaya.md).
-
-### 11.7 — Decibel
-
-Fork personnalisé de **Decibels**, le lecteur audio GNOME. Les modifications apportées permettent notamment de supprimer un titre avec `Suppr` et d'éviter l'ouverture d'une seconde fenêtre lorsqu'un fichier audio est ouvert pendant une lecture : le nouveau morceau remplace celui de la fenêtre existante.
-
-**Paquet fourni : `decibel-49.6.1-1-any.pkg.tar.zst`.**
-
-### Installation
-
-```fish
-sudo pacman -U ./decibel-49.6.1-1-any.pkg.tar.zst
-```
-
-### Désinstallation
-
-```fish
-sudo pacman -Rns decibel
-```
-
-### Capture
-
-Une capture de l'interface de Decibel n'a pas été fournie dans cet envoi. Elle pourra être ajoutée sous `../Ressources/screenshots/vibe-coded/decibel.png`.
-
----
-
-### 11.27 — Disquaire
-
-**Disquaire 1.5.2** est un éditeur GTK4/libadwaita de tags MP3 et FLAC pour GNOME. Il conserve sept champs — artiste, titre, album, date, genre, pochette et paroles — et supprime les autres tags à l'enregistrement.
-
-La version 1.5.2 comprend la recherche de tags dans toute la discothèque, l'édition groupée, la mise en forme et le renommage cohérents artiste/titre, la réserve de pochettes par genre, la recherche floue de doublons, la conversion FLAC vers MP3 320 kb/s et l'annulation des dernières opérations. La recherche globale utilise un cache dans ~/.cache/disquaire/index.json.
-
-Autres fonctions : arborescence et recherche des dossiers, création et déplacement par glisser-déposer, pochettes depuis folder.jpg ou une recherche en ligne, lecture intégrée, corbeille et restauration des dernières opérations. Les fichiers comportant des tags supplémentaires sont signalés ; les modifications ne sont écrites sur le disque qu'à l'enregistrement.
-
-Le paquet compilé disquaire-1.5.2-1-any.pkg.tar.zst est déjà présent dans le dossier Disquaire. Pour l'installer depuis ce dossier :
-
-~~~fish
-sudo pacman -U ./disquaire-1.5.2-1-any.pkg.tar.zst
-~~~
-
-Le [README complet de Disquaire](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/01-Multimedia/Disquaire/README.md) décrit les fonctions, les raccourcis, les dépendances et la compilation.
-
----
-
 ## 02 — Bureautique et rédaction
 
 ### 11.3 — Grimoire
@@ -935,6 +791,150 @@ grep -n -i "sauts" /usr/lib/python3.14/site-packages/showtime/widgets/window.py
 ```
 
 La seconde commande doit afficher les lignes contenant le marqueur « sauts ». Si le chemin d'installation change avec la version de Python ou du paquet, retrouver le chemin exact avec `pacman -Ql showtime | string match -r '\\S+/widgets/window\\.py
+
+- [11.3 — Grimoire](#113--grimoire)
+- [11.23 — Grille](#1123--grille)
+- [11.24 — Samizdat](#1124--samizdat)
+
+## 03 — Fichiers et téléchargements
+
+- [11.4 — Fret](#114--fret)
+- [11.2 — Grabber](#112--grabber)
+- [11.12 — Nautilus Bookmark Icons](#1112--nautilus-bookmark-icons)
+- [11.26 — PLACES — Dossiers Ogu](#1126--places--dossiers-ogu)
+
+## 04 — Bureau et personnalisation
+
+- [11.21 — Extension Manager](#1121--extension-manager)
+- [11.25 — Icônes UI](#1125--icônes-ui)
+
+## 05 — Système et utilitaires
+
+- [11.28 — Vidange](#1128--vidange)
+- [11.15 — dconf-editor GTK4](#1115--dconf-editor-gtk4)
+- [11.8 — Fisherman](#118--fisherman)
+- [11.9 — Pacto](#119--pacto)
+- [11.11 — Pusher](#1111--pusher)
+- [11.10 — Radar](#1110--radar)
+- [11.5 — SCX Manager](#115--scx-manager)
+- [11.6 — systemd](#116--systemd)
+- [11.13 — Sismographe](#1113--sismographe)
+- [11.14 — Snapper GTK4](#1114--snapper-gtk4)
+
+## Extensions GNOME Shell
+
+- [11.1 — Always on top, always on top](#111--always-on-top-always-on-top)
+- [11.16 — Session Keeper](#1116--session-keeper)
+- [11.17 — Focus & Boutons](#1117--focus--boutons)
+- [11.18 — Battery Time Compact — Ogu](#1118--battery-time-compact--ogu)
+- [11.19 — Power Total](#1119--power-total)
+- [11.20 — UI Management](#1120--ui-management)
+
+## 01 — Multimédia
+
+### 11.22 — Amplifaya — moteur headless et interface
+
+**Amplifaya** est un moteur audio PipeWire sans interface au démarrage ni Qt, construit sur le cœur DSP de [JamesDSP](https://github.com/Audio4Linux/JDSP4Linux). Le profil **ClearPenguin** est chargé par défaut. Le moteur headless en C fournit la commande `amplifayactl` et le service systemd utilisateur ; l'interface GTK4/libadwaita est facultative et peut être lancée avec `amplifaya-gui`.
+
+Depuis la version 0.4.0, le moteur force le volume matériel de la carte son à 100 % au démarrage et lors d'un changement de sortie, puis reporte le volume total sur le curseur GNOME. Un seul paquet unifié, `amplifaya-full`, installe le moteur et l'interface. Le moteur fonctionne en arrière-plan sans ouvrir l'interface, qui reste disponible à la demande avec `amplifaya-gui`. La commande `amplifayactl test` vérifie le traitement audio en cours de lecture, et `amplifayactl ab` compare le son traité à la source en restaurant l'état initial ensuite.
+
+- Traitements disponibles : Bass Boost, égaliseur, limiteur, crossfeed BS2B au casque et élargissement stéréo sur haut-parleurs.
+- Pas de prise en charge Bluetooth ; tous les effets de JamesDSP ne sont pas repris.
+- L'interface utilise environ 100 Mo lorsqu'elle est ouverte ; le moteur seul environ 2 Mo.
+
+Désactive l'ancien traitement global JamesDSP ou EasyEffects avant d'activer Amplifaya, pour éviter un double traitement. Installation du paquet unifié depuis le répertoire qui le contient :
+
+```fish
+sudo pacman -U ./amplifaya-full-0.4.0-1-x86_64.pkg.tar.zst
+systemctl --user daemon-reload
+systemctl --user restart amplifaya.service
+amplifayactl status
+```
+
+### Vérification après installation
+
+Lance un morceau (MP3 ou autre) et laisse-le jouer pendant toute la vérification. Ces commandes contrôlent le volume matériel, le volume de la sortie Amplifaya, la sortie par défaut, le journal du moteur et enfin le traitement audio réel :
+
+```fish
+pactl get-sink-volume alsa_output.pci-0000_63_00.6.analog-stereo
+pactl get-sink-volume amplifaya
+pactl get-default-sink
+journalctl --user -u amplifaya -b --no-pager | grep carte
+amplifayactl test
+amplifayactl ab
+```
+
+Résultat attendu sur la configuration testée : la carte physique est à **100 %**, la sortie par défaut est `amplifaya`, le journal indique que la carte a été mise à 100 % et que le volume Amplifaya a été ajusté. `amplifayactl test` doit confirmer que le son est modifié. `amplifayactl ab` alterne quatre fois entre le traitement Amplifaya et le son d'origine, puis restaure l'état initial. Les noms de sink peuvent varier d'une machine à l'autre : si la carte physique n'a pas le nom indiqué, repère son nom exact avec `pactl list short sinks` et adapte la première commande.
+
+L'interface est incluse dans ce même paquet et peut être ouverte à la demande :
+
+```fish
+amplifaya-gui
+```
+
+Commandes utiles : `amplifayactl test`, `amplifayactl ab`, `amplifayactl bypass on|off`, `amplifayactl bass on|off`, `amplifayactl wide on|off`, `amplifayactl outputs`, `amplifayactl output NOM`, `amplifayactl stop` et `amplifayactl start`. Journaux : `journalctl --user -u amplifaya.service -b`.
+
+La documentation complète et l'historique des versions sont dans [le README Amplifaya](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/01-Multimedia/Amplifaya/readme_amplifaya.md).
+
+### 11.7 — Decibel
+
+Fork personnalisé de **Decibels**, le lecteur audio GNOME. Les modifications apportées permettent notamment de supprimer un titre avec `Suppr` et d'éviter l'ouverture d'une seconde fenêtre lorsqu'un fichier audio est ouvert pendant une lecture : le nouveau morceau remplace celui de la fenêtre existante.
+
+**Paquet fourni : `decibel-49.6.1-1-any.pkg.tar.zst`.**
+
+### Installation
+
+```fish
+sudo pacman -U ./decibel-49.6.1-1-any.pkg.tar.zst
+```
+
+### Désinstallation
+
+```fish
+sudo pacman -Rns decibel
+```
+
+### Capture
+
+Une capture de l'interface de Decibel n'a pas été fournie dans cet envoi. Elle pourra être ajoutée sous `../Ressources/screenshots/vibe-coded/decibel.png`.
+
+---
+
+### 11.27 — Disquaire
+
+**Disquaire 1.5.2** est un éditeur GTK4/libadwaita de tags MP3 et FLAC pour GNOME. Il conserve sept champs — artiste, titre, album, date, genre, pochette et paroles — et supprime les autres tags à l'enregistrement.
+
+La version 1.5.2 comprend la recherche de tags dans toute la discothèque, l'édition groupée, la mise en forme et le renommage cohérents artiste/titre, la réserve de pochettes par genre, la recherche floue de doublons, la conversion FLAC vers MP3 320 kb/s et l'annulation des dernières opérations. La recherche globale utilise un cache dans ~/.cache/disquaire/index.json.
+
+Autres fonctions : arborescence et recherche des dossiers, création et déplacement par glisser-déposer, pochettes depuis folder.jpg ou une recherche en ligne, lecture intégrée, corbeille et restauration des dernières opérations. Les fichiers comportant des tags supplémentaires sont signalés ; les modifications ne sont écrites sur le disque qu'à l'enregistrement.
+
+Le paquet compilé disquaire-1.5.2-1-any.pkg.tar.zst est déjà présent dans le dossier Disquaire. Pour l'installer depuis ce dossier :
+
+~~~fish
+sudo pacman -U ./disquaire-1.5.2-1-any.pkg.tar.zst
+~~~
+
+Le [README complet de Disquaire](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/01-Multimedia/Disquaire/README.md) décrit les fonctions, les raccourcis, les dépendances et la compilation.
+
+---
+
+### 11.29 — Showtime — sauts proportionnels dans la vidéo
+
+Showtime est le lecteur vidéo GNOME. Ce dépôt documente un correctif local de `showtime/widgets/window.py` pour rendre les déplacements à la recherche proportionnels à la durée totale de la vidéo :
+
+- **Flèches gauche / droite** : saut d'environ **1 %** de la durée totale par pression.
+- **Flèches haut / bas** : saut d'environ **5 %** de la durée totale par pression.
+- Le déplacement est calculé selon la durée du média : le saut s'adapte donc automatiquement aux vidéos courtes ou longues.
+
+Le fichier Python corrigé devra être déposé manuellement dans :
+`Ressources/Applis vibe codées en Libadwaita/01-Multimedia/Showtime/window.py`.
+
+### Installation du correctif
+
+Depuis la racine du dépôt, une fois le fichier corrigé ajouté à ce dossier :
+
+```fish
+sudo cp "Ressources/Applis vibe codées en Libadwaita/01-Multimedia/Showtime/window.py" (pacman -Ql showtime | string match -r '\\S+/widgets/window\\.py
 
 - [11.3 — Grimoire](#113--grimoire)
 - [11.23 — Grille](#1123--grille)
