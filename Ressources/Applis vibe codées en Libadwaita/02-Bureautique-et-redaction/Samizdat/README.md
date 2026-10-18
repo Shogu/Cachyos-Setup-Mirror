@@ -39,11 +39,20 @@ Quatre modèles DOCX sont fournis :
 
 Il est possible d’enregistrer un document comme modèle, d’importer un modèle et de choisir le modèle de démarrage dans les préférences. Dossier par défaut : `~/.local/share/samizdat/modeles`.
 
-Les modèles joints à la version 0.8.0 sont à placer dans `Ressources/Applis vibe codées en Libadwaita/Samizdat/Modeles/` du dépôt :
+Les quatre modèles DOCX préétablis sont regroupés dans l’archive `Modèles de cours en docx (Samizdat).tar.xz`, disponible dans le dépôt sous `Ressources/Applis vibe codées en Libadwaita/02-Bureautique-et-redaction/Samizdat/Modeles/` :
 - `Cours.docx`
 - `Page de garde de séquence.docx`
 - `Bac blanc Français.docx`
 - `Bac blanc Histoire-Géographie.docx`
+
+### Télécharger et importer les modèles
+
+1. Télécharger le dépôt GitLab (ou récupérer uniquement l’archive ci-dessus).
+2. Extraire l’archive `.tar.xz` pour obtenir les quatre fichiers DOCX.
+3. Dans Samizdat, ouvrir les préférences avec `Ctrl+,`, lancer l’importation d’un modèle et sélectionner les fichiers DOCX extraits.
+4. Choisir ensuite le modèle souhaité dans les préférences comme modèle de démarrage, si besoin.
+
+Samizdat conserve les modèles utilisateur dans `~/.local/share/samizdat/modeles`. Le simple fait de télécharger l’archive dans le dépôt ne les importe pas automatiquement dans l’application.
 
 ## Aménagements et exports
 

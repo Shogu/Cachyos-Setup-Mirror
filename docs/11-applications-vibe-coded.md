@@ -205,7 +205,7 @@ Le paquet 0.8.0 est accompagné de quatre modèles DOCX :
 - `Bac blanc Français.docx`
 - `Bac blanc Histoire-Géographie.docx`
 
-Le dossier attendu dans le dépôt est `Ressources/Applis vibe codées en Libadwaita/02-Bureautique-et-redaction/Samizdat/Modeles/`. Les fichiers modèles et le paquet Arch joints doivent être ajoutés manuellement à GitLab ; ils ne sont pas inclus dans ce commit.
+Les modèles sont fournis dans le dépôt, dans l’archive `Modèles de cours en docx (Samizdat).tar.xz`, située dans `Ressources/Applis vibe codées en Libadwaita/02-Bureautique-et-redaction/Samizdat/Modeles/`. **Après avoir téléchargé le dépôt ou cette archive, extraire les quatre fichiers DOCX puis les importer dans Samizdat** : ouvrir les préférences (`Ctrl+,`), utiliser la fonction d’importation de modèle et sélectionner les fichiers extraits. Les modèles importés sont disponibles dans le dossier utilisateur `~/.local/share/samizdat/modeles` et peuvent ensuite être choisis comme modèles de démarrage.
 
 ### Installation
 
