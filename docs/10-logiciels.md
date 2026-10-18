@@ -52,6 +52,13 @@
 
 - `sushi` : prévisualisation rapide des fichiers dans Nautilus avec la barre d’espace.
 
+  **Après l’installation de Sushi**, exécuter cette commande pour arrêter l’ancien visualiseur, fermer Nautilus et vider le cache des miniatures :
+
+  ```fish
+  pkill -f NautilusPreviewer; nautilus -q; rm -rf ~/.cache/thumbnails/*
+  ```
+
+
 - **dconf-editor GTK4** : build du [portage GTK4 officiel en cours](11-applications-vibe-coded.md#1115--dconf-editor-gtk4), compilé depuis les sources upstream ; il remplace le `dconf-editor` GTK3 des dépôts.
 - `powertop` : diagnostic de consommation énergétique.
 - `profile-cleaner` : nettoyage des profils navigateurs.
