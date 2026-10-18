@@ -573,6 +573,16 @@ NoExtract = !usr/share/locale/en*
 NoExtract = !usr/share/locale/locale.alias
 ```
 
+### Éviter le conflit avec l’ancien paquet AUR `pusher`
+
+Le nom du paquet de l’application personnelle **Pusher** (interface GTK4/libadwaita pour le dépôt GitLab) est également utilisé par une ancienne application publiée sur l’AUR. Pour éviter que Pacman ne propose ce paquet homonyme lors des mises à jour, ajouter `pusher` à `IgnorePkg` dans la section `[options]` de `/etc/pacman.conf` :
+
+```ini
+IgnorePkg = pusher
+```
+
+Cette exclusion concerne les opérations ordinaires de synchronisation et de mise à jour de Pacman. Elle ne remplace pas l’installation explicite de la version personnelle fournie dans ce dépôt, avec `pacman -U`.
+
 **Attention : ne pas ajouter de règle `NoExtract` ciblant un fichier de traduction français précis.** Une règle supplémentaire telle que `NoExtract = usr/share/locale/fr/LC_MESSAGES/gnome-shell.mo` bloque explicitement ce fichier, même si les règles précédentes autorisent les traductions françaises. Cela peut laisser des composants GNOME partiellement en anglais après une mise à jour.
 
 Les règles commençant par `!` réautorisent les chemins français et anglais après l'exclusion générale.
