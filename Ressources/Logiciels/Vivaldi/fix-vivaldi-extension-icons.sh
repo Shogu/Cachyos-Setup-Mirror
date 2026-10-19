@@ -9,8 +9,6 @@ UBLOCK_ID="cjpalhdlnbpafiamejdnhcphjbkeiagm"
 
 RAINDROP_ICON="$ADWAITA/status/weather-overcast-symbolic.svg"
 COPY_ICON="$ADWAITA/actions/edit-copy-symbolic.svg"
-UBLOCK_OPEN="$ADWAITA/actions/view-reveal-symbolic.svg"
-UBLOCK_CLOSED="$ADWAITA/actions/view-conceal-symbolic.svg"
 
 for cmd in find sed rsvg-convert install; do
     command -v "$cmd" >/dev/null || {
@@ -18,7 +16,7 @@ for cmd in find sed rsvg-convert install; do
         exit 1
     }
 done
-for f in "$RAINDROP_ICON" "$COPY_ICON" "$UBLOCK_OPEN" "$UBLOCK_CLOSED"; do
+for f in "$RAINDROP_ICON" "$COPY_ICON"; do
     [[ -f "$f" ]] || {
         printf 'Erreur : icône introuvable : %s\n' "$f" >&2
         exit 1
@@ -65,10 +63,24 @@ for color in black white; do
     done
 done
 
-# uBlock : œil ouvert = filtrage actif ; œil fermé = désactivé.
+# uBlock : bouclier plein = actif ; bouclier pointillé et u atténué = inactif.
+cat > "$TMP/ublock-active.svg" <<'SVG'
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+  <path d="M 3 2.5 L 13 2.5 L 13 8 C 13 11.5, 10.5 14, 8 14.8 C 5.5 14, 3 11.5, 3 8 Z" fill="none" stroke="currentColor" stroke-width="1.4"/>
+  <path d="M 6 6 L 6 9.5 C 6 10.5, 10 10.5, 10 9.5 L 10 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+</svg>
+SVG
+
+cat > "$TMP/ublock-inactive.svg" <<'SVG'
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+  <path d="M 3 2.5 L 13 2.5 L 13 8 C 13 11.5, 10.5 14, 8 14.8 C 5.5 14, 3 11.5, 3 8 Z" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="2,1.5"/>
+  <path d="M 6 6 L 6 9.5 C 6 10.5, 10 10.5, 10 9.5 L 10 6" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.5"/>
+</svg>
+SVG
+
 for size in 16 32; do
-    make_png "$UBLOCK_OPEN" "#ffffff" "$size" "$TMP/ublock-open-$size.png"
-    make_png "$UBLOCK_CLOSED" "#ffffff" "$size" "$TMP/ublock-closed-$size.png"
+    make_png "$TMP/ublock-active.svg" "#ffffff" "$size" "$TMP/ublock-active-$size.png"
+    make_png "$TMP/ublock-inactive.svg" "#ffffff" "$size" "$TMP/ublock-inactive-$size.png"
 done
 
 # Vérifier toutes les destinations avant toute modification.
@@ -94,8 +106,8 @@ for color in black white; do
     done
 done
 for size in 16 32; do
-    install -m 600 "$TMP/ublock-open-$size.png" "$UBLOCK_IMG_DIR/icon_$size.png"
-    install -m 600 "$TMP/ublock-closed-$size.png" "$UBLOCK_IMG_DIR/icon_$size-off.png"
+    install -m 600 "$TMP/ublock-active-$size.png" "$UBLOCK_IMG_DIR/icon_$size.png"
+    install -m 600 "$TMP/ublock-inactive-$size.png" "$UBLOCK_IMG_DIR/icon_$size-off.png"
 done
 
 printf '\nIcônes remplacées avec succès.\n'

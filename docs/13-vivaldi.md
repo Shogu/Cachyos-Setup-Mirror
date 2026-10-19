@@ -89,7 +89,7 @@ Le script [fix-vivaldi-extension-icons.sh](../Ressources/Logiciels/Vivaldi/fix-v
 
 - **Raindrop** : nuage Adwaita blanc.
 - **Tab Copy** : icône de copie Adwaita en noir et blanc.
-- **uBlock Origin classique** : œil ouvert lorsque le filtrage est actif, œil fermé lorsque l'extension est désactivée.
+- **uBlock Origin classique** : bouclier avec « u » en trait continu lorsque le filtrage est actif ; contour pointillé et « u » atténué lorsque l'extension est désactivée.
 
 ### Installation et exécution
 
