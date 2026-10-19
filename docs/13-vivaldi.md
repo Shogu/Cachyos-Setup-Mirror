@@ -7,7 +7,8 @@
 - [13.1 Synchronisation, cache et réglages internes](#131--synchronisation-cache-et-réglages-internes)
 - [13.2 Appliquer le thème et les modifications CSS](#132--appliquer-le-thème-et-les-modifications-css)
 - [13.3 Configurer le panneau latéral et la recherche Google](#133--configurer-le-panneau-latéral-et-la-recherche-google)
-- [13.4 Installer les extensions et associer les liens magnet](#134--installer-les-extensions-et-associer-les-liens-magnet)
+- [13.4 Personnaliser les icônes des extensions](#134--personnaliser-les-icônes-des-extensions)
+- [13.5 Installer les extensions et associer les liens magnet](#135--installer-les-extensions-et-associer-les-liens-magnet)
 
 ## 13.1 — Synchronisation, cache et réglages internes
 
@@ -82,7 +83,33 @@ Paramètres POST de recherche d'image:
 encoded_image={google:imageThumbnail},image_url={google:imageURL},sbisrc={google:imageSearchSource},original_width={google:imageOriginalWidth},original_height={google:imageOriginalHeight},processed_image_dimensions={google:processedImageDimensions}
 ```
 
-## 13.4 — Installer les extensions et associer les liens magnet
+## 13.4 — Personnaliser les icônes des extensions
+
+Le script [fix-vivaldi-extension-icons.sh](../Ressources/Logiciels/Vivaldi/fix-vivaldi-extension-icons.sh) personnalise les icônes de la barre d'outils :
+
+- **Raindrop** : nuage Adwaita blanc.
+- **Tab Copy** : icône de copie Adwaita en noir et blanc.
+- **uBlock Origin classique** : œil ouvert lorsque le filtrage est actif, œil fermé lorsque l'extension est désactivée.
+
+### Installation et exécution
+
+1. Vérifier que Vivaldi et les trois extensions sont installés dans le profil par défaut.
+2. Installer la conversion SVG si nécessaire : `sudo pacman -S librsvg`
+3. Depuis la racine du dépôt, rendre le script exécutable, vérifier sa syntaxe, puis le lancer :
+
+   `chmod +x Ressources/Logiciels/Vivaldi/fix-vivaldi-extension-icons.sh`
+
+   `bash -n Ressources/Logiciels/Vivaldi/fix-vivaldi-extension-icons.sh`
+
+   `bash Ressources/Logiciels/Vivaldi/fix-vivaldi-extension-icons.sh`
+
+4. Redémarrer Vivaldi.
+
+Le script s'arrête si une dépendance, une icône Adwaita ou un fichier cible attendu est absent. Il ne crée pas de sauvegarde des originaux. Une mise à jour de Vivaldi ou d'une extension peut restaurer les icônes d'origine : relancer alors le script.
+
+**Badge uBlock :** le nombre de publicités bloquées est géré séparément de l'image de l'icône et devrait rester disponible. Si l'extension redéfinit dynamiquement son icône, elle peut toutefois remplacer l'image personnalisée.
+
+## 13.5 — Installer les extensions et associer les liens magnet
 
 Les extensions sont regroupées ci-dessous par usage.
 
