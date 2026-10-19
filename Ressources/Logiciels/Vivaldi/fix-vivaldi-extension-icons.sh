@@ -46,7 +46,7 @@ trap 'rm -rf -- "$TMP"' EXIT
 make_png() {
     local source="$1" color="$2" size="$3" output="$4" svg="$TMP/generated.svg"
     sed -e "s/<svg /<svg style=\"color:$color;fill:$color\" /" \
-        -e "s/#2e3436/$color/g" -e "s/currentColor/$color/g" \
+        -e "s/#2e3436/$color/g" -e "s/#222/$color/g" -e "s/currentColor/$color/g" \
         "$source" > "$svg"
     rsvg-convert -w "$size" -h "$size" "$svg" -o "$output"
     [[ -s "$output" ]] || { printf 'Erreur de génération : %s\n' "$output" >&2; return 1; }
