@@ -63,19 +63,22 @@ for color in black white; do
     done
 done
 
-# uBlock : carré arrondi continu = actif ; contour pointillé et u atténué = inactif.
-# Les contours sont explicitement tracés : les SVG fournis n'incluaient pas stroke/fill.
+# uBlock : cadre carré arrondi continu = actif ; cadre pointillé et u atténué = inactif.
 cat > "$TMP/ublock-active.svg" <<'SVG'
 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
-  <rect x="1.5" y="1.5" width="13" height="13" rx="3" ry="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
-  <path d="M 6 5.5 L 6 9 C 6 10.2 10 10.2 10 9 L 10 5.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+  <!-- Cadre extérieur carré arrondi (identique aux autres icônes) -->
+  <rect x="1.5" y="1.5" width="13" height="13" rx="3.5" ry="3.5" fill="none" stroke="currentColor" stroke-width="1.5" />
+  <!-- Lettre "u" parfaitement calibrée avec la même épaisseur (1.5px) -->
+  <path d="M 6 5.5 L 6 9.5 C 6 11, 10 11, 10 9.5 L 10 5.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
 </svg>
 SVG
 
 cat > "$TMP/ublock-inactive.svg" <<'SVG'
 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
-  <rect x="1.5" y="1.5" width="13" height="13" rx="3" ry="3" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="2,1.5"/>
-  <path d="M 6 5.5 L 6 9 C 6 10.2 10 10.2 10 9 L 10 5.5" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.4"/>
+  <!-- Cadre extérieur en pointillés réguliers -->
+  <rect x="1.5" y="1.5" width="13" height="13" rx="3.5" ry="3.5" fill="none" stroke="currentColor" stroke-width="1.3" stroke-dasharray="2,2" />
+  <!-- Lettre "u" en semi-transparence pour marquer l'inactivité -->
+  <path d="M 6 5.5 L 6 9.5 C 6 11, 10 11, 10 9.5 L 10 5.5" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" opacity="0.4" />
 </svg>
 SVG
 
