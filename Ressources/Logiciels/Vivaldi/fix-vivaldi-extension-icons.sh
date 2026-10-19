@@ -63,18 +63,19 @@ for color in black white; do
     done
 done
 
-# uBlock : bouclier plein = actif ; bouclier pointillé et u atténué = inactif.
+# uBlock : carré arrondi continu = actif ; contour pointillé et u atténué = inactif.
+# Les contours sont explicitement tracés : les SVG fournis n'incluaient pas stroke/fill.
 cat > "$TMP/ublock-active.svg" <<'SVG'
 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
-  <path d="M 3 2.5 L 13 2.5 L 13 8 C 13 11.5, 10.5 14, 8 14.8 C 5.5 14, 3 11.5, 3 8 Z" fill="none" stroke="currentColor" stroke-width="1.4"/>
-  <path d="M 6 6 L 6 9.5 C 6 10.5, 10 10.5, 10 9.5 L 10 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+  <rect x="1.5" y="1.5" width="13" height="13" rx="3" ry="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+  <path d="M 6 5.5 L 6 9 C 6 10.2 10 10.2 10 9 L 10 5.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
 </svg>
 SVG
 
 cat > "$TMP/ublock-inactive.svg" <<'SVG'
 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
-  <path d="M 3 2.5 L 13 2.5 L 13 8 C 13 11.5, 10.5 14, 8 14.8 C 5.5 14, 3 11.5, 3 8 Z" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="2,1.5"/>
-  <path d="M 6 6 L 6 9.5 C 6 10.5, 10 10.5, 10 9.5 L 10 6" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.5"/>
+  <rect x="1.5" y="1.5" width="13" height="13" rx="3" ry="3" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="2,1.5"/>
+  <path d="M 6 5.5 L 6 9 C 6 10.2 10 10.2 10 9 L 10 5.5" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.4"/>
 </svg>
 SVG
 
