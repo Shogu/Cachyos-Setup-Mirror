@@ -1,3 +1,4 @@
+
 function _lastinstalled_rp
     set -l color 1
     if test (count $argv) -ge 1
@@ -129,7 +130,6 @@ end
 function _lastinstalled_blocks
     set -l mode $argv[1]
     set -l color 1
-
     if test (count $argv) -ge 2
         set color $argv[2]
     end
@@ -147,27 +147,33 @@ function _lastinstalled_blocks
         end
     end |
     awk '
+        function plain(s) {
+            gsub(/\033\[[0-9;]*m/, "", s)
+            return s
+        }
+
         /--- / {
             if (block != "" && has)
-                blocks[++n]=block
+                blocks[++n] = block
 
-            block=$0 ORS
-            has=0
+            block = $0 ORS
+            has = 0
             next
         }
 
         {
-            block=block $0 ORS
+            block = block $0 ORS
+            line = plain($0)
 
-            if ($0 ~ /\+ / || $0 ~ /= / || $0 ~ /- /)
-                has=1
+            if (line ~ /^[[:space:]]*[+=-][[:space:]]+/)
+                has = 1
         }
 
         END {
             if (block != "" && has)
-                blocks[++n]=block
+                blocks[++n] = block
 
-            for (i=n; i>=1; i--)
+            for (i = n; i >= 1; i--)
                 printf "%s", blocks[i]
         }
     ' |
@@ -178,7 +184,6 @@ function _lastinstalled_fzf
     set -l mode $argv[1]
     set -l number $argv[2]
     set -l color 1
-
     if test (count $argv) -ge 3
         set color $argv[3]
     end
@@ -194,6 +199,7 @@ function _lastinstalled_fzf
         set output (printf '%s\n' $output | awk '{print NR " " $0}')
     end
 
+    # Le preview d'origine est en Bash ; on force seulement le shell du processus fzf.
     set -l preview 'cmd=$(printf "%s\n" {} | sed -E "s/\x1B\[[0-9;]*m//g;s/^[[:space:]]*[0-9]*[[:space:]]*//;s/^\[[^]]*\][[:space:]]*//"); set -- $cmd; p=""; case "$1" in +|=|-) p="$2";; esac; if [[ -n "$p" ]]; then out=$(pacman -Sii "$p" 2>/dev/null) && printf "%s\n" "$out" || printf "%s\n" "$cmd"; else printf "%s\n" "$cmd"; fi'
 
     set -l selected (printf '%s\n' $output |
@@ -209,7 +215,6 @@ function _lastinstalled_fzf
         sed -E 's/\x1b\[[0-9;]*m//g; s/^[[:space:]]*[0-9]+[[:space:]]+//; s/^\[[^]]+\][[:space:]]*//; s/^[[:space:]]+//')
 
     set -l clipboard_text
-
     if string match --quiet --regex '^[+=-][[:space:]]+' -- "$clean"
         set clipboard_text (printf '%s\n' "$clean" | awk '{print $2}')
     else
@@ -223,7 +228,7 @@ function _lastinstalled_fzf
     end
 end
 
-function lastinstalled
+function lastinstalled --description "Derniers paquets installés"
     set -l mode a
     set -l dump 0
     set -l number 0
@@ -241,7 +246,6 @@ function lastinstalled
                 set number 1
             case m monochrome
                 set color 0
-
             case '-h' '--help'
                 printf '%s\n' \
                     'Usage:' \
@@ -274,11 +278,9 @@ function lastinstalled
                     '  -h, --help          show this help' \
                     '  -v, --version       show version'
                 return 0
-
             case '--version' '-v'
                 printf '%s\n' 'lastinstalled 1.0'
                 return 0
-
             case '*'
                 if string match --quiet --regex '^[cudnm]+$' -- "$arg"
                     for char in (string split '' -- "$arg")
@@ -293,6 +295,10 @@ function lastinstalled
                                 set number 1
                             case m
                                 set color 0
+                            case '*'
+                                printf 'lastinstalled: unknown argument: %s\n' "$arg" >&2
+                                lastinstalled --help
+                                return 2
                         end
                     end
                 else
@@ -305,7 +311,6 @@ function lastinstalled
 
     if test "$dump" -eq 1
         set -l output
-
         switch $mode
             case c
                 set output (_lastinstalled_rp "$color" | sed '/= /d')
@@ -320,7 +325,6 @@ function lastinstalled
         else
             printf '%s\n' $output | sed 's/--- //'
         end
-
         return 0
     end
 

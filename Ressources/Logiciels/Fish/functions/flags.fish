@@ -1,4 +1,4 @@
-function flags
+function flags --description "Liste des arguments kernel"
     clear
     echo "KERNEL FLAGS (/proc/cmdline)"
     echo "============================="

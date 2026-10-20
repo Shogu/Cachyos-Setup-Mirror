@@ -1,4 +1,4 @@
-function mkinitcpio
+function mkinitcpio --description "Affiche le fichier MKINITCPIO"
     clear
     echo "/etc/mkinitcpio.conf"
     echo

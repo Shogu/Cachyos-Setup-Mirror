@@ -1,4 +1,4 @@
-function timer
+function timer --description "Extinction par minuteur"
     read -P "Fermer Vivaldi puis choisir le nombre de minutes (de 1 à 15) : " -l mins
 
     # Validation : entier entre 1 et 15

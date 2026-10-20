@@ -1,4 +1,4 @@
-function fstab
+function fstab --description "Affiche les entrées FSTAB"
     clear
     echo "/etc/fstab"
     echo

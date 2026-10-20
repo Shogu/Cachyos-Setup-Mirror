@@ -1,4 +1,4 @@
-function pacstats
+function pacstats --description "Stats des paquets Arch"
     echo "Nombre de paquets installés :"
     pacman -Q | wc -l
     echo "Taille totale des paquets installés :"
