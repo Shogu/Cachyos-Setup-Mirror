@@ -20,7 +20,7 @@ set paquets_semitone (find . -maxdepth 1 -type f -name 'semitone*.pkg.tar.zst')
 if test (count $paquets_semitone) -eq 1
     sudo pacman -U "$paquets_semitone[1]"
 else
-    printf '%s\\n' 'Conserver un seul paquet Semitone dans ce dossier avant installation.'
+    echo 'Conserver un seul paquet Semitone dans ce dossier avant installation.''
 end
 ```
 
