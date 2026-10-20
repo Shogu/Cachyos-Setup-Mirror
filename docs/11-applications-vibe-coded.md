@@ -11,7 +11,7 @@
 Les dossiers sont classés par usage principal. Les extensions GNOME Shell restent regroupées dans [Extensions GNOME](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/).
 
 - **01 — Multimédia** : Amplifaya, Decibel, Disquaire, Semitone.
-- **02 — Bureautique et rédaction** : Grimoire, Grille, Samizdat.
+- **02 — Bureautique et rédaction** : Alexandrie, Grimoire, Grille, Samizdat.
 - **03 — Fichiers et téléchargements** : Fret, Grabber, Nautilus Bookmark Icons, PLACES.
 - **04 — Bureau et personnalisation** : Extension Manager, Icônes UI.
 - **05 — Système et utilitaires** : dconf-editor GTK4, Fisherman, Pacto, Pusher, Radar, Sismographe, Snapper GTK4, systemd-gui, Vidange.
@@ -28,6 +28,7 @@ Les dossiers sont classés par usage principal. Les extensions GNOME Shell reste
 - [11.3 — Grimoire](#113--grimoire)
 - [11.23 — Grille](#1123--grille)
 - [11.24 — Samizdat](#1124--samizdat)
+- [11.30 — Alexandrie](#1130--alexandrie)
 
 ## 03 — Fichiers et téléchargements
 
@@ -266,6 +267,39 @@ sudo pacman -U ./samizdat-*.pkg.tar.zst
 Les dépendances OCR `tesseract` et `tesseract-data-fra` sont installées automatiquement par pacman si elles sont déclarées dans le paquet.
 
 Le [README complet de Samizdat](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/02-Bureautique-et-redaction/Samizdat/README.md) récapitule les fonctions, raccourcis et limites connues. Le paquet Arch compilé n’est pas encore présent dans le dossier : il sera ajouté manuellement.
+
+
+### 11.30 — Alexandrie
+
+**Alexandrie** est une visionneuse simple de Wikipédia en français pour GNOME, développée en GTK 4/libadwaita. Elle est conçue pour préparer des cours d'histoire, de géographie et de littérature : lecture épurée d'articles, collecte d'extraits et export de fiches PDF.
+
+- **Lecture** : onglets, sommaire latéral, aperçu des liens au survol, recherche dans l'article et historique.
+- **Repères et lieux** : dates clés extraites de Wikidata (vie, œuvres, événements, fonctions), carte OpenStreetMap et ouverture des lieux cités dans GNOME Cartes.
+- **Panier d'extraits** : passages, images, dates, consignes et glossaire ; documents numérotés, à copier dans un traitement de texte ou à exporter en PDF.
+- **Favoris** : classement par tags libres.
+- **Sources** : Wikipédia (« Encyclopédie »), Vikidia (8–13 ans), Wikisource (« Textes ») et Wikimedia Commons (« Images »). Le Wiktionnaire s'ouvre au double-clic ; les articles proposent aussi « Voir aussi ».
+
+### Installation et lancement
+
+Depuis le dossier des sources, sur Arch Linux ou CachyOS :
+
+```sh
+makepkg -si
+```
+
+Ou installer le paquet précompilé, une fois ajouté au dossier de l'application :
+
+```sh
+sudo pacman -U ./alexandrie-*.pkg.tar.*
+```
+
+Vérifier qu'un seul paquet correspond au motif avant l'installation. Pour essayer l'application sans l'installer, depuis les sources :
+
+```sh
+./run.sh
+```
+
+Le guide complet `docs/GUIDE.md` est fourni avec les sources et couvre les fonctionnalités, raccourcis, préférences et données utilisateur. Les sources et le guide détaillé ne sont pas encore copiés dans ce dépôt ; le paquet compilé sera ajouté manuellement dans `Ressources/Applis vibe codées en Libadwaita/02-Bureautique-et-redaction/Alexandrie/`.
 
 ---
 
