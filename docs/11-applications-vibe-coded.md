@@ -14,7 +14,7 @@ Les dossiers sont classés par usage principal. Les extensions GNOME Shell reste
 - **02 — Bureautique et rédaction** : Grimoire, Grille, Samizdat.
 - **03 — Fichiers et téléchargements** : Fret, Grabber, Nautilus Bookmark Icons, PLACES.
 - **04 — Bureau et personnalisation** : Extension Manager, Icônes UI.
-- **05 — Système et utilitaires** : dconf-editor GTK4, Fisherman, Pacto, Pusher, Radar, SCX Manager, Sismographe, Snapper GTK4, systemd-gui, Vidange.
+- **05 — Système et utilitaires** : dconf-editor GTK4, Fisherman, Pacto, Pusher, Radar, Sismographe, Snapper GTK4, systemd-gui, Vidange.
 
 ## 01 — Multimédia
 
@@ -49,7 +49,6 @@ Les dossiers sont classés par usage principal. Les extensions GNOME Shell reste
 - [11.9 — Pacto](#119--pacto)
 - [11.11 — Pusher](#1111--pusher)
 - [11.10 — Radar](#1110--radar)
-- [11.5 — SCX Manager](#115--scx-manager)
 - [11.6 — systemd](#116--systemd)
 - [11.13 — Sismographe](#1113--sismographe)
 - [11.14 — Snapper GTK4](#1114--snapper-gtk4)
@@ -418,7 +417,7 @@ Archive, métadonnées, exécutable, lanceur et icônes contrôlés. **Lancement
 
 ### Captures d'écran restantes
 
-Les captures fournies avec cette mise à jour couvrent **Always on top, Grabber, Grimoire, Fret, systemd, Pacto, Radar et Pusher**. Les trois applications suivantes restent volontairement sans capture afin de ne pas fabriquer une représentation de leur interface : **SCX Manager, Decibel et Fisherman**.
+Les captures fournies avec cette mise à jour couvrent **Always on top, Grabber, Grimoire, Fret, systemd, Pacto, Radar et Pusher**. Les trois applications suivantes restent volontairement sans capture afin de ne pas fabriquer une représentation de leur interface : **Decibel et Fisherman**.
 
 ### 11.25 — Icônes UI
 
@@ -562,37 +561,6 @@ sudo pacman -Rns radar
 ```
 
 ---
-
-### 11.5 — SCX Manager
-
-Réécriture native GTK4/libadwaita de SCX Manager pour GNOME. L'application permet de consulter et piloter `scx_loader`, le service D-Bus qui gère les planificateurs Linux `sched-ext`.
-
-**Version du projet : 0.1.2.** L'archive fournie contient le projet source et son `PKGBUILD`, mais pas de paquet binaire précompilé.
-
-### Installation depuis les sources
-
-Décompresser `scx-manager-adwaita-0.1.2-pacman.zip`, puis :
-
-```fish
-cd scx-manager-adwaita
-makepkg -si
-```
-
-Pour une installation utilisateur depuis les sources, suivre le `README` du projet et utiliser son script d'installation avec le préfixe prévu.
-
-### Désinstallation
-
-Pour une installation Pacman :
-
-```fish
-sudo pacman -Rns scx-manager-adwaita
-```
-
-Pour une installation par script, utiliser le `uninstall.sh` fourni par le projet.
-
-### Capture
-
-Une capture de l'interface SCX Manager n'a pas été fournie dans cet envoi. Elle pourra être ajoutée ultérieurement sous `../Ressources/screenshots/vibe-coded/scx-manager.png`.
 
 ---
 

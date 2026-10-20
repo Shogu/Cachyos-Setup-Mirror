@@ -40,7 +40,7 @@ Désactiver le scheduler SCX actif avec l'outil qui le gère, puis empêcher le 
 
 ```fish
 sudo systemctl mask scx_loader.service
-sudo pacman -Rns scx-manager scx-tools scx-scheds cachyos-kernel-manager
+sudo pacman -Rns scx-tools scx-scheds cachyos-kernel-manager
 ```
 
 Retirer aussi les sections SCX des profils TuneD si elles relancent un scheduler. Le masquage seul n'arrête pas nécessairement un scheduler déjà actif.

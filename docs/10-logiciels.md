@@ -71,7 +71,6 @@
 - `libgda6` : bibliothèque d'accès aux données, requise par certaines extensions GNOME.
 - `inotify-tools` : surveillance des évènements du système de fichiers.
 - `libnotify` : notifications système.
-- **SCX Manager** : installer [l’interface maison pour sched-ext](11-applications-vibe-coded.md#115--scx-manager) depuis son archive source.
 - **systemd-gui** : installer [l’interface maison de gestion des services](11-applications-vibe-coded.md#116--systemd).
 - **Fisherman** : installer [le gestionnaire maison de configuration Fish](11-applications-vibe-coded.md#118--fisherman).
 - **Pacto** : installer [le gestionnaire maison des fichiers `.pacnew` et `.pacsave`](11-applications-vibe-coded.md#119--pacto).
@@ -130,7 +129,7 @@ sudo pacman -U \
   "Ressources/Applis vibe codées en Libadwaita/01-Multimedia/Disquaire/disquaire-1.0.0-1-any.pkg.tar.zst"
 ```
 
-Pour **Semitone**, installer séparément le paquet Arch compilé avec Claude, après l’avoir ajouté manuellement dans son dossier de ressources ; voir [les instructions d’installation](11-applications-vibe-coded.md#1129--semitone). Pour **Grabber** (AppImage) et **SCX Manager** (sources), suivre leurs [instructions d’installation](11-applications-vibe-coded.md). La commande Pacman ci-dessus suppose que chaque paquet a été vérifié pour cette machine.
+Pour **Semitone**, installer séparément le paquet Arch compilé avec Claude, après l’avoir ajouté manuellement dans son dossier de ressources ; voir [les instructions d’installation](11-applications-vibe-coded.md#1129--semitone). Pour **Grabber** (AppImage), suivre ses [instructions d’installation](11-applications-vibe-coded.md). La commande Pacman ci-dessus suppose que chaque paquet a été vérifié pour cette machine.
 
 ### 10.1.3 — Extension Manager
 

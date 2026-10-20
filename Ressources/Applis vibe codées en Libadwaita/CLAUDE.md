@@ -5,7 +5,7 @@ Chaque sous-dossier = un projet. Lire aussi le `CLAUDE.md` du sous-dossier conce
 ## Nature de ce dossier
 
 - Ce dossier contient des **livrables**, pas des arbres de sources : paquets `*.pkg.tar.zst`, ZIP d'extensions, AppImage, et un `readme_<app>.md` (ou `README.md`).
-- Aucun `PKGBUILD`, `meson.build` ni test n'est versionné ici (sauf dans l'archive SCX Manager). Les sources « vivantes » ne sont pas sur le disque.
+- Aucun `PKGBUILD`, `meson.build` ni test n'est versionné ici. Les sources « vivantes » ne sont pas sur le disque.
 - Pour les projets Python/GJS, le code lisible est **dans le paquet** : `bsdtar -tf <pkg>` pour lister, `bsdtar -xOf <pkg> <chemin>` pour lire. Extraire dans le scratchpad, jamais dans ce dossier.
 - Pour modifier une app : extraire → éditer → reconstruire un paquet (PKGBUILD minimal `arch=any` pour Python) → incrémenter `pkgrel` (ou `pkgver`) → remplacer l'ancien `.pkg.tar.zst` → mettre à jour le readme.
 

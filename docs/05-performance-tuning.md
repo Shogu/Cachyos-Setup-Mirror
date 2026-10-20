@@ -2,12 +2,11 @@
 
 [Accueil](../README.md) · [Précédent](04-filesystems-storage.md) · [Suivant](06-network.md)
 
-> **Dans ce chapitre :** coordination TuneD/SCX, Ananicy-cpp, ADIOS, split lock et compilation optimisée znver4.
+> **Dans ce chapitre :** coordination TuneD/sched-ext, Ananicy-cpp, ADIOS, split lock et compilation optimisée znver4.
 
 > ⚠️ **Avertissement** : certaines optimisations de ce chapitre réduisent la stabilité ou la sécurité par défaut du système (modification de fichiers de paquets sous `/usr/lib`, désactivation de mitigations noyau comme le split lock, etc.).
 
 - [5.1 Coordonner TuneD, les profils énergétiques et SCX](#51--coordonner-tuned-les-profils-énergétiques-et-scx)
-- [5.2 Installer et gérer SCX Manager](#52--installer-et-gérer-scx-manager)
 - [5.3 Ananicy-cpp : installation depuis les sources et dépannage](#53--ananicy-cpp--installation-depuis-les-sources-et-dépannage)
 - [5.4 Désactiver le Split Lock](#54--désactiver-le-split-lock)
 - [5.5 Sélectionner ADIOS avec udev et TuneD](#55--sélectionner-adios-avec-udev-et-tuned)
@@ -199,27 +198,6 @@ La valeur attendue est :
 
 ```text
 boost=1
-```
-
-## 5.2 — Installer et gérer SCX Manager
-
-Installer SCX Manager Libadwaita (paquet Arch créé par ChatGPT & Claude) afin de supprimer complètement sched-ext et les paquets Qt devenus inutiles. Le readme du projet donne la marche à suivre.
-
-### Changer l'icône et le chemin d'exécution dans le menu
-
-- Icône : `/home/ogu/.local/Icones/Apps/mixxx.svg`
-- Chemin de l'exécutable : `scx-manager-adwaita`
-
-### Supprimer l'ancien gestionnaire Qt, les outils CachyOS, les dépendances Qt et les dépendances de build éventuelles
-
-```fish
-sudo pacman -Rns scx-manager kernel-manager qt6-base qt6-translations qt6-svg meson ninja
-```
-
-Pour désinstaller scx-manager :
-
-```fish
-sudo pacman -R scx-manager-adwaita
 ```
 
 ## 5.3 — Ananicy-cpp : installation depuis les sources et dépannage
