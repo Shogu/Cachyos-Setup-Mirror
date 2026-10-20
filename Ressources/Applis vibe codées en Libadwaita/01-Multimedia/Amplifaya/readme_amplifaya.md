@@ -1,127 +1,119 @@
 # Amplifaya — moteur audio PipeWire
 
-**Amplifaya** est un moteur audio pour PipeWire, sans interface au démarrage et sans Qt, construit sur le cœur DSP de [JamesDSP](https://github.com/Audio4Linux/JDSP4Linux). Il applique par défaut le profil **ClearPenguin** (Bass Boost, égaliseur, limiteur) à tout le son de la machine. Une interface GTK4/libadwaita est disponible à la demande.
+**Amplifaya** est un moteur de traitement audio pour PipeWire, sans interface graphique au démarrage et sans Qt, construit sur le cœur DSP de [JamesDSP](https://github.com/Audio4Linux/JDSP4Linux). Il applique le profil **ClearPenguin** (Bass Boost, égaliseur et limiteur) au son de la machine. Une interface GTK4/libadwaita est disponible à la demande.
 
-- **Un seul paquet unifié** installe le moteur headless en C, le plugin LADSPA, la commande `amplifayactl`, le service systemd utilisateur et l'interface GTK4/libadwaita. L'interface se lance à la demande avec `amplifaya-gui` ; fermer sa fenêtre laisse le moteur actif.
-- ClearPenguin est installé dans `/usr/share/amplifaya/presets/ClearPenguin.conf`.
-- Le moteur propose notamment Bass Boost, égaliseur, crossfeed BS2B au casque, élargissement stéréo sur haut-parleurs, post-gain et limiteur.
-- Le moteur occupe environ 2 Mo de mémoire ; l'interface Python utilise environ 100 Mo lorsqu'elle est ouverte et 0 lorsqu'elle est fermée.
+Depuis la version **0.5.0**, PipeWire charge directement le traitement et WirePlumber l’insère devant la sortie audio. Il n’y a plus de démon Amplifaya ni de service systemd utilisateur à maintenir : le moteur peut rester actif sans processus de contrôle permanent. La commande `amplifayactl` pilote directement le traitement.
 
-Désactive l'ancien traitement global JamesDSP ou EasyEffects avant d'activer Amplifaya, afin d'éviter un double traitement.
+## Nouveautés et corrections
 
-## Ce qui a changé
+Ce récapitulatif suit l’évolution depuis la version 0.1.1, qui restait muette.
 
-Ce récapitulatif suit l'évolution depuis la version 0.1.1, qui restait muette.
+### 0.5.1 — casque automatique et marge avant traitement
 
-### 0.4.0 — tout le volume disponible
+- **Bascule automatique casque/haut-parleurs sans service dédié :** un script exécuté par WirePlumber retire Amplifaya lorsque le casque est détecté, pour retrouver le son natif, puis réactive le traitement lorsque la sortie repasse sur les haut-parleurs. `amplifayactl test` indique notamment « Casque détecté ». La détection sur la prise jack physique reste à vérifier en session réelle.
+- **Marge avant traitement réglable de 0 à 6 dB**, depuis l’interface ou avec `amplifayactl marge N`. La valeur par défaut est 0 dB : aucune marge supplémentaire n’est appliquée.
 
-- **Carte son à 100 % automatiquement.** Deux volumes se multipliaient : le curseur GNOME, qui règle la sortie Amplifaya, et celui de la vraie carte son, restée bloquée à 40 % (−24 dB) sans qu'on le voie. Au démarrage et à chaque changement de sortie, le moteur met maintenant la carte à 100 % et reporte le volume total sur le curseur GNOME. On n'entend aucun saut de volume, et le curseur couvre enfin toute sa plage, jusqu'au vrai maximum.
-- **Paquet unifié `amplifaya-full`** : moteur et interface sont distribués ensemble.
+### 0.5.0 — architecture PipeWire, sans démon ni service
 
-### 0.3.0 — nouveau nom et nouvelle icône
+- **PipeWire charge lui-même le traitement** via `/usr/share/pipewire/pipewire.conf.d/60-amplifaya.conf`. WirePlumber l’insère devant la sortie à l’aide de ses filtres intelligents. Si un ancien démon de contrôle est tué, cela ne doit plus provoquer la coupure sonore qui affectait l’ancienne architecture.
+- **Un seul volume :** le curseur GNOME règle directement le volume de la carte son. La compensation de volume introduite en 0.4.0 est supprimée.
+- **Contrôle direct avec `amplifayactl` :** bypass, Bass Boost, élargissement stéréo et changement de profil à chaud. L’état est mémorisé dans `~/.config/amplifaya/state.conf`.
+- **Éléments retirés :** le service `amplifaya.service`, le démon `amplifayad`, l’ancien automatisme casque et le choix de sortie dans l’interface. La détection automatique du casque revient dans la 0.5.1 via WirePlumber, sans service Amplifaya distinct.
+- **Nouvelle icône** à couronne de segments et icône symbolique de 16 px.
 
-- **Nom : Amplifaya.** C'est « amplifier » prononcé à la jamaïcaine, avec le double sens de *faya*, le feu.
+### Mise à jour depuis la 0.4.x
 
-  | Élément | Nom |
-  |---|---|
-  | Commande | `amplifayactl` |
-  | Interface | `amplifaya-gui` |
-  | Service | `amplifaya.service` |
-  | Sortie son | « Amplifaya » |
+La version 0.4.0 pouvait laisser la carte son à 100 %. **Baisse le volume avant de relancer la musique** après la mise à jour.
 
-- **Icône :** un potard à fond sur une platine verte, avec un cran jaune, deux crans rouges et un index rouge. En 32 et 16 px, une version simplifiée sans crans.
-- **ClearPenguin est intégré** et chargé par défaut.
+1. Mets la musique en pause.
+2. Installe le nouveau paquet.
+3. Désactive l’ancien service s’il existe, puis redémarre PipeWire et WirePlumber :
 
-### 0.2.0 — vérifier que le son est vraiment modifié
-
-- **`amplifayactl test`** : avec de la musique en cours, compare le son qui entre dans le moteur et celui qui en sort, puis donne un verdict : modifié, bypass (écart exactement nul), silence ou rien ne passe.
-- **`amplifayactl ab`** : écoute comparative. La commande alterne Amplifaya et le son d'origine, puis restaure l'état de départ, y compris après Ctrl+C.
-- **`amplifayactl` réécrit en C** : le moteur n'a plus besoin de Python.
-- **Architecture moteur/interface :** le moteur tourne en arrière-plan ; l'interface reste facultative à l'utilisation, bien que les deux soient livrés dans le même paquet.
-
-### 0.1.2 — la cause du silence
-
-- Le fichier `ladspa.h` livré déclarait des types de 8 octets au lieu des 4 qu'exige la norme LADSPA. PipeWire lisait les ports de travers et voyait 2 entrées et 0 sortie : silence total, même en bypass.
-- C'est corrigé, et la compilation échoue désormais si cette erreur revient.
-- Ctrl+C ferme l'interface proprement.
-
-## Installation
-
-Installation du paquet unifié (moteur et interface) :
-
-```fish
-sudo pacman -U ./amplifaya-full-0.4.0-1-x86_64.pkg.tar.zst
-systemctl --user daemon-reload
-systemctl --user restart amplifaya.service
-amplifayactl status
+```sh
+sudo pacman -U ./amplifaya-full-0.5.1-1-x86_64.pkg.tar.zst
+systemctl --user disable --now amplifaya.service 2>/dev/null
+systemctl --user restart pipewire wireplumber pipewire-pulse
 ```
 
-### Vérification après installation
+4. Baisse le volume avant de reprendre la lecture, puis vérifie le résultat avec `amplifayactl status` et `amplifayactl test`.
 
-Lance un morceau (MP3 ou autre) et laisse-le jouer pendant toute la vérification. Exécute les commandes suivantes dans un terminal :
+Le paquet moteur seul s’appelle `amplifaya-0.5.1-1-x86_64.pkg.tar.zst`. Le paquet `amplifaya-full` inclut le moteur et l’interface.
 
-```fish
-pactl get-sink-volume alsa_output.pci-0000_63_00.6.analog-stereo
-pactl get-sink-volume amplifaya
-pactl get-default-sink
-journalctl --user -u amplifaya -b --no-pager | grep carte
-amplifayactl test
-amplifayactl ab
-```
+### 0.4.0 — volume matériel et curseur GNOME
 
-Sur la configuration testée, le résultat attendu est :
-- la carte physique est à **100 %** ;
-- le volume de la sortie `amplifaya` est proche de 100 % selon le niveau GNOME ;
-- la sortie par défaut est `amplifaya` ;
-- le journal contient une ligne du type `carte … mise a 100 % (etait 54%), volume Amplifaya ajuste a 54%` ;
-- `amplifayactl test` confirme que le son est bien modifié par Amplifaya ;
-- `amplifayactl ab` alterne quatre fois entre Amplifaya actif et le son d'origine (bypass), puis restaure l'état de départ.
+Deux volumes se multipliaient : le curseur GNOME et celui de la carte son physique, qui pouvait rester à 40 % (−24 dB). La version 0.4.0 mettait la carte à 100 % au démarrage et lors d’un changement de sortie, puis reportait le volume total sur le curseur GNOME. Cette compensation a été retirée en 0.5.0 au profit d’un volume unique.
 
-Le nom `alsa_output.pci-0000_63_00.6.analog-stereo` dépend du matériel. Si le tien diffère, repère le nom exact avec `pactl list short sinks` et remplace-le dans la première commande.
+### 0.3.0 — nouveau nom et icône
 
-Depuis la racine du dépôt, le paquet unifié se trouve dans `Ressources/Applis vibe codées en Libadwaita/01-Multimedia/Amplifaya/`. L'interface est incluse et peut être ouverte à la demande :
+- **Nom : Amplifaya**, jeu de mots autour d’« amplifier » et de *faya* (« feu »).
+- Commande : `amplifayactl` ; interface : `amplifaya-gui` ; sortie audio : « Amplifaya ».
+- ClearPenguin est intégré et chargé par défaut depuis `/usr/share/amplifaya/presets/ClearPenguin.conf`.
 
-```fish
-amplifaya-gui
-```
+### 0.2.0 — diagnostic audio et comparaison A/B
 
-## Compilation depuis les sources
+- **`amplifayactl test`** compare, musique en cours, le signal d’entrée et celui de sortie du moteur. Il distingue son modifié, bypass (écart exactement nul), silence et absence de signal.
+- **`amplifayactl ab`** alterne le traitement Amplifaya et le son d’origine, puis restaure l’état initial, y compris après Ctrl+C.
+- La commande de contrôle a été réécrite en C : le moteur ne dépend plus de Python.
 
-Le bundle de développement de la version 0.4.0 contient le code source, le `PKGBUILD` et un fichier `BUILDING.txt`. **Attention : le `PKGBUILD` fourni dans cette archive construit encore trois variantes** (`amplifaya`, `amplifaya-gui` et `amplifaya-full`). Il doit être adapté avant compilation pour ne produire que le paquet unifié `amplifaya-full`, conformément à la distribution actuelle. Ne suis donc pas la consigne du `BUILDING.txt` d'origine telle quelle.
+### 0.1.2 — correction du silence
 
-Le paquet unifié final doit contenir le moteur, le service systemd utilisateur, le preset ClearPenguin et l'interface GTK4/libadwaita. Une fois le `PKGBUILD` adapté, la compilation sur Arch Linux ou CachyOS se fait depuis le répertoire des sources :
-
-```fish
-makepkg -s
-```
-
+Le fichier `ladspa.h` fourni déclarait des types de 8 octets au lieu des 4 octets imposés par la norme LADSPA. PipeWire interprétait mal les ports et détectait deux entrées et aucune sortie, produisant un silence total même en bypass. La déclaration a été corrigée et la compilation échoue désormais si cette erreur réapparaît. Ctrl+C ferme également l’interface proprement.
 
 ## Commandes utiles
 
 | Commande | Effet |
 |---|---|
-| `amplifayactl status` | État du moteur |
-| `amplifayactl test` | Vérifie que le son est modifié (musique en cours) |
-| `amplifayactl ab` | Écoute comparative avec le son d'origine |
-| `amplifayactl bypass on|off` | Contourne le traitement sans arrêter le moteur |
+| `amplifayactl status` | État du traitement |
+| `amplifayactl test` | Vérifie le traitement audio (musique en cours) |
+| `amplifayactl ab` | Compare le son traité au son d’origine |
+| `amplifayactl bypass on|off` | Active ou désactive le bypass |
 | `amplifayactl bass on|off` | Active ou désactive Bass Boost |
-| `amplifayactl wide on|off` | Scène stéréo élargie (refusée au casque) |
-| `amplifayactl outputs` / `output NOM` | Liste les sorties / change de sortie |
-| `amplifayactl stop` / `start` | Arrête ou relance le moteur |
+| `amplifayactl wide on|off` | Active ou désactive l’élargissement stéréo |
+| `amplifayactl marge 0…6` | Règle la marge avant traitement en dB |
+| `amplifayactl presets` | Liste les profils disponibles |
+| `amplifayactl preset NOM` | Charge un profil sans redémarrer |
 
-Diagnostic et gestion du service :
+L’interface est facultative : lance-la avec `amplifaya-gui`. Le moteur reste actif lorsque la fenêtre est fermée.
 
-```fish
-systemctl --user status amplifaya.service
-journalctl --user -u amplifaya.service -b
-systemctl --user stop amplifaya.service
-systemctl --user start amplifaya.service
+## Vérification et diagnostic
+
+Lance un morceau et laisse-le jouer pendant les tests :
+
+```sh
+amplifayactl status
+amplifayactl test
+amplifayactl ab
+pactl get-default-sink
+journalctl --user -b --no-pager | grep -i amplifaya
 ```
 
-Le README installé se trouve dans `/usr/share/doc/amplifaya/README.md`.
+Le nom de la sortie audio et les lignes de journal dépendent de la configuration. Pour lister les sorties disponibles :
+
+```sh
+pactl list short sinks
+```
+
+Depuis la version 0.5.0, ne cherche pas à diagnostiquer le fonctionnement normal au moyen de `systemctl --user status amplifaya.service` : ce service a été supprimé. Après installation, le redémarrage de PipeWire et WirePlumber permet de charger la nouvelle configuration.
+
+## Dépendances et architecture
+
+- Moteur C et plugin LADSPA, chargés par PipeWire.
+- WirePlumber pour l’insertion du filtre et la bascule automatique casque/haut-parleurs.
+- Interface facultative Python/PyGObject avec GTK4/libadwaita.
+- Preset ClearPenguin fourni avec le paquet.
+
+Le moteur utilise environ **2 Mo** de mémoire. L’interface utilise environ **100 Mo lorsqu’elle est ouverte**, et aucune mémoire d’interface lorsqu’elle est fermée.
 
 ## Limites connues
 
-- **Pas de Bluetooth :** c'est volontaire, la machine n'en utilise pas.
+- **Bluetooth non pris en charge**, volontairement.
 - Amplifaya ne reprend pas tous les effets de JamesDSP.
-- L'interface est en Python et utilise environ 100 Mo lorsqu'elle est ouverte ; le moteur reste autour de 2 Mo.
+- La bascule casque a été essayée avec un casque USB simulé ; le comportement de la prise jack physique n’a pas encore été validé en session réelle.
+
+## Emplacement du paquet
+
+Le dossier de l’application dans le dépôt est :
+
+`Ressources/Applis vibe codées en Libadwaita/01-Multimedia/Amplifaya/`
+
+Le dépôt contient encore le paquet historique **0.4.0**. Ajoute manuellement le paquet 0.5.1 dans ce dossier lorsqu’il est prêt ; ne renomme pas l’ancien fichier pour lui donner la nouvelle version.

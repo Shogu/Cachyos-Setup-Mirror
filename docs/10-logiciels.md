@@ -41,7 +41,7 @@
 
 ### Audio & vidéo
 
-- **Amplifaya** : installer [le moteur headless et sa télécommande GTK4/libadwaita](11-applications-vibe-coded.md#1123--amplifaya--moteur-headless-et-interface), fork allégé de JamesDSP.
+- **Amplifaya** : moteur audio PipeWire sans démon ni service utilisateur depuis la v0.5.0, avec interface GTK4/libadwaita facultative et bascule casque/haut-parleurs via WirePlumber en v0.5.1. Voir [la documentation détaillée](11-applications-vibe-coded.md#1122--amplifaya--moteur-audio-pipewire). Le paquet 0.5.1 sera ajouté manuellement dans [son dossier](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/01-Multimedia/Amplifaya/).
 
 - **Semitone** : lecteur musical GTK4/libadwaita, fork de Gapless, compilé avec Claude. Il remplace `gapless` ; le paquet Arch sera ajouté manuellement dans [son dossier](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/01-Multimedia/Semitone/). Voir [11.29 — Semitone](11-applications-vibe-coded.md#1129--semitone).
 - **Decibel** : installer [le fork maison du lecteur audio GNOME](11-applications-vibe-coded.md#117--decibel), fourni dans le dépôt.

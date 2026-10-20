@@ -64,24 +64,32 @@ Les dossiers sont classés par usage principal. Les extensions GNOME Shell reste
 
 ## 01 — Multimédia
 
-### 11.22 — Amplifaya — moteur headless et interface
+### 11.22 — Amplifaya — moteur audio PipeWire
 
-**Amplifaya** est un moteur audio PipeWire sans interface au démarrage ni Qt, construit sur le cœur DSP de [JamesDSP](https://github.com/Audio4Linux/JDSP4Linux). Le profil **ClearPenguin** est chargé par défaut. Le moteur headless en C fournit la commande `amplifayactl` et le service systemd utilisateur ; l'interface GTK4/libadwaita est facultative et peut être lancée avec `amplifaya-gui`.
+**Amplifaya 0.5.1** est un moteur audio PipeWire basé sur le cœur DSP de JamesDSP, sans interface graphique au démarrage et sans Qt. Le profil ClearPenguin est chargé par défaut ; une interface GTK4/libadwaita reste disponible à la demande avec `amplifaya-gui`.
 
-Depuis la version 0.4.0, le moteur force le volume matériel de la carte son à 100 % au démarrage et lors d'un changement de sortie, puis reporte le volume total sur le curseur GNOME. Un seul paquet unifié, `amplifaya-full`, installe le moteur et l'interface. Le moteur fonctionne en arrière-plan sans ouvrir l'interface, qui reste disponible à la demande avec `amplifaya-gui`. La commande `amplifayactl test` vérifie le traitement audio en cours de lecture, et `amplifayactl ab` compare le son traité à la source en restaurant l'état initial ensuite.
+Depuis la 0.5.0, PipeWire charge directement le traitement et WirePlumber insère le filtre devant la sortie audio. Le démon `amplifayad` et le service utilisateur `amplifaya.service` ont été supprimés. La commande `amplifayactl` pilote directement le traitement et conserve son état dans `~/.config/amplifaya/state.conf`.
 
-- Traitements disponibles : Bass Boost, égaliseur, limiteur, crossfeed BS2B au casque et élargissement stéréo sur haut-parleurs.
-- Pas de prise en charge Bluetooth ; tous les effets de JamesDSP ne sont pas repris.
-- L'interface utilise environ 100 Mo lorsqu'elle est ouverte ; le moteur seul environ 2 Mo.
+La 0.5.1 ajoute la bascule automatique vers le son natif lors de la détection d’un casque, puis le retour du traitement sur les haut-parleurs, sans service séparé. La marge avant traitement est réglable de 0 à 6 dB (0 par défaut). La détection de la prise jack physique reste à vérifier en session réelle.
 
-Désactive l'ancien traitement global JamesDSP ou EasyEffects avant d'activer Amplifaya, pour éviter un double traitement. Installation du paquet unifié depuis le répertoire qui le contient :
+Commandes principales : `amplifayactl status`, `test`, `ab`, `bypass on|off`, `bass on|off`, `wide on|off`, `marge 0…6`, `presets` et `preset NOM`. Lance un morceau pendant `test` ou `ab`. Désactive JamesDSP ou EasyEffects pour éviter un double traitement.
+
+**Mise à jour depuis 0.4.x :** mets la musique en pause, installe le nouveau paquet, désactive l’ancien service s’il existe, puis redémarre PipeWire et WirePlumber. La version 0.4.0 pouvait forcer la carte son à 100 % : baisse le volume avant de reprendre la lecture.
 
 ```fish
-sudo pacman -U ./amplifaya-full-0.4.0-1-x86_64.pkg.tar.zst
-systemctl --user daemon-reload
-systemctl --user restart amplifaya.service
+sudo pacman -U ./amplifaya-full-0.5.1-1-x86_64.pkg.tar.zst
+systemctl --user disable --now amplifaya.service 2>/dev/null
+systemctl --user restart pipewire wireplumber pipewire-pulse
 amplifayactl status
+amplifayactl test
 ```
+
+Le paquet moteur seul est `amplifaya-0.5.1-1-x86_64.pkg.tar.zst`. Le dépôt contient encore l’archive 0.4.0 ; ajoute manuellement le paquet 0.5.1 dans le dossier [Amplifaya](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/01-Multimedia/Amplifaya/).
+
+- Le moteur utilise environ 2 Mo de mémoire ; l’interface environ 100 Mo lorsqu’elle est ouverte.
+- Pas de Bluetooth ; tous les effets de JamesDSP ne sont pas repris.
+- Documentation détaillée : [README d’Amplifaya](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/01-Multimedia/Amplifaya/readme_amplifaya.md).
+
 
 ### Vérification après installation
 
