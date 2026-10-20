@@ -134,19 +134,23 @@ Une capture de l'interface de Decibel n'a pas été fournie dans cet envoi. Elle
 
 ### 11.27 — Disquaire
 
-**Disquaire 1.5.2** est un éditeur GTK4/libadwaita de tags MP3 et FLAC pour GNOME. Il conserve sept champs — artiste, titre, album, date, genre, pochette et paroles — et supprime les autres tags à l'enregistrement.
+**Disquaire 1.7.1** est un éditeur GTK4/libadwaita de tags MP3 et FLAC pour GNOME. Il conserve sept champs — artiste, titre, album, année, genre, pochette et paroles — et supprime les autres tags lors du nettoyage automatique ou à l’enregistrement.
 
-La version 1.5.2 comprend la recherche de tags dans toute la discothèque, l'édition groupée, la mise en forme et le renommage cohérents artiste/titre, la réserve de pochettes par genre, la recherche floue de doublons, la conversion FLAC vers MP3 320 kb/s et l'annulation des dernières opérations. La recherche globale utilise un cache dans ~/.cache/disquaire/index.json.
+La version documentée propose notamment le nettoyage automatique, la normalisation des dates et pochettes, la recherche globale avec index en cache, l’édition groupée, la mise en forme artiste/titre, la réserve de pochettes par genre, la recherche de paroles LRCLIB avec traitement en lot, la recherche floue de doublons, la conversion FLAC vers MP3 320 kb/s et l’annulation des dernières opérations.
 
-Autres fonctions : arborescence et recherche des dossiers, création et déplacement par glisser-déposer, pochettes depuis folder.jpg ou une recherche en ligne, lecture intégrée, corbeille et restauration des dernières opérations. Les fichiers comportant des tags supplémentaires sont signalés ; les modifications ne sont écrites sur le disque qu'à l'enregistrement.
+Les modifications de pochette, la mise en forme et les valeurs récupérées en ligne sont enregistrées directement. Les modifications manuelles dans les champs restent en attente, signalées par un point bleu. Le nettoyage automatique peut être désactivé dans les préférences.
 
-Le paquet compilé disquaire-1.5.2-1-any.pkg.tar.zst est déjà présent dans le dossier Disquaire. Pour l'installer depuis ce dossier :
+Le README complet de Disquaire décrit l’ensemble des fonctions, les raccourcis, les dépendances et la compilation.
+
+**Installation du paquet 1.7.1** — le fichier `disquaire-1.7.1-1-any.pkg.tar.zst` doit être présent dans le dossier Disquaire :
 
 ~~~fish
-sudo pacman -U ./disquaire-1.5.2-1-any.pkg.tar.zst
+sudo pacman -U "Ressources/Applis vibe codées en Libadwaita/01-Multimedia/Disquaire/disquaire-1.7.1-1-any.pkg.tar.zst"
 ~~~
 
-Le [README complet de Disquaire](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/01-Multimedia/Disquaire/README.md) décrit les fonctions, les raccourcis, les dépendances et la compilation.
+Le dépôt contient encore l’archive 1.5.2 ; ajoutez le paquet 1.7.1 manuellement avant d’utiliser cette commande.
+
+[Lire le README complet de Disquaire](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/01-Multimedia/Disquaire/README.md).
 
 
 ---
