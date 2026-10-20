@@ -1,15 +1,37 @@
-# Samizdat
+# Samizdat — documentation et développement
 
-Traitement de texte léger pour GNOME : ouvre/édite/enregistre **DOCX, ODT, Markdown**, texte brut et HTML, export **PDF**. Mise en forme, styles de paragraphe, listes, tableaux, images (redimensionnement, recadrage), mise en page, plan, rechercher/remplacer, annuler/rétablir.
+Traitement de texte GNOME en Rust, GTK4/libadwaita, basé sur `letters-core` de [gtk-office-suite](https://github.com/tuna-os/gtk-office-suite) (GPL-3.0). La documentation utilisateur de référence est le [README Samizdat](README.md).
 
-## Technique
+## État documenté
 
-- **Rust**, GTK4/libadwaita (gtk4-rs / libadwaita-rs), éditeur basé sur `GtkTextView`. Moteur de document : **letters-core** de https://github.com/tuna-os/gtk-office-suite (GPL-3.0), avec corrections maison (position des tableaux DOCX, paragraphes vides ajoutés à chaque enregistrement, images dans leur paragraphe).
-- Toute commande passe par le modèle letters-core et doit s'annuler en **un seul Ctrl+Z**.
-- Build : `cargo build --release` ; tests : `xvfb-run cargo test -p samizdat` (besoin d'un affichage). Le `[patch.crates-io]` de `Cargo.toml` (fork épinglé d'`oxml-layout`) est indispensable. Paquet : `makepkg -si`.
-- Licence GPL-3.0-or-later.
+Le README couvre la base fonctionnelle de la version 0.8.0 et les nouveautés signalées pour les versions 0.8.1 à 0.11.0 : aperçu paginé en direct, OCR Tesseract en français, règle graduée, commandes de paragraphe remaniées, correction orthographique globale, mode concentration amélioré, interface plus compacte et corrections d’enregistrement/copie.
 
-## État
+Le dépôt contient le README, ce fichier, ainsi que les modèles DOCX sous `Modeles/`. Le code source et le paquet Arch compilé ne sont pas présents dans ce dossier ; le paquet sera ajouté manuellement lorsqu’il sera disponible. Ne pas inventer le numéro de release du paquet avant de connaître le nom réel de l’archive.
 
-- Seul `README.md` est présent : ni sources ni paquet. Le paquet est à ajouter par Ogu ; nom et version encore inconnus (`docs/11` §11.25 à compléter à son arrivée).
-- Limites connues : tableaux affichés en grille de texte dans l'éditeur, pas de pagination à l'écran, pas de commentaires ni de suivi des modifications.
+## Architecture et compilation
+
+- Rust, GTK4/libadwaita (`gtk4-rs` / `libadwaita-rs`), éditeur basé sur `GtkTextView`.
+- Moteur documentaire : `letters-core` de gtk-office-suite, avec correctifs locaux décrits dans l’historique de l’application.
+- Toute commande doit passer par le modèle de document et pouvoir être annulée en un seul `Ctrl+Z` lorsque la fonctionnalité est conçue comme une opération atomique.
+- Compilation Arch : `makepkg -si` ; compilation Cargo : `cargo build --release` ; tests : `xvfb-run cargo test -p samizdat`. Le `[patch.crates-io]` de `Cargo.toml` (fork épinglé d’`oxml-layout`) est indispensable. Les tests GTK ont besoin d’un affichage.
+- Le paquet doit déclarer `tesseract` et `tesseract-data-fra` comme dépendances runtime pour que l’OCR français fonctionne après installation.
+
+## Principes à préserver
+
+- Garder une interface native GNOME, sobre, en GTK4/libadwaita.
+- Préserver le texte sélectionné lors des changements de police, taille et couleur.
+- L’OCR doit rester non bloquant, nettoyer les césures et respecter les listes, puis insérer le résultat comme une seule opération annulable.
+- L’aperçu ne doit pas ralentir la frappe : temporiser le rendu après la dernière touche et ne dessiner que les pages visibles.
+- Maintenir la cohérence du modèle de document, des exports DOCX/ODT/PDF et de l’annulation/rétablissement.
+- Ne pas présenter la page de l’éditeur comme une maquette exacte de la pagination PDF ; c’est l’aperçu paginé qui fait foi.
+
+## Limites documentées
+
+- OCR prévu pour le texte imprimé ; écriture manuscrite non prise en charge et colonnes multiples complexes moins fiables.
+- Dans l’éditeur, les tableaux sont représentés en grille de texte ; les exports contiennent de vrais tableaux.
+- Les images et cartouches restent dans le fil du texte ; pas de placement flottant libre.
+- Pas de commentaires ni de suivi des modifications.
+
+## Licence
+
+GPL-3.0-or-later.

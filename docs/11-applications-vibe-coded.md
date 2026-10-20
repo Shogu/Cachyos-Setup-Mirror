@@ -233,29 +233,39 @@ Les formats pris en charge et la commande de lancement restent à préciser à p
 
 ### 11.24 — Samizdat
 
-**Samizdat 0.8.0** est un traitement de texte GNOME en Rust, GTK4/libadwaita, basé sur le moteur `letters-core` de gtk-office-suite. Il prend en charge DOCX, ODT, Markdown, texte brut, HTML et la lecture/export PDF.
+**Samizdat 0.11.0** est un traitement de texte GNOME en Rust, GTK4/libadwaita, basé sur `letters-core` de gtk-office-suite. Il prend en charge DOCX, ODT, Markdown, texte brut, HTML et la lecture/export PDF. Les nouveautés documentées depuis 0.8.0 comprennent un aperçu paginé en direct, l’OCR français (images et PDF scannés), une règle graduée, des commandes de paragraphe plus compactes, la correction orthographique globale, un mode concentration amélioré et des corrections de sélection, de défilement et de copie sur clé USB.
 
-La version 0.8.0 ajoute notamment la typographie française automatique, les styles de paragraphes, les listes multiniveaux, les cartouches, la numérotation des lignes, les formes, les frises chronologiques modifiables, les tableaux, le traitement des images, la correction orthographique française, les en-têtes/pieds de page, les colonnes, le plan et le sommaire automatique. Elle comprend aussi le mode concentration, les modèles, les exports DOCX/PDF, les livrets de séquence, les PDF aménagés pour les élèves à besoins particuliers, les onglets/fenêtres, la sauvegarde de secours automatique et les préférences d’interface.
+### Nouveautés 0.8.1 à 0.11.0
+
+- **Aperçu en direct** : panneau à droite, F12 pour l’afficher/masquer, rendu différé après la frappe, suivi de la page et du curseur, clic pour positionner le curseur et double-clic pour ouvrir l’outil d’une image, frise, tableau ou cartouche. Largeur mémorisée ; panneau masqué en mode concentration et dans les onglets PDF.
+- **OCR en français** : Tesseract reconnaît le texte imprimé d’une image collée, d’un fichier image ou d’un PDF scanné. Le texte peut remplacer l’image collée, être inséré sous une image ou être copié depuis un onglet PDF. Les pages PDF sont traitées avec progression ; une opération OCR s’annule en un seul Ctrl+Z. L’écriture manuscrite et les documents complexes en plusieurs colonnes restent moins bien reconnus.
+- **Règle graduée** : Ctrl+R, graduation tous les 0,25 cm, réglage du retrait du paragraphe et lignes repères verticales.
+- **Paragraphes et orthographe** : style courant indiqué par l’icône ¶, retrait basculant, boutons dédiés d’alignement à gauche et de centrage ; « Corriger tout le document » applique la première suggestion après confirmation, avec une seule annulation.
+- **Mode concentration et interface** : page blanche plein écran, ligne en cours centrée si l’option est activée, entrée/sortie sans perdre la position du curseur. Barre d’outils plus compacte, Annuler/Rétablir à gauche, boutons d’insertion regroupés dans « + » lorsque la fenêtre est étroite.
+- **Préférences** : aperçu à droite au démarrage et bouton OCR masquable.
+- **Corrections** : la sélection est conservée lors du changement de police, taille ou couleur ; le clic dans la page ne provoque plus de remontée intempestive ; les erreurs d’enregistrement expliquent la cause probable ; la copie sur clé USB passe par des fichiers préparés localement.
 
 ### Modèles fournis
 
-Le paquet 0.8.0 est accompagné de quatre modèles DOCX :
+Quatre modèles DOCX sont fournis dans l’archive `Modèles de cours en docx (Samizdat).tar.xz` :
 - `Cours.docx`
 - `Page de garde de séquence.docx`
 - `Bac blanc Français.docx`
 - `Bac blanc Histoire-Géographie.docx`
 
-Les modèles sont fournis dans le dépôt, dans l’archive `Modèles de cours en docx (Samizdat).tar.xz`, située dans `Ressources/Applis vibe codées en Libadwaita/02-Bureautique-et-redaction/Samizdat/Modeles/`. **Après avoir téléchargé le dépôt ou cette archive, extraire les quatre fichiers DOCX puis les importer dans Samizdat** : ouvrir les préférences (`Ctrl+,`), utiliser la fonction d’importation de modèle et sélectionner les fichiers extraits. Les modèles importés sont disponibles dans le dossier utilisateur `~/.local/share/samizdat/modeles` et peuvent ensuite être choisis comme modèles de démarrage.
+L’archive se trouve dans `Ressources/Applis vibe codées en Libadwaita/02-Bureautique-et-redaction/Samizdat/Modeles/`. Après extraction, importer les fichiers DOCX depuis les préférences (`Ctrl+,`). Ils ne sont pas importés automatiquement.
 
 ### Installation
 
-Depuis le dossier où se trouve le paquet fourni :
+Depuis le dossier contenant le paquet compilé, installer l’archive Samizdat. Le nom exact du fichier dépend de la release ajoutée manuellement ; vérifier qu’un seul paquet correspond au motif :
 
 ```fish
-sudo pacman -U ./samizdat-0.8.0-1-x86_64.pkg.tar.zst
+sudo pacman -U ./samizdat-*.pkg.tar.zst
 ```
 
-Le [README complet de Samizdat](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Samizdat/README.md) récapitule les fonctionnalités, les raccourcis et les limites connues. Le paquet n’a pas été installé ni testé dans une session GNOME pendant cette mise à jour.
+Les dépendances OCR `tesseract` et `tesseract-data-fra` sont installées automatiquement par pacman si elles sont déclarées dans le paquet.
+
+Le [README complet de Samizdat](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/02-Bureautique-et-redaction/Samizdat/README.md) récapitule les fonctions, raccourcis et limites connues. Le paquet Arch compilé n’est pas encore présent dans le dossier : il sera ajouté manuellement.
 
 ---
 

@@ -22,7 +22,7 @@
 
 ### Bureautique
 
-- **Samizdat** : installer [le traitement de texte léger GTK4/libadwaita](11-applications-vibe-coded.md#1125--samizdat), pour les documents courants DOCX, ODT et Markdown, avec export PDF.
+- **Samizdat** : installer [le traitement de texte GTK4/libadwaita](11-applications-vibe-coded.md#1124--samizdat), désormais documenté en version 0.11.0, avec aperçu paginé en direct, OCR français pour images/PDF scannés, règle graduée et export PDF. Le paquet compilé sera ajouté manuellement dans [son dossier](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/02-Bureautique-et-redaction/Samizdat/).
 
 - **Grille** : [visionneuse simple de fichiers tableurs, codée avec Claude](11-applications-vibe-coded.md#1124--grille).
 
