@@ -12,7 +12,7 @@ Les dossiers sont classés par usage principal. Les extensions GNOME Shell reste
 
 - **01 — Multimédia** : Amplifaya, Decibel, Disquaire, Semitone.
 - **02 — Bureautique et rédaction** : Alexandrie, Grimoire, Grille, Samizdat.
-- **03 — Fichiers et téléchargements** : Fret, Grabber, Nautilus Bookmark Icons, PLACES.
+- **03 — Fichiers et téléchargements** : Fret, Grabber, Nautilus Bookmark Icons, PLACES, Thumbnailer Sushi.
 - **04 — Bureau et personnalisation** : Extension Manager, Icônes UI.
 - **05 — Système et utilitaires** : dconf-editor GTK4, Fisherman, Pacto, Pusher, Radar, Sismographe, Snapper GTK4, systemd-gui, Vidange.
 
@@ -36,6 +36,24 @@ Les dossiers sont classés par usage principal. Les extensions GNOME Shell reste
 - [11.2 — Grabber](#112--grabber)
 - [11.12 — Nautilus Bookmark Icons](#1112--nautilus-bookmark-icons)
 - [11.26 — PLACES — Dossiers Ogu](#1126--places--dossiers-ogu)
+- [11.31 — Thumbnailer Sushi](#1131--thumbnailer-sushi)
+
+### 11.31 — Thumbnailer Sushi
+
+**Thumbnailer Sushi 1.6.0-1** est un paquet Arch `any` vibe codé pour compléter **Sushi** et les miniatures GNOME, sans installer LibreOffice. Il cible CachyOS, GNOME 51 et Sushi 51.1.
+
+- **Aperçus Sushi** : documents DOCX, ODT, RTF et Markdown ; présentations PPTX/ODP avec une carte par diapositive ; tableurs XLSX/ODS avec une vue GTK par feuille.
+- **Archives** : ZIP, TAR et variantes compressées, 7z, RAR et paquets Arch `.pkg.tar.zst`, listés sans extraction.
+- **Miniatures Nautilus** : documents, présentations, tableurs, texte brut et code, avec une apparence cohérente. Les archives conservent leur icône habituelle.
+- **Sécurité** : conversion dans un processus Python séparé sans shell, contenu HTML avec CSP restrictive et JavaScript désactivé, ressources externes/locales bloquées dans l’aperçu, archives non extraites.
+
+Le rendu est destiné à la consultation rapide : les mises en page complexes, les images de diapositives, la mise en forme des tableurs et les formats Office binaires anciens (`.doc`, `.xls`, `.ppt`) ne sont pas pris en charge.
+
+Le paquet compilé sera ajouté manuellement dans [le dossier Thumbnailer Sushi](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/03-Fichiers-et-telechargements/Thumbnailer%20Sushi/). Son [README détaillé](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/03-Fichiers-et-telechargements/Thumbnailer%20Sushi/README.md) donne les instructions d’installation, les dépendances, les limites, le dépannage et l’état des tests.
+
+Pour l’utilisation dans le workflow Nautilus, voir [9.7 — Aperçu et miniatures avec Sushi](09-nautilus-workflow.md#97--aperçu-et-miniatures-avec-sushi).
+
+---
 
 ## 04 — Bureau et personnalisation
 

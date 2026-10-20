@@ -19,7 +19,7 @@ Les miniatures utilisent un bandeau coloré et une fiche adaptée à la famille 
 Depuis la racine du dépôt, après avoir ajouté le paquet Arch à ce dossier :
 
 ```fish
-set paquets (find "Ressources/Logiciels/thumbnailer-docx-nautilus-sushi" -maxdepth 1 -type f -name 'thumbnailer-docx-nautilus-sushi-*-any.pkg.tar.zst')
+set paquets (find "Ressources/Applis vibe codées en Libadwaita/03-Fichiers-et-telechargements/Thumbnailer Sushi" -maxdepth 1 -type f -name 'thumbnailer-docx-nautilus-sushi-*-any.pkg.tar.zst')
 if test (count $paquets) -eq 1
     sudo pacman -U "$paquets[1]"
 else

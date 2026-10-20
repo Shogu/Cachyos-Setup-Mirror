@@ -53,17 +53,6 @@
 ### Système & outils
 
 - `sushi` : prévisualisation rapide des fichiers dans Nautilus avec la barre d’espace.
-- **thumbnailer-docx-nautilus-sushi** : paquet local qui ajoute à Sushi des aperçus de documents, présentations, tableurs et archives, ainsi que des miniatures Nautilus pour documents, présentations, tableurs, texte brut et code. Le paquet compilé est à déposer manuellement dans [son dossier](../Ressources/Logiciels/thumbnailer-docx-nautilus-sushi/). Voir [9.7 — Aperçu et miniatures avec Sushi](09-nautilus-workflow.md#97--aperçu-et-miniatures-avec-sushi) et le [README du paquet](../Ressources/Logiciels/thumbnailer-docx-nautilus-sushi/README.md).
-
-  Après installation ou mise à jour du paquet, relancer les deux applications et vider le cache des miniatures :
-
-  ```fish
-  pkill -f NautilusPreviewer
-  nautilus -q
-  rm -rf ~/.cache/thumbnails/*
-  ```
-
-
 - **dconf-editor GTK4** : build du [portage GTK4 officiel en cours](11-applications-vibe-coded.md#1115--dconf-editor-gtk4), compilé depuis les sources upstream ; il remplace le `dconf-editor` GTK3 des dépôts.
 - `powertop` : diagnostic de consommation énergétique.
 - `profile-cleaner` : nettoyage des profils navigateurs.

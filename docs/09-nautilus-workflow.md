@@ -251,7 +251,7 @@ Attribuer manuellement les icônes **Teal** aux dossiers Archives, Audio, Code, 
 
 ## 9.7 — Aperçu et miniatures avec Sushi
 
-**Sushi** ouvre un aperçu rapide avec la barre d’espace dans Nautilus. Le paquet local `thumbnailer-docx-nautilus-sushi` complète Sushi et les miniatures GNOME, sans installer LibreOffice :
+**Sushi** ouvre un aperçu rapide avec la barre d’espace dans Nautilus. Le paquet vibe codé [Thumbnailer Sushi 1.6.0-1](11-applications-vibe-coded.md#1131--thumbnailer-sushi) complète Sushi et les miniatures GNOME, sans installer LibreOffice. Sa documentation complète est désormais rangée avec les autres applications vibe codées, dans [son dossier dédié](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/03-Fichiers-et-telechargements/Thumbnailer%20Sushi/README.md).
 
 - **Aperçu Sushi** des documents DOCX/ODT/RTF/Markdown, des présentations PPTX/ODP et des tableurs XLSX/ODS, avec leurs variantes et modèles pris en charge ;
 - **aperçu du contenu des archives** ZIP, TAR, 7z, RAR et paquets Arch ;
@@ -261,10 +261,10 @@ Les documents sont présentés comme une page défilante, les présentations com
 
 ### Installation
 
-Ajouter manuellement le paquet compilé dans `Ressources/Logiciels/thumbnailer-docx-nautilus-sushi/`, puis depuis la racine du dépôt :
+Ajouter manuellement le paquet compilé dans `Ressources/Applis vibe codées en Libadwaita/03-Fichiers-et-telechargements/Thumbnailer Sushi/`, puis depuis la racine du dépôt :
 
 ```fish
-set paquets (find "Ressources/Logiciels/thumbnailer-docx-nautilus-sushi" -maxdepth 1 -type f -name 'thumbnailer-docx-nautilus-sushi-*-any.pkg.tar.zst')
+set paquets (find "Ressources/Applis vibe codées en Libadwaita/03-Fichiers-et-telechargements/Thumbnailer Sushi" -maxdepth 1 -type f -name 'thumbnailer-docx-nautilus-sushi-*-any.pkg.tar.zst')
 if test (count $paquets) -eq 1
     sudo pacman -U "$paquets[1]"
 else
@@ -280,7 +280,7 @@ nautilus -q
 rm -rf ~/.cache/thumbnails/*
 ```
 
-Le [README du paquet](../Ressources/Logiciels/thumbnailer-docx-nautilus-sushi/README.md) décrit les formats, les limites, le dépannage et l’état des tests. Le paquet place son fichier `.thumbnailer` dans `/usr/local/share/thumbnailers/` pour passer avant celui de `libgsf` ; cet emplacement est volontaire et ne doit pas être modifié.
+Le [README du paquet](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/03-Fichiers-et-telechargements/Thumbnailer%20Sushi/README.md) décrit les formats, les limites, le dépannage et l’état des tests. Le paquet place son fichier `.thumbnailer` dans `/usr/local/share/thumbnailers/` pour passer avant celui de `libgsf` ; cet emplacement est volontaire et ne doit pas être modifié.
 
 ---
 
