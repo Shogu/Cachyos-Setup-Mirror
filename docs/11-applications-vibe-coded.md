@@ -753,7 +753,7 @@ Le [README du dossier Session Keeper](../Ressources/Applis%20vibe%20codées%20en
 
 Extension GNOME Shell maison dédiée à la rationalisation de **Quick Settings** et du panneau **Calendrier/Notifications**. Compatible GNOME Shell **50 et 51**.
 
-**Version documentée : v14.** UUID : `focus-et-boutons@ogu`. Le dépôt contient encore le paquet v12 ; le ZIP v14 reste à ajouter.
+**Version documentée : v25.** UUID : `focus-et-boutons@ogu`. Le ZIP v25 doit être ajouté manuellement au dépôt dans `Ressources/Applis vibe codées en Libadwaita/Extensions GNOME/Focus & Boutons/`.
 
 ### Fonctions principales
 
@@ -761,7 +761,7 @@ Extension GNOME Shell maison dédiée à la rationalisation de **Quick Settings*
 - même comportement pour le panneau Calendrier/Notifications ;
 - masquage optionnel du bouton Capture d’écran ;
 - bouton **Réglages scindé** : clic principal vers Paramètres GNOME ; chevron vers Ajustements, Éditeur dconf et Extensions Manager ;
-- bouton **Power scindé** : clic principal vers le dialogue Éteindre ; chevron vers Suspendre, Redémarrer, Redémarrer la session et Verrouiller la session ;
+- bouton **Power scindé** : clic principal vers le dialogue Éteindre ; chevron vers Suspendre, Redémarrer, Reconnexion et Verrouiller la session ;
 - coloration **bleu Adwaita temporaire** des deux boutons scindés tant que leur sous-menu est ouvert ;
 - renommage optionnel du profil de puissance en **Énergie** ;
 - retrait du cadenas séparé quand le bouton Power scindé est actif ;
@@ -772,22 +772,36 @@ Extension GNOME Shell maison dédiée à la rationalisation de **Quick Settings*
 
 L’extension ne modifie ni le volume ni le microphone. Elle peut masquer le sélecteur de sortie audio, mais ne change pas la sortie par défaut.
 
+### Changements techniques récents
+
+**v22 — Appel de l’OSD et journalisation**
+- Essaie plusieurs signatures d’appel de l’OSD de GNOME Shell, mémorise la forme qui fonctionne et l’écrit dans le journal.
+- Enregistre une fois au chargement la définition de la fonction OSD réellement présente dans GNOME Shell, utile pour diagnostiquer une incompatibilité si les trois formes échouent.
+- Limite l’échec à une seule erreur de journal au lieu de répéter le message en boucle.
+
+**v25 — Liste des rendez-vous adaptative**
+- La liste prend la hauteur nécessaire à son contenu : pas de grand espace vide quand il y a peu de rendez-vous.
+- Elle grandit jusqu’à **300 px** ; au-delà, son contenu défile.
+- Le fondu de bord reste à **14 px**.
+
+**Tests :** la v25 n’a pas pu être testée ici. Le comportement adaptatif est donc à vérifier en session GNOME réelle.
+
 ### Installation
 
-**Installation v14 :** le ZIP v14 reste à ajouter au dépôt. Après récupération de cette archive, depuis le dossier qui la contient :
+Depuis le dossier contenant le ZIP v25 :
 
 ```fish
-gnome-extensions install --force ./Focus-et-Boutons-v14.zip
+gnome-extensions install --force ./Focus-et-Boutons-v25.zip
 gnome-extensions enable focus-et-boutons@ogu
 ```
 
 Préférences :
 
-Sous Wayland, fermer puis rouvrir la session après remplacement d’une version déjà chargée.
-
 ```fish
 gnome-extensions prefs focus-et-boutons@ogu
 ```
+
+Sous Wayland, fermer puis rouvrir la session après remplacement d’une version déjà chargée.
 
 ### Désinstallation
 

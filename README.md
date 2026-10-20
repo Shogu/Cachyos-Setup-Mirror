@@ -17,16 +17,15 @@ Setup, conseils et réglages personnels pour **CachyOS** sur **ASUS Zenbook 14 O
 
 
 
-## Focus & Boutons v16
+## Focus & Boutons v25
 
-**Focus & Boutons v16 remplace « Redémarrer la session » par « Reconnexion ».**
+**Focus & Boutons v25** conserve les améliorations de diagnostic de l’OSD introduites en v22 et rend la liste des rendez-vous adaptative.
 
-- **Menu du bouton Power** : l’entrée s’appelle maintenant « Reconnexion ».
-- **Fenêtre de confirmation** : le titre et le bouton affichent « Reconnexion », tant que l’option des préférences est activée.
-- **Préférences** : l’interrupteur s’appelle « Fenêtre « Reconnexion » ».
-- **Sans l’option** : la fenêtre de confirmation revient au texte de GNOME (« Fermer la session »).
+- **OSD (v22)** : essaie plusieurs formes d’appel, retient et journalise celle qui fonctionne ; enregistre une fois au chargement la définition de la fonction OSD de GNOME Shell. Si les trois essais échouent, une seule erreur est journalisée.
+- **Rendez-vous (v25)** : la liste s’ajuste au contenu, sans grand vide avec peu d’éléments ; elle grandit jusqu’à **300 px**, puis défile. Le fondu de bord reste à **14 px**.
+- **Test** : la v25 n’a pas pu être testée dans une session GNOME réelle ; la hauteur adaptative reste à vérifier.
 
-**Vérifications rapportées pour cette version :** `node --check` et compilation du schéma. **Aucun test dans un vrai GNOME Shell n’a été effectué.**
+Détails, installation et désinstallation : [documentation complète de Focus & Boutons](docs/11-applications-vibe-coded.md#1117--focus--boutons).
 
 ## Philosophie
 

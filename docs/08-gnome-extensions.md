@@ -86,26 +86,32 @@ gnome-extensions enable always-on-top-always-on-top@localhost
 
 ## 8.7 — Focus & Boutons
 
-Extension GNOME Shell maison compatible **GNOME 50 et 51**. Elle regroupe les ajustements de Quick Settings et du panneau Calendrier/Notifications afin d’éviter d’empiler plusieurs petites extensions.
+Extension GNOME Shell maison compatible **GNOME 50 et 51**, UUID `focus-et-boutons@ogu`. Elle regroupe les ajustements de Quick Settings et du panneau Calendrier/Notifications afin d’éviter d’empiler plusieurs petites extensions.
 
 Fonctions principales :
 
 - fermeture automatique de **Quick Settings** et du panneau **Calendrier/Notifications** après sortie du pointeur, avec délai réglable ;
 - bouton **Capture d’écran** masquable sans désactiver les raccourcis GNOME ;
 - bouton **Réglages scindé** : clic principal vers Paramètres GNOME, chevron vers Ajustements, Éditeur dconf et Extensions Manager ;
-- bouton **Power scindé** : clic principal vers Éteindre, chevron vers Suspendre, Redémarrer, Redémarrer la session et Verrouiller la session ;
+- bouton **Power scindé** : clic principal vers Éteindre, chevron vers Suspendre, Redémarrer, Reconnexion et Verrouiller la session ;
 - les deux boutons scindés deviennent **bleu Adwaita uniquement pendant l’ouverture de leur menu** ;
 - libellé du profil de puissance raccourci en **Énergie** ;
 - retrait du cadenas séparé quand le bouton Power scindé est actif ;
 - masquage optionnel de la liste des sorties audio et de son chevron ;
 - carte des rendez-vous dans la couleur d’accent du système (bleu par défaut), sans modifier la date ni ajouter de bordure ;
-- masquage complet de la colonne **Aucune notification** quand elle est vide ; réapparition dès qu’une notification existe ;
-- panneau de préférences pour activer ou désactiver les fonctions.
+- masquage complet de la colonne **Aucune notification** quand elle est vide ; réapparition dès qu’une notification existe.
 
-**Installation v14 :** le ZIP v14 reste à ajouter au dépôt. Après récupération de cette archive, depuis le dossier qui la contient :
+### Changements récents
+
+- **v22 — OSD :** l’extension essaie plusieurs formes d’appel de l’OSD, conserve celle qui fonctionne et la consigne dans le journal. Au chargement, elle enregistre également une fois la définition de la fonction OSD de GNOME Shell. Si les trois formes échouent, cette trace aide à déterminer la signature réelle. Une seule erreur est ensuite journalisée, plutôt qu’une répétition massive.
+- **v25 — Rendez-vous adaptatifs :** la liste prend la hauteur de son contenu ; elle ne laisse plus un grand vide quand il y a peu de rendez-vous. Elle grandit avec le contenu jusqu’à **300 px**, puis défile. Le fondu de bord reste à **14 px**.
+
+**État des tests :** la v25 n’a pas pu être testée ici dans une session GNOME réelle ; le comportement adaptatif doit être vérifié sur la machine cible.
+
+**Installation v25 :** le ZIP v25 doit être ajouté manuellement au dépôt dans le dossier Focus & Boutons. Une fois l’archive présente, depuis le dossier qui la contient :
 
 ```fish
-gnome-extensions install --force ./Focus-et-Boutons-v14.zip
+gnome-extensions install --force ./Focus-et-Boutons-v25.zip
 gnome-extensions enable focus-et-boutons@ogu
 ```
 

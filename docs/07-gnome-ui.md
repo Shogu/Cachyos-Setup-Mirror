@@ -108,7 +108,7 @@ gsettings set org.gnome.settings-daemon.plugins.housekeeping donation-reminder-e
 
 Le renommage manuel du fichier de traduction GNOME Shell n’est plus nécessaire. L’extension maison **Focus & Boutons** peut remplacer directement le libellé **Mode puissance** par **Énergie** et réorganiser la rangée système de Quick Settings.
 
-Elle fournit également les boutons scindés **Réglages** et **Power**, la fermeture automatique de Quick Settings et du panneau Calendrier/Notifications, ainsi que les options d’affichage du calendrier.
+Elle fournit également les boutons scindés **Réglages** et **Power**, la fermeture automatique de Quick Settings et du panneau Calendrier/Notifications, ainsi que les options d’affichage du calendrier. La v22 améliore la compatibilité de l’OSD en essayant plusieurs signatures et en journalisant la forme retenue ; la v25 rend la liste des rendez-vous adaptative (hauteur du contenu, maximum 300 px avant défilement, fondu de 14 px). La v25 n’a pas encore été testée en session GNOME réelle.
 
 Voir [Extensions GNOME — Focus & Boutons](08-gnome-extensions.md#87--focus--boutons) et [Applications Vibe Coded — Focus & Boutons](11-applications-vibe-coded.md#1118--focus--boutons).
 
