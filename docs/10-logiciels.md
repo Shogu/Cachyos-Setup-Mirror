@@ -52,11 +52,14 @@
 ### Système & outils
 
 - `sushi` : prévisualisation rapide des fichiers dans Nautilus avec la barre d’espace.
+- **thumbnailer-docx-nautilus-sushi** : paquet local qui ajoute à Sushi des aperçus de documents, présentations, tableurs et archives, ainsi que des miniatures Nautilus pour documents, présentations, tableurs, texte brut et code. Le paquet compilé est à déposer manuellement dans [son dossier](../Ressources/Logiciels/thumbnailer-docx-nautilus-sushi/). Voir [9.7 — Aperçu et miniatures avec Sushi](09-nautilus-workflow.md#97--aperçu-et-miniatures-avec-sushi) et le [README du paquet](../Ressources/Logiciels/thumbnailer-docx-nautilus-sushi/README.md).
 
-  **Après l’installation de Sushi**, exécuter cette commande pour arrêter l’ancien visualiseur, fermer Nautilus et vider le cache des miniatures :
+  Après installation ou mise à jour du paquet, relancer les deux applications et vider le cache des miniatures :
 
   ```fish
-  pkill -f NautilusPreviewer; nautilus -q; rm -rf ~/.cache/thumbnails/*
+  pkill -f NautilusPreviewer
+  nautilus -q
+  rm -rf ~/.cache/thumbnails/*
   ```
 
 

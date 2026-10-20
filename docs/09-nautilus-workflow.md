@@ -10,6 +10,7 @@
 - [9.4 Icônes personnalisées des favoris de la sidebar](#94--icônes-personnalisées-des-favoris-de-la-sidebar)
 - [9.5 Modèles de documents](#95--modèles-de-documents)
 - [9.6 Trieur automatique de Téléchargements](#96--trieur-automatique-de-téléchargements)
+- [9.7 Aperçu et miniatures avec Sushi](#97--aperçu-et-miniatures-avec-sushi)
 
 ## 9.1 — Marque-pages
 
@@ -246,6 +247,40 @@ systemctl --user restart Trieur.path
 ```
 
 Attribuer manuellement les icônes **Teal** aux dossiers Archives, Audio, Code, Documents, Images, ISOs et Packages.
+
+
+## 9.7 — Aperçu et miniatures avec Sushi
+
+**Sushi** ouvre un aperçu rapide avec la barre d’espace dans Nautilus. Le paquet local `thumbnailer-docx-nautilus-sushi` complète Sushi et les miniatures GNOME, sans installer LibreOffice :
+
+- **Aperçu Sushi** des documents DOCX/ODT/RTF/Markdown, des présentations PPTX/ODP et des tableurs XLSX/ODS, avec leurs variantes et modèles pris en charge ;
+- **aperçu du contenu des archives** ZIP, TAR, 7z, RAR et paquets Arch ;
+- **miniatures Nautilus** pour les documents bureautiques, les présentations, les tableurs, le texte brut et le code. Les archives conservent leur icône habituelle.
+
+Les documents sont présentés comme une page défilante, les présentations comme une suite de cartes textuelles et les tableurs comme des tableaux GTK. Le rendu est destiné à la consultation rapide, pas à remplacer l’application d’origine : mise en page complexe et graphiques ne sont pas reproduits. Les fichiers Office binaires anciens (`.doc`, `.xls`, `.ppt`) sont volontairement exclus.
+
+### Installation
+
+Ajouter manuellement le paquet compilé dans `Ressources/Logiciels/thumbnailer-docx-nautilus-sushi/`, puis depuis la racine du dépôt :
+
+```fish
+set paquets (find "Ressources/Logiciels/thumbnailer-docx-nautilus-sushi" -maxdepth 1 -type f -name 'thumbnailer-docx-nautilus-sushi-*-any.pkg.tar.zst')
+if test (count $paquets) -eq 1
+    sudo pacman -U "$paquets[1]"
+else
+    echo 'Conserver un seul paquet thumbnailer-docx-nautilus-sushi dans son dossier avant installation.'
+end
+```
+
+Après l’installation, fermer Sushi et Nautilus puis invalider les miniatures mémorisées :
+
+```fish
+pkill -f NautilusPreviewer
+nautilus -q
+rm -rf ~/.cache/thumbnails/*
+```
+
+Le [README du paquet](../Ressources/Logiciels/thumbnailer-docx-nautilus-sushi/README.md) décrit les formats, les limites, le dépannage et l’état des tests. Le paquet place son fichier `.thumbnailer` dans `/usr/local/share/thumbnailers/` pour passer avant celui de `libgsf` ; cet emplacement est volontaire et ne doit pas être modifié.
 
 ---
 
