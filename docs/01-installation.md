@@ -38,10 +38,10 @@ Dans **CachyOS Hello** :
 ## 1.2 — Installation de paquets
 
 ```fish
-paru -Syu libre-menu-editor gapless
+paru -Syu libre-menu-editor
 ```
 
-Pour les applications GTK4/libadwaita spécifiques au setup, notamment **Snapper GTK4** et le build **dconf-editor GTK4**, voir [10 — Logiciels](10-logiciels.md) et [11 — Applications Vibe Coded](11-applications-vibe-coded.md).
+Le lecteur audio **Semitone**, fork de Gapless compilé avec Claude, remplace désormais le paquet `gapless` : son paquet Arch sera ajouté manuellement dans [son dossier de ressources](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/01-Multimedia/Semitone/). Voir [11.29 — Semitone](11-applications-vibe-coded.md#1129--semitone) pour l’installation. Pour les applications GTK4/libadwaita spécifiques au setup, notamment **Snapper GTK4** et le build **dconf-editor GTK4**, voir [10 — Logiciels](10-logiciels.md) et [11 — Applications Vibe Coded](11-applications-vibe-coded.md).
 
 ### Remplacements de paquets
 

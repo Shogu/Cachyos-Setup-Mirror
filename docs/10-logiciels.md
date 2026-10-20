@@ -43,6 +43,7 @@
 
 - **Amplifaya** : installer [le moteur headless et sa télécommande GTK4/libadwaita](11-applications-vibe-coded.md#1123--amplifaya--moteur-headless-et-interface), fork allégé de JamesDSP.
 
+- **Semitone** : lecteur musical GTK4/libadwaita, fork de Gapless, compilé avec Claude. Il remplace `gapless` ; le paquet Arch sera ajouté manuellement dans [son dossier](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/01-Multimedia/Semitone/). Voir [11.29 — Semitone](11-applications-vibe-coded.md#1129--semitone).
 - **Decibel** : installer [le fork maison du lecteur audio GNOME](11-applications-vibe-coded.md#117--decibel), fourni dans le dépôt.
 - **Disquaire** : installer [l’éditeur de tags MP3/FLAC](11-applications-vibe-coded.md#1128--disquaire), qui ne conserve que les sept champs retenus.
 - [**Showtime**](https://apps.gnome.org/Showtime/) (`showtime`) : lecteur vidéo GNOME GTK4/libadwaita.
@@ -129,7 +130,7 @@ sudo pacman -U \
   "Ressources/Applis vibe codées en Libadwaita/01-Multimedia/Disquaire/disquaire-1.0.0-1-any.pkg.tar.zst"
 ```
 
-Pour **Grabber** (AppImage) et **SCX Manager** (sources), suivre leurs [instructions d’installation](11-applications-vibe-coded.md). La commande Pacman ci-dessus suppose que chaque paquet a été vérifié pour cette machine.
+Pour **Semitone**, installer séparément le paquet Arch compilé avec Claude, après l’avoir ajouté manuellement dans son dossier de ressources ; voir [les instructions d’installation](11-applications-vibe-coded.md#1129--semitone). Pour **Grabber** (AppImage) et **SCX Manager** (sources), suivre leurs [instructions d’installation](11-applications-vibe-coded.md). La commande Pacman ci-dessus suppose que chaque paquet a été vérifié pour cette machine.
 
 ### 10.1.3 — Extension Manager
 

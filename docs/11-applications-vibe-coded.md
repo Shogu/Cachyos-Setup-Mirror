@@ -2,7 +2,7 @@
 
 [Accueil](../README.md) · [Précédent](10-logiciels.md) · [Suivant](12-shell-terminal.md)
 
-> **Dans ce chapitre :** applications personnelles développées avec l'aide du Vibe Coding, principalement en GTK4/libadwaita, dont le fork **Extension Manager**, les extensions GNOME maison « Always on top, always on top », **Session Keeper**, **Focus & Boutons**, **Power Total**, **UI Management** et le fork **Battery Time Compact — Ogu**, ainsi qu’un build GTK4 upstream utilisé par le setup.
+> **Dans ce chapitre :** applications personnelles développées avec l'aide du Vibe Coding, principalement en GTK4/libadwaita, dont le lecteur musical **Semitone** (fork de Gapless compilé avec Claude), le fork **Extension Manager**, les extensions GNOME maison « Always on top, always on top », **Session Keeper**, **Focus & Boutons**, **Power Total**, **UI Management** et le fork **Battery Time Compact — Ogu**, ainsi qu’un build GTK4 upstream utilisé par le setup.
 
 **Compilation depuis les sources :** [Mail (`mail-postcard`)](10-logiciels.md#1014--messagerie--mail) est compilé avec **Claude** depuis Postcard, avec recherche et affichage des pièces jointes, aperçu des pièces jointes dans le panneau de droite (PDF, images, texte et documents Word/LibreOffice), vue à trois volets avec sélection multiple et menu au clic droit, et purge des copies locales à la fermeture, contraste entre panneaux et francisation complète. La base upstream est conservée ; le paquet est à ajouter manuellement dans `Ressources/Logiciels/Mail/`.
 
@@ -10,7 +10,7 @@
 
 Les dossiers sont classés par usage principal. Les extensions GNOME Shell restent regroupées dans [Extensions GNOME](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/).
 
-- **01 — Multimédia** : Amplifaya, Decibel, Disquaire.
+- **01 — Multimédia** : Amplifaya, Decibel, Disquaire, Semitone.
 - **02 — Bureautique et rédaction** : Grimoire, Grille, Samizdat.
 - **03 — Fichiers et téléchargements** : Fret, Grabber, Nautilus Bookmark Icons, PLACES.
 - **04 — Bureau et personnalisation** : Extension Manager, Icônes UI.
@@ -21,6 +21,7 @@ Les dossiers sont classés par usage principal. Les extensions GNOME Shell reste
 - [11.22 — Amplifaya — moteur headless et interface](#1122--amplifaya--moteur-headless-et-interface)
 - [11.7 — Decibel](#117--decibel)
 - [11.27 — Disquaire](#1127--disquaire)
+- [11.29 — Semitone](#1129--semitone)
 
 ## 02 — Bureautique et rédaction
 
@@ -147,6 +148,34 @@ sudo pacman -U ./disquaire-1.5.2-1-any.pkg.tar.zst
 ~~~
 
 Le [README complet de Disquaire](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/01-Multimedia/Disquaire/README.md) décrit les fonctions, les raccourcis, les dépendances et la compilation.
+
+
+---
+
+### 11.29 — Semitone
+
+**Semitone** est un lecteur musical GTK4/libadwaita écrit en Vala, fork de [Gapless](https://gitlab.com/Lalaggi/semitone/-/tree/main) (dans la lignée de G4Music). Le fork est compilé avec **Claude** pour ce setup et remplace l’installation du paquet `gapless` depuis l’AUR.
+
+Fonctions annoncées par le projet :
+
+- Lecture sans blanc entre les morceaux (*gapless*) via GStreamer.
+- Paroles synchronisées au format LRC, avec 13 fournisseurs.
+- Égaliseur à six bandes et prise en charge de ReplayGain.
+- Gestion des playlists et intégration MPRIS avec GNOME.
+
+Le paquet Arch compilé n’est pas inclus pour le moment : il sera ajouté manuellement dans le dossier [Semitone](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/01-Multimedia/Semitone/), comme les autres paquets maison. Une fois le fichier `semitone-*.pkg.tar.zst` copié dans ce dossier, ouvrir un terminal dans ce dossier et installer le paquet :
+
+```fish
+set paquets_semitone (find . -maxdepth 1 -type f -name 'semitone*.pkg.tar.zst')
+if test (count $paquets_semitone) -eq 1
+    sudo pacman -U "$paquets_semitone[1]"
+else
+    printf '%s\\n' 'Conserver un seul paquet Semitone dans ce dossier avant installation.'
+end
+```
+
+Le README du dossier détaille les fonctions et l’installation. Aucune version précise du paquet n’est indiquée tant que l’archive compilée n’a pas été ajoutée.
+
 
 ---
 
