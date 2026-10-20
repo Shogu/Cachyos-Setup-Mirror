@@ -445,13 +445,19 @@ L’outil Icônes UI et le gestionnaire d’icônes des dossiers personnels sont
 
 ### 11.28 — Vidange
 
-**Vidange** est une application GTK4/libadwaita en Python pour le nettoyage de CachyOS sous GNOME 51. L'interface est en français et l'application ne tourne jamais en root.
+**Vidange** est une application GTK4/libadwaita en Python pour nettoyer CachyOS sous GNOME 51. Elle centralise les tâches d'entretien dans une fenêtre, estime l'espace récupérable avant le nettoyage et affiche un récapitulatif final.
 
-Elle rassemble la vérification des paquets orphelins, le nettoyage du cache pacman, des journaux systemd et de certains caches utilisateur, navigateurs et dossiers de développement. Elle estime l'espace récupérable et présente un récapitulatif des opérations.
+- **Paquets orphelins** : trois niveaux, des orphelins classiques (`pacman -Qtdq`) aux dépendances utilisées uniquement entre elles et aux paquets explicitement installés qui ne sont utilisés par aucun autre paquet.
+- **Cache pacman** : garder deux versions, retirer les versions désinstallées ou vider entièrement le cache.
+- **Cache AUR** : Shelly, yay et paru ; journaux systemd avec taille réglable ; miniatures et corbeille ; caches pip, npm, yarn et Go ; profils navigateurs via `profile-cleaner`.
+- Chaque catégorie présente une estimation avant action. « Tout nettoyer » enchaîne les catégories de nettoyage et récapitule les résultats.
+- Les vues des dépendances entre orphelins et des paquets explicitement installés sont des **vues de vérification** : rien n'est coché par défaut et elles ne sont pas incluses dans « Tout nettoyer ».
 
-Les tâches bloquantes s'exécutent en arrière-plan. Les opérations privilégiées passent par un helper dédié via Polkit, avec validation stricte des paramètres ; aucune commande arbitraire ni aucun chemin ne doit être accepté. Le backend reste indépendant de GTK et les réglages sont stockés dans ~/.config/vidange/settings.json.
+Vidange remplace la fonction Fish `clean` et le paquet AUR `archclean`. Elle ne cherche volontairement pas les gros fichiers.
 
-Le paquet Arch compilé sera ajouté manuellement au dossier [Vidange](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/05-Systeme-et-utilitaires/Vidange/). Le README du dossier présente l'application ; le fichier CLAUDE.md détaille les contraintes techniques et les procédures de vérification.
+**Sécurité :** l'application ne tourne jamais en root. Les opérations système passent par `/usr/lib/vidange/vidange-helper`, lancé via `pkexec` et Polkit. Le helper n'accepte qu'une liste fermée d'actions, valide les paramètres et exécute les commandes sans shell. Les tâches bloquantes sont exécutées en arrière-plan pour préserver la réactivité de l'interface.
+
+Le paquet Arch compilé sera ajouté manuellement dans [le dossier Vidange](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/05-Systeme-et-utilitaires/Vidange/). Son [README](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/05-Systeme-et-utilitaires/Vidange/README.md) donne les instructions d'installation et les dépendances ; le `CLAUDE.md` du dossier conserve les détails techniques du helper.
 
 ---
 

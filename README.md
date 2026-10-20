@@ -6,6 +6,8 @@ Setup, conseils et réglages personnels pour **CachyOS** sur **ASUS Zenbook 14 O
 
 **Aperçus Nautilus :** [**thumbnailer-docx-nautilus-sushi**](docs/09-nautilus-workflow.md#97--aperçu-et-miniatures-avec-sushi) ajoute des aperçus Sushi pour les documents bureautiques, présentations, tableurs et archives, ainsi que des miniatures Nautilus pour le texte brut et le code. Le paquet compilé sera ajouté manuellement dans `Ressources/Logiciels/thumbnailer-docx-nautilus-sushi/`.
 
+**Nettoyage du système :** [**Vidange**](docs/11-applications-vibe-coded.md#1128--vidange) regroupe le nettoyage des paquets orphelins, caches, journaux systemd, miniatures, corbeille et caches de développement/navigateurs. L’application GTK4/libadwaita ne tourne jamais en root ; les opérations privilégiées passent par un helper limité et Polkit. Le paquet compilé sera ajouté manuellement dans `Ressources/Applis vibe codées en Libadwaita/05-Systeme-et-utilitaires/Vidange/`.
+
 **Messagerie :** [**Mail (`mail-postcard`)**](docs/10-logiciels.md#1014--messagerie--mail), compilé avec **Claude** depuis les sources de Postcard, avec recherche et affichage des pièces jointes, aperçu des pièces jointes dans le panneau de droite (PDF, images, texte et documents Word/LibreOffice), vue à trois volets avec sélection multiple et menu au clic droit, et purge des copies locales à la fermeture, contraste entre panneaux et francisation complète. La base est issue du projet upstream ; le paquet est ajouté manuellement dans `Ressources/Logiciels/Mail/`.
 
 <p>
