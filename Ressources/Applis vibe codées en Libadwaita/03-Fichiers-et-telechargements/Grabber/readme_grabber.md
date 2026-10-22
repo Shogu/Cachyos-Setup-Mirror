@@ -439,3 +439,5 @@ chmod +x ./grabber.AppImage
 ```
 
 Cette commande explicite installe une icône persistante et le lanceur `com.ogu.Grabber.desktop` dans le profil utilisateur. Les anciens lanceurs Grabber sont sauvegardés puis actualisés pour conserver les favoris existants ; leurs doublons sont masqués du menu. Aucun privilège administrateur requis. Relancer la commande après avoir déplacé l’AppImage. Le démarrage normal ne crée pas de lanceur.
+
+Cette installation du lanceur est également nécessaire pour l’extension **Grabber pour Vivaldi** : elle envoie les URL au frontend via le protocole `grabber://`. L’extension et ses fichiers de documentation seront ajoutés dans le dépôt lorsqu’ils auront été fournis ; l’archive sera ajoutée manuellement.

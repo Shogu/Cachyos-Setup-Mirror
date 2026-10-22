@@ -354,20 +354,22 @@ sudo pacman -Rns fret
 
 ### 11.2 — Grabber
 
-Frontend GTK4/libadwaita minimaliste pour JDownloader 2. Il permet de récupérer des liens, sélectionner les fichiers utiles, les ajouter à la file de téléchargement et suivre les téléchargements. L'AppImage embarque son propre Java et JDownloader.
+Frontend GTK4/libadwaita minimaliste pour JDownloader 2. Il permet de récupérer des liens, sélectionner les fichiers utiles, les ajouter à la file de téléchargement et suivre les téléchargements. L'AppImage embarque son propre Java et JDownloader. Une extension complémentaire pour Vivaldi envoie les URL au logiciel via le protocole `grabber://`.
 
-**AppImage fournie : `grabber.AppImage`.**
+**AppImage fournie : `Grabber.AppImage`.**
 
 ![Interface de Grabber](../Ressources/screenshots/vibe-coded/grabber.png)
 
 ### Installation
 
-Rendre l'AppImage exécutable puis la lancer :
+Rendre l'AppImage exécutable, puis installer le lanceur GNOME et l'association de protocole :
 
 ```fish
-chmod +x ./grabber.AppImage
-./grabber.AppImage
+chmod +x ./Grabber.AppImage
+./Grabber.AppImage --install-desktop
 ```
+
+L'option `--install-desktop` doit être exécutée une fois depuis l'emplacement définitif de l'AppImage, et de nouveau si celle-ci est déplacée. Elle installe le lanceur utilisateur et permet notamment à l'extension Vivaldi de transmettre les URL à Grabber via `grabber://`. Pour un lancement manuel normal, utiliser ensuite `./Grabber.AppImage`.
 
 Les données persistantes de JDownloader sont conservées dans `~/.local/share/jd-adwaita/jdownloader`.
 

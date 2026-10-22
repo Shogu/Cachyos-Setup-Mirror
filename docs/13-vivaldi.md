@@ -9,6 +9,7 @@
 - [13.3 Configurer le panneau latéral et la recherche Google](#133--configurer-le-panneau-latéral-et-la-recherche-google)
 - [13.4 Personnaliser les icônes des extensions](#134--personnaliser-les-icônes-des-extensions)
 - [13.5 Installer les extensions et associer les liens magnet](#135--installer-les-extensions-et-associer-les-liens-magnet)
+- [13.6 Extension Grabber pour Vivaldi](#136--extension-grabber-pour-vivaldi)
 
 ## 13.1 — Synchronisation, cache et réglages internes
 
@@ -146,6 +147,18 @@ Associer les liens magnet à Fragments :
 ```fish
 gio mime x-scheme-handler/magnet de.haeckerfelix.Fragments.desktop
 ```
+
+## 13.6 — Extension Grabber pour Vivaldi
+
+L’extension complémentaire **Grabber** transmet les URL sélectionnées depuis Vivaldi à l’application de bureau via le protocole `grabber://`. Pour que le protocole soit associé au lanceur de l’application, exécuter une fois l’AppImage Grabber depuis son emplacement définitif avec `--install-desktop` :
+
+```fish
+./Grabber.AppImage --install-desktop
+```
+
+Les fichiers de l’extension et sa documentation détaillée seront ajoutés à cette section dès qu’ils auront été fournis. L’archive de l’extension sera ajoutée manuellement au dépôt.
+
+---
 
 ---
 
