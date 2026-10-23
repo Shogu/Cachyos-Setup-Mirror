@@ -30,9 +30,12 @@ end
 Puis relancer Sushi et Nautilus et supprimer le cache des miniatures :
 
 ```fish
-pkill -f NautilusPreviewer
 nautilus -q
-rm -rf ~/.cache/thumbnails/*
+sleep 1
+pkill -f NautilusPreviewer
+pkill -f nautilus-previewer
+rm -rf ~/.cache/thumbnails/{fail,normal,large,x-large,xx-large}
+nautilus &>/dev/null &
 ```
 
 Les deux processus seront relancés au prochain usage. Le nettoyage du cache force GNOME à recréer les miniatures et à retenter celles dont l’échec avait été mémorisé.
@@ -75,7 +78,16 @@ Pour vérifier le type MIME attribué à un document :
 gio info -a standard::content-type fichier.docx
 ```
 
-Après un échec de miniature, vider le cache avec `rm -rf ~/.cache/thumbnails/*`. Si WPS Office a remplacé les types MIME standards par des types `application/wps-office.*`, le paquet les reconnaît ; un fichier personnel `~/.local/share/mime/packages/Override.xml` peut néanmoins expliquer un comportement inhabituel.
+Après un échec de miniature, utiliser la procédure complète ci-dessous pour arrêter Nautilus et son service d’aperçu, supprimer les caches de miniatures (y compris les échecs mémorisés), puis relancer Nautilus :
+
+```fish
+nautilus -q
+sleep 1
+pkill -f NautilusPreviewer
+pkill -f nautilus-previewer
+rm -rf ~/.cache/thumbnails/{fail,normal,large,x-large,xx-large}
+nautilus &>/dev/null &
+``` Si WPS Office a remplacé les types MIME standards par des types `application/wps-office.*`, le paquet les reconnaît ; un fichier personnel `~/.local/share/mime/packages/Override.xml` peut néanmoins expliquer un comportement inhabituel.
 
 Le générateur peut être testé indépendamment de Nautilus :
 
