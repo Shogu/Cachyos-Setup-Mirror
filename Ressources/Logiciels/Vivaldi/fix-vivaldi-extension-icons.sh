@@ -9,16 +9,16 @@
 set -Eeuo pipefail
 
 
-BASE="\${BASE:-$HOME/.config/vivaldi/Default/Extensions}"
-ADWAITA="\${ADWAITA:-/usr/share/icons/Adwaita/symbolic}"
-CACHE="\${CACHE:-$HOME/.cache/vivaldi-extension-icons}"
+BASE="${BASE:-$HOME/.config/vivaldi/Default/Extensions}"
+ADWAITA="${ADWAITA:-/usr/share/icons/Adwaita/symbolic}"
+CACHE="${CACHE:-$HOME/.cache/vivaldi-extension-icons}"
 
-RAINDROP_ID="\${RAINDROP_ID:-ldgfbffkinooeloadekpmfoklnobpien}"
-UBLOCK_ID="\${UBLOCK_ID:-cjpalhdlnbpafiamejdnhcphjbkeiagm}"
+RAINDROP_ID="${RAINDROP_ID:-ldgfbffkinooeloadekpmfoklnobpien}"
+UBLOCK_ID="${UBLOCK_ID:-cjpalhdlnbpafiamejdnhcphjbkeiagm}"
 # L'ID de Tab Copy (visible sur vivaldi://extensions). Vide, Tab Copy est cherchée
 # dans tout le profil par le nom de ses fichiers : renseigne-le pour éviter
 # qu'une autre extension possédant le même chemin d'image soit modifiée à sa place.
-TABCOPY_ID="\${TABCOPY_ID:-}"
+TABCOPY_ID="${TABCOPY_ID:-}"
 
 RAINDROP_ICON="$ADWAITA/status/weather-overcast-symbolic.svg"
 COPY_ICON="$ADWAITA/actions/edit-copy-symbolic.svg"
@@ -173,7 +173,7 @@ SVG
 }
 
 
-# Chaque traitement tourne dans un contexte conditionnel : avec \`set -e\`, un échec
+# Chaque traitement tourne dans un contexte conditionnel : avec `set -e`, un échec
 # n'interrompt donc pas le script, et le code de retour dit quoi afficher.
 declare -a faites=() ignorees=() a_verifier=()
 
@@ -181,7 +181,7 @@ traiter() {
     local nom="$1" fonction="$2" sortie code resume
     code=0
     sortie="$("$fonction")" || code=$?
-    resume="\${sortie//$'\n'/ }"
+    resume="${sortie//$'\n'/ }"
 
     case "$code" in
         0)
@@ -206,17 +206,17 @@ traiter "uBlock Origin" traiter_ublock
 
 
 printf '\n'
-if (("\${#faites[@]}")); then
-    printf 'Traitées : %s\n' "\${faites[*]}"
+if (("${#faites[@]}")); then
+    printf 'Traitées : %s\n' "${faites[*]}"
 fi
-if (("\${#ignorees[@]}")); then
-    printf 'Ignorées (absentes) : %s\n' "\${ignorees[*]}"
+if (("${#ignorees[@]}")); then
+    printf 'Ignorées (absentes) : %s\n' "${ignorees[*]}"
 fi
-if (("\${#a_verifier[@]}")); then
-    printf 'Ignorées (à vérifier) : %s\n' "\${a_verifier[*]}"
+if (("${#a_verifier[@]}")); then
+    printf 'Ignorées (à vérifier) : %s\n' "${a_verifier[*]}"
 fi
 
-if (("\${#faites[@]} == 0")); then
+if (("${#faites[@]} == 0")); then
     printf '\nAucune extension n’a pu être traitée.\n' >&2
     exit 1
 fi
