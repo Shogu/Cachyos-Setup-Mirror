@@ -120,9 +120,6 @@ Les extensions sont regroupées ci-dessous par usage.
 
 - [Rehistoria Auto Delete](https://chromewebstore.google.com/detail/rehistoria-auto-delete-hi/dheibmdojjjhiahbdmcnmbepnaiilloe)
 
-### Téléchargement
-
-- [Video Download Helper](https://chromewebstore.google.com/detail/video-downloadhelper/lmjnegcaeklhafolokijcfjliaokphfk) et réglages mkv + dossier téléchargements VDH, repris par Périscope (application maison) pour le tri des vidéos téléchargées
 
 ### Productivité
 
