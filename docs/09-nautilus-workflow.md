@@ -272,16 +272,7 @@ else
 end
 ```
 
-Après l’installation, fermer Sushi et Nautilus puis invalider les miniatures mémorisées :
-
-```fish
-nautilus -q
-sleep 1
-pkill -f NautilusPreviewer
-pkill -f nautilus-previewer
-rm -rf ~/.cache/thumbnails/{fail,normal,large,x-large,xx-large}
-nautilus &>/dev/null &
-```
+Le **script d’installation du projet** s’occupe aussi de purger automatiquement le cache des miniatures (y compris les échecs mémorisés) et de relancer Nautilus. Il n’est plus nécessaire de lancer manuellement les commandes de nettoyage après l’installation.
 
 Le [README du paquet](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/03-Fichiers-et-telechargements/Thumbnailer%20Sushi/README.md) décrit les formats, les limites, le dépannage et l’état des tests. Le paquet place son fichier `.thumbnailer` dans `/usr/local/share/thumbnailers/` pour passer avant celui de `libgsf` ; cet emplacement est volontaire et ne doit pas être modifié.
 
