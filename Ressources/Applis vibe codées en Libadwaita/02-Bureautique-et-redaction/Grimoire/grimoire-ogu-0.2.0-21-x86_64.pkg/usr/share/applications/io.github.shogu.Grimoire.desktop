@@ -1,0 +1,17 @@
+[Desktop Entry]
+Type=Application
+Name=Grimoire
+GenericName=Markdown Editor
+GenericName[fr]=Éditeur Markdown
+Comment=Write and preview local Markdown files
+Comment[fr]=Vos textes, vos notes et vos formules
+Exec=grimoire %F
+Icon=io.github.shogu.Grimoire
+Terminal=false
+Categories=GNOME;GTK;Utility;TextEditor;
+MimeType=text/markdown;text/x-markdown;
+Keywords=Markdown;notes;editor;
+Keywords[fr]=Markdown;notes;éditeur;fish;
+StartupNotify=true
+DBusActivatable=true
+X-GNOME-UsesNotifications=false

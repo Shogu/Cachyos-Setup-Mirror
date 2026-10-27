@@ -1,0 +1,3 @@
+[D-BUS Service]
+Name=io.github.shogu.Grimoire
+Exec=/usr/bin/grimoire --gapplication-service

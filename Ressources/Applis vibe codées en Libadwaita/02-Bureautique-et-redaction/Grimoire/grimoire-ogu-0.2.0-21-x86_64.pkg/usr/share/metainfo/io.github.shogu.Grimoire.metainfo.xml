@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>io.github.shogu.Grimoire</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>MIT</project_license>
+  <name>Grimoire</name>
+  <name xml:lang="fr">Grimoire</name>
+  <summary>Edit local Markdown files</summary>
+  <summary xml:lang="fr">Modifier des fichiers Markdown locaux</summary>
+  <description>
+    <p>
+      Grimoire is a local Markdown editor for GNOME: it opens the files already on your
+      disk, never uploads anything and keeps a live preview beside the source.
+    </p>
+    <p xml:lang="fr">
+      Grimoire est un éditeur Markdown local pour GNOME : il ouvre les fichiers déjà
+      présents sur votre disque, n’envoie rien sur le réseau et affiche un aperçu à côté
+      de la source.
+    </p>
+    <ul>
+      <li>Source, split and preview modes</li>
+      <li xml:lang="fr">Modes Code, Scindé et Rendu</li>
+      <li>Pinned folder with sub-folder browsing and outline of the current document</li>
+      <li xml:lang="fr">Dossier épinglé avec navigation dans les sous-dossiers et sommaire du document</li>
+      <li>Formatting toolbar, literal search and replace, draft recovery</li>
+      <li xml:lang="fr">Barre de mise en forme, recherche/remplacement littéral, récupération de brouillons</li>
+    </ul>
+  </description>
+  <launchable type="desktop-id">io.github.shogu.Grimoire.desktop</launchable>
+  <provides>
+    <binary>grimoire</binary>
+  </provides>
+  <categories>
+    <category>Utility</category>
+    <category>TextEditor</category>
+  </categories>
+  <keywords>
+    <keyword>Markdown</keyword>
+    <keyword>editor</keyword>
+    <keyword>notes</keyword>
+  </keywords>
+  <content_rating type="oars-1.1"/>
+  <developer id="io.github.shogu">
+    <name>Ogu</name>
+  </developer>
+  <!-- No public homepage or issue tracker was discoverable in this extracted tree. -->
+  <!-- When a real hosted capture is available, add:
+  <screenshots>
+    <screenshot type="default">
+      <image>REPLACE_WITH_HOSTED_SCREENSHOT_URL</image>
+    </screenshot>
+  </screenshots>
+  -->
+  <requires>
+    <display_length compare="ge">360</display_length>
+  </requires>
+  <supports>
+    <control>keyboard</control>
+    <control>pointing</control>
+    <control>touch</control>
+  </supports>
+  <releases>
+    <release version="0.2.0" date="2026-09-23">
+      <description>
+        <p xml:lang="fr">
+          Interface reprise selon les recommandations GNOME : fenêtre adaptative,
+          barres d’outils Adwaita, dialogues modernes, préférences GSettings et respect
+          de la couleur d’accentuation du système, jusque dans le surlignage de recherche.
+          Nouvelle icône sans marque-page, bouton de code en ligne et barre latérale
+          masquée au démarrage.
+        </p>
+        <p>
+          The interface now follows the GNOME HIG: adaptive window, Adwaita toolbars,
+          modern dialogs, GSettings preferences and support for the system accent colour,
+          including search highlighting. New icon without the bookmark ribbon, inline code
+          button and a sidebar hidden on start-up.
+        </p>
+      </description>
+    </release>
+    <release version="0.1.7" date="2026-09-20"/>
+  </releases>
+</component>

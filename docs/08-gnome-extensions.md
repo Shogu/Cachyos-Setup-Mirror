@@ -1,0 +1,210 @@
+# 8 — Extensions GNOME
+
+[Accueil](../README.md) · [Précédent](07-gnome-ui.md) · [Suivant](09-nautilus-workflow.md)
+
+> **Dans ce chapitre :** sélection d'extensions GNOME Shell classées par usage (essentielles, productivité, esthétiques, optionnelles, obsolètes).
+
+- [8.1 Validation des versions d'extensions](#81--validation-des-versions-dextensions)
+- [8.2 Essentielles](#82--essentielles)
+- [8.3 Productivité](#83--productivité)
+- [8.4 Esthétiques](#84--esthétiques)
+- [8.5 Optionnelles](#85--optionnelles)
+- [8.6 Extension maison : Always on top, always on top](#86--extension-maison--always-on-top-always-on-top)
+- [8.7 Focus & Boutons](#87--focus--boutons)
+- [8.8 Battery Time Compact — Ogu](#88--battery-time-compact--ogu)
+- [8.9 Power Total](#89--power-total)
+- [8.10 UI Management](#810--ui-management)
+- [8.11 Classer les extensions avec Extension Manager](#811--classer-les-extensions-avec-extension-manager)
+
+## 8.1 — Validation des versions d'extensions
+
+En cas de mise à jour de GNOME Shell, le mémo propose de désactiver temporairement la validation des versions plutôt que de modifier chaque `metadata.json` :
+
+```fish
+gsettings set org.gnome.shell disable-extension-version-validation true
+```
+
+Cela ne rend pas une extension incompatible fonctionnelle ; réactiver la validation une fois les extensions adaptées :
+
+```fish
+gsettings set org.gnome.shell disable-extension-version-validation false
+```
+
+## 8.2 — Essentielles
+
+Extensions apportant des fonctions d'interface ou de système considérées comme centrales dans ce setup :
+
+- **Focus & Boutons** — extension maison GNOME 50/51 : auto-fermeture de Quick Settings et du panneau Calendrier/Notifications, boutons Réglages et Power scindés, pilule de mises à jour Shelly, icône musicale animée dans Quick Settings, masquage de Capture d’écran, libellé **Énergie** et carte RDV bleue. Voir [11.17](11-applications-vibe-coded.md#1117--focus--boutons) et [12.3 — Shelly et le lanceur de mise à jour](12-shell-terminal.md#123--shelly-et-le-lanceur-de-mise-à-jour).
+- **Topbar Center Widget 1.6** — extension GNOME 50/51 qui gère le contenu du menu de l’horloge : notes épinglées dans Grimoire, lecteur multimédia, notifications et rendez-vous par agenda ; elle ajoute aussi l’icône animée du lecteur à gauche de la barre supérieure. Voir [Topbar Center Widget 1.6](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Topbar%20Center%20Widget%20(Grimoire%20Semitone)/README.md).
+- [**Battery Time Compact — Ogu v54**](#88--battery-time-compact--ogu) — fork local GNOME 50/51 : top bar `temps - pourcentage`, bouton batterie Quick Settings `temps - watts`. Voir [11.19](11-applications-vibe-coded.md#1118--battery-time-compact--ogu).
+- **UI Management** — extension maison **GNOME 49/50/51**, classée dans **Bureau et fenêtres**. Elle remplace dans ce setup **Just Perfection**, **AutoActivities**, **Hot Edge** et **Quick Close Overview** en ne conservant que les fonctions réellement utilisées. Voir [8.10](#810--ui-management) et [11.21](11-applications-vibe-coded.md#1120--ui-management).
+- [Power Total](#89--power-total) — extension maison GNOME 50, catégorie **Système et énergie** : profils secteur/batterie, luminosité, thème et rétroéclairage. Voir [11.20](11-applications-vibe-coded.md#1119--power-total).
+- [Drag'n'Tile](https://extensions.gnome.org/extension/7863/dragntile/)
+
+
+
+## 8.3 — Productivité
+
+- [Caffeine](https://extensions.gnome.org/extension/517/caffeine/)
+- **Copyous — fork corrigé pour GNOME 51** : ajoute un **mode cumul** du multi-copiage, activable/désactivable par un toggle. L’archive fournie est à placer dans `Ressources/Applis vibe codées en Libadwaita/Extensions GNOME/Copyous/copyous-gnome51.zip` (fichier à ajouter manuellement au dépôt). Installer la dépendance puis l’extension :
+  ```fish
+  sudo pacman -S libgda6
+  gnome-extensions install --force "Ressources/Applis vibe codées en Libadwaita/Extensions GNOME/Copyous/copyous-gnome51.zip"
+  gnome-extensions enable copyous@boerdereinar.dev
+  ```
+  Le ZIP original reçu ne déclarait que GNOME 48, 49 et 50. La copie préparée pour le dépôt ajoute `51` à `shell-version` dans `metadata.json`. Cette correction de métadonnées ne remplace pas un test fonctionnel en session GNOME 51.
+- **Session Keeper** — extension GNOME Shell de productivité qui sauvegarde en continu la session et restaure rapidement les applications, fenêtres, espaces de travail, disposition et états de fenêtres. Version adaptée à GNOME 50, avec restauration multi-fenêtres et options avancées. Voir [Applications Vibe Coded — Session Keeper](11-applications-vibe-coded.md#1116--session-keeper).
+
+
+## 8.4 — Esthétiques
+
+- [Panel Corners](https://extensions.gnome.org/extension/4805/panel-corners/)
+
+**Just Perfection n’est plus installée séparément dans ce setup** : les options réellement utilisées ont été reprises dans **UI Management**. Le masquage du bouton Capture d’écran de Quick Settings reste, lui, géré par **Focus & Boutons**.
+
+
+## 8.5 — Optionnelles : à retirer après réglage
+
+- [Privacy Settings](https://extensions.gnome.org/extension/4491/privacy-settings-menu/) — installer, effectuer les réglages voulus, puis la supprimer une fois cela fait.
+
+## 8.6 — Extension maison : Always on top, always on top
+
+Une icône dans la barre supérieure active ou désactive **Toujours au premier plan** pour la fenêtre active. Elle affiche l’icône de la dernière fenêtre épinglée et suit son état, même après un changement de fenêtre. Compatible GNOME Shell 45 à 50 ; sans dépendance ni préférences. [Détails et captures](11-applications-vibe-coded.md#111--always-on-top-always-on-top).
+
+Depuis la racine du dépôt, installer [l’archive fournie](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extension%20Gnome%20ALWAYS%20ON%20TOP%20ALWAYS%20ON%20TOP/always-on-top-always-on-top_localhost.shell-extension.zip) :
+
+```bash
+gnome-extensions install --force "Ressources/Applis vibe codées en Libadwaita/Extension Gnome ALWAYS ON TOP ALWAYS ON TOP/always-on-top-always-on-top_localhost.shell-extension.zip"
+```
+
+Sous Wayland, se déconnecter puis se reconnecter ; ensuite activer l’extension :
+
+```bash
+gnome-extensions enable always-on-top-always-on-top@localhost
+```
+
+
+## 8.7 — Focus & Boutons
+
+Extension GNOME Shell maison compatible **GNOME 50 et 51**, UUID `focus-et-boutons@ogu`. Elle regroupe les ajustements de Quick Settings et du panneau Calendrier/Notifications afin d’éviter d’empiler plusieurs petites extensions.
+
+Fonctions principales :
+
+- fermeture automatique de **Quick Settings** et du panneau **Calendrier/Notifications** après sortie du pointeur, avec délai réglable ;
+- bouton **Capture d’écran** masquable sans désactiver les raccourcis GNOME ;
+- bouton **Réglages scindé** : clic principal vers Paramètres GNOME, chevron vers Ajustements, Éditeur dconf et Extensions Manager ;
+- bouton **Power scindé** : clic principal vers Éteindre, chevron vers Suspendre, Redémarrer, Reconnexion et Verrouiller la session ;
+- les deux boutons scindés deviennent **bleu Adwaita uniquement pendant l’ouverture de leur menu** ;
+- libellé du profil de puissance raccourci en **Énergie** ;
+- retrait du cadenas séparé quand le bouton Power scindé est actif ;
+- masquage optionnel de la liste des sorties audio et de son chevron ;
+- carte des rendez-vous dans la couleur d’accent du système (bleu par défaut), sans modifier la date ni ajouter de bordure ;
+- masquage complet de la colonne **Aucune notification** quand elle est vide ; réapparition dès qu’une notification existe ;
+- pilule **Mises à jour** dans Quick Settings : nombre, liste des mises à jour des dépôts officiels et heure du contrôle, avec lancement du script Shelly configuré au clic ;
+- icône musicale animée intégrée à Quick Settings, remplaçant l’extension séparée Now Playing Card.
+
+### Changements récents
+
+- **v22 — OSD :** l’extension essaie plusieurs formes d’appel de l’OSD, conserve celle qui fonctionne et la consigne dans le journal. Au chargement, elle enregistre également une fois la définition de la fonction OSD de GNOME Shell. Si les trois formes échouent, cette trace aide à déterminer la signature réelle. Une seule erreur est ensuite journalisée, plutôt qu’une répétition massive.
+- **v25 — Rendez-vous adaptatifs :** la liste prend la hauteur de son contenu ; elle ne laisse plus un grand vide quand il y a peu de rendez-vous. Elle grandit avec le contenu jusqu’à **300 px**, puis défile. Le fondu de bord reste à **14 px**.
+
+**État des versions :** le ZIP v25 encore présent dans le dépôt ne contient pas les fonctions récentes. La pilule Mises à jour et l’icône musicale animée nécessitent l’archive Focus & Boutons **v36 ou ultérieure**, à ajouter manuellement.
+
+**Installation :** après avoir ajouté au dossier l’archive v36 ou ultérieure qui contient les nouvelles fonctions, installer cette archive depuis son dossier :
+
+```fish
+gnome-extensions install --force ./Focus-et-Boutons-v36.zip
+gnome-extensions enable focus-et-boutons@ogu
+```
+
+Adapter le nom du ZIP à la version réellement déposée. Le fichier v25 actuellement présent est ancien et ne fournit pas la pilule de mises à jour ni l’icône musicale animée.
+
+Préférences :
+
+Sous Wayland, fermer puis rouvrir la session après remplacement d’une version déjà chargée.
+
+```fish
+gnome-extensions prefs focus-et-boutons@ogu
+```
+
+## 8.8 — Battery Time Compact — Ogu
+
+Fork local de [**Battery Time (Percentage) Compact**](https://github.com/SaGrLand/gnome-shell-battery-time-percentage-compact), adapté à **GNOME 50 et 51**. La v54 remplace l’extension habituellement installée grâce au même UUID ; ne pas installer les deux variantes séparément. Après remplacement d’une version chargée, fermer puis rouvrir la session GNOME sous Wayland.
+
+- top bar : `9:27 - 56%` ;
+- Quick Settings : `9:27 - 4.2 W` ;
+- le pourcentage reste toujours visible dans la top bar ;
+- la puissance instantanée provient de `UPower.Device.EnergyRate` ;
+- la synchronisation v54 réapplique le texte après chaque actualisation UPower.
+
+Installation :
+
+```fish
+gnome-extensions install --force "Ressources/Applis vibe codées en Libadwaita/Extensions GNOME/Battery Time Compact Ogu/Battery-Time-Compact-Ogu-v54.zip"
+gnome-extensions enable batterytimepercentagecompact@sagrland.de
+```
+
+## 8.9 — Power Total
+
+Extension GNOME Shell **50**, version **0.1.1**, remplaçant **Auto Power Profile** et **Power Switching Manager** dans ce setup. Classée automatiquement dans **Système et énergie** par Extension Manager Ogu.
+
+Elle regroupe les profils énergétiques sur secteur/batterie et par application, la luminosité de l’écran, le thème clair/sombre et le rétroéclairage du clavier. Chaque module peut être activé séparément. Seul le changement de profil est actif par défaut : **Performance sur secteur**, **Équilibré sur batterie**.
+
+Depuis la racine du dépôt, installer l’archive :
+
+```fish
+gnome-extensions install --force "Ressources/Applis vibe codées en Libadwaita/Extensions GNOME/Power Total/Power-Total.zip"
+```
+
+Se déconnecter puis se reconnecter à GNOME. Désactiver les deux anciennes extensions avant d’activer Power Total :
+
+```fish
+gnome-extensions disable auto-power-profile@dmy3k.github.io
+gnome-extensions disable power-switching-manager@joseruibarros.com
+gnome-extensions enable power-total@ogu
+gnome-extensions prefs power-total@ogu
+```
+
+Si une ancienne extension n’est pas installée, sa commande de désactivation peut signaler qu’elle est introuvable. Le bouton **Importer** des préférences permet de récupérer ses réglages personnalisés ; les modules supplémentaires restent à activer séparément.
+
+Si la gestion de luminosité de Power Total est activée, désactiver la luminosité automatique de GNOME :
+
+```fish
+gsettings set org.gnome.settings-daemon.plugins.power ambient-enabled false
+```
+
+Les contrôles statiques et les tests avec services simulés ne remplacent pas un essai dans une session GNOME réelle.
+
+## 8.10 — UI Management
+
+Extension GNOME Shell maison dédiée à la **gestion du bureau et des fenêtres**, compatible **GNOME Shell 49, 50 et 51** et classée dans **Bureau et fenêtres** par Extension Manager Ogu.
+
+Elle remplace quatre extensions auparavant installées séparément :
+
+- **Just Perfection** — uniquement les options effectivement utilisées dans le setup ;
+- **AutoActivities** ;
+- **Hot Edge** ;
+- **Quick Close Overview** / fermeture rapide d’une fenêtre depuis l’Overview.
+
+Les préférences sont regroupées en quatre pages : **Visibilité**, **Comportement**, **Personnaliser** et **Automatisation**. Les blocs Auto Activities, Hot Edge et Quick Close in Overview restent indépendamment activables.
+
+
+Voir aussi [Applications Vibe Coded — UI Management](11-applications-vibe-coded.md#1120--ui-management).
+
+## 8.11 — Classer les extensions avec Extension Manager
+
+Le setup utilise [Extension Manager personnalisé](11-applications-vibe-coded.md#1121--extension-manager), une application GTK4/libadwaita installée avec le paquet `extension-manager-ogu`. L’[installation du paquet local](10-logiciels.md#1013--extension-manager) remplace la version standard.
+
+Dans l’onglet **Installées**, les extensions utilisateur sont regroupées en sept catégories : **Interface et apparence**, **Bureau et fenêtres**, **Barre supérieure et réglages rapides**, **Productivité**, **Système et énergie**, **Multimédia**, **Autres**. Les extensions système restent séparées.
+
+Le classement automatique utilise les UUID connus, puis le nom et la description. Le menu de classement d’une extension permet de choisir une catégorie manuellement ; **Catégorie automatique** rétablit la détection. Les choix manuels sont mémorisés et restent prioritaires. Power Total 0.1.1 est reconnue dans **Système et énergie** grâce à sa description.
+
+Le panneau **Parcourir** conserve le mécanisme de recherche de l’application originelle. Aucun filtre de version GNOME N+1/N−1 n’a été ajouté. L’icône personnalisée Ogu est incluse.
+
+La procédure d’installation du paquet local est décrite dans [10.1.3 — Extension Manager](10-logiciels.md#1013--extension-manager).
+
+---
+
+Pour les extensions qui changent les profils d'alimentation : voir [Optimisations & performance](05-performance-tuning.md#51--coordonner-tuned-les-profils-énergétiques-et-scx).
+
+[Accueil](../README.md) · [Précédent](07-gnome-ui.md) · [Suivant](09-nautilus-workflow.md)

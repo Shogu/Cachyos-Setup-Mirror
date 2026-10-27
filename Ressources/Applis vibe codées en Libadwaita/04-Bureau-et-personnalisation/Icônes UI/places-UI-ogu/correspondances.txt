@@ -1,0 +1,17 @@
+Nouveau nom		Fichier d'origine
+dossier-archives.svg	←	adwaita-blue/folder-archives.svg
+dossier-capture.svg	←	adwaita-blue/folder-screenshot.svg
+dossier-cassette.svg	←	adwaita-blue/folder-podcast.svg
+dossier-code.svg	←	adwaita-blue/folder-code.svg
+dossier-crayon-regle.svg	←	adwaita-blue/folder-hig.svg
+dossier-disque.svg	←	adwaita-blue/folder-isos.svg
+dossier-dropbox.svg	←	adwaita-blue/folder-dropbox.svg
+dossier-ecole.svg	←	adwaita-blue/folder-school.svg
+dossier-gitlab.svg	←	adwaita-blue/folder-gitlab.svg
+dossier-godot.svg	←	adwaita-blue/folder-godot.svg
+dossier-grabber.svg	←	adwaita-blue/folder-grabber-native.svg
+dossier-image-retouche.svg	←	adwaita-blue/folder-images-adwaita-blue.svg
+dossier-livre.svg	←	adwaita-blue/folder-ebooks.svg
+dossier-maison.svg	←	adwaita-blue/go-home.svg
+dossier-nuage.svg	←	adwaita-blue/folder-cloud-filled.svg
+dossier-terminal.svg	←	adwaita-blue/folder-shell.svg

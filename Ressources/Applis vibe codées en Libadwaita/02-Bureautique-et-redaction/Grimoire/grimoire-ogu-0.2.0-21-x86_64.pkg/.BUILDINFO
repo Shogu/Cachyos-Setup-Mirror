@@ -1,0 +1,10 @@
+format = 2
+pkgname = grimoire-ogu
+pkgbase = grimoire-ogu
+pkgver = 0.2.0-21
+pkgarch = x86_64
+packager = Unknown Packager
+builddate = 1793029764
+builddir = /workspace/scratch/ef02d53f0151/pkg-spellbook
+buildtool = python-tarfile-repack
+buildtoolver = 3.12

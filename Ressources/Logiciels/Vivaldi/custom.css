@@ -1,0 +1,17 @@
+
+/* Supprime le bouton Maximiser, jugé incohérent dans ce thème. */
+button.window-maximize {
+  display: none !important;
+}
+
+/* Police de type Adwaita côté navigateur. */
+#browser.linux {
+  font-family: sans-serif, system-ui;
+}
+
+/* Supprime le bouton de marque-page dans la barre d'URL. */
+.BookmarkButton,
+.url-bar-button.bookmark-button,
+.button.bookmark-button {
+  display: none !important;
+}

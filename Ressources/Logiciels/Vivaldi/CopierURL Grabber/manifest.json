@@ -1,0 +1,44 @@
+{
+  "manifest_version": 3,
+  "name": "CopierURL",
+  "version": "0.8.4",
+  "description": "Copie les URL des onglets dans le presse-papiers ou les transmet à Grabber via un menu contextuel.",
+  "permissions": [
+    "tabs",
+    "contextMenus",
+    "offscreen",
+    "clipboardWrite"
+  ],
+  "action": {
+    "default_title": "Copier l'URL",
+    "default_icon": {
+      "16": "icons/symbolic-light/copie-16.png",
+      "32": "icons/symbolic-light/copie-32.png",
+      "48": "icons/symbolic-light/copie-48.png",
+      "128": "icons/symbolic-light/copie-128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/copie-16.png",
+    "32": "icons/copie-32.png",
+    "48": "icons/copie-48.png",
+    "128": "icons/copie-128.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "commands": {
+    "copy-current": {
+      "suggested_key": {
+        "default": "Alt+Shift+G"
+      },
+      "description": "Copier l’URL de l’onglet courant"
+    },
+    "copy-window": {
+      "suggested_key": {
+        "default": "Alt+Shift+H"
+      },
+      "description": "Copier les URL de tous les onglets de la fenêtre"
+    }
+  }
+}

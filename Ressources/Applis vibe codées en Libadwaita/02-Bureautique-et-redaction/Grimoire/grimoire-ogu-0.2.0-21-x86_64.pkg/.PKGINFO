@@ -1,0 +1,21 @@
+# Grimoire: icône violette au format livre, symbolique sans tranche
+pkgname = grimoire-ogu
+pkgbase = grimoire-ogu
+xdata = pkgtype=pkg
+pkgver = 0.2.0-21
+pkgdesc = Local Markdown editor for GNOME
+url = 
+builddate = 1793029764
+packager = Unknown Packager
+size = 148599
+arch = x86_64
+license = MIT
+depend = python
+depend = python-gobject
+depend = gtk4
+depend = libadwaita>=1.8
+depend = gtksourceview5
+depend = webkitgtk-6.0
+depend = python-markdown
+depend = python-pygments
+depend = python-bleach
