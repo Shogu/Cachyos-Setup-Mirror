@@ -251,6 +251,12 @@ desktop-file-validate "$HOME/.local/share/applications/lelivrescolaire.fr.deskto
 "$HOME/.local/Lelivrescolaire.fr.AppImage"
 ```
 
+### Amélioration possible : remplacer FUSE 2 par FUSE 3
+
+OpenCode peut être chargé d'étudier puis d'adapter l'AppImage de LeLivreScolaire pour qu'elle utilise **FUSE 3** plutôt que **FUSE 2**. Si le runtime de l'AppImage peut être reconstruit ou remplacé de façon compatible, cela permettrait de supprimer la dépendance système au paquet `fuse2`.
+
+À faire vérifier par OpenCode avant de retirer `fuse2` : identifier le runtime AppImage et ses dépendances, appliquer la modification appropriée, puis tester le lancement de l'application et la gestion du montage sur cette machine. Ne supprimer `fuse2` qu'après validation du fonctionnement de l'AppImage modifiée.
+
 ## 10.3 — Dropbox
 
 Utiliser le client officiel Dropbox en arrière-plan, avec un démarrage automatique par **XDG Autostart**. Cette méthode fonctionne dans la session GNOME : Dropbox démarre à l’ouverture de session et `dropbox-cli status` permet de vérifier la synchronisation. Les commandes ci-dessous s’exécutent dans **Fish**.
