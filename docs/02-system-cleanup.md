@@ -34,10 +34,10 @@ sudo efibootmgr -b 0002 -B
 
 ### Première passe — paquets dont l'inutilité est confirmée sur ce setup
 
-Cette transaction regroupe les paquets retenus pour la première passe de l'audit d'octobre 2026 : aucun volume JFS/NILFS, pas de Secure Boot ni de second système à détecter, pas de VPN, pas d'alertes e-mail SMART, pas de gestion des miroirs par Reflector, pas de fichiers RAW. Les dépendances ont été examinées avec pactree -r lorsque pertinent.
+Cette transaction regroupe les paquets retenus pour la première passe de l'audit d'octobre 2026 : aucun volume JFS/NILFS, pas de Secure Boot ni de second système à détecter, pas de VPN, pas d'alertes e-mail SMART, pas de gestion des miroirs par Reflector, pas de fichiers RAW. Les dépendances ont été examinées avec pactree -r lorsque pertinent. `fd` et `sd` ne sont utilisés ni par les scripts Fish repérés ni par le dépôt ; ils sont uniquement requis par `hwdetect`. `jemalloc` est requis par `fd` et `bind`, tandis que `libmaxminddb` et `liburcu` sont requis par `bind`. Ces cinq paquets sont donc inclus explicitement dans la commande.
 
 ```fish
-sudo pacman -Rns jfsutils nilfs-utils bind dnssec-anchors s-nail efitools os-prober xl2tpd ppp reflector hwdetect libopenraw nlohmann-json
+sudo pacman -Rns jfsutils nilfs-utils bind dnssec-anchors s-nail efitools os-prober xl2tpd ppp reflector hwdetect fd sd jemalloc libmaxminddb liburcu libopenraw nlohmann-json
 ```
 
 **Lire la transaction Pacman avant de confirmer.** Si Pacman propose de retirer un composant supplémentaire inattendu, répondre `n` et examiner la dépendance. Les commandes des rubriques thématiques ci-dessous documentent les catégories ; cette commande agrégée suffit pour cette première passe, il n'est pas nécessaire de relancer ensuite les commandes thématiques qui visent les mêmes paquets.
