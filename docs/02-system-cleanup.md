@@ -222,19 +222,28 @@ sudo pacman -Rns libopenraw nlohmann-json
 - `tesseract-data-fra` : données OCR français.
 - `tesseract-data-osd` : détection orientation/script.
 - `autoconf` : génération de scripts de configuration.
-- `base-devel` : groupe d'outils de compilation Arch.
+- `base-devel` : métapaquet des outils de compilation Arch.
+- `automake`, `bison`, `flex`, `m4`, `make`, `patch`, `pkgconf` : outils de construction et de configuration.
+- `gcc` : compilateurs C/C++ ; `libisl` : bibliothèque utilisée par GCC.
+- `gdb`, `gdb-common`, `source-highlight` : débogueur et outils associés.
+- `fakeroot` : permet à makepkg de simuler les privilèges lors de la création de paquets.
+- `debugedit` : outil de traitement des informations de débogage.
+- `cpio` : outil d'archives, également dépendance optionnelle de File Roller.
+- `guile` et `gc` : dépendances de construction présentes dans la transaction de suppression ; Graphviz peut utiliser les bindings Guile.
 - `rust` : toolchain Rust.
-- `lld` : linker LLVM
+- `lld` : linker LLVM.
 - `llvm` : infrastructure de compilation LLVM.
 - `pahole` : outil lié au debug/types noyau.
 - `linux-cachyos-headers` : headers noyau pour modules externes.
 - `linux-cachyos-lts-headers` : headers noyau LTS pour modules externes.
 - `mesa-utils` : outils de test OpenGL/EGL.
-- `cachyos-packageinstaller` : mini installeur CachyOS
-- `bash-completion`
--`fwupd` : la function Fish l'installe puis le désinstalle à la volée
+- `cachyos-packageinstaller` : mini installeur CachyOS.
+- `bash-completion`.
+- `fwupd` : la fonction Fish l'installe puis le désinstalle à la volée.
 
-`base-devel` fournit les outils de compilation nécessaires à de nombreux paquets AUR. Le réinstaller avant une compilation ou mise à jour AUR qui en dépend.
+La suppression de `base-devel` a été vérifiée sur cette installation : Pacman a proposé de retirer également `automake bison cpio debugedit fakeroot flex gc gcc gdb gdb-common guile libisl m4 make patch pkgconf source-highlight`, soit **345,55 Mio** pour l'ensemble de la transaction. Les avertissements concernant `cpio`, `guile` et `fakeroot` sont des dépendances optionnelles : leur retrait peut désactiver les fonctions correspondantes, sans empêcher nécessairement les applications de démarrer.
+
+Pour ce poste, la compilation est principalement déléguée à distance. Si une compilation locale ou un paquet AUR devient nécessaire, réinstaller `base-devel` (et les dépendances spécifiques demandées par le paquet) avant de lancer `makepkg`. Pacman signale certaines dépendances optionnelles lors de la désinstallation ; un outil lancé plus tard peut aussi afficher une erreur s'il lui manque une commande ou une bibliothèque, mais le terminal ne réinstallera pas automatiquement `fakeroot` ou les autres outils.
 
 ```
 sudo pacman -Rns ninja tesseract tesseract-data-fra tesseract-data-osd autoconf base-devel rust lld llvm pahole linux-cachyos-headers linux-cachyos-lts-headers mesa-utils cachyos-packageinstaller bash-completion
