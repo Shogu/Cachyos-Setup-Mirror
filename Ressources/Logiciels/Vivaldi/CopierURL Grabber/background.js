@@ -12,12 +12,18 @@ const TAB_CLOSE_DELAY_MS = 1500;
 const MAX_URLS_PER_CALL = 12;
 const MAX_URI_LENGTH = 1800;
 
-// Ordre d'affichage : portées croissantes, Copier et Ouvrir appariés.
+// Ordre d'affichage : portées croissantes.
+//
+// Pas d’entrée « Copier l'URL de cet onglet » : le clic sur le bouton copie déjà
+// l’onglet courant, et Vivaldi affiche les entrées de page dans le menu du bouton,
+// où une telle entrée ferait doublon avec lui. Restent le raccourci Alt+Maj+G et
+// « Copier les URL de cette fenêtre ».
 const MENUS = [
-  { id: 'open-action', title: 'Ouvrir cet onglet avec Grabber', contexts: ['action'] },
+  // Une seule entrée pour le bouton (contexte `action`), la page et l’onglet : la
+  // cible est partout l’onglet, et le menu du bouton afficherait sinon deux fois
+  // le même libellé.
+  { id: 'open-current', title: 'Ouvrir cet onglet avec Grabber', contexts: ['action', 'page', 'frame', 'tab'] },
   { id: 'open-link', title: 'Ouvrir ce lien avec Grabber', contexts: ['link'] },
-  { id: 'copy-current', title: 'Copier l’URL de cet onglet', contexts: ['page', 'frame', 'tab'] },
-  { id: 'open-current', title: 'Ouvrir cet onglet avec Grabber', contexts: ['page', 'frame', 'tab'] },
   { id: 'separator-scopes', type: 'separator', contexts: ['page', 'frame', 'tab'] },
   { id: 'copy-highlighted', title: 'Copier les URL des onglets sélectionnés', contexts: ['tab'] },
   { id: 'open-highlighted', title: 'Ouvrir les URL des onglets sélectionnés avec Grabber', contexts: ['tab'] },
@@ -51,9 +57,6 @@ chrome.action.onClicked.addListener((tab) => copyUrls([tab?.url], 'onglet'));
 
 chrome.contextMenus.onClicked.addListener((info, tab) => {
   switch (info.menuItemId) {
-    case 'copy-current':
-      copyUrls([tab?.url], 'onglet');
-      break;
     case 'copy-selection':
       copyUrls(extractUrls(info.selectionText), 'sélection');
       break;
@@ -67,7 +70,6 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
       openWithGrabber([info.linkUrl], 'lien');
       break;
     case 'open-current':
-    case 'open-action':
       openWithGrabber([tab?.url], 'onglet');
       break;
     case 'open-highlighted':

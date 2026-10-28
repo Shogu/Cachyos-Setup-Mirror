@@ -6,7 +6,7 @@ Extension Chromium Manifest V3, destinée à Vivaldi. Elle remplace Tab Copy / A
 
 - Clic sur l’icône ou raccourci `Alt+Maj+G` : copie l’URL de l’onglet courant.
 - `Alt+Maj+H` : copie les URL de tous les onglets de la fenêtre.
-- Menus contextuels pour copier l’URL de l’onglet, les URL des onglets sélectionnés, toutes les URL de la fenêtre et les URL HTTP(S) trouvées dans un texte sélectionné.
+- Menus contextuels pour copier les URL des onglets sélectionnés, toutes les URL de la fenêtre et les URL HTTP(S) trouvées dans un texte sélectionné.
 - Menus **Ouvrir … avec Grabber** pour transmettre l’URL d’un lien, d’un onglet, d’onglets sélectionnés, d’une fenêtre ou d’un média.
 - Badge temporaire indiquant le nombre d’URL copiées ou remises au protocole.
 
@@ -35,7 +35,7 @@ Pour copier des URL, aucun autre prérequis n’est nécessaire. Pour **Ouvrir a
 | Clic sur l’icône | Copie l’URL de l’onglet actif |
 | `Alt+Maj+G` | Copie l’URL de l’onglet actif |
 | `Alt+Maj+H` | Copie les URL de tous les onglets de la fenêtre |
-| Clic droit sur la page ou l’onglet | Copier l’URL de l’onglet ou toutes les URL de la fenêtre ; ouvrir l’onglet ou la fenêtre avec Grabber |
+| Clic droit sur la page ou l’onglet | Copier toutes les URL de la fenêtre, onglet actif compris ; ouvrir l’onglet ou la fenêtre avec Grabber |
 | Clic droit sur des onglets sélectionnés | Copier ou transmettre les URL sélectionnées |
 | Clic droit sur un lien | Ouvrir ce lien avec Grabber |
 | Clic droit sur une image, vidéo ou audio | Transmettre l’URL du fichier média à Grabber |
