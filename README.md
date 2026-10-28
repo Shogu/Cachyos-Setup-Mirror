@@ -25,7 +25,7 @@ Ce setup applique des **optimisations agressives** : allègement système, désa
 ## Table des matières
 
 1. [Installation & préparation](docs/01-installation.md)
-2. [Allégement système](docs/02-system-cleanup.md) · [Audit complémentaire des paquets supprimables](docs/15-paquets-a-supprimer.md)
+2. [Allégement système](docs/02-system-cleanup.md)
 3. [Boot & kernel](docs/03-boot-kernel.md)
 4. [Filesystems & stockage](docs/04-filesystems-storage.md)
 5. [Optimisations & performance](docs/05-performance-tuning.md)
