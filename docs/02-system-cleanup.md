@@ -32,6 +32,18 @@ sudo efibootmgr -b 0002 -B
 
 ## 2.2 — Alléger les logiciels installés
 
+### Première passe — paquets dont l'inutilité est confirmée sur ce setup
+
+Cette transaction regroupe les paquets retenus pour la première passe de l'audit d'octobre 2026 : aucun volume JFS/NILFS, pas de Secure Boot ni de second système à détecter, pas de VPN, pas d'alertes e-mail SMART, pas de gestion des miroirs par Reflector, pas de fichiers RAW. Les dépendances ont été examinées avec pactree -r lorsque pertinent.
+
+```fish
+sudo pacman -Rns jfsutils nilfs-utils bind dnssec-anchors s-nail efitools os-prober xl2tpd ppp reflector hwdetect libopenraw nlohmann-json
+```
+
+**Lire la transaction Pacman avant de confirmer.** Si Pacman propose de retirer un composant supplémentaire inattendu, répondre `n` et examiner la dépendance. Les commandes des rubriques thématiques ci-dessous documentent les catégories ; cette commande agrégée suffit pour cette première passe, il n'est pas nécessaire de relancer ensuite les commandes thématiques qui visent les mêmes paquets.
+
+Les paquets encore incertains — notamment lvm2, dnsmasq, inetutils, lua-luv et la chaîne de compilation locale — restent hors de cette transaction et seront examinés séparément.
+
 
 ### Accessibilité et aide
 
@@ -82,6 +94,15 @@ sudo pacman -S pacman-contrib
 
 Cette méthode conserve les autres outils de `pacman-contrib` ; elle ne désinstalle pas le paquet.
 
+### Boot et UEFI
+
+- efitools : outils de gestion de clés et signatures Secure Boot ; inutiles dans cette configuration sans Secure Boot.
+- os-prober : détection d'autres systèmes pour les menus de démarrage ; inutile sans GRUB ni second système.
+
+```fish
+sudo pacman -Rns efitools os-prober
+```
+
 ### Partage réseau, découverte et montage de périphériques
 
 - `apache` : serveur web HTTP.
@@ -104,14 +125,36 @@ Cette méthode conserve les autres outils de `pacman-contrib` ; elle ne désinst
 sudo pacman -Rns apache mod_dnssd gnome-user-share rygel gvfs-dnssd gvfs-smb nss-mdns gvfs-afc gvfs-gphoto2 netctl nfs-utils gvfs-nfs usb_modeswitch tcl db
 ```
 
+### DNS et miroirs Pacman
+
+- bind et dnssec-anchors : composants DNS non utilisés sur ce poste ; aucun autre paquet installé ne réclame bind.
+- reflector : mise à jour de la liste des miroirs via Reflector. Ce poste utilise cachyos-rate-mirrors à la place.
+
+```fish
+sudo pacman -Rns bind dnssec-anchors reflector
+```
+
+ dnsmasq reste à examiner séparément : ne pas le retirer tant que l'absence d'utilisateur réseau n'a pas été confirmée.
+
 ### VPN
 
 - `openvpn` : client/protocole VPN OpenVPN.
 - `networkmanager-openvpn` : intégration OpenVPN dans NetworkManager.
 - `networkmanager-vpn-plugin-openvpn` : plugin OpenVPN pour NetworkManager.
+- `xl2tpd` : client/serveur L2TP, non utilisé sur ce poste.
+- `ppp` : protocole Point-to-Point ; dans l'installation auditée, le seul paquet qui le réclame est `xl2tpd`. NetworkManager ne le déclare qu'en dépendance optionnelle.
 
+```fish
+sudo pacman -Rns openvpn networkmanager-openvpn networkmanager-vpn-plugin-openvpn xl2tpd ppp
 ```
-sudo pacman -Rns openvpn networkmanager-openvpn networkmanager-vpn-plugin-openvpn
+
+### Outils pour systèmes de fichiers non utilisés
+
+- `jfsutils` : outils pour JFS ; aucun volume JFS n'a été repéré.
+- `nilfs-utils` : outils pour NILFS2 ; aucun volume NILFS2 n'a été repéré.
+
+```fish
+sudo pacman -Rns jfsutils nilfs-utils
 ```
 
 ### Systèmes de fichiers et scanners
@@ -147,6 +190,31 @@ Retirer également Fastfetch:
 sudo pacman -Rdd fastfetch
 ```
 
+### Détection matérielle
+
+- hwdetect : outil de détection matérielle et de génération de configurations ; aucun paquet installé ne le réclame et le setup gère déjà manuellement sa configuration mkinitcpio.
+
+```fish
+sudo pacman -Rns hwdetect
+```
+
+### Alertes et messagerie en ligne de commande
+
+- s-nail : client mail en ligne de commande ; inutile ici, car les alertes SMART par e-mail ne sont pas souhaitées et smartd est désactivé.
+
+```fish
+sudo pacman -Rns s-nail
+```
+
+### Formats et bibliothèques isolées
+
+- libopenraw : prise en charge des images RAW ; aucun paquet installé ne le réclame et les fichiers RAW ne sont pas utilisés.
+- nlohmann-json : bibliothèque JSON C++ ; aucun paquet installé ne le réclame. Elle peut être réinstallée si une compilation locale en a besoin.
+
+```fish
+sudo pacman -Rns libopenraw nlohmann-json
+```
+
 ### Développement et compilation
 
 - `ninja` : outil de build.
@@ -172,13 +240,9 @@ sudo pacman -Rdd fastfetch
 sudo pacman -Rns ninja tesseract tesseract-data-fra tesseract-data-osd autoconf base-devel rust lld llvm pahole linux-cachyos-headers linux-cachyos-lts-headers mesa-utils cachyos-packageinstaller bash-completion
 ```
 
-### AppImage — dépendance FUSE 2 devenue inutile
+### AppImage — migration FUSE 2 vers FUSE 3
 
-- `fuse2` : runtime FUSE 2, à retirer **uniquement après** qu'OpenCode a adapté l'AppImage de LeLivreScolaire pour utiliser FUSE 3 et que son lancement a été testé avec succès. Voir [10.2 — Puls et LeLivreScolaire](10-logiciels.md#102--puls-et-lelivrescolaire).
-
-```fish
-sudo pacman -Rns fuse2
-```
+- fuse2 : **déjà supprimé de cette installation**. Ne pas le remettre dans les commandes de nettoyage. L'AppImage de LeLivreScolaire doit être testée sans ce runtime ; si elle échoue, faire adapter son runtime pour FUSE 3 avant d'envisager une réinstallation. Voir [10.2 — Puls et LeLivreScolaire](10-logiciels.md#102--puls-et-lelivrescolaire).
 
 ### Flatpak et contrôle parental
 
