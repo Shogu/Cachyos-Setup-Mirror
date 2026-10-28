@@ -172,6 +172,14 @@ sudo pacman -Rdd fastfetch
 sudo pacman -Rns ninja tesseract tesseract-data-fra tesseract-data-osd autoconf base-devel rust lld llvm pahole linux-cachyos-headers linux-cachyos-lts-headers mesa-utils cachyos-packageinstaller bash-completion
 ```
 
+### AppImage — dépendance FUSE 2 devenue inutile
+
+- `fuse2` : runtime FUSE 2, à retirer **uniquement après** qu'OpenCode a adapté l'AppImage de LeLivreScolaire pour utiliser FUSE 3 et que son lancement a été testé avec succès. Voir [10.2 — Puls et LeLivreScolaire](10-logiciels.md#102--puls-et-lelivrescolaire).
+
+```fish
+sudo pacman -Rns fuse2
+```
+
 ### Flatpak et contrôle parental
 
 - `flatpak` : gestion d'applications Flatpak.
