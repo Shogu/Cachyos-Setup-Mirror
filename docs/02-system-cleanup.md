@@ -127,14 +127,14 @@ sudo pacman -Rns apache mod_dnssd gnome-user-share rygel gvfs-dnssd gvfs-smb nss
 
 ### DNS et miroirs Pacman
 
-- bind et dnssec-anchors : composants DNS non utilisés sur ce poste ; aucun autre paquet installé ne réclame bind.
-- reflector : mise à jour de la liste des miroirs via Reflector. Ce poste utilise cachyos-rate-mirrors à la place.
+- `bind` et `dnssec-anchors` : composants DNS non utilisés sur ce poste ; aucun autre paquet installé ne réclame `bind`.
+- `reflector` : mise à jour de la liste des miroirs via Reflector. Ce poste utilise `cachyos-rate-mirrors` à la place.
 
 ```fish
 sudo pacman -Rns bind dnssec-anchors reflector
 ```
 
- dnsmasq reste à examiner séparément : ne pas le retirer tant que l'absence d'utilisateur réseau n'a pas été confirmée.
+`dnsmasq` reste à examiner séparément : ne pas le retirer tant que l'absence d'utilisateur réseau n'a pas été confirmée.
 
 ### VPN
 
@@ -192,7 +192,7 @@ sudo pacman -Rdd fastfetch
 
 ### Détection matérielle
 
-- hwdetect : outil de détection matérielle et de génération de configurations ; aucun paquet installé ne le réclame et le setup gère déjà manuellement sa configuration mkinitcpio.
+- `hwdetect` : outil de détection matérielle et de génération de configurations ; aucun paquet installé ne le réclame et le setup gère déjà manuellement sa configuration `mkinitcpio`.
 
 ```fish
 sudo pacman -Rns hwdetect
@@ -200,7 +200,7 @@ sudo pacman -Rns hwdetect
 
 ### Alertes et messagerie en ligne de commande
 
-- s-nail : client mail en ligne de commande ; inutile ici, car les alertes SMART par e-mail ne sont pas souhaitées et smartd est désactivé.
+- `s-nail` : client mail en ligne de commande ; inutile ici, car les alertes SMART par e-mail ne sont pas souhaitées et `smartd` est désactivé.
 
 ```fish
 sudo pacman -Rns s-nail
@@ -208,8 +208,8 @@ sudo pacman -Rns s-nail
 
 ### Formats et bibliothèques isolées
 
-- libopenraw : prise en charge des images RAW ; aucun paquet installé ne le réclame et les fichiers RAW ne sont pas utilisés.
-- nlohmann-json : bibliothèque JSON C++ ; aucun paquet installé ne le réclame. Elle peut être réinstallée si une compilation locale en a besoin.
+- `libopenraw` : prise en charge des images RAW ; aucun paquet installé ne le réclame et les fichiers RAW ne sont pas utilisés.
+- `nlohmann-json` : bibliothèque JSON C++ ; aucun paquet installé ne le réclame. Elle peut être réinstallée si une compilation locale en a besoin.
 
 ```fish
 sudo pacman -Rns libopenraw nlohmann-json
