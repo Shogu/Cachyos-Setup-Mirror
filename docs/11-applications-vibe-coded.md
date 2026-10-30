@@ -563,43 +563,43 @@ L’outil Icônes UI et le gestionnaire d’icônes des dossiers personnels sont
 
 ### 11.33 — Perceptron — interface GNOME pour OpenCode
 
-**Perceptron** (\`opencode-perceptron\`) est une interface GTK4/libadwaita native pour [OpenCode](https://opencode.ai). Elle présente l’interface web d’OpenCode dans une fenêtre GNOME, grâce à WebKitGTK 6.0 : barre d’en-tête, menus, raccourcis, thème clair/sombre synchronisé avec le système et fenêtre dont la taille est restaurée.
+**Perceptron** (`opencode-perceptron`) est une interface GTK4/libadwaita native pour [OpenCode](https://opencode.ai). Elle présente l’interface web d’OpenCode dans une fenêtre GNOME, grâce à WebKitGTK 6.0 : barre d’en-tête, menus, raccourcis, thème clair/sombre synchronisé avec le système et fenêtre dont la taille est restaurée.
 
-Perceptron est un **wrapper** : la logique de programmation, les modèles et les sessions restent gérés par OpenCode. Au lancement, Perceptron démarre \`opencode serve\`, effectue l’appairage avec \`opencode pair\`, puis charge l’interface web dans sa vue WebKit. OpenCode n’est pas embarqué dans le paquet et doit être installé séparément, accessible dans le \`PATH\`.
+Perceptron est un **wrapper** : la logique de programmation, les modèles et les sessions restent gérés par OpenCode. Au lancement, Perceptron démarre `opencode serve`, effectue l’appairage avec `opencode pair`, puis charge l’interface web dans sa vue WebKit. OpenCode n’est pas embarqué dans le paquet et doit être installé séparément, accessible dans le `PATH`.
 
 Fonctions d’interface :
 - indicateur de chargement natif et page d’erreur avec bouton **Réessayer** ;
-- cookies persistants pendant 30 jours dans \`~/.local/share/opencode-perceptron\` ;
+- cookies persistants pendant 30 jours dans `~/.local/share/opencode-perceptron` ;
 - suivi du thème clair/sombre GNOME ;
 - mémorisation de la taille de fenêtre ;
-- icône couleur et variante symbolique \`org.gnome.Perceptron\`.
+- icône couleur et variante symbolique `org.gnome.Perceptron`.
 
-**Dépendances système :** \`python\`, \`python-gobject\`, \`gtk4\`, \`libadwaita\` et \`webkitgtk-6.0\`. Le binaire \`opencode\` est une dépendance fonctionnelle obligatoire, mais reste installé séparément.
+**Dépendances système :** `python`, `python-gobject`, `gtk4`, `libadwaita` et `webkitgtk-6.0`. Le binaire `opencode` est une dépendance fonctionnelle obligatoire, mais reste installé séparément.
 
-**Paquet fourni :** \`opencode-perceptron-0.1.0-1-any.pkg.tar.zst\`.
+**Paquet fourni :** `opencode-perceptron-0.1.0-1-any.pkg.tar.zst`.
 
 Depuis la racine du dépôt, installer le paquet :
 
-\`\`\`fish
+```fish
 sudo pacman -U "Ressources/Applis vibe codées en Libadwaita/05-Systeme-et-utilitaires/Perceptron-opencode/opencode-perceptron-0.1.0-1-any.pkg.tar.zst"
-\`\`\`
+```
 
 Vérifier qu’OpenCode est disponible, puis lancer Perceptron depuis le menu GNOME ou avec :
 
-\`\`\`fish
+```fish
 opencode --version
 opencode-perceptron
-\`\`\`
+```
 
-Raccourcis : \`Ctrl+R\` pour recharger, \`Ctrl++\` / \`Ctrl+-\` / \`Ctrl+0\` pour le zoom, \`F11\` pour le plein écran, \`Ctrl+?\` pour l’aide des raccourcis et \`Ctrl+Q\` pour quitter.
+Raccourcis : `Ctrl+R` pour recharger, `Ctrl++` / `Ctrl+-` / `Ctrl+0` pour le zoom, `F11` pour le plein écran, `Ctrl+?` pour l’aide des raccourcis et `Ctrl+Q` pour quitter.
 
-Pour reconstruire le paquet depuis les sources présentes dans le dossier, utiliser \`makepkg -si\` (avec \`fakeroot\`) ou \`./build.sh\` selon les instructions du README du projet.
+Pour reconstruire le paquet depuis les sources présentes dans le dossier, utiliser `makepkg -si` (avec `fakeroot`) ou `./build.sh` selon les instructions du README du projet.
 
 **Désinstallation :**
 
-\`\`\`fish
+```fish
 sudo pacman -Rns opencode-perceptron
-\`\`\`
+```
 
 ---
 
