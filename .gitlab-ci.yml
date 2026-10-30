@@ -9,7 +9,6 @@ workflow:
 grabber-appimage:
   stage: build
   image: ubuntu:24.04
-  tags: []
   variables:
     DEBIAN_FRONTEND: noninteractive
   script:
@@ -22,7 +21,7 @@ grabber-appimage:
       test -s "$BASE"
       test -d "$SRC/Grabber-sources/jd_adwaita"
       chmod +x "$BASE"
-      ./ "$BASE" --appimage-extract
+      "$BASE" --appimage-extract
       APPDIR="$CI_PROJECT_DIR/squashfs-root"
       test -d "$APPDIR/usr/lib/jd-adwaita/bundle/java"
       test -f "$APPDIR/usr/lib/jd-adwaita/bundle/jdownloader/JDownloader.jar"
@@ -68,12 +67,8 @@ grabber-appimage:
       exec -a Grabber python3 -m jd_adwaita "$@"
       APPRUN
       chmod +x "$APPDIR/AppRun"
-      # Use the existing full-colour app icon as the AppImage icon.
       cp "$APPDIR/usr/share/icons/hicolor/512x512/apps/com.ogu.Grabber.png" "$APPDIR/com.ogu.Grabber.png"
-      # The package already carries its desktop entry and icon theme assets.
-      curl --fail --location --retry 3 \
-        https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage \
-        --output appimagetool
+      curl --fail --location --retry 3 https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage --output appimagetool
       chmod +x appimagetool
       APPIMAGE_EXTRACT_AND_RUN=1 ARCH=x86_64 ./appimagetool "$APPDIR" Grabber-0.10.32-self-contained-x86_64.AppImage
       chmod +x Grabber-0.10.32-self-contained-x86_64.AppImage
