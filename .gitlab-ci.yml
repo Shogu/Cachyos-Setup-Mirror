@@ -66,7 +66,8 @@ grabber-appimage:
       export JD_ADWAITA_ICON_DIR="$app_dir/usr/share/icons/hicolor/512x512/apps"
       exec -a Grabber python3 -m jd_adwaita "$@"
       APPRUN
-      chmod +x "$APPDIR/AppRun"
+      chmod -R a+rX "$APPDIR"
+      chmod a+rx "$APPDIR/AppRun"
       cp "$APPDIR/usr/share/icons/hicolor/512x512/apps/com.ogu.Grabber.png" "$APPDIR/com.ogu.Grabber.png"
       curl --fail --location --retry 3 https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage --output appimagetool
       chmod +x appimagetool
