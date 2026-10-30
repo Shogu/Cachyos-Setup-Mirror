@@ -1,0 +1,88 @@
+stages:
+  - build
+
+workflow:
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "tmp/grabber-appimage-build-20261030"'
+    - when: never
+
+grabber-appimage:
+  stage: build
+  image: ubuntu:24.04
+  tags: []
+  variables:
+    DEBIAN_FRONTEND: noninteractive
+  script:
+    - apt-get update
+    - apt-get install -y --no-install-recommends ca-certificates curl file python3 squashfs-tools libfuse2
+    - |
+      set -euo pipefail
+      SRC="Ressources/Applis vibe codées en Libadwaita/03-Fichiers-et-telechargements/Grabber"
+      BASE="$SRC/Grabber.AppImage"
+      test -s "$BASE"
+      test -d "$SRC/Grabber-sources/jd_adwaita"
+      chmod +x "$BASE"
+      ./ "$BASE" --appimage-extract
+      APPDIR="$CI_PROJECT_DIR/squashfs-root"
+      test -d "$APPDIR/usr/lib/jd-adwaita/bundle/java"
+      test -f "$APPDIR/usr/lib/jd-adwaita/bundle/jdownloader/JDownloader.jar"
+      mkdir -p "$APPDIR/usr/lib/jd-adwaita"
+      cp -a "$SRC/Grabber-sources/jd_adwaita" "$APPDIR/usr/lib/jd-adwaita/jd_adwaita"
+      rm -rf "$APPDIR/usr/lib/jd-adwaita/jd_adwaita/__pycache__"
+      cat > "$APPDIR/AppRun" <<'APPRUN'
+      #!/usr/bin/env bash
+      set -euo pipefail
+      app_dir="$(CDPATH= cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+      if [[ "${1:-}" == "--install-desktop" ]]; then
+          exec python3 "$app_dir/install-desktop.py"
+      fi
+      bundle_root="$app_dir/usr/lib/jd-adwaita/bundle"
+      data_home="${XDG_DATA_HOME:-$HOME/.local/share}"
+      user_app="$data_home/jd-adwaita/app"
+      if [[ ! -e "$user_app" ]]; then
+          mkdir -p "$(dirname "$user_app")"
+          cp -a "$app_dir/usr/lib/jd-adwaita/jd_adwaita" "$user_app"
+      fi
+      runtime_dir="${JD_ADWAITA_RUNTIME_DIR:-$data_home/jd-adwaita/jdownloader}"
+      if [[ ! -f "$runtime_dir/JDownloader.jar" ]]; then
+          mkdir -p "$runtime_dir"
+          cp -a "$bundle_root/jdownloader/." "$runtime_dir/"
+      fi
+      ytdlp_dir="$data_home/jd-adwaita/bin"
+      if [[ ! -x "$ytdlp_dir/yt-dlp" ]]; then
+          mkdir -p "$ytdlp_dir"
+          cp -a "$app_dir/usr/lib/jd-adwaita/bin/yt-dlp" "$ytdlp_dir/yt-dlp"
+          chmod +x "$ytdlp_dir/yt-dlp"
+      fi
+      export JD_ADWAITA_YTDLP_PATH="$ytdlp_dir/yt-dlp"
+      export PATH="$ytdlp_dir:$PATH"
+      export JAVA_HOME="$bundle_root/java"
+      export PATH="$JAVA_HOME/bin:$PATH"
+      export PYTHONPATH="$user_app:$app_dir/usr/lib/jd-adwaita${PYTHONPATH:+:$PYTHONPATH}"
+      export JD_ADWAITA_BUNDLE_ROOT="$bundle_root"
+      export JD_ADWAITA_RUNTIME_DIR="$runtime_dir"
+      export JD_ADWAITA_JAVA_PATH="$JAVA_HOME/bin/java"
+      export XDG_DATA_DIRS="$app_dir/usr/share:${XDG_DATA_DIRS:-/usr/local/share:/usr/share}"
+      export JD_ADWAITA_ICON_PATH="$app_dir/com.ogu.Grabber.png"
+      export JD_ADWAITA_ICON_DIR="$app_dir/usr/share/icons/hicolor/512x512/apps"
+      exec -a Grabber python3 -m jd_adwaita "$@"
+      APPRUN
+      chmod +x "$APPDIR/AppRun"
+      # Use the existing full-colour app icon as the AppImage icon.
+      cp "$APPDIR/usr/share/icons/hicolor/512x512/apps/com.ogu.Grabber.png" "$APPDIR/com.ogu.Grabber.png"
+      # The package already carries its desktop entry and icon theme assets.
+      curl --fail --location --retry 3 \
+        https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage \
+        --output appimagetool
+      chmod +x appimagetool
+      APPIMAGE_EXTRACT_AND_RUN=1 ARCH=x86_64 ./appimagetool "$APPDIR" Grabber-0.10.32-self-contained-x86_64.AppImage
+      chmod +x Grabber-0.10.32-self-contained-x86_64.AppImage
+      file Grabber-0.10.32-self-contained-x86_64.AppImage
+      sha256sum Grabber-0.10.32-self-contained-x86_64.AppImage > SHA256SUMS
+      test -s Grabber-0.10.32-self-contained-x86_64.AppImage
+  artifacts:
+    name: "Grabber-0.10.32-self-contained"
+    paths:
+      - Grabber-0.10.32-self-contained-x86_64.AppImage
+      - SHA256SUMS
+    expire_in: 7 days
