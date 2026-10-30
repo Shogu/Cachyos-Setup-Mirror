@@ -224,6 +224,13 @@ Lancement depuis les sources
 Sur Arch/CachyOS, installer les dépendances graphiques et Java :
 
 sudo pacman -S --needed gtk4 libadwaita python python-gobject jre-openjdk
+
+Dépendances système pour yt-dlp
+Pour permettre à yt-dlp d'accéder aux secrets et aux cookies des navigateurs, installer également les paquets Python suivants :
+
+```fish
+sudo pacman -S python-secretstorage python-pycryptodome
+```
 Puis :
 
 cd jd-adwaita
