@@ -34,7 +34,7 @@ Ce setup applique des **optimisations agressives** : allègement système, désa
 8. [Extensions GNOME](docs/08-gnome-extensions.md)
 9. [Nautilus — workflow](docs/09-nautilus-workflow.md)
 10. [Logiciels](docs/10-logiciels.md) — [Dropbox sans interface](docs/10-logiciels.md#103--dropbox) · [Claude Code](docs/10-logiciels.md#107--claude-code)
-11. [Applications Vibe Coded](docs/11-applications-vibe-coded.md) — [Sismographe](docs/11-applications-vibe-coded.md#1113--sismographe) · [Amplifaya](docs/11-applications-vibe-coded.md#1122--amplifaya--moteur-headless-et-interface) · [Semitone](docs/11-applications-vibe-coded.md#1129--semitone) · [Dactylo](docs/11-applications-vibe-coded.md#1124--dactylo) · [Alexandrie](docs/11-applications-vibe-coded.md#1130--alexandrie) · [Polaroid](docs/11-applications-vibe-coded.md#1132--polaroid)
+11. [Applications Vibe Coded](docs/11-applications-vibe-coded.md) — [Sismographe](docs/11-applications-vibe-coded.md#1113--sismographe) · [Amplifaya](docs/11-applications-vibe-coded.md#1122--amplifaya--moteur-headless-et-interface) · [Semitone](docs/11-applications-vibe-coded.md#1129--semitone) · [Dactylo](docs/11-applications-vibe-coded.md#1124--dactylo) · [Alexandrie](docs/11-applications-vibe-coded.md#1130--alexandrie) · [Polaroid](docs/11-applications-vibe-coded.md#1132--polaroid) · [Perceptron](docs/11-applications-vibe-coded.md#1133--perceptron--interface-gnome-pour-opencode)
 12. [Shell & terminal](docs/12-shell-terminal.md)
 13. [Vivaldi](docs/13-vivaldi.md)
 14. [Maintenance](docs/14-maintenance.md)
