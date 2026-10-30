@@ -29,6 +29,16 @@ sudo ufw --force enable
 sudo ufw status numbered
 ```
 
+### Client Android Perceptron
+
+Pour autoriser un client Android à se connecter au service OpenCode hébergé sur la machine, ouvrir le port TCP 49374 :
+
+```fish
+sudo ufw allow 49374/tcp comment 'opencode service'
+```
+
+Après l’ajout de la règle, relancer l’appairage avec `opencode-pair`.
+
 Dans Nicotine : sélectionner `wlan0` et le port 2234.
 
 Régler Nicotine et Fragments pour qu'ils utilisent les ports correspondants à UFW — 🔗 voir aussi leur configuration applicative dans [Logiciels](10-logiciels.md#104--téléchargement--grabber-et-fragments).
