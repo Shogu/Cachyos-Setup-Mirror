@@ -4,7 +4,6 @@
 
 > **Dans ce chapitre :** rendu des polices, échelle, thème visuel, session et alimentation, trousseau, permissions et organisation des lanceurs GNOME.
 
-- [7.1 Ajuster le rendu des polices](#71--ajuster-le-rendu-des-polices)
 - [7.2 Régler l'échelle (HiDPI)](#72--régler-léchelle-hidpi)
 - [7.3 Fond d'écran, thème de curseurs et GDM](#73--fond-décran-thème-de-curseurs-et-gdm)
 - [7.4 Importer et activer le profil couleur de l'écran](#74--importer-et-activer-le-profil-couleur-de-lécran)
@@ -17,16 +16,6 @@
 - [7.11 Raccourcis clavier](#711--raccourcis-clavier)
 - [7.12 Désactiver les autostarts inutilisés](#712--désactiver-les-autostarts-inutilisés)
 - [7.13 Setup d’icônes et dossiers GNOME](#713--setup-dicônes-et-dossiers-gnome)
-
-## 7.1 — Ajuster le rendu des polices
-
-Dans `/etc/environment`, ajouter cette variable :
-
-```ini
-FREETYPE_PROPERTIES="cff:no-stem-darkening=0 autofitter:no-stem-darkening=0"
-```
-
-Se déconnecter puis se reconnecter pour appliquer le réglage aux nouvelles applications.
 
 ## 7.2 — Régler l'échelle (HiDPI)
 
