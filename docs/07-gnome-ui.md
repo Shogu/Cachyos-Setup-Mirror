@@ -20,21 +20,13 @@
 
 ## 7.1 — Ajuster le rendu des polices
 
-Éditer le fichier d'environnement :
-
-```fish
-sudoedit /etc/environment
-```
-
-Ajouter :
+Dans `/etc/environment`, ajouter cette variable :
 
 ```ini
 FREETYPE_PROPERTIES="cff:no-stem-darkening=0 autofitter:no-stem-darkening=0"
 ```
 
 Se déconnecter puis se reconnecter pour appliquer le réglage aux nouvelles applications.
-
-Le README proposait aussi une variante « moins grasse », mais reproduisait exactement la même valeur. Il n'y a donc qu'un réglage distinct à reprendre ici ; aucune seconde valeur n'a été inventée.
 
 ## 7.2 — Régler l'échelle (HiDPI)
 
