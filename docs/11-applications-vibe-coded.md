@@ -2,7 +2,7 @@
 
 [Accueil](../README.md) · [Précédent](10-logiciels.md) · [Suivant](12-shell-terminal.md)
 
-> **Dans ce chapitre :** applications personnelles développées avec l'aide du Vibe Coding, principalement en GTK4/libadwaita, dont le lecteur musical **Semitone** (fork de Gapless compilé avec Claude), le fork **Extension Manager**, les extensions GNOME maison « Always on top, always on top », **Session Keeper**, **Focus & Boutons** (pilule Shelly et icône musicale animée incluses), **Power Total**, **UI Management** et le fork **Battery Time Compact — Ogu**, ainsi qu’un build GTK4 upstream utilisé par le setup.
+> **Dans ce chapitre :** applications personnelles développées avec l'aide du Vibe Coding, principalement en GTK4/libadwaita, dont l’interface native **Perceptron** pour OpenCode, le lecteur musical **Semitone** (fork de Gapless compilé avec Claude), le fork **Extension Manager**, les extensions GNOME maison « Always on top, always on top », **Session Keeper**, **Focus & Boutons** (pilule Shelly et icône musicale animée incluses), **Power Total**, **UI Management** et le fork **Battery Time Compact — Ogu**, ainsi qu’un build GTK4 upstream utilisé par le setup.
 
 **Portage upstream adapté :** Mail (`mail-postcard`) est compilé avec Claude depuis Postcard. Ses fonctions et la procédure d’installation sont décrites dans [10.1.4 — Messagerie : Mail](10-logiciels.md#1014--messagerie--mail).
 
@@ -14,7 +14,7 @@ Les dossiers sont classés par usage principal. Les extensions GNOME Shell reste
 - **02 — Bureautique et rédaction** : Alexandrie, Grimoire, Grille, Dactylo.
 - **03 — Fichiers et téléchargements** : Fret, Grabber, Nautilus Bookmark Icons, PLACES, Thumbnailer Sushi.
 - **04 — Bureau et personnalisation** : Extension Manager, Icônes UI.
-- **05 — Système et utilitaires** : dconf-editor GTK4, Fisherman, Pacto, Pusher, Radar, Sismographe, Snapper GTK4, systemd-gui, Vidange.
+- **05 — Système et utilitaires** : dconf-editor GTK4, Fisherman, Pacto, Perceptron, Pusher, Radar, Sismographe, Snapper GTK4, systemd-gui, Vidange.
 
 ## 01 — Multimédia
 
@@ -78,6 +78,7 @@ Pour l’utilisation dans le workflow Nautilus, voir [9.7 — Aperçu et miniatu
 ## 05 — Système et utilitaires
 
 - [11.28 — Vidange](#1128--vidange)
+- [11.33 — Perceptron — interface GNOME pour OpenCode](#1133--perceptron--interface-gnome-pour-opencode)
 - [11.15 — dconf-editor GTK4](#1115--dconf-editor-gtk4)
 - [11.8 — Fisherman](#118--fisherman)
 - [11.9 — Pacto](#119--pacto)
@@ -559,6 +560,48 @@ L’outil Icônes UI et le gestionnaire d’icônes des dossiers personnels sont
 ---
 
 ## 05 — Système et utilitaires
+
+### 11.33 — Perceptron — interface GNOME pour OpenCode
+
+**Perceptron** (\`opencode-perceptron\`) est une interface GTK4/libadwaita native pour [OpenCode](https://opencode.ai). Elle présente l’interface web d’OpenCode dans une fenêtre GNOME, grâce à WebKitGTK 6.0 : barre d’en-tête, menus, raccourcis, thème clair/sombre synchronisé avec le système et fenêtre dont la taille est restaurée.
+
+Perceptron est un **wrapper** : la logique de programmation, les modèles et les sessions restent gérés par OpenCode. Au lancement, Perceptron démarre \`opencode serve\`, effectue l’appairage avec \`opencode pair\`, puis charge l’interface web dans sa vue WebKit. OpenCode n’est pas embarqué dans le paquet et doit être installé séparément, accessible dans le \`PATH\`.
+
+Fonctions d’interface :
+- indicateur de chargement natif et page d’erreur avec bouton **Réessayer** ;
+- cookies persistants pendant 30 jours dans \`~/.local/share/opencode-perceptron\` ;
+- suivi du thème clair/sombre GNOME ;
+- mémorisation de la taille de fenêtre ;
+- icône couleur et variante symbolique \`org.gnome.Perceptron\`.
+
+**Dépendances système :** \`python\`, \`python-gobject\`, \`gtk4\`, \`libadwaita\` et \`webkitgtk-6.0\`. Le binaire \`opencode\` est une dépendance fonctionnelle obligatoire, mais reste installé séparément.
+
+**Paquet fourni :** \`opencode-perceptron-0.1.0-1-any.pkg.tar.zst\`.
+
+Depuis la racine du dépôt, installer le paquet :
+
+\`\`\`fish
+sudo pacman -U "Ressources/Applis vibe codées en Libadwaita/05-Systeme-et-utilitaires/Perceptron-opencode/opencode-perceptron-0.1.0-1-any.pkg.tar.zst"
+\`\`\`
+
+Vérifier qu’OpenCode est disponible, puis lancer Perceptron depuis le menu GNOME ou avec :
+
+\`\`\`fish
+opencode --version
+opencode-perceptron
+\`\`\`
+
+Raccourcis : \`Ctrl+R\` pour recharger, \`Ctrl++\` / \`Ctrl+-\` / \`Ctrl+0\` pour le zoom, \`F11\` pour le plein écran, \`Ctrl+?\` pour l’aide des raccourcis et \`Ctrl+Q\` pour quitter.
+
+Pour reconstruire le paquet depuis les sources présentes dans le dossier, utiliser \`makepkg -si\` (avec \`fakeroot\`) ou \`./build.sh\` selon les instructions du README du projet.
+
+**Désinstallation :**
+
+\`\`\`fish
+sudo pacman -Rns opencode-perceptron
+\`\`\`
+
+---
 
 ### 11.28 — Vidange
 
