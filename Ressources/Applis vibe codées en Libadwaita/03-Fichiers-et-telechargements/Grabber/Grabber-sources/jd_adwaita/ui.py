@@ -393,6 +393,13 @@ def build_window(window: Any) -> None:
     window.stop_button.connect("clicked", window._stop_downloads)
     header.pack_start(window.stop_button)
 
+    window.export_videos_button = icon_button("folder-download-symbolic")
+    window.export_videos_button.set_tooltip_text("Exporter les vidéos terminées vers ~/Videos/.DEV")
+    window.export_videos_button.set_sensitive(False)
+    window.export_videos_button.set_visible(window.config.show_export_videos_button)
+    window.export_videos_button.connect("clicked", window._export_videos)
+    header.pack_start(window.export_videos_button)
+
     # L'indicateur d'attente natif de GNOME : un spinner dans la barre
     # d'en-tête, là où Nautilus, Logiciels ou Builder montrent une activité.
     # Adw.Spinner (libadwaita 1.6+) est le widget officiel ; Gtk.Spinner le

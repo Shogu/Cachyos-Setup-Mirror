@@ -191,38 +191,13 @@ def open_settings(window: Any, *_args: Any) -> None:
     )
     download_group.add(simultaneous_row)
 
-    video_group = Adw.PreferencesGroup(title="Déplacement automatique des vidéos")
-    auto_move_row = Adw.SwitchRow(
-        title="Déplacer automatiquement les vidéos terminées",
-        subtitle="Déplacer uniquement les vidéos téléchargées par JDownloader",
+    video_group = Adw.PreferencesGroup(title="Vidéos")
+    export_videos_row = Adw.SwitchRow(
+        title="Afficher le bouton d'export vidéos",
+        subtitle="Exporter manuellement les vidéos terminées vers ~/Videos/.DEV",
     )
-    auto_move_row.set_active(window.config.auto_move_videos_enabled)
-    video_group.add(auto_move_row)
-
-    source_row = Adw.ActionRow(title="Dossier source des vidéos")
-    source_entry = Gtk.Entry(hexpand=True)
-    source_entry.set_text(window.config.video_source_dir)
-    source_row.add_suffix(source_entry)
-    choose_source = Gtk.Button(label="Choisir…")
-    choose_source.set_valign(Gtk.Align.CENTER)
-    source_row.add_suffix(choose_source)
-    video_group.add(source_row)
-
-    destination_row = Adw.ActionRow(title="Dossier de destination")
-    destination_entry = Gtk.Entry(hexpand=True)
-    destination_entry.set_text(window.config.video_destination_dir)
-    destination_row.add_suffix(destination_entry)
-    choose_destination = Gtk.Button(label="Choisir…")
-    choose_destination.set_valign(Gtk.Align.CENTER)
-    destination_row.add_suffix(choose_destination)
-    video_group.add(destination_row)
-
-    remove_empty_row = Adw.SwitchRow(
-        title="Supprimer les dossiers parents devenus vides",
-        subtitle="Suppression directe, sans corbeille ni confirmation ; le dossier source est conservé",
-    )
-    remove_empty_row.set_active(window.config.remove_empty_video_folders)
-    video_group.add(remove_empty_row)
+    export_videos_row.set_active(window.config.show_export_videos_button)
+    video_group.add(export_videos_row)
     grabber_group = Adw.PreferencesGroup(
         title="Grabber",
         description=(
@@ -303,34 +278,8 @@ def open_settings(window: Any, *_args: Any) -> None:
         chooser = Gtk.FileDialog(title="Choisir le dossier de destination")
         chooser.select_folder(dialog, None, on_folder_chosen)
 
-    def on_source_chosen(file_dialog: Gtk.FileDialog, result: Gio.AsyncResult) -> None:
-        try:
-            selected = file_dialog.select_folder_finish(result)
-        except GLib.Error:
-            return
-        if selected is not None:
-            source_entry.set_text(selected.get_path() or "")
-
-    def choose_source_folder(*_args: Any) -> None:
-        chooser = Gtk.FileDialog(title="Choisir le dossier source des vidéos")
-        chooser.select_folder(dialog, None, on_source_chosen)
-
-    def on_destination_chosen(file_dialog: Gtk.FileDialog, result: Gio.AsyncResult) -> None:
-        try:
-            selected = file_dialog.select_folder_finish(result)
-        except GLib.Error:
-            return
-        if selected is not None:
-            destination_entry.set_text(selected.get_path() or "")
-
-    def choose_destination_folder(*_args: Any) -> None:
-        chooser = Gtk.FileDialog(title="Choisir le dossier de destination des vidéos")
-        chooser.select_folder(dialog, None, on_destination_chosen)
-
     choose_jar.connect("clicked", choose_jar_file)
     choose_folder.connect("clicked", choose_folder_file)
-    choose_source.connect("clicked", choose_source_folder)
-    choose_destination.connect("clicked", choose_destination_folder)
 
     ytdlp_group = Adw.PreferencesGroup(
         title="Liens confiés à yt-dlp",
@@ -366,21 +315,11 @@ def open_settings(window: Any, *_args: Any) -> None:
 
 
     def save_settings(*_args: Any) -> None:
-        source_path = Path(source_entry.get_text()).expanduser().resolve()
-        destination_path = Path(destination_entry.get_text()).expanduser().resolve()
-        if source_path == destination_path or source_path in destination_path.parents:
-            window._show_error(RuntimeError(
-                "Le dossier de destination des vidéos doit être différent du dossier source et ne pas se trouver à l’intérieur de celui-ci."
-            ))
-            return
         window.config.jar_path = jar_entry.get_text()
         window.config.java_path = java_entry.get_text()
         window.config.download_dir = folder_entry.get_text()
         window.config.close_warning_enabled = close_warning_row.get_active()
-        window.config.auto_move_videos_enabled = auto_move_row.get_active()
-        window.config.video_source_dir = source_entry.get_text()
-        window.config.video_destination_dir = destination_entry.get_text()
-        window.config.remove_empty_video_folders = remove_empty_row.get_active()
+        window.config.show_export_videos_button = export_videos_row.get_active()
         window.config.clipboard_scan_enabled = clipboard_row.get_active()
         window.config.focus_on_delivery = focus_row.get_active()
         window.config.grabber_whitelist_enabled = whitelist_switch.get_active()
@@ -408,6 +347,7 @@ def open_settings(window: Any, *_args: Any) -> None:
             window._clipboard_monitor.stop()
         window._sync_grabber_option_switches()
         window._populate_grabber(window._grabber_items)
+        window.export_videos_button.set_visible(window.config.show_export_videos_button)
         dialog.close()
         if window._known_online:
             window._run_thread(

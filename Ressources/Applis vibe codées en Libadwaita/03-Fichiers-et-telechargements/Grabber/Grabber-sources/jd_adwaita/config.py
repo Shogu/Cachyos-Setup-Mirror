@@ -43,10 +43,7 @@ class AppConfig:
             # default: Grabber only takes the focus on its first launch.
             "focus_on_delivery": False,
             "close_warning_enabled": True,
-            "auto_move_videos_enabled": True,
-            "video_source_dir": str(Path.home() / "Downloads"),
-            "video_destination_dir": str(Path.home() / "Videos" / ".DEV"),
-            "remove_empty_video_folders": True,
+            "show_export_videos_button": True,
             "moved_video_paths": {},
         }
         self.load()
@@ -209,38 +206,12 @@ class AppConfig:
         self.data["close_warning_enabled"] = bool(value)
 
     @property
-    def auto_move_videos_enabled(self) -> bool:
-        return bool(self.data.get("auto_move_videos_enabled", True))
+    def show_export_videos_button(self) -> bool:
+        return bool(self.data.get("show_export_videos_button", True))
 
-    @auto_move_videos_enabled.setter
-    def auto_move_videos_enabled(self, value: bool) -> None:
-        self.data["auto_move_videos_enabled"] = bool(value)
-
-    @property
-    def video_source_dir(self) -> str:
-        value = str(self.data.get("video_source_dir", "")).strip()
-        return value or str(Path.home() / "Downloads")
-
-    @video_source_dir.setter
-    def video_source_dir(self, value: str) -> None:
-        self.data["video_source_dir"] = value.strip()
-
-    @property
-    def video_destination_dir(self) -> str:
-        value = str(self.data.get("video_destination_dir", "")).strip()
-        return value or str(Path.home() / "Videos" / ".DEV")
-
-    @video_destination_dir.setter
-    def video_destination_dir(self, value: str) -> None:
-        self.data["video_destination_dir"] = value.strip()
-
-    @property
-    def remove_empty_video_folders(self) -> bool:
-        return bool(self.data.get("remove_empty_video_folders", True))
-
-    @remove_empty_video_folders.setter
-    def remove_empty_video_folders(self, value: bool) -> None:
-        self.data["remove_empty_video_folders"] = bool(value)
+    @show_export_videos_button.setter
+    def show_export_videos_button(self, value: bool) -> None:
+        self.data["show_export_videos_button"] = bool(value)
 
     @property
     def clipboard_scan_enabled(self) -> bool:

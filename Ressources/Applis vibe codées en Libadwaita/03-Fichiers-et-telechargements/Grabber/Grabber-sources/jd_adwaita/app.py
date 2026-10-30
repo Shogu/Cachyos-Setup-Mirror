@@ -108,9 +108,6 @@ class MainWindow(Adw.ApplicationWindow):
                     self._download_file_overrides[int(raw_id)] = Path(str(raw_path)).expanduser()
                 except (TypeError, ValueError):
                     continue
-        self._auto_move_in_progress: set[int] = set()
-        self._auto_moved_download_ids: set[int] = set()
-        self._download_snapshot_initialized = False
 
         build_window(self)
         self._sync_grabber_option_switches()
@@ -1025,77 +1022,60 @@ class MainWindow(Adw.ApplicationWindow):
 
         self._run_thread(work, done, self._show_error)
 
-    def _schedule_auto_video_moves(self, items: list[dict[str, Any]]) -> None:
-        """Move only newly completed video files that belong to the configured source."""
-        extensions = {".mp4", ".mkv", ".avi", ".mov", ".flv", ".wmv", ".mpeg", ".mpg", ".webm", ".m4v", ".ogv"}
-        source = Path(self.config.video_source_dir).expanduser().resolve()
-        destination = Path(self.config.video_destination_dir).expanduser().resolve()
-        if not source.is_dir() or source == destination or source in destination.parents:
-            return
-        for item in items:
+    def _export_videos(self, *_args: Any) -> None:
+        """Manually move completed video downloads to ~/Videos/.DEV."""
+        video_extensions = {
+            ".mp4", ".mkv", ".avi", ".mov", ".flv", ".wmv",
+            ".mpeg", ".mpg", ".webm", ".m4v", ".ogv",
+        }
+        candidates: list[tuple[int, Path]] = []
+        for item in self._download_items:
+            if not (bool(item.get("finished")) or status_text(item) == "Terminé"):
+                continue
             try:
                 link_id = int(item.get("uuid"))
             except (TypeError, ValueError):
                 continue
-            is_finished = bool(item.get("finished")) or status_text(item) == "Terminé"
-            if not is_finished:
-                # A reset/retry can complete again under the same link UUID.
-                self._auto_moved_download_ids.discard(link_id)
-                self._download_file_overrides.pop(link_id, None)
-                moved_paths = self.config.data.get("moved_video_paths", {})
-                if isinstance(moved_paths, dict):
-                    moved_paths.pop(str(link_id), None)
-                continue
-            if link_id in self._auto_moved_download_ids or link_id in self._auto_move_in_progress:
-                continue
             path = self._download_file_path(item)
-            if path is None or not path.is_file() or path.suffix.lower() not in extensions:
-                continue
-            try:
-                resolved = path.resolve()
-                resolved.relative_to(source)
-            except (OSError, ValueError):
-                continue
-            self._auto_move_in_progress.add(link_id)
-
-            def work(path: Path = resolved) -> Path:
-                destination.mkdir(parents=True, exist_ok=True)
-                target = destination / path.name
+            if path is not None and path.is_file() and path.suffix.lower() in video_extensions:
+                candidates.append((link_id, path))
+        if not candidates:
+            self.engine_hint.set_text("Aucune vidéo terminée à exporter")
+            return
+        destination = Path.home() / "Videos" / ".DEV"
+        def work() -> list[tuple[int, Path]]:
+            destination.mkdir(parents=True, exist_ok=True)
+            moved: list[tuple[int, Path]] = []
+            for link_id, source in candidates:
+                source = source.resolve()
+                if source.parent == destination.resolve():
+                    moved.append((link_id, source))
+                    continue
+                target = destination / source.name
                 if target.exists():
-                    stem, suffix, index = path.stem, path.suffix, 2
+                    stem, suffix, index = source.stem, source.suffix, 2
                     while (destination / f"{stem} ({index}){suffix}").exists():
                         index += 1
                     target = destination / f"{stem} ({index}){suffix}"
-                shutil.move(str(path), str(target))
-                if self.config.remove_empty_video_folders:
-                    parent = path.parent
-                    while parent != source and source in parent.parents:
-                        try:
-                            parent.rmdir()
-                        except OSError:
-                            break
-                        parent = parent.parent
-                return target
-
-            def done(target: Path, link_id: int = link_id) -> None:
-                self._auto_move_in_progress.discard(link_id)
-                self._auto_moved_download_ids.add(link_id)
+                shutil.move(str(source), str(target))
+                moved.append((link_id, target))
+            return moved
+        def done(moved: list[tuple[int, Path]]) -> None:
+            stored = self.config.data.setdefault("moved_video_paths", {})
+            for link_id, target in moved:
                 self._download_file_overrides[link_id] = target
-                moved_paths = self.config.data.setdefault("moved_video_paths", {})
-                if isinstance(moved_paths, dict):
-                    moved_paths[str(link_id)] = str(target)
-                    try:
-                        self.config.save()
-                    except OSError as exc:
-                        self._show_error(exc)
-                self.engine_hint.set_text(f"Vidéo déplacée vers {target.parent}")
-                self._refresh_now()
-
-            def failed(exc: Exception, link_id: int = link_id) -> None:
-                self._auto_move_in_progress.discard(link_id)
-                self.engine_hint.set_text(f"Déplacement automatique impossible : {exc}")
-
-            self._run_thread(work, done, failed, manage_busy=False)
+                if isinstance(stored, dict):
+                    stored[str(link_id)] = str(target)
+            try:
+                self.config.save()
+            except OSError as exc:
+                self._show_error(exc)
+            count = len(moved)
+            self.engine_hint.set_text(
+                f"{count} vidéo{'s' if count > 1 else ''} exportée{'s' if count > 1 else ''} vers {destination}"
+            )
+            self._refresh_now()
+        self._run_thread(work, done, self._show_error)
 
     def _remove_finished_downloads(self, *_args: Any) -> None:
         """Remove only completed queue entries; keep their local files."""
@@ -1564,6 +1544,16 @@ class MainWindow(Adw.ApplicationWindow):
             self._selected_download_ids.discard(download_id)
         if hasattr(self, "delete_selected_downloads_button"):
             self.delete_selected_downloads_button.set_sensitive(bool(self._selected_download_ids))
+        if hasattr(self, "export_videos_button"):
+            video_extensions = {".mp4", ".mkv", ".avi", ".mov", ".flv", ".wmv", ".mpeg", ".mpg", ".webm", ".m4v", ".ogv"}
+            has_exportable_video = any(
+                (bool(item.get("finished")) or status_text(item) == "Terminé")
+                and (path := self._download_file_path(item)) is not None
+                and path.is_file()
+                and path.suffix.lower() in video_extensions
+                for item in items
+            )
+            self.export_videos_button.set_sensitive(has_exportable_video)
 
     def _delete_selected_downloads(self, *_args: Any) -> None:
         selected = [
@@ -1844,18 +1834,6 @@ class MainWindow(Adw.ApplicationWindow):
         if hasattr(self, "delete_selected_downloads_button"):
             self.delete_selected_downloads_button.set_sensitive(bool(self._selected_download_ids))
         self._set_download_package_dirs(packages)
-        if not self._download_snapshot_initialized:
-            # Do not unexpectedly move videos that were already completed before
-            # this application session started; only move completions observed later.
-            for item in items:
-                if bool(item.get("finished")) or status_text(item) == "Terminé":
-                    try:
-                        self._auto_moved_download_ids.add(int(item.get("uuid")))
-                    except (TypeError, ValueError):
-                        pass
-            self._download_snapshot_initialized = True
-        elif self.config.auto_move_videos_enabled:
-            self._schedule_auto_video_moves(items)
         self._favicon_images = {}
         self._clear_list(self.download_list)
         for position, item in enumerate(items, start=1):
