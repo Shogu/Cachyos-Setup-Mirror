@@ -591,6 +591,13 @@ opencode --version
 opencode-perceptron
 ```
 
+**Client Android :** pour permettre au téléphone de joindre le service OpenCode, ouvrir le port TCP 49374 dans UFW, puis relancer l’appairage depuis le terminal :
+
+```fish
+sudo ufw allow 49374/tcp comment 'opencode service'
+opencode-pair
+```
+
 Raccourcis : `Ctrl+R` pour recharger, `Ctrl++` / `Ctrl+-` / `Ctrl+0` pour le zoom, `F11` pour le plein écran, `Ctrl+?` pour l’aide des raccourcis et `Ctrl+Q` pour quitter.
 
 Pour reconstruire le paquet depuis les sources présentes dans le dossier, utiliser `makepkg -si` (avec `fakeroot`) ou `./build.sh` selon les instructions du README du projet.
