@@ -68,10 +68,10 @@ grabber-appimage:
       APPRUN
       chmod +x "$APPDIR/AppRun"
       cp "$APPDIR/usr/share/icons/hicolor/512x512/apps/com.ogu.Grabber.png" "$APPDIR/com.ogu.Grabber.png"
-      curl --fail --location --retry 3 https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage --output appimagetool
+      curl --fail --location --retry 3 https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage --output appimagetool
       chmod +x appimagetool
-      curl --fail --location --retry 3 https://github.com/AppImage/type2-runtime/releases/download/continuous/runtime-x86_64 --output runtime
-      echo '1cc49bcf1e2ccd593c379adb17c9f85a36d619088296504de95b1d06215aebbf  runtime' | sha256sum --check -
+      curl --fail --location --retry 3 https://github.com/AppImage/type2-runtime/releases/download/20251108/runtime-x86_64 --output runtime
+      echo '2fca8b443c92510f1483a883f60061ad09b46b978b2631c807cd873a47ec260d  runtime' | sha256sum --check -
       chmod +x runtime
       APPIMAGE_EXTRACT_AND_RUN=1 ARCH=x86_64 ./appimagetool --runtime-file runtime --comp zstd "$APPDIR" Grabber-0.10.33-self-contained-x86_64.AppImage
       chmod +x Grabber-0.10.33-self-contained-x86_64.AppImage
