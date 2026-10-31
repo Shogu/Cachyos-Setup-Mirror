@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 160" width="80" height="160">
+  <defs>
+    <linearGradient id="steamGradA" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#FDFEFE" stop-opacity="0.0" />
+      <stop offset="25%" stop-color="#F9EBEA" stop-opacity="0.45" />
+      <stop offset="65%" stop-color="#FEF9E7" stop-opacity="0.25" />
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.0" />
+    </linearGradient>
+  </defs>
+  <path d="M 40,155 C 25,125 50,95 30,60 C 15,35 35,15 25,5" fill="none" stroke="url(#steamGradA)" stroke-width="14" stroke-linecap="round" />
+</svg>
