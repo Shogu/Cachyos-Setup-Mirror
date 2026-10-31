@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800">
+  <defs>
+    <linearGradient id="facet-main-light" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FBF8F3" stop-opacity="0.98"/>
+      <stop offset="100%" stop-color="#EFE9DC" stop-opacity="0.98"/>
+    </linearGradient>
+    <linearGradient id="facet-shadow-soft" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E5DCCE" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#CFC4B2" stop-opacity="0.95"/>
+    </linearGradient>
+    <linearGradient id="facet-shadow-deep" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#BFB29E" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#9E907B" stop-opacity="0.9"/>
+    </linearGradient>
+    <linearGradient id="wing-accent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FAF4EB" stop-opacity="0.98"/>
+      <stop offset="100%" stop-color="#D9CCBA" stop-opacity="0.98"/>
+    </linearGradient>
+    <style>
+      .fold-line-main {
+        fill: none;
+        stroke: #4A4035;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        opacity: 0.9;
+      }
+      .fold-line-subtle {
+        fill: none;
+        stroke: #736758;
+        stroke-width: 1.3;
+        stroke-dasharray: 5 4;
+        stroke-linecap: round;
+        opacity: 0.7;
+      }
+      .fold-crease-inner {
+        fill: none;
+        stroke: #A89B88;
+        stroke-width: 1.2;
+        opacity: 0.6;
+      }
+      .paper-facet {
+        transition: all 0.3s ease;
+      }
+    </style>
+  </defs>
+
+  <!-- Queue arrière -->
+  <polygon class="paper-facet" points="400,380 580,480 470,420" fill="url(#facet-shadow-deep)"/>
+
+  <!-- Corps et structure centrale -->
+  <polygon class="paper-facet" points="400,340 310,400 400,530" fill="url(#facet-shadow-soft)"/>
+  <polygon class="paper-facet" points="400,340 400,530 470,420" fill="url(#facet-main-light)"/>
+
+  <polygon class="paper-facet" points="400,340 350,230 400,200" fill="url(#facet-shadow-soft)"/>
+  <polygon class="paper-facet" points="400,340 400,200 430,240" fill="url(#facet-main-light)"/>
+
+  <!-- Cou et tête -->
+  <polygon class="paper-facet" points="400,340 330,160 350,230" fill="url(#facet-main-light)"/>
+  <polygon class="paper-facet" points="330,160 350,230 290,260" fill="url(#facet-shadow-soft)"/>
+
+  <polygon class="paper-facet" points="330,160 270,185 305,200" fill="url(#facet-shadow-deep)"/>
+  <polygon class="paper-facet" points="330,160 305,200 320,215" fill="url(#facet-main-light)"/>
+
+  <!-- Aile avant principale -->
+  <polygon class="paper-facet" points="400,340 620,180 430,240" fill="url(#wing-accent)"/>
+  <polygon class="paper-facet" points="400,340 620,180 510,360" fill="url(#facet-main-light)"/>
+  <polygon class="paper-facet" points="400,340 510,360 470,420" fill="url(#facet-shadow-soft)"/>
+  <polygon class="paper-facet" points="510,360 620,180 560,290" fill="url(#facet-shadow-soft)"/>
+
+  <!-- Lignes de pliage et structure -->
+  <line x1="330" y1="160" x2="400" y2="530" class="fold-line-subtle"/>
+  <line x1="180" y1="260" x2="580" y2="480" class="fold-line-subtle"/>
+  <line x1="350" y1="230" x2="470" y2="420" class="fold-line-subtle"/>
+
+  <!-- Contour tête et cou -->
+  <polyline points="270,185 330,160 400,340" class="fold-line-main"/>
+  <polyline points="270,185 305,200 330,160" class="fold-line-main"/>
+  <line x1="305" y1="200" x2="320" y2="215" class="fold-line-main"/>
+  <line x1="330" y1="160" x2="350" y2="230" class="fold-line-main"/>
+
+  <!-- Contour aile avant -->
+  <polyline points="400,340 430,240 620,180 510,360 400,340" class="fold-line-main"/>
+  <line x1="620" y1="180" x2="400" y2="340" class="fold-line-main"/>
+  <line x1="620" y1="180" x2="560" y2="290" class="fold-crease-inner"/>
+  <line x1="560" y1="290" x2="510" y2="360" class="fold-line-main"/>
+
+  <!-- Contour corps inférieur -->
+  <polyline points="400,340 310,400 400,530 470,420 400,340" class="fold-line-main"/>
+  <line x1="400" y1="340" x2="400" y2="530" class="fold-line-main"/>
+
+  <!-- Contour aile arrière et queue -->
+  <polyline points="400,340 180,260 260,220" class="fold-line-main"/>
+  <line x1="180" y1="260" x2="310" y2="400" class="fold-line-main"/>
+  <polyline points="470,420 580,480 400,380" class="fold-line-main"/>
+
+  <!-- Repères graphiques -->
+  <circle cx="620" cy="180" r="3" fill="#4A4035" opacity="0.8"/>
+  <circle cx="180" cy="260" r="3" fill="#4A4035" opacity="0.8"/>
+  <circle cx="270" cy="185" r="2.5" fill="#4A4035" opacity="0.8"/>
+  <circle cx="400" cy="530" r="3" fill="#4A4035" opacity="0.8"/>
+</svg>
