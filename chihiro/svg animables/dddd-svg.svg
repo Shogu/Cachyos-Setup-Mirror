@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 200" width="80" height="200">
+  <defs>
+    <linearGradient id="dropGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.85" />
+      <stop offset="50%" stop-color="#A9CCE3" stop-opacity="0.40" />
+      <stop offset="100%" stop-color="#1B2631" stop-opacity="0.60" />
+    </linearGradient>
+    <linearGradient id="trailGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.0" />
+      <stop offset="30%" stop-color="#D4E6F1" stop-opacity="0.35" />
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.65" />
+    </linearGradient>
+  </defs>
+
+  <!-- Traînée de pluie fluide -->
+  <path d="M 38,15 Q 41,60 36,110 T 40,160" fill="none" stroke="url(#trailGrad)" stroke-width="2.5" stroke-linecap="round" />
+
+  <!-- Goutte principale lourde en bas -->
+  <path d="M 40,158 C 33,158 30,165 30,172 C 30,180 34,186 40,186 C 46,186 50,180 50,172 C 50,165 47,158 40,158 Z" fill="url(#dropGrad)" />
+  <ellipse cx="37" cy="168" rx="2.5" ry="5" fill="#FFFFFF" opacity="0.9" transform="rotate(-20 37 168)" />
+
+  <!-- Micro-gouttelettes résiduelles dispersées -->
+  <circle cx="38" cy="45" r="2" fill="url(#dropGrad)" />
+  <circle cx="41" cy="85" r="2.5" fill="url(#dropGrad)" />
+  <circle cx="36" cy="125" r="1.8" fill="url(#dropGrad)" />
+</svg>

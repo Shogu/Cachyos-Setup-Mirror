@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 80" width="60" height="80">
+  <defs>
+    <linearGradient id="noteGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F9EBEA" stop-opacity="0.9" />
+      <stop offset="50%" stop-color="#F39C12" stop-opacity="0.85" />
+      <stop offset="100%" stop-color="#A04000" stop-opacity="0.8" />
+    </linearGradient>
+  </defs>
+  <!-- Ovale de la note inclinée + Hampe + Fanion fluide -->
+  <g transform="rotate(-12 30 40)">
+    <ellipse cx="22" cy="58" rx="10" ry="7" fill="url(#noteGrad)" transform="rotate(-25 22 58)" />
+    <rect x="29" y="18" width="3.5" height="42" rx="1.5" fill="url(#noteGrad)" />
+    <path d="M 31,18 C 42,22 48,32 50,42 C 45,34 38,30 31,28 Z" fill="url(#noteGrad)" />
+  </g>
+</svg>

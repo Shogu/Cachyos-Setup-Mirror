@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 110" width="70" height="110">
+  <defs>
+    <linearGradient id="clefGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FEF9E7" stop-opacity="0.95" />
+      <stop offset="50%" stop-color="#F39C12" stop-opacity="0.85" />
+      <stop offset="100%" stop-color="#D35400" stop-opacity="0.75" />
+    </linearGradient>
+  </defs>
+  <path d="M 38,92 C 34,92 30,89 30,85 C 30,80 35,76 40,79 C 45,82 42,90 37,90 
+           C 37,70 48,45 38,18 C 35,10 28,15 32,28 C 36,42 12,50 18,72 
+           C 23,90 48,88 52,70 C 55,54 38,45 28,55 C 22,61 28,70 34,66 
+           C 38,63 35,55 28,57" fill="none" stroke="url(#clefGrad)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" />
+  <circle cx="31" cy="98" r="3.5" fill="url(#clefGrad)" />
+</svg>

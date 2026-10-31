@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <radialGradient id="starGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="1" />
+      <stop offset="35%" stop-color="#FCF3CF" stop-opacity="0.7" />
+      <stop offset="70%" stop-color="#F1C40F" stop-opacity="0.2" />
+      <stop offset="100%" stop-color="#F39C12" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <!-- Étoile principale 4 branches style peinture Ghibli -->
+  <g transform="translate(60, 60)">
+    <circle cx="0" cy="0" r="35" fill="url(#starGlow)" />
+    <path d="M 0,-28 C 1,-10 10,-1 28,0 C 10,1 1,10 0,28 C -1,10 -10,1 -28,0 C -10,-1 -1,-10 0,-28 Z" fill="#FFFDE7" />
+  </g>
+
+  <!-- Petite étoile satellite A -->
+  <g transform="translate(20, 25)">
+    <circle cx="0" cy="0" r="16" fill="url(#starGlow)" />
+    <path d="M 0,-14 C 0.5,-5 5,-0.5 14,0 C 5,0.5 0.5,5 0,14 C -0.5,5 -5,0.5 -14,0 C -5,-0.5 -0.5,-5 0,-14 Z" fill="#FFFFFF" />
+  </g>
+
+  <!-- Petite étoile satellite B -->
+  <g transform="translate(95, 85)">
+    <circle cx="0" cy="0" r="20" fill="url(#starGlow)" />
+    <path d="M 0,-16 C 0.6,-6 6,-0.6 16,0 C 6,0.6 0.6,6 0,16 C -0.6,6 -6,0.6 -16,0 C -6,-0.6 -0.6,-6 0,-16 Z" fill="#FFFDE7" />
+  </g>
+</svg>
