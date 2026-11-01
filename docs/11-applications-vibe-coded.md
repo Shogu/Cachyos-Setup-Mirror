@@ -589,6 +589,8 @@ Fonctions d’interface :
 
 **Dépendances système :** `python`, `python-gobject`, `gtk4`, `libadwaita` et `webkitgtk-6.0`. Le binaire `opencode` est une dépendance fonctionnelle obligatoire, mais reste installé séparément.
 
+Pour ouvrir directement une session OpenCode depuis Nautilus, le dépôt fournit aussi l’extension contextuelle **« Ouvrir dans OpenCode »** : clic droit sur un dossier ou dans une zone vide pour lancer `opencode` dans le répertoire correspondant avec Ptyxis. Son installation manuelle (dépendance `nautilus-python`, copie de `opencode_open.py` dans `~/.local/share/nautilus-python/extensions/`, puis rechargement de Nautilus) est détaillée dans [9.2 — Ouvrir dans OpenCode](09-nautilus-workflow.md#92--ouvrir-dans-opencode). Le script source se trouve dans [`Ressources/Nautilus extensions/OpenCode/`](../Ressources/Nautilus%20extensions/OpenCode/).
+
 **Paquet fourni :** `opencode-perceptron-0.4.0-1-any.pkg.tar.zst`.
 
 Depuis la racine du dépôt, installer le paquet :
