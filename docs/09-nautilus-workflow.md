@@ -48,11 +48,61 @@ nautilus -q
 nautilus
 ```
 
-### Extension Nautilus — « Ouvrir dans Perceptron »
+### Extension Nautilus — « Ouvrir dans OpenCode »
 
-Le paquet **`perceptron-nautilus`** installe également une extension Nautilus **« Ouvrir dans Perceptron »**. Elle permet d’ouvrir le dossier sélectionné directement dans Perceptron depuis le menu contextuel. L’extension est installée et mise à jour avec le paquet : aucune copie manuelle de script ni dépendance `nautilus-python` à installer séparément.
+L’extension ajoute **« Ouvrir dans OpenCode »** au menu contextuel de Nautilus :
 
-Voir [11.33 — Perceptron](11-applications-vibe-coded.md#1133--perceptron--interface-gnome-pour-opencode) pour l’installation du paquet.
+- Clic droit sur un **dossier** : ouvre une session `opencode` dans ce dossier.
+- Clic droit dans une **zone vide** : ouvre une session dans le dossier actuellement affiché.
+
+Au clic, elle lance :
+
+```bash
+ptyxis -d <dossier> -x opencode
+```
+
+#### Emplacement du script
+
+Déposer `opencode_open.py` dans :
+
+```text
+~/.local/share/nautilus-python/extensions/
+```
+
+Dans le dépôt, conserver le script dans le sous-dossier :
+
+```text
+Ressources/Nautilus extensions/OpenCode/opencode_open.py
+```
+
+#### Installation
+
+Installer la dépendance une seule fois :
+
+```fish
+sudo pacman -S nautilus-python
+```
+
+Créer le dossier d’extensions utilisateur et y copier le script depuis la racine du dépôt :
+
+```fish
+mkdir -p ~/.local/share/nautilus-python/extensions
+cp "Ressources/Nautilus extensions/OpenCode/opencode_open.py" ~/.local/share/nautilus-python/extensions/
+nautilus -q
+```
+
+#### Compatibilité et comportement
+
+- API ciblée : **Nautilus 51 / nautilus-python 4.x**.
+- Utilise `get_file_items(files)` et `get_background_items(current_folder)`, sans ancien argument `window`.
+- L’entrée n’apparaît que lorsqu’un seul dossier est sélectionné.
+
+#### Désinstallation
+
+```fish
+rm ~/.local/share/nautilus-python/extensions/opencode_open.py
+nautilus -q
+```
 
 Pour l'intégration du terminal Ptyxis dans Nautilus (clic droit → ouvrir un terminal), voir [Shell & terminal](12-shell-terminal.md#121--intégrer-ptyxis-à-nautilus-et-aux-outils-cachyos).
 
