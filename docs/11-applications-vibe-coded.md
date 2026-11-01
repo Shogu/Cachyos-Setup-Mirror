@@ -589,14 +589,19 @@ Fonctions d’interface :
 
 **Dépendances système :** `python`, `python-gobject`, `gtk4`, `libadwaita` et `webkitgtk-6.0`. Le binaire `opencode` est une dépendance fonctionnelle obligatoire, mais reste installé séparément.
 
-Pour ouvrir directement une session OpenCode depuis Nautilus, le dépôt fournit aussi l’extension contextuelle **« Ouvrir dans OpenCode »** : clic droit sur un dossier ou dans une zone vide pour lancer `opencode` dans le répertoire correspondant avec Ptyxis. Son installation manuelle (dépendance `nautilus-python`, copie de `opencode_open.py` dans `~/.local/share/nautilus-python/extensions/`, puis rechargement de Nautilus) est détaillée dans [9.2 — Ouvrir dans OpenCode](09-nautilus-workflow.md#92--ouvrir-dans-opencode). Le script source se trouve dans [`Ressources/Nautilus extensions/OpenCode/`](../Ressources/Nautilus%20extensions/OpenCode/).
+Le paquet **`perceptron-nautilus`** installe également l’extension Nautilus **« Ouvrir dans Perceptron »** : un clic droit sur un dossier permet de l’ouvrir directement dans l’application. L’extension est intégrée au paquet ; elle ne nécessite ni script séparé ni installation manuelle de `nautilus-python`.
 
-**Paquet fourni :** `opencode-perceptron-0.4.0-1-any.pkg.tar.zst`.
+Le paquet Arch/CachyOS **`perceptron-nautilus`** remplace l’ancien paquet `opencode-perceptron`. Le nouveau paquet sera ajouté manuellement dans [le dossier Perceptron](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/05-Systeme-et-utilitaires/Perceptron/).
 
 Depuis la racine du dépôt, installer le paquet :
 
 ```fish
-sudo pacman -U "Ressources/Applis vibe codées en Libadwaita/05-Systeme-et-utilitaires/Perceptron-opencode/opencode-perceptron-0.4.0-1-any.pkg.tar.zst"
+set paquets_perceptron (find "Ressources/Applis vibe codées en Libadwaita/05-Systeme-et-utilitaires/Perceptron" -maxdepth 1 -type f -name 'perceptron-nautilus*.pkg.tar.zst')
+if test (count $paquets_perceptron) -eq 1
+    sudo pacman -U "$paquets_perceptron[1]"
+else
+    echo 'Ajouter un seul paquet perceptron-nautilus*.pkg.tar.zst dans le dossier Perceptron.'
+end
 ```
 
 Vérifier qu’OpenCode est disponible, puis lancer Perceptron depuis le menu GNOME ou avec :
@@ -620,7 +625,7 @@ Pour reconstruire le paquet depuis les sources présentes dans le dossier, utili
 **Désinstallation :**
 
 ```fish
-sudo pacman -Rns opencode-perceptron
+sudo pacman -Rns perceptron-nautilus
 ```
 
 ---
