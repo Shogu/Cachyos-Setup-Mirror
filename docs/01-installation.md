@@ -1,0 +1,75 @@
+# 1 — Installation & préparation du setup
+
+[Accueil](../README.md) · [Suivant](02-system-cleanup.md)
+
+> **Dans ce chapitre :** premiers réglages après l'installation (Fish, CachyOS Hello) et configuration du gestionnaire de paquets (Paru/AUR).
+
+- [1.1 Premiers réglages](#11--premiers-réglages)
+- [1.2 Installation de paquets](#12--installation-de-paquets)
+
+## 1.1 — Premiers réglages
+
+### Préparer Fish
+
+Installer dès le début le fichier **`config.fish` du dépôt** dans `~/.config/fish/config.fish` afin de disposer des fonctions personnelles, notamment celles utilisées pour l'édition avec `sudoedit`.
+
+```fish
+mkdir -p ~/.config/fish
+```
+
+Copier le fichier du dépôt à cet emplacement, puis le charger :
+
+```fish
+source ~/.config/fish/config.fish
+```
+
+Pour les functions : voir [la configuration complète de Fish et des éditeurs](12-shell-terminal.md#122--fish-gnome-text-editor-et-micro).
+
+
+### Réglages initiaux dans CachyOS Hello
+
+Dans **CachyOS Hello** :
+
+- Désactiver le Bluetooth
+- Ne pas activer l'icône de mise à jour CachyOS dans la zone de notification.
+- Classer les miroirs.
+- Ne pas installer PSD
+
+## 1.2 — Installation de paquets
+
+```fish
+paru -Syu libre-menu-editor
+```
+
+Le lecteur audio **Semitone**, fork de Gapless compilé avec Claude, remplace désormais le paquet `gapless` : son paquet Arch sera ajouté manuellement dans [son dossier de ressources](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/01-Multimedia/Semitone/). Voir [11.29 — Semitone](11-applications-vibe-coded.md#1129--semitone) pour l’installation. Pour les applications GTK4/libadwaita spécifiques au setup, notamment **Snapper GTK4** et le build **dconf-editor GTK4**, voir [10 — Logiciels](10-logiciels.md) et [11 — Applications Vibe Coded](11-applications-vibe-coded.md).
+
+### Remplacements de paquets
+
+Remplacer la visionneuse d’images GNOME Loupe par **Polaroid**, son fork GTK4/libadwaita doté d’un éditeur d’annotations. Ajouter d’abord le paquet local au dépôt dans `Ressources/Applis vibe codées en Libadwaita/01-Multimedia/Polaroid/`, puis suivre les [instructions d’installation de Polaroid](11-applications-vibe-coded.md#1132--polaroid). La désinstallation de `loupe` est indiquée dans cette procédure.
+
+
+Remplacer `jack` (AUR) par `jack2` des dépôts & installer `geocode-glib`
+
+```fish
+sudo pacman -Syu jack2 geocode-glib
+```
+
+
+Remplacement de `sudo` par `sudo-rs` avec le paquet CachyOS et la réutilisation de la configuration existante. 
+
+```fish
+sudo pacman -Syu sudo-rs
+```
+
+
+### Mesurer le volume installé
+
+
+```fish
+pacman -Q | wc -l
+expac -H M '%m' | awk '{sum += $1} END {printf "%.2f GiB\n", sum/1024}'
+```
+---
+Ou function Fish `pacstats`
+
+[Accueil](../README.md) · [Suivant](02-system-cleanup.md)
