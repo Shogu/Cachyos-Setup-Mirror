@@ -393,6 +393,40 @@ sudo cp "Ressources/Logiciels/Players/Showtime/window.py" (pacman -Ql showtime |
 
 Les applications personnelles développées avec l'aide du Vibe Coding sont documentées séparément afin de conserver ici uniquement les logiciels et réglages généraux : [11 — Applications Vibe Coded](11-applications-vibe-coded.md).
 
+## 10.8 — OpenCode
+
+OpenCode est l’assistant de développement utilisé depuis le terminal ou via l’interface GNOME **Perceptron**. Après son installation, vérifier sa configuration et les intégrations suivantes.
+
+### Fournisseur principal et fournisseurs de secours
+
+- **Albert Dinum API** : penser à activer/configurer l’API dans OpenCode.
+- **Groq**, **Gemini** et **OpenRouter** : conserver ces fournisseurs comme solutions de secours disponibles, sans bascule automatique. Le changement de fournisseur doit rester une action volontaire : OpenCode ne doit pas basculer de lui-même vers un autre modèle en cas d’échec.
+
+### GitLab : CLI et MCP
+
+Le paquet système `glab`, installé avec les autres outils, fournit l’interface en ligne de commande officielle de GitLab. Il sert à OpenCode pour accéder aux fonctions GitLab et gérer le dépôt : projets, issues, merge requests, etc.
+
+Authentifier d’abord `glab` avec le compte GitLab :
+
+```fish
+glab auth login
+glab auth status
+```
+
+Configurer ensuite le **MCP GitLab** dans OpenCode en s’appuyant sur cette installation et cette authentification `glab`. Le MCP doit permettre à OpenCode d’interagir avec le dépôt GitLab.
+
+### Whisper : transcription audio avec Groq
+
+La fonction **Whisper** est un script local Bash ou Python qui envoie le fichier audio à l’API de transcription Groq, compatible OpenAI :
+
+```text
+POST https://api.groq.com/openai/v1/audio/transcriptions
+```
+
+Le script doit lire la clé API depuis la variable d’environnement secrète `GROQ_API_KEY`. Ne jamais inscrire la clé en dur dans le script, dans la configuration versionnée ou dans le dépôt.
+
+Le script appelle l’endpoint de transcription avec la clé transmise dans l’en-tête d’authentification. La fonction Whisper d’OpenCode s’appuie sur ce script pour transcrire les fichiers audio.
+
 ## 10.7 — Claude Code
 
 [**Claude Code**](https://code.claude.com/docs/en/quickstart) est l’assistant de programmation Anthropic en terminal. Utiliser l’installateur natif officiel pour Linux : il ne nécessite pas Node.js et gère ses mises à jour automatiquement. Cette installation est indépendante de Shelly et des paquets AUR.
