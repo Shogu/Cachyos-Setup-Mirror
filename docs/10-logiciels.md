@@ -73,6 +73,7 @@ Voir [11.32 — Polaroid](11-applications-vibe-coded.md#1132--polaroid) pour les
 - `powertop` : diagnostic de consommation énergétique.
 - `profile-cleaner` : nettoyage des profils navigateurs.
 - **Perceptron** : installer [l’interface GNOME native pour OpenCode](11-applications-vibe-coded.md#1133--perceptron--interface-gnome-pour-opencode). OpenCode doit être installé séparément et accessible dans le \`PATH\`.
+- `glab` : interface en ligne de commande officielle de GitLab, utilisée par **OpenCode** pour interagir avec GitLab et pour la gestion du dépôt (projets, issues, merge requests, etc.). À installer avec les autres outils système.
 - **Vidange** : application GTK4/libadwaita qui centralise le nettoyage des orphelins, caches pacman/AUR, journaux systemd, miniatures, corbeille, caches de développement et navigateurs. Elle remplace la fonction Fish `clean` et le paquet AUR `archclean`. Le paquet local sera ajouté manuellement dans [son dossier](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/05-Systeme-et-utilitaires/Vidange/). Voir [11.28 — Vidange](11-applications-vibe-coded.md#1128--vidange).
 - `seahorse` : gestion du trousseau de mots de passe.
 - [**Extension Manager**](#1013--extension-manager) : version personnalisée avec classement des extensions GNOME par catégorie et icône Ogu ; paquet local `extension-manager-ogu`.
@@ -95,7 +96,7 @@ Voir [11.32 — Polaroid](11-applications-vibe-coded.md#1132--polaroid) pour les
 Commande des paquets des dépôts (les applications maison se trouvent ci-dessous) :
 
 ```
-sudo pacman -Syu powertop gst-thumbnailers profile-cleaner seahorse fragments papers nicotine+ resources xournal++ gnome-calendar duf trash-cli libgda6 shelly inotify-tools libnotify showtime sushi
+sudo pacman -Syu powertop gst-thumbnailers profile-cleaner seahorse fragments papers nicotine+ resources xournal++ gnome-calendar duf trash-cli libgda6 shelly inotify-tools libnotify showtime sushi glab
 ```
 
 ### 10.1.1 — dconf-editor GTK4
