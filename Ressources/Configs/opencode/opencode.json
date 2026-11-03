@@ -1,0 +1,147 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "albert/deepseek-v4-flash-0731",
+  "providers": {
+    "albert": {
+      "name": "Albert API (DINUM)",
+      "package": "@opencode/ai/providers/openai-compatible",
+      "settings": {
+        "baseURL": "https://albert.api.etalab.gouv.fr/v1",
+        "apiKey": "{file:secrets/albert.key}"
+      },
+      "compatibility": {
+        "maxTokensField": "max_tokens"
+      },
+      "models": {
+        "deepseek-v4-flash-0731": {
+          "name": "DeepSeek V4 Flash (Albert)",
+          "capabilities": {
+            "tools": true,
+            "reasoning": {
+              "supported": true,
+              "effort": [
+                "low",
+                "medium",
+                "high"
+              ]
+            },
+            "input": [
+              "text"
+            ],
+            "output": [
+              "text"
+            ]
+          },
+          "limit": {
+            "context": 131072,
+            "output": 32768
+          },
+          "body": {
+            "tool_choice": "auto",
+            "chat_template_kwargs": {
+              "thinking": true
+            }
+          }
+        },
+        "gpt-oss-120b": {
+          "name": "GPT-OSS 120B (Albert)",
+          "capabilities": {
+            "tools": true,
+            "reasoning": {
+              "supported": true
+            },
+            "input": [
+              "text"
+            ],
+            "output": [
+              "text"
+            ]
+          },
+          "limit": {
+            "context": 131072,
+            "output": 32768
+          }
+        },
+        "gemma-4-31b-it": {
+          "name": "Gemma 4 31B IT (Albert)",
+          "capabilities": {
+            "tools": true,
+            "reasoning": {
+              "supported": true
+            },
+            "input": [
+              "text",
+              "image"
+            ],
+            "output": [
+              "text"
+            ]
+          },
+          "limit": {
+            "context": 131072,
+            "output": 32768
+          }
+        },
+        "ministral-3-8b-instruct-2512": {
+          "name": "Ministral 3 8B (Albert)",
+          "capabilities": {
+            "tools": true,
+            "input": [
+              "text",
+              "image"
+            ],
+            "output": [
+              "text"
+            ]
+          },
+          "limit": {
+            "context": 262144,
+            "output": 32768
+          }
+        },
+        "mistral-small-3-2-24b-instruct-2506": {
+          "name": "Mistral Small 3.2 24B (Albert)",
+          "capabilities": {
+            "tools": true,
+            "input": [
+              "text",
+              "image"
+            ],
+            "output": [
+              "text"
+            ]
+          },
+          "limit": {
+            "context": 128000,
+            "output": 32768
+          }
+        }
+      }
+    }
+  },
+  "agents": {
+    "title": {
+      "model": "albert/gpt-oss-120b"
+    },
+    "summary": {
+      "model": "albert/gpt-oss-120b"
+    },
+    "compaction": {
+      "model": "albert/gpt-oss-120b"
+    }
+  },
+  "plugins": [
+    {
+      "package": "/home/ogu/.config/opencode/plugins/albert-fallback",
+      "options": {
+        "chain": [
+          "albert/deepseek-v4-flash-0731",
+          "albert/gpt-oss-120b",
+          "albert/gemma-4-31b-it",
+          "albert/mistral-small-3-2-24b-instruct-2506",
+          "albert/ministral-3-8b-instruct-2512"
+        ]
+      }
+    }
+  ]
+}

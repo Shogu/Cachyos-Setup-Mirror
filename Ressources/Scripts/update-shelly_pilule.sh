@@ -3,7 +3,15 @@
 # Vérifie d'abord que /boot (ESP) est monté : sans lui, une mise à jour du
 # noyau désynchronise le noyau de l'ESP et ses modules (mode d'urgence).
 
+# Témoin « mise à jour en cours » lu par la tuile de Focus & Boutons : créé au
+# début, supprimé quand le shell fish se termine (succès, erreur ou fenêtre fermée).
+flag="${XDG_RUNTIME_DIR:-/tmp}/update-shelly.running"
+
 ptyxis --maximize -- fish -c "
+touch $flag
+function __update_cleanup --on-event fish_exit
+    rm -f $flag
+end
 set_color 3584e4
 echo '╔══════════════════════╗'
 echo '║  MISE À JOUR SHELLY  ║'

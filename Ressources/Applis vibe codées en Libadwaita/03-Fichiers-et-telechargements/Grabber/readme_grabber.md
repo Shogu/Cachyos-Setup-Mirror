@@ -20,11 +20,10 @@ deux onglets : Téléchargements et Grabber ;
 interface GTK4/libadwaita avec boutons d'action et boutons iconiques
 compacts ;
 
-boutons iconiques circulaires de taille fixe, notamment démarrer, arrêter,
-réglages, confidentialité, connexion et suppression ;
+barre d'en-tête allégée : lecture/pause et confidentialité, plus un menu
+principal (préférences, mise à jour JDownloader, import vidéo, à propos) ;
 
-indicateur de connexion sous forme d'icône circulaire libadwaita, bleu quand
-JDownloader est connecté, sans mention inutile de « moteur local connecté » ;
+boutons iconiques plats et circulaires, aux couleurs d'Adwaita ;
 
 application, processus Linux et classe de fenêtre nommés Grabber ;
 
