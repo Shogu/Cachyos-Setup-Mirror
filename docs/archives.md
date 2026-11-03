@@ -78,7 +78,6 @@ Dans le profil NetworkManager de la connexion Wi-Fi 5 GHz, le mémo propose :
 | Masque | `255.255.255.0` (`/24`) |
 | Passerelle | `192.168.31.1` |
 | DNS | `1.1.1.1`, `1.0.0.1` |
-| IPv6 | Désactivé dans cette variante |
 
 Adapter ces valeurs au réseau et vérifier que l'adresse n'est pas attribuée à un autre appareil.
 

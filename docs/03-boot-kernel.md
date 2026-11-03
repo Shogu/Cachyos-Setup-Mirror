@@ -126,7 +126,7 @@ sudoedit /etc/default/limine
 Puis saisir :
 
 ```ini
-LINUX_OPTIONS="pci=noaer module_blacklist=thunderbolt init_on_alloc=0 page_alloc.shuffle=0 drm_kms_helper.poll=0 systemd.tpm2_wait=false cryptomgr.notests efi=disable_early_pci_dma nomce nowatchdog no_timer_check noresume zswap.enabled=0 systemd.show_status=false quiet 8250.nr_uarts=0 ipv6.disable=1 amd_iommu=off vt.global_cursor_default=0 consoleblank=0 udev.log_level=0 loglevel=0 systemd.watchdog_sec=0 rootflags=subvol=/@,noatime,commit=60,noacl,compress=zstd:1"
+LINUX_OPTIONS="pci=noaer module_blacklist=thunderbolt init_on_alloc=0 page_alloc.shuffle=0 drm_kms_helper.poll=0 systemd.tpm2_wait=false cryptomgr.notests efi=disable_early_pci_dma nomce nowatchdog no_timer_check noresume zswap.enabled=0 systemd.show_status=false quiet 8250.nr_uarts=0 amd_iommu=off vt.global_cursor_default=0 consoleblank=0 udev.log_level=0 loglevel=0 systemd.watchdog_sec=0 rootflags=subvol=/@,noatime,commit=60,noacl,compress=zstd:1"
 ```
 
 **Puis gérer les options de la racine dès l'initramfs.** Si utilisation de l'option `rootflags` comme flag kernel, alors masquage de `systemd-remount-fs.service` et commentaire de la ligne `/` dans `/etc/fstab`.
@@ -185,10 +185,10 @@ noresume zswap.enabled=0 nvme_core.default_ps_max_latency_us=5500
 rcutree.enable_rcu_lazy=1 rcu_nocbs=0-7
 ```
 
-**Réseau et autres réglages :**
+**Autres réglages :**
 
 ```text
-ipv6.disable=1 amd_iommu=off
+amd_iommu=off
 ```
 
 ## 3.5 — Limiter l'activation automatique des TTY
