@@ -28,3 +28,5 @@ gnome-extensions enable copyous@boerdereinar.dev
 ```
 
 La copie préparée pour le dépôt ajoute `"51"` à `shell-version` dans `metadata.json`. Cette correction de métadonnées ne constitue pas un test fonctionnel : le comportement doit être vérifié dans une session GNOME 51.
+
+**Version :** 2.0.1-mc.11
