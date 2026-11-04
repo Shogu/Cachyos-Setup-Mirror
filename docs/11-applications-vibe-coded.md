@@ -11,7 +11,7 @@
 Les dossiers sont classés par usage principal. Les extensions GNOME Shell restent regroupées dans [Extensions GNOME](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/).
 
 - **01 — Multimédia** : Amplifaya, Decibel, Disquaire, Semitone, Polaroid.
-- **02 — Bureautique et rédaction** : Alexandrie, Grimoire, Grille, Dactylo.
+- **02 — Bureautique et rédaction** : Alexandrie, Grimoire, Grille, Dactylo, Maquette.
 - **03 — Fichiers et téléchargements** : Fret, Grabber, Nautilus Bookmark Icons, PLACES, Thumbnailer Sushi.
 - **04 — Bureau et personnalisation** : Extension Manager, Icônes UI.
 - **05 — Système et utilitaires** : dconf-editor GTK4, Fisherman, Pacto, Perceptron, Pusher, Radar, Sismographe, Snapper GTK4, systemd-gui, Vidange.
@@ -30,6 +30,7 @@ Les dossiers sont classés par usage principal. Les extensions GNOME Shell reste
 - [11.23 — Grille](#1123--grille)
 - [11.24 — Dactylo](#1124--dactylo)
 - [11.30 — Alexandrie](#1130--alexandrie)
+- [11.34 — Maquette](#1134--maquette)
 
 ## 03 — Fichiers et téléchargements
 

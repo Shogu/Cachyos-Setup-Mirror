@@ -23,6 +23,8 @@
 
 ### Bureautique
 
+- **Maquette** : éditeur et outil de mise en page PDF GTK4/libadwaita pour assembler, réordonner, recadrer, annoter par ajout de texte et préparer des brochures ou livrets. Voir [11.34 — Maquette](11-applications-vibe-coded.md#1134--maquette) ; paquet local dans [son dossier](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/02-Bureautique-et-redaction/Maquette/).
+
 - **Dactylo** : installer [le traitement de texte GTK4/libadwaita](11-applications-vibe-coded.md#1124--dactylo), désormais documenté en version 0.11.0, avec aperçu paginé en direct, OCR français pour images/PDF scannés, règle graduée et export PDF. Le dossier contient encore l’ancien paquet Samizdat, qui doit être reconstruit avant toute distribution sous le nom Dactylo ; voir [l’état du paquet](11-applications-vibe-coded.md#1124--dactylo).
 
 - **Grille** : [visionneuse simple de fichiers tableurs, codée avec Claude](11-applications-vibe-coded.md#1123--grille).
