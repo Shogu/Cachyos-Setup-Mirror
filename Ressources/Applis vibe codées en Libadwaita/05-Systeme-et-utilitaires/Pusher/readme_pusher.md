@@ -21,16 +21,84 @@ La fenêtre distingue désormais deux groupes :
 **Symptôme** : Pusher n'affichait qu'**un seul** fichier en attente, même quand il y en
 avait plusieurs, alors que le push envoyait bien **tout** sur GitLab.
 
-**Cause** : `pending_changes()` utilisait `git status -z` (séparateur NUL `\0`) mais lisait la
+**Cause** : `pending_changes()` utilisait `git status -z` (séparateur NUL `\\0`) mais lisait la
 sortie via `Gio.communicate_utf8()`, qui **tronque la chaîne au premier octet NUL**. Résultat :
 seul le premier fichier restait visible ; le push (`git add --all`) envoyait pourtant l'arbre complet.
 
 **Correctif** : nouvelle fonction `run_git_bytes()` qui lit la sortie **en octets bruts**
-(`Gio.Subprocess.communicate()`) et préserve les `\0`, puis `pending_changes()` découpe proprement
-sur `\0`. La liste affiche désormais **tous** les fichiers en attente.
+(`Gio.Subprocess.communicate()`) et préserve les `\\0`, puis `pending_changes()` découpe proprement
+sur `\\0`. La liste affiche désormais **tous** les fichiers en attente.
 
 ### 1.8.1 — précédente version
 Correctif initial du défaut NUL (premier build corrigé).
+
+## Afficher le diff des archives ZIP
+
+Git traite les fichiers `.zip` comme des binaires : il indique qu'une archive a changé, mais
+n'en montre pas le contenu du diff. Le mécanisme **textconv** permet de convertir temporairement
+chaque archive en manifeste texte (taille décompressée + nom des fichiers) pour rendre les
+changements lisibles. **L'archive stockée et envoyée par Git reste strictement inchangée** :
+seule la présentation du diff est modifiée.
+
+Cette configuration comporte trois éléments :
+
+### 1. Script local de conversion
+
+Créer `~/.local/bin/zipmanifest.py` sur la machine :
+
+```python
+#!/usr/bin/env python3
+import sys
+import zipfile
+
+with zipfile.ZipFile(sys.argv[1]) as archive:
+    for item in archive.infolist():
+        print(f"{item.file_size:>9}  {item.filename}")
+```
+
+Puis le rendre exécutable :
+
+```fish
+mkdir -p ~/.local/bin
+chmod +x ~/.local/bin/zipmanifest.py
+```
+
+Le script affiche, pour chaque entrée de l'archive, sa taille décompressée et son chemin.
+
+### 2. Déclarer les archives ZIP dans le dépôt
+
+Ajouter cette règle au fichier `.gitattributes` **à la racine du dépôt** (à créer s'il n'existe pas) :
+
+```gitattributes
+*.zip diff=zipdiff
+```
+
+Ce fichier est versionné : la règle est ainsi partagée avec les clones du dépôt. Elle associe
+les archives ZIP au driver de diff nommé `zipdiff`.
+
+### 3. Configurer le driver Git localement
+
+Sur chaque machine, configurer le chemin vers le script. La configuration est globale à l'utilisateur
+et le chemin utilise `$HOME` pour éviter de dépendre d'un nom de compte précis :
+
+```fish
+git config --global diff.zipdiff.textconv "$HOME/.local/bin/zipmanifest.py"
+git config --global diff.zipdiff.binary false
+```
+
+Le script et cette configuration restent locaux ; seul `.gitattributes` est commité dans le dépôt.
+
+### Vérifier
+
+Après avoir modifié et commité une archive ZIP, comparer deux révisions :
+
+```fish
+git diff HEAD~1 HEAD -- "chemin/vers/fichier.zip"
+```
+
+Git affiche alors les différences entre les manifestes : fichiers ajoutés ou supprimés, chemins
+modifiés et tailles différentes. Ce procédé ne compare pas le contenu interne des fichiers et ne
+remplace pas un outil de comparaison spécialisé pour les documents contenus dans l'archive.
 
 ## Rebuild depuis le `.zst` (pas de source amont)
 
