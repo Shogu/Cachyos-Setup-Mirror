@@ -130,6 +130,7 @@ Depuis la racine du dépôt, installer les paquets maison fournis ci-dessus :
 ```fish
 sudo pacman -U \
   "Ressources/Applis vibe codées en Libadwaita/02-Bureautique-et-redaction/Grimoire/grimoire-ogu-0.3.0-1-x86_64.pkg.tar.zst" \
+  "Ressources/Applis vibe codées en Libadwaita/02-Bureautique-et-redaction/Maquette/maquette-1.1.1-1-any.pkg.tar.zst" \
   "Ressources/Applis vibe codées en Libadwaita/03-Fichiers-et-telechargements/Fret/fret-0.2.0-1-any.pkg.tar.zst" \
   "Ressources/Applis vibe codées en Libadwaita/01-Multimedia/Decibel/decibel-49.6.1-1-any.pkg.tar.zst" \
   "Ressources/Applis vibe codées en Libadwaita/05-Systeme-et-utilitaires/systemd-gui/systemd-gui-0.4.0-5-any.pkg.tar.zst" \
