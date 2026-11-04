@@ -4,6 +4,12 @@ Extension GNOME Shell compatible avec **GNOME 50 et 51**. Elle gère **tout le c
 
 > **État de validation :** la version 1.7 n’a pas encore été testée en session GNOME Shell. La documentation décrit les fonctionnalités annoncées, sans prétendre à une validation en conditions réelles.
 
+> **Sources :** ce dépôt ne contient pas les sources brutes du widget ; seul `topbar-center-widgetogu.shell-extension.zip` porte le code. Pour l'extraire : `unzip <zip> -d <cible>` ; c'est le `notesFolder.js` de l'archive qui contient la limite des 80 caractères et la resynchronisation du `# H1` référencées plus bas.
+
+## Lecteur
+
+Le lecteur (Semitone, navigateur, lecteurs vidéo compatibles MPRIS…) est placé au-dessus des notes.
+
 ## Lecteur
 
 Le lecteur (Semitone, navigateur, lecteurs vidéo compatibles MPRIS…) est placé au-dessus des notes.
@@ -34,6 +40,14 @@ Les notes proviennent des dossiers épinglés dans Grimoire. Les cartes proposen
 Une seule catégorie est affichée à la fois : **Épinglées**, **Aujourd'hui**, **Hier**, **Cette semaine**, **Ce mois-ci** ou **Plus ancien**. Le filtre **Toutes** affiche la date sur chaque note.
 
 Pour renommer une catégorie, faire un clic droit sur sa puce, saisir le nouveau nom puis appuyer sur Entrée. Échap annule. Le renommage est effectué dans Grimoire, qui renomme le dossier correspondant.
+
+### Titre des notes et bouton **+**
+
+Le titre tapé dans le champ « Nouvelle note » devient le nom du fichier **et** le premier titre `# H1` du document. Depuis la révision du 4 novembre 2026 :
+
+- Le titre est tronqué à **80 caractères** pour produire un nom de fichier raisonnable ; le `# H1` du document est égal à ce nom tronqué.
+- Renommer une note met à jour le `# H1` quand celui-ci correspond exactement à l'ancien nom de fichier ; un titre écrit à la main dans le document n'est jamais écrasé.
+- Renommer une note vers un nom différent qui tronque au même nom des 80 caractères est silencieusement ignoré (pas d'erreur « le fichier existe déjà »).
 
 Raccourci : `Super+Alt+N`.
 
@@ -74,6 +88,12 @@ gnome-extensions prefs topbar-center-widget@ogu
 - Une seule catégorie de notes affichée à la fois ; le filtre **Toutes** conserve la date sur chaque note.
 - Renommage d’une catégorie par clic droit sur sa puce ; Grimoire renomme le dossier correspondant.
 - Ligne **Notifications** alignée à gauche.
+
+### Révision du 4 novembre 2026
+
+- Titre des notes tronqué à **80 caractères** à la création (bouton **+**) pour garder un nom de fichier raisonnable ; le `# H1` suit ce nom tronqué.
+- Renommer une note resynchronise le `# H1` du document quand il correspond à l'ancien nom ; un titre écrit à la main n'est jamais écrasé.
+- Renommer une note vers un nom différent mais tronqué au même nom des 80 caractères est ignoré au lieu de lever une erreur.
 
 ### 1.6
 

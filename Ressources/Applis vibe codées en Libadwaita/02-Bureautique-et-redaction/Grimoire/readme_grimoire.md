@@ -6,6 +6,8 @@
 
 Le paquet actuellement fourni dans le dépôt est `grimoire-ogu-0.3.0-1-x86_64.pkg.tar.zst`. Les mentions 0.1.x et 0.2.x plus bas correspondent à l’historique des évolutions et ne désignent pas le paquet actuel.
 
+Le dépôt documente **Grimoire 0.3.0**, fourni sous forme du paquet `grimoire-ogu-0.3.0-4-x86_64.pkg.tar.zst`. Les mentions 0.1.x et 0.2.x plus bas correspondent à l'historique des évolutions et ne désignent pas le paquet actuel. La révision `-4` part de la révision `-3` de `~/Projets` (celle installée sur la machine au 4 novembre) et lui ajoute les fonctions détaillées ci-dessous ; le `-1` du dépôt gitlab était antérieur à `-3` et ne doit pas être réinstallé.
+
 ### Version 0.3.0
 
 - **Actions sur la note**, à trois endroits (menu principal, section « Cette note » ; clic droit sur un onglet ; clic droit dans la liste des documents) : Renommer, Dupliquer, Déplacer vers, Afficher dans Fichiers, Épingler dans le widget, Créer un rendez-vous, Supprimer.
@@ -13,6 +15,17 @@ Le paquet actuellement fourni dans le dépôt est `grimoire-ogu-0.3.0-1-x86_64.p
 - **Renommer un dossier épinglé** : crayon à côté du dossier dans le sélecteur. Les onglets ouverts, les dossiers épinglés et les réglages du widget suivent le nouveau nom.
 - **Recherche GNOME** : les notes correspondantes des dossiers épinglés apparaissent dans la vue d’ensemble et s’ouvrent dans Grimoire.
 - Icône violette à toutes les tailles, dock compris.
+
+- **Supprimer** : la note disparaît immédiatement ; « Annuler » est disponible pendant 5 s, ensuite elle part à la corbeille.
+- **Renommer un dossier épinglé** : crayon à côté du dossier dans le sélecteur de dossiers. Les onglets ouverts, les dossiers épinglés et les réglages du widget suivent le nouveau nom.
+- **Recherche GNOME** : taper un mot dans la vue d'ensemble affiche les notes des dossiers épinglés qui le contiennent ; un clic ouvre la note dans Grimoire.
+- Icône violette à toutes les tailles (dock compris).
+
+### Révision 0.3.0 du 4 novembre 2026
+
+- **Double-clic sur un onglet** : ouvre le renommage de la note (F2 et le clic droit reste réservés au renommage). Le premier clic active l'onglet, le second ouvre le champ de renommage ; on renomme donc la note affichée dans l'onglet actif, jamais une autre.
+- **Titre et nom de fichier synchronisés** : renommer une note met à jour son premier titre `# H1` quand ce titre correspond exactement à l'ancien nom de fichier (un titre écrit à la main, différent du nom, n'est jamais écrasé). Un bloc de code en tout début de fichier protège le premier `#` d'une réécriture, de même qu'un titre de niveau 2 ou plus.
+- Grimoire ne plafonne pas les noms saisis au renommage ; la limite de 80 caractères est appliquée à la création de note, côté widget (voir son README).
 
 ## Installer sur Arch ou CachyOS
 
