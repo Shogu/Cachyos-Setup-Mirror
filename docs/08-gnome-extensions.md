@@ -46,13 +46,13 @@ Extensions apportant des fonctions d'interface ou de système considérées comm
 ## 8.3 — Productivité
 
 - [Caffeine](https://extensions.gnome.org/extension/517/caffeine/)
-- **Copyous — fork corrigé pour GNOME 51** : ajoute un **mode cumul** du multi-copiage, activable/désactivable par un toggle. L’archive fournie est à placer dans `Ressources/Applis vibe codées en Libadwaita/Extensions GNOME/Copyous/copyous-gnome51.zip` (fichier à ajouter manuellement au dépôt). Installer la dépendance puis l’extension :
+- **Copyous — fork corrigé pour GNOME 51** : ajoute le **Multi-Paste Picker**, une fenêtre multi-presse-papiers ouverte par **Super+V** (configurable), avec sélection multiple par Ctrl+clic ou Espace, aperçu des images et collage séquentiel (300 ms entre les entrées). Le raccourci peut être désactivé dans les préférences ou le menu contextuel de l’icône ; le dialogue principal historique reste accessible par **Super+Shift+V**. Le menu propose aussi les interrupteurs **Multi-Paste Picker**, **Mode accumule** et **Mode incognito**. L’archive fournie est à placer dans `Ressources/Applis vibe codées en Libadwaita/Extensions GNOME/Copyous/copyous-gnome51.zip` (fichier à ajouter manuellement au dépôt). Installer la dépendance puis l’extension :
   ```fish
-  sudo pacman -S libgda6
+  sudo pacman -S --needed libgda6
   gnome-extensions install --force "Ressources/Applis vibe codées en Libadwaita/Extensions GNOME/Copyous/copyous-gnome51.zip"
   gnome-extensions enable copyous@boerdereinar.dev
   ```
-  Le ZIP original reçu ne déclarait que GNOME 48, 49 et 50. La copie préparée pour le dépôt ajoute `51` à `shell-version` dans `metadata.json`. Cette correction de métadonnées ne remplace pas un test fonctionnel en session GNOME 51.
+  La copie préparée pour le dépôt ajoute `51` à `shell-version` dans `metadata.json`. Cette correction de métadonnées ne remplace pas un test fonctionnel en session GNOME 51. Voir le [README de Copyous](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Copyous/README.md) pour les détails.
 - **Session Keeper** — extension GNOME Shell de productivité qui sauvegarde en continu la session et restaure rapidement les applications, fenêtres, espaces de travail, disposition et états de fenêtres. Version adaptée à GNOME 50, avec restauration multi-fenêtres et options avancées. Voir [Applications Vibe Coded — Session Keeper](11-applications-vibe-coded.md#1116--session-keeper).
 
 
