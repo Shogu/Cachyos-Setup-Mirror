@@ -95,9 +95,11 @@ gnome-extensions prefs topbar-center-widget@ogu
 - Renommer une note resynchronise le `# H1` du document quand il correspond à l'ancien nom ; un titre écrit à la main n'est jamais écrasé.
 - Renommer une note vers un nom différent mais tronqué au même nom des 80 caractères est ignoré au lieu de lever une erreur.
 
-### 1.6
+### 1.6.6 (4 novembre 2026)
 
-- Réorganisation du lecteur : boutons centrés sous la barre de progression et titre sur toute la largeur disponible à droite de la pochette.
+- Titre des notes tronqué à **80 caractères** à la création (bouton **+**) pour garder un nom de fichier raisonnable ; le `# H1` du document suit ce nom tronqué.
+- Renommer une note resynchronise le `# H1` du document quand il correspond à l'ancien nom ; un titre écrit à la main n'est jamais écrasé.
+- Renommer une note vers un nom différent mais tronqué au même nom des 80 caractères est ignoré au lieu de lever une erreur.
 - Masquage du bouton `^`.
 - Barre de progression compatible aussi avec les lecteurs sans identifiant de morceau.
 - Défilement du titre uniquement si nécessaire, avec retour plus rapide.
