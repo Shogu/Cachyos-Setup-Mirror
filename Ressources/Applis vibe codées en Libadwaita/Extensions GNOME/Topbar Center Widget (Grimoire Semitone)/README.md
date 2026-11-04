@@ -70,17 +70,10 @@ gnome-extensions prefs topbar-center-widget@ogu
 
 ### 1.7
 
-<<<<<<< Updated upstream
 - Boutons **Copier** et **⋮** dans chaque carte de note, en bas à droite ; le titre utilise toute la largeur.
 - Une seule catégorie de notes affichée à la fois ; le filtre **Toutes** conserve la date sur chaque note.
-- Renommage d'une catégorie par clic droit sur sa puce ; Grimoire renomme le dossier.
+- Renommage d’une catégorie par clic droit sur sa puce ; Grimoire renomme le dossier correspondant.
 - Ligne **Notifications** alignée à gauche.
-=======
-- **Boutons dans la carte** : Copier et ⋮ en bas à droite de chaque note ; le titre a toute la largeur.
-- **Une seule catégorie affichée** : notes rangées sous « Épinglées », « Aujourd’hui », « Hier », « Cette semaine », « Ce mois-ci », « Plus ancien ». Avec « Toutes », la date reste sur chaque note.
-- **Renommer une catégorie** : clic droit sur sa puce, taper le nom, Entrée (Échap annule). C’est Grimoire qui renomme le dossier.
-- Ligne « Notifications » alignée à gauche.
->>>>>>> Stashed changes
 
 ### 1.6
 

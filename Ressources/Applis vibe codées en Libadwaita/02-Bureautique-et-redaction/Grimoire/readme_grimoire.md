@@ -4,23 +4,15 @@
 
 ## Version fournie
 
-<<<<<<< Updated upstream
-Le dépôt documente **Grimoire 0.3.0**. Cette version ajoute les actions sur les notes, le renommage des dossiers épinglés et l'accès aux notes depuis la recherche GNOME.
-=======
 Le paquet actuellement fourni dans le dépôt est `grimoire-ogu-0.3.0-1-x86_64.pkg.tar.zst`. Les mentions 0.1.x et 0.2.x plus bas correspondent à l’historique des évolutions et ne désignent pas le paquet actuel.
 
 ### Version 0.3.0
 
 - **Actions sur la note**, à trois endroits (menu principal, section « Cette note » ; clic droit sur un onglet ; clic droit dans la liste des documents) : Renommer, Dupliquer, Déplacer vers, Afficher dans Fichiers, Épingler dans le widget, Créer un rendez-vous, Supprimer.
-- **Supprimer** : la note disparaît immédiatement ; « Annuler » est disponible pendant 5 s, ensuite elle part à la corbeille.
-- **Renommer un dossier épinglé** : crayon à côté du dossier dans le sélecteur de dossiers. Les onglets ouverts, les dossiers épinglés et les réglages du widget suivent le nouveau nom.
-- **Recherche GNOME** : taper un mot dans la vue d’ensemble affiche les notes des dossiers épinglés qui le contiennent ; un clic ouvre la note dans Grimoire.
-- Icône violette à toutes les tailles (dock compris).
-
-### Révision 0.2.0-10 — icône
-
-L’icône conserve son dessin original, avec des marges transparentes : dessin de 112 × 112 dans un canevas nominal de 128 × 128. Le paquet fournit le SVG contenant le PNG original intégré et huit tailles PNG (16 à 512 px). Les fonctions de l’application sont inchangées par rapport à la révision 0.2.0-9.
->>>>>>> Stashed changes
+- **Suppression avec annulation** : la note disparaît immédiatement ; « Annuler » est disponible pendant 5 secondes, ensuite elle part à la corbeille.
+- **Renommer un dossier épinglé** : crayon à côté du dossier dans le sélecteur. Les onglets ouverts, les dossiers épinglés et les réglages du widget suivent le nouveau nom.
+- **Recherche GNOME** : les notes correspondantes des dossiers épinglés apparaissent dans la vue d’ensemble et s’ouvrent dans Grimoire.
+- Icône violette à toutes les tailles, dock compris.
 
 ## Installer sur Arch ou CachyOS
 
@@ -36,13 +28,19 @@ Pacman installe les dépendances des dépôts si elles sont absentes. Pas de com
 
 ## Nouveautés 0.3.0
 
-- **Actions sur une note** : renommer, dupliquer, déplacer vers un autre dossier épinglé, afficher dans Fichiers, épingler dans le widget, créer un rendez-vous ou supprimer. Ces actions sont accessibles depuis le menu principal, le clic droit sur un onglet et le clic droit dans la liste des documents.
+- **Actions sur une note** : renommer, dupliquer, déplacer vers un autre dossier épinglé, afficher dans Fichiers, épingler dans le widget, créer un rendez-vous ou supprimer. Le renommage passe par `retitle()` et s’intègre aux méthodes `Document.rename` et `notes.rename_note` dans `core.py` et `notes.py`.
+- **Renommer un onglet** : double-cliquer sur l’onglet permet de lancer le renommage ; `rename_tab` dans `grimoire.py` relie l’interaction à l’interface. Ces actions sont accessibles depuis le menu principal, le clic droit sur un onglet et le clic droit dans la liste des documents.
 - **Suppression avec annulation** : la note disparaît immédiatement ; « Annuler » reste disponible pendant 5 secondes avant l'envoi à la corbeille.
 - **Renommer un dossier épinglé** : utiliser le crayon dans le sélecteur de dossiers. Les onglets ouverts, les dossiers épinglés et les réglages du widget suivent le nouveau nom.
 - **Recherche GNOME** : rechercher un mot dans la vue d'ensemble pour retrouver les notes des dossiers épinglés ; cliquer sur un résultat ouvre la note dans Grimoire.
 - **Icône violette** à toutes les tailles, y compris dans le dock.
 
 ## Fonctions
+
+### Renommage des notes et des onglets — version 0.3.0
+
+Le renommage est centralisé avec `retitle()` et raccordé à `Document.rename` et `notes.rename_note` dans `core.py` et `notes.py`. Dans `grimoire.py`, le double-clic sur un onglet déclenche `rename_tab` pour proposer le renommage depuis l’interface.
+
 
 ### Sous-dossiers et taille du texte — version 0.1.7
 
