@@ -577,9 +577,12 @@ L’outil Icônes UI et le gestionnaire d’icônes des dossiers personnels sont
 
 ### 11.33 — Perceptron — interface GNOME pour OpenCode
 
-**Perceptron** (`opencode-perceptron`) est une interface GTK4/libadwaita native pour [OpenCode](https://opencode.ai). Elle présente l’interface web d’OpenCode dans une fenêtre GNOME, grâce à WebKitGTK 6.0 : barre d’en-tête, menus, raccourcis, thème clair/sombre synchronisé avec le système et fenêtre dont la taille est restaurée.
+**Perceptron** (`opencode-perceptron`) propose deux variantes d’interface pour [OpenCode](https://opencode.ai) :
 
-Perceptron est un **wrapper** : la logique de programmation, les modèles et les sessions restent gérés par OpenCode. Au lancement, Perceptron démarre `opencode serve`, effectue l’appairage avec `opencode pair`, puis charge l’interface web dans sa vue WebKit. OpenCode n’est pas embarqué dans le paquet et doit être installé séparément, accessible dans le `PATH`.
+- **Variante WebKit** : affiche directement l’interface web d’OpenCode depuis son URL dans une vue WebKit. Simple à mettre en œuvre, elle est toutefois plus lourde en ressources.
+- **Variante Adwaita** : transforme l’interface accessible depuis l’URL d’OpenCode en une interface GNOME native, construite avec des composants GTK4/libadwaita. Elle est plus légère en mémoire vive.
+
+Les README propres à chaque variante préciseront leurs caractéristiques, dépendances et procédures d’installation. La description technique qui suit concerne la **variante WebKit** actuellement documentée : elle démarre `opencode serve`, effectue l’appairage avec `opencode pair`, puis charge l’interface web dans sa vue WebKit. La logique de programmation, les modèles et les sessions restent gérés par OpenCode, qui doit être installé séparément et accessible dans le `PATH`.
 
 Fonctions d’interface :
 - indicateur de chargement natif et page d’erreur avec bouton **Réessayer** ;
