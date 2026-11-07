@@ -1,13 +1,6 @@
-# Perceptron
+# Perceptron — variante WebKit
 
-Perceptron propose **deux variantes d’interface pour OpenCode** :
-
-- **Variante WebKit** : affiche directement l’interface web d’OpenCode à partir de son URL dans une vue WebKit. C’est l’approche la plus simple, mais aussi la plus lourde en ressources.
-- **Variante Adwaita** : transforme l’interface accessible depuis l’URL d’OpenCode en une interface composée d’éléments GNOME/libadwaita natifs. Cette approche est plus légère en mémoire vive.
-
-Les README détaillés des deux variantes viendront compléter cette présentation. Les informations techniques et la procédure ci-dessous décrivent la **variante WebKit** actuellement documentée dans ce dossier.
-
-Perceptron est un wrapper : il démarre `opencode serve`, réalise l’appairage avec `opencode pair` et affiche l’interface web d’OpenCode dans une fenêtre Adwaita. OpenCode doit être installé séparément et accessible dans le `PATH`.
+Interface de bureau GTK4/libadwaita pour [OpenCode](https://opencode.ai), reposant sur **WebKitGTK 6.0**. Perceptron démarre `opencode serve`, réalise l’appairage avec `opencode pair` et charge l’interface web d’OpenCode dans une vue WebKit. OpenCode doit être installé séparément et accessible dans le `PATH`.
 
 ## Installation
 
