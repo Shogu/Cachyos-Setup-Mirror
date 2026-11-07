@@ -1,6 +1,0 @@
-#!/bin/sh
-# Answers git credential prompts with the token exported by Pusher.
-case "$1" in
-  *[Uu]sername*) printf 'oauth2\n' ;;
-  *) printf '%s\n' "$PUSHER_TOKEN" ;;
-esac
