@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Pusher
+GenericName=Gestionnaire GitLab
+Comment=Synchroniser le dépôt CACHYOS-Setup avec GitLab
+Exec=pusher
+Icon=io.gitlab.shogu.Pusher
+Terminal=false
+StartupNotify=true
+Categories=Development;Utility;

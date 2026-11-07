@@ -1,0 +1,3 @@
+#!/bin/sh
+[ -n "${PUSHER_TOKEN:-}" ] || exit 1
+printf '%s\n' "$PUSHER_TOKEN"

@@ -758,14 +758,14 @@ sudo pacman -Rns pacto
 
 Application GTK4/libadwaita minimaliste destinée à la gestion graphique du dépôt GitLab personnel. Elle regroupe les opérations courantes autour du dépôt local et de son envoi vers le dépôt distant.
 
-**Paquet fourni : `pusher-1.8.2-1-any.pkg.tar.zst`.** La source corrective **1.8.3** ajoute la détection des conflits présents dans l’index Git même lorsque `MERGE_HEAD` est absent ; le paquet 1.8.3 reste à reconstruire. Voir le [README de Pusher](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/05-Systeme-et-utilitaires/Pusher/readme_pusher.md).
+**Paquet fourni : `pusher-1.8.3-1-any.pkg.tar.zst`.** Cette version détecte les entrées non fusionnées de l’index avec `git ls-files -u`, même lorsque `MERGE_HEAD` est absent, et bloque les opérations tant que le conflit n’est pas résolu. Voir le [README de Pusher](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/05-Systeme-et-utilitaires/Pusher/readme_pusher.md).
 
 ![Interface de Pusher](../Ressources/screenshots/vibe-coded/pusher.png)
 
 ### Installation
 
 ```fish
-sudo pacman -U ./pusher-1.7.0-1-any.pkg.tar.zst
+sudo pacman -U "Ressources/Applis vibe codées en Libadwaita/05-Systeme-et-utilitaires/Pusher/pusher-1.8.3-1-any.pkg.tar.zst"
 ```
 
 ### Désinstallation

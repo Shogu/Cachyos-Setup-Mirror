@@ -1,69 +1,54 @@
 # Pusher
 
-Application libadwaita « vibe codée » de gestion ultra-basique du dépôt GitLab personnel.
+Application GTK4/libadwaita de gestion du dépôt GitLab personnel **CACHYOS-Setup**.
 
-**Paquet installé dans le dépôt :** `pusher-1.8.2-1-any.pkg.tar.zst`.
-**Source corrective :** `pusher-1.8.3-pusher.py` (paquet 1.8.3 à reconstruire).
+<badge>Paquet actuel : `pusher-1.8.3-1-any.pkg.tar.zst`</badge>
 
 ## Installation
 
-Le paquet 1.8.2 fourni reste installable ainsi :
+Depuis ce dossier :
 
 ```fish
-sudo pacman -U ./pusher-1.8.2-1-any.pkg.tar.zst
+sudo pacman -U ./pusher-1.8.3-1-any.pkg.tar.zst
 ```
 
 ## Changelog
 
-### 1.8.3 — Détection des conflits Git dans l’index
+### 1.8.3 — Protection contre les conflits Git résiduels
 
-**Symptôme corrigé :** Pusher pouvait tenter `git reset --soft` alors que l’index contenait encore des entrées non fusionnées. Git refusait alors l’opération avec :
+Pusher vérifie désormais les entrées non fusionnées de l’index avec `git ls-files -u`, en plus des marqueurs de rebase, merge, cherry-pick et revert. Cela couvre le cas où l’index conserve un conflit (par exemple un fichier supprimé par l’autre branche) alors que `.git/MERGE_HEAD` est absent.
+
+Dans cet état, Pusher bloque le push et le pull et affiche un message demandant de résoudre les chemins signalés par `git status`. Cette vérification évite d’appeler `git reset --soft` sur un index encore en conflit, qui provoquait :
 
 ```text
 fatal: Cannot do a soft reset in the middle of a merge.
 ```
 
-Ce cas peut survenir même lorsque `.git/MERGE_HEAD` est absent : la présence d’entrées de conflit est vérifiée directement avec `git ls-files -u`. Pusher bloque alors la synchronisation et indique de résoudre les chemins signalés par `git status` dans le terminal. Le test est appliqué avant le push et avant le pull.
-
-Le fichier `pusher-1.8.3-pusher.py` contient le correctif. **Le paquet binaire fourni est encore en 1.8.2** : reconstruire et installer 1.8.3 pour bénéficier du correctif.
-
 ### 1.8.2 — Séparation UI envoyés/supprimés
 
-La fenêtre distingue désormais deux groupes :
-- **Fichiers à envoyer** : ajouts, modifications, nouveaux fichiers (avec taille).
-- **Fichiers supprimés** : fichiers effacés du dépôt local (à pousser sur GitLab).
+La fenêtre distingue deux groupes :
+- **Fichiers à envoyer** : ajouts, modifications et nouveaux fichiers (avec taille).
+- **Fichiers supprimés** : fichiers effacés localement et à répercuter sur GitLab.
 
-### 1.8.2 — Correctif : liste tronquée au premier fichier (NUL)
+### 1.8.2 — Liste complète des fichiers en attente
 
-**Symptôme** : Pusher n'affichait qu'**un seul** fichier en attente, même quand il y en
-avait plusieurs, alors que le push envoyait bien **tout** sur GitLab.
+La lecture de `git status -z` utilise désormais `Gio.Subprocess.communicate()` en octets bruts. Les séparateurs NUL ne sont plus tronqués et tous les fichiers en attente sont affichés.
 
-**Cause** : `pending_changes()` utilisait `git status -z` (séparateur NUL `\\0`) mais lisait la
-sortie via `Gio.communicate_utf8()`, qui **tronque la chaîne au premier octet NUL**.
+## Reconstruction
 
-**Correctif** : nouvelle fonction `run_git_bytes()` qui lit la sortie **en octets bruts**
-(`Gio.Subprocess.communicate()`) et préserve les séparateurs NUL.
-
-## Rebuild depuis le paquet fourni
-
-Le dépôt conserve le paquet 1.8.2 comme base. Pour reconstruire la version corrigée depuis ce paquet, depuis le dossier Pusher :
+Le dossier contient le `PKGBUILD`, la source Python, le script `GIT_ASKPASS`, le lanceur et les ressources GNOME nécessaires. Depuis ce dossier, reconstruire avec `makepkg` :
 
 ```fish
-mkdir -p build
-cd build
-bsdtar -xf ../pusher-1.8.2-1-any.pkg.tar.zst
-cp ../pusher-1.8.3-pusher.py usr/lib/pusher/pusher.py
-sed -i 's/^pkgver = 1.8.2-1$/pkgver = 1.8.3-1/' .PKGINFO
-rm -f usr/lib/pusher/__pycache__/*
-bsdtar -czf .MTREE --format=mtree \
-  --options='!all,use-set,type,uid,gid,mode,time,size,md5,sha256,link' .
-cd ..
-bsdtar -cf - --uid=0 --gid=0 -C build .MTREE .PKGINFO .BUILDINFO usr \
-  | zstd -19 -o pusher-1.8.3-1-any.pkg.tar.zst
+makepkg -f
+```
+
+Le paquet obtenu est `pusher-1.8.3-1-any.pkg.tar.zst`. Pour l’installer :
+
+```fish
 sudo pacman -U ./pusher-1.8.3-1-any.pkg.tar.zst
 ```
 
-Vérifier que la constante `VERSION` dans le script et `pkgver` dans `.PKGINFO` indiquent toutes deux `1.8.3`.
+Dépendances d’exécution : `python`, `python-gobject`, `gtk4`, `libadwaita`, `libsecret`, `git` et `openssh`.
 
 ## Désinstallation
 
