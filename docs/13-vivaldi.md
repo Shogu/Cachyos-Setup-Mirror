@@ -122,6 +122,7 @@ Les extensions sont regroupées ci-dessous par usage.
 ### Productivité
 
 - **CopierURL — Grabber** : extension locale documentée en [13.6](#136--copierurl--extension-vivaldi-pour-grabber), qui remplace Tab Copy/Auto Tab Copy pour la copie d’URL et ajoute l’envoi vers Grabber.
+- **Perceptron** : extension compagnon qui envoie l’URL de l’onglet ou une sélection de texte vers une nouvelle session dédiée dans Perceptron. Voir [13.7](#137--perceptron--extension-compagnon-pour-opencode).
 - [Raindrop](https://chromewebstore.google.com/detail/raindropio/ldgfbffkinooeloadekpmfoklnobpien?pli=1)
 
 ### Apparence
@@ -171,6 +172,15 @@ Les URL copiées sont écrites une par ligne dans le presse-papiers. L’envoi �
 
 L’extension utilise les raccourcis et menus contextuels listés ci-dessus. L’envoi vers Grabber passe par le protocole `grabber://add` et peut nécessiter l’autorisation du navigateur pour ouvrir l’application externe.
 ---
+
+## 13.7 — Perceptron — extension compagnon pour OpenCode
+
+L’extension Vivaldi **Perceptron** permet d’envoyer le contexte de la page consultée vers une **nouvelle session dédiée dans Perceptron** :
+
+- envoyer l’URL de l’onglet courant ;
+- envoyer une sélection de texte.
+
+L’extension et sa notice sont regroupées dans [Ressources/Logiciels/Vivaldi/Perceptron/](../Ressources/Logiciels/Vivaldi/Perceptron/README.md). Le dossier est prévu pour recevoir les fichiers de l’extension ; les étapes de chargement dans Vivaldi seront précisées avec son README technique.
 
 ---
 
