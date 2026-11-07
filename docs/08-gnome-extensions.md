@@ -46,6 +46,15 @@ Extensions apportant des fonctions d'interface ou de système considérées comm
 ## 8.3 — Productivité
 
 - [Caffeine](https://extensions.gnome.org/extension/517/caffeine/)
+- **Chihito — bascule de lancement dans Quick Settings** : l’extension GNOME Shell `chihiro-quicksettings-launch-toggle@ogu` est intégrée au paquet de l’application. Installer le paquet, se déconnecter puis se reconnecter à GNOME sous Wayland pour que Shell découvre l’extension, puis l’activer :
+  ```fish
+  sudo pacman -U "Ressources/Applis vibe codées en Libadwaita/01-Multimedia/Chihito/chihiro-0.6.1-1-any.pkg.tar.zst"
+  ```
+  Après reconnexion :
+  ```fish
+  gnome-extensions enable chihiro-quicksettings-launch-toggle@ogu
+  ```
+  Voir le [README de Chihito](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/01-Multimedia/Chihito/README.md).
 - **Copyous — fork corrigé pour GNOME 51** : ajoute le **Multi-Paste Picker**, une fenêtre multi-presse-papiers ouverte par **Super+V** (configurable), avec sélection multiple par Ctrl+clic ou Espace, aperçu des images et collage séquentiel (300 ms entre les entrées). Le raccourci peut être désactivé dans les préférences ou le menu contextuel de l’icône ; le dialogue principal historique reste accessible par **Super+Shift+V**. Le menu propose aussi les interrupteurs **Multi-Paste Picker**, **Mode accumule** et **Mode incognito**. L’archive fournie est à placer dans `Ressources/Applis vibe codées en Libadwaita/Extensions GNOME/Copyous/copyous-gnome51.zip` (fichier à ajouter manuellement au dépôt). Installer la dépendance puis l’extension :
   ```fish
   sudo pacman -S --needed libgda6

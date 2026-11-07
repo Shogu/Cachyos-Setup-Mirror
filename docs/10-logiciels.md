@@ -60,6 +60,9 @@ Voir [11.32 — Polaroid](11-applications-vibe-coded.md#1132--polaroid) pour les
 
 ### Audio & vidéo
 
+- **Chihito** : ambiance de travail dans l’esprit de Lofi Girl, avec une extension GNOME Shell intégrée qui ajoute une bascule de lancement aux réglages rapides. Voir [11.35 — Chihito](11-applications-vibe-coded.md#1135--chihito) et la [procédure d’activation de l’extension](08-gnome-extensions.md#83--productivité).
+- **SPECTACLE** : lecteur YouTube utilisable avec ou sans vidéo, avec une fonction **Rideau**. Voir [11.36 — SPECTACLE](11-applications-vibe-coded.md#1136--spectacle).
+
 - **Amplifaya** : moteur audio PipeWire sans démon ni service utilisateur depuis la v0.5.0, avec interface GTK4/libadwaita facultative et bascule casque/haut-parleurs via WirePlumber en v0.5.1. Voir [la documentation détaillée](11-applications-vibe-coded.md#1122--amplifaya--moteur-audio-pipewire). Le paquet 0.5.1 sera ajouté manuellement dans [son dossier](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/01-Multimedia/Amplifaya/).
 
 - **Semitone** : lecteur musical GTK4/libadwaita, fork de Gapless, compilé avec Claude. Il remplace `gapless` ; le paquet Arch sera ajouté manuellement dans [son dossier](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/01-Multimedia/Semitone/). Voir [11.29 — Semitone](11-applications-vibe-coded.md#1129--semitone). La version mise à jour expose le chemin du fichier local, l’identifiant du morceau, les changements d’état de l’aléatoire et le titre suivant pour enrichir l’intégration MPRIS. Pour intégrer Semitone et les autres lecteurs MPRIS au menu de l’horloge et afficher l’icône animée dans la barre supérieure, voir [Topbar Center Widget 1.7](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Topbar%20Center%20Widget%20(Grimoire%20Semitone)/README.md).

@@ -10,7 +10,7 @@
 
 Les dossiers sont classés par usage principal. Les extensions GNOME Shell restent regroupées dans [Extensions GNOME](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/).
 
-- **01 — Multimédia** : Amplifaya, Decibel, Disquaire, Semitone, Polaroid.
+- **01 — Multimédia** : Amplifaya, Chihito, Decibel, Disquaire, SPECTACLE, Semitone, Polaroid.
 - **02 — Bureautique et rédaction** : Alexandrie, Grimoire, Grille, Dactylo, Maquette.
 - **03 — Fichiers et téléchargements** : Fret, Grabber, Nautilus Bookmark Icons, PLACES, Thumbnailer Sushi.
 - **04 — Bureau et personnalisation** : Extension Manager, Icônes UI.
@@ -23,6 +23,8 @@ Les dossiers sont classés par usage principal. Les extensions GNOME Shell reste
 - [11.32 — Polaroid](#1132--polaroid)
 - [11.27 — Disquaire](#1127--disquaire)
 - [11.29 — Semitone](#1129--semitone)
+- [11.35 — Chihito](#1135--chihito)
+- [11.36 — SPECTACLE](#1136--spectacle)
 
 ## 02 — Bureautique et rédaction
 
@@ -257,6 +259,38 @@ end
 
 La procédure ci-dessus fonctionne dès qu’un unique paquet `semitone*.pkg.tar.zst` est ajouté dans le dossier Semitone. Aucun paquet compilé n’est actuellement référencé dans le dépôt.
 
+
+---
+
+### 11.35 — Chihito
+
+**Chihito** est une application d’ambiance de travail dans l’esprit de **Lofi Girl**, destinée à accompagner les sessions de concentration. Son paquet intègre une extension GNOME Shell qui ajoute une bascule de lancement dans les réglages rapides.
+
+**Paquet fourni :** `chihiro-0.6.1-1-any.pkg.tar.zst` (à déposer manuellement dans [le dossier Chihito](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/01-Multimedia/Chihito/)).
+
+Depuis ce dossier, installer le paquet :
+
+```fish
+sudo pacman -U ./chihiro-0.6.1-1-any.pkg.tar.zst
+```
+
+Sous Wayland, **se déconnecter puis se reconnecter** : GNOME Shell ne découvre les nouvelles extensions qu’à l’ouverture de session. Activer ensuite l’extension intégrée :
+
+```fish
+gnome-extensions enable chihiro-quicksettings-launch-toggle@ogu
+```
+
+Voir le [README de Chihito](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/01-Multimedia/Chihito/README.md).
+
+---
+
+### 11.36 — SPECTACLE
+
+**SPECTACLE** est un lecteur YouTube qui permet de lire les contenus **avec ou sans vidéo**. Il comprend également une fonction nommée **Rideau**.
+
+Le paquet et les éventuelles sources seront ajoutés manuellement dans [le dossier SPECTACLE](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/01-Multimedia/SPECTACLE/). Les dépendances et la procédure d’installation seront précisées lorsque le README technique sera disponible.
+
+Voir le [README de SPECTACLE](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/01-Multimedia/SPECTACLE/README.md).
 
 ---
 
