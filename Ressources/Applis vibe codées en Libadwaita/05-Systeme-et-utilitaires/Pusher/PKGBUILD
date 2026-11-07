@@ -1,5 +1,5 @@
 # Maintainer: Ogu
-pkgname=pusher
+pkgname=pusher-ogu
 pkgver=1.8.3
 pkgrel=1
 pkgdesc='Gestionnaire GTK4/libadwaita du dépôt GitLab CACHYOS-Setup'
@@ -7,6 +7,9 @@ arch=('any')
 url='https://gitlab.com/Shogu/CACHYOS-Setup'
 license=('GPL-3.0-only')
 depends=('python' 'python-gobject' 'gtk4' 'libadwaita' 'libsecret' 'git' 'openssh')
+provides=('pusher')
+conflicts=('pusher')
+replaces=('pusher')
 source=('pusher-1.8.3-pusher.py' 'pusher-askpass' 'io.gitlab.shogu.Pusher.desktop' 'io.gitlab.shogu.Pusher.svg')
 sha256sums=('a95368993695b34ad53abe6dad5f3eaf5dbe2ba6cc1aaacb9bf49ce677992cbb' 'SKIP' 'SKIP' 'SKIP')
 

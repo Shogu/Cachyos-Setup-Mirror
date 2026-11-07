@@ -2,14 +2,14 @@
 
 Application GTK4/libadwaita de gestion du dépôt GitLab personnel **CACHYOS-Setup**.
 
-<badge>Paquet actuel : `pusher-1.8.3-1-any.pkg.tar.zst`</badge>
+Le nom du paquet Arch est **pusher-ogu** pour éviter la collision avec le paquet AUR homonyme. Le nom affiché dans GNOME et la commande restent **Pusher** et `pusher`.
 
 ## Installation
 
 Depuis ce dossier :
 
 ```fish
-sudo pacman -U ./pusher-1.8.3-1-any.pkg.tar.zst
+sudo pacman -U ./pusher-ogu-1.8.3-1-any.pkg.tar.zst
 ```
 
 ## Changelog
@@ -36,16 +36,16 @@ La lecture de `git status -z` utilise désormais `Gio.Subprocess.communicate()` 
 
 ## Reconstruction
 
-Le dossier contient le `PKGBUILD`, la source Python, le script `GIT_ASKPASS`, le lanceur et les ressources GNOME nécessaires. Depuis ce dossier, reconstruire avec `makepkg` :
+Depuis ce dossier :
 
 ```fish
 makepkg -f
 ```
 
-Le paquet obtenu est `pusher-1.8.3-1-any.pkg.tar.zst`. Pour l’installer :
+Le paquet obtenu est `pusher-ogu-1.8.3-1-any.pkg.tar.zst`. Pour l’installer :
 
 ```fish
-sudo pacman -U ./pusher-1.8.3-1-any.pkg.tar.zst
+sudo pacman -U ./pusher-ogu-1.8.3-1-any.pkg.tar.zst
 ```
 
 Dépendances d’exécution : `python`, `python-gobject`, `gtk4`, `libadwaita`, `libsecret`, `git` et `openssh`.
@@ -53,5 +53,5 @@ Dépendances d’exécution : `python`, `python-gobject`, `gtk4`, `libadwaita`, 
 ## Désinstallation
 
 ```fish
-sudo pacman -Rns pusher
+sudo pacman -Rns pusher-ogu
 ```
