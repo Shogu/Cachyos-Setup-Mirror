@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist gettext-domain="always-on-top-always-on-top@localhost">
+  <schema id="org.gnome.shell.extensions.always-on-top-always-on-top"
+          path="/org/gnome/shell/extensions/always-on-top-always-on-top/">
+
+    <key name="shortcut-enabled" type="b">
+      <default>false</default>
+      <summary>Enable the Super+T shortcut</summary>
+      <description>When enabled, the extension registers a keyboard shortcut that toggles Always on Top on the focused window, like the top bar button.</description>
+    </key>
+
+    <key name="aot-toggle-shortcut" type="as">
+      <default>["&lt;Super&gt;t"]</default>
+      <summary>Shortcut</summary>
+      <description>Keyboard shortcut used when the shortcut is enabled. Not shown in the preferences window; it can be changed with gsettings or dconf. The key name is deliberately specific: keybinding names share one global namespace in GNOME Shell, and a generic name can clash with another extension.</description>
+    </key>
+
+  </schema>
+</schemalist>

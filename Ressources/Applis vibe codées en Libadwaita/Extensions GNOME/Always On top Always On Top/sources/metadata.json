@@ -1,0 +1,17 @@
+{
+  "uuid": "always-on-top-always-on-top@localhost",
+  "name": "Always on top always on top",
+  "description": "A single monochrome top bar icon to toggle \"Always on Top\" for the focused window. When a window is pinned, the icon switches to that app's symbolic icon and stays put until it is unpinned. Optional Super+T shortcut (off by default).",
+  "shell-version": [
+    "45",
+    "46",
+    "47",
+    "48",
+    "49",
+    "50",
+    "51"
+  ],
+  "settings-schema": "org.gnome.shell.extensions.always-on-top-always-on-top",
+  "gettext-domain": "always-on-top-always-on-top@localhost",
+  "version": 30
+}

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema id="org.gnome.shell.extensions.focus-et-boutons" path="/org/gnome/shell/extensions/focus-et-boutons/">
+    <key name="auto-close-quick-settings" type="b">
+      <default>true</default>
+      <summary>Fermer automatiquement Quick Settings</summary>
+    </key>
+    <key name="auto-close-calendar" type="b">
+      <default>true</default>
+      <summary>Fermer automatiquement Calendrier et Notifications</summary>
+    </key>
+    <key name="close-delay-ms" type="u">
+      <range min="100" max="2000"/>
+      <default>350</default>
+      <summary>Délai de fermeture en millisecondes</summary>
+    </key>
+    <key name="hide-screenshot" type="b">
+      <default>true</default>
+      <summary>Masquer le bouton Capture d'écran</summary>
+    </key>
+    <key name="split-settings-button" type="b">
+      <default>true</default>
+      <summary>Utiliser un bouton Réglages scindé</summary>
+    </key>
+    <key name="rename-power-profile" type="b">
+      <default>true</default>
+      <summary>Renommer le profil de puissance en Énergie</summary>
+    </key>
+    <key name="rename-dark-style" type="b">
+      <default>true</default>
+      <summary>Renommer Style sombre en Thème Dark</summary>
+    </key>
+    <key name="hide-audio-outputs" type="b">
+      <default>true</default>
+      <summary>Masquer la liste des sorties audio</summary>
+    </key>
+    <key name="restart-session-dialog" type="b">
+      <default>true</default>
+      <summary>Afficher « Reconnexion » dans la fenêtre de confirmation</summary>
+    </key>
+    <key name="split-power-button" type="b">
+      <default>true</default>
+      <summary>Utiliser un bouton Power scindé</summary>
+    </key>
+    <key name="charge-limit-toggle" type="b">
+      <default>true</default>
+      <summary>Pilule Charge batterie</summary>
+      <description>Même réglage que « Préserver la santé de la batterie » dans Paramètres (UPower). Absente si la batterie ne le gère pas.</description>
+    </key>
+    <key name="projector-toggle" type="b">
+      <default>true</default>
+      <summary>Pilule Projecteur</summary>
+      <description>Dupliquer, Étendre, Écran externe seul, Écran intégré seul ; visible quand un deuxième écran est branché.</description>
+    </key>
+    <key name="update-toggle" type="b">
+      <default>true</default>
+      <summary>Tuile Upgrade</summary>
+      <description>Tuile de Quick Settings qui lance le script de mise à jour ; bleue tant qu'il tourne.</description>
+    </key>
+    <key name="update-command" type="s">
+      <default>'~/.local/bin/update-shelly.sh'</default>
+      <summary>Script de mise à jour</summary>
+      <description>Script lancé par un clic sur la tuile Upgrade.</description>
+    </key>
+    <key name="slider-osd" type="b">
+      <default>true</default>
+      <summary>OSD du volume</summary>
+      <description>Afficher l'OSD natif de GNOME quand on déplace le curseur de volume de Quick Settings (celui de la luminosité existe déjà).</description>
+    </key>
+  </schema>
+</schemalist>

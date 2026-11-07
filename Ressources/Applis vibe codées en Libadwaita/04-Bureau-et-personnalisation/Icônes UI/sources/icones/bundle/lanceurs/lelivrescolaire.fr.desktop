@@ -1,0 +1,26 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Manuel
+Comment=Application de consultation des manuels Lelivrescolaire.fr
+Exec=/home/ogu/.local/bin/Manuels.AppImage %U
+Icon=lelivrescolaire.fr
+Terminal=false
+StartupNotify=true
+StartupWMClass=Manuels
+MimeType=x-scheme-handler/lls;
+Categories=Education;
+Name[fr]=Manuel
+Name[fr_FR]=Manuel
+Name[fr_FR.UTF-8]=Manuel
+Comment[fr]=Application de consultation des manuels Lelivrescolaire.fr
+Comment[fr_FR]=Application de consultation des manuels Lelivrescolaire.fr
+Comment[fr_FR.UTF-8]=Application de consultation des manuels Lelivrescolaire.fr
+PrefersNonDefaultGPU=false
+Hidden=false
+NoDisplay=false
+Keywords=livre
+Keywords[fr]=livre
+Keywords[fr_FR]=livre
+Keywords[fr_FR.UTF-8]=livre
+

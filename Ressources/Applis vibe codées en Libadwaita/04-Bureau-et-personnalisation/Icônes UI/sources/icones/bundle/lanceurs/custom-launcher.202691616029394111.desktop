@@ -1,0 +1,18 @@
+[Desktop Entry]
+Type=Application
+Name=Kill XWayland
+Exec=/home/ogu/.local/bin/kill-xwayland.sh
+X-GNOME-Autostart-enabled=true
+NoDisplay=true
+Hidden=false
+Comment=Désactiver XWayland après login
+Name[fr]=Kill XWayland
+Name[fr_FR]=Kill XWayland
+Name[fr_FR.UTF-8]=Kill XWayland
+Comment[fr]=Désactiver XWayland après login
+Comment[fr_FR]=Désactiver XWayland après login
+Comment[fr_FR.UTF-8]=Désactiver XWayland après login
+PrefersNonDefaultGPU=false
+StartupNotify=false
+Terminal=false
+

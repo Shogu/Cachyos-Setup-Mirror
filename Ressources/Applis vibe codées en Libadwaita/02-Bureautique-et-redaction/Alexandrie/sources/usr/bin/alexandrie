@@ -1,0 +1,15 @@
+#!/usr/bin/python3
+import ctypes
+import sys
+
+sys.path.insert(0, "/usr/lib/alexandrie")
+
+# Nom du processus « alexandrie » au lieu de « python3 » (moniteurs système, Ressources).
+ctypes.CDLL(None).prctl(15, b"alexandrie", 0, 0, 0)  # PR_SET_NAME
+import setproctitle  # noqa: E402
+
+setproctitle.setproctitle("alexandrie")
+
+from alexandrie.main import main  # noqa: E402
+
+sys.exit(main())

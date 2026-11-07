@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=Chihiro
+Comment=Petit compagnon vidéo pour le bureau
+Exec=chihiro
+Icon=fr.ogu.Chihiro
+Terminal=false
+Type=Application
+Categories=AudioVideo;Video;GTK;GNOME;
+Keywords=compagnon;vidéo;animation;
+StartupNotify=true
+StartupWMClass=fr.ogu.Chihiro
+SingleMainWindow=true

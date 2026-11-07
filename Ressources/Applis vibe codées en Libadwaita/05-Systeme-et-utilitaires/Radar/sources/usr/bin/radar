@@ -1,0 +1,1424 @@
+#!/usr/bin/env python3
+"""Radar — recherche de fichiers avec aperçu (GTK 4 + libadwaita).
+
+Dépendances : python-gobject, gtk4, libadwaita >= 1.5
+Optionnel   : gtksourceview5 (coloration syntaxique), gst-plugin-gtk4 (vidéo/audio),
+              poppler (pdftoppm pour l’aperçu PDF)
+"""
+
+import os
+import re
+import subprocess
+import sys
+import tempfile
+import threading
+import time
+import zipfile
+from datetime import datetime, timedelta
+from xml.etree import ElementTree
+
+import gi
+
+gi.require_version("Gtk", "4.0")
+gi.require_version("Adw", "1")
+try:
+    gi.require_version("GtkSource", "5")
+    from gi.repository import GtkSource
+    GtkSource.init()
+except (ValueError, ImportError):
+    GtkSource = None
+
+from gi.repository import Adw, Gdk, Gio, GLib, GObject, Gtk, Pango
+
+APP_ID = "local.Radar"
+ROOT = "/"
+MAX_RESULTS = 5000
+SHORTLIST = 800  # candidates that get the exact (expensive) fuzzy score per keystroke
+INDEX_BATCH = 2000
+PREVIEW_LINES = 200
+PREVIEW_BYTES = 512 * 1024
+HOME = os.path.expanduser("~")
+
+# Mêmes exclusions que la fonction fish d'origine.
+PRUNE = ["/proc", "/sys", "/dev", "/run", "/tmp", "/var/tmp", "/var/cache",
+         "*/.cache", "*/.cache/*"]
+for _d in ("node_modules", ".git", ".venv", "venv", "build", "dist", "target"):
+    PRUNE += [f"*/{_d}", f"*/{_d}/*"]
+
+
+def index_command(show_hidden, roots):
+    """List every file under `roots` once (no name filter) — this is the full
+    corpus the fuzzy matcher then ranks in memory on every keystroke."""
+    cmd = ["find"] + roots + ["("]
+    for i, path in enumerate(PRUNE):
+        if i:
+            cmd.append("-o")
+        cmd += ["-path", path]
+    command = cmd + [")", "-prune", "-o"]
+    if not show_hidden:
+        command += ["(", "!", "-path", "*/.*", "-o",
+                    "-path", "*/.local/share/Trash/*", ")"]
+    return command + ["-type", "f", "-print"]
+
+
+# ---------- Recherche floue (façon fzf, portée en Python) ----------
+#
+# Trois étages, du moins cher au plus cher, pour rester réactif même sur un
+# index de centaines de milliers de fichiers :
+#   1. un masque de bits par nom de fichier rejette en O(1) tout candidat à
+#      qui il manque une lettre du motif ;
+#   2. une recherche de sous-séquence (gloutonne, la plus à gauche) confirme
+#      le candidat et donne une portée (span) bon marché pour un premier tri ;
+#   3. seuls les SHORTLIST meilleurs candidats (portée la plus courte) passent
+#      par le score exact — une programmation dynamique façon Smith-Waterman
+#      qui favorise les lettres consécutives et les débuts de mot/camelCase.
+BOUNDARY_CHARS = set("/-_. ")
+SCORE_MATCH = 16.0
+BONUS_BOUNDARY = 8.0
+BONUS_CAMEL = 8.0
+BONUS_CONSECUTIVE = 16.0
+GAP_PENALTY = 3.0
+LEADING_GAP_PENALTY = 1.0
+NEG_INF = float("-inf")
+
+
+def _char_bitmask(text_lower):
+    mask = 0
+    for ch in text_lower:
+        if "a" <= ch <= "z":
+            mask |= 1 << (ord(ch) - 97)
+        elif "0" <= ch <= "9":
+            mask |= 1 << (26 + ord(ch) - 48)
+    return mask
+
+
+def _subsequence_span(hay_lower, pattern_lower):
+    """Plus petite fenêtre trouvée par un appariement glouton de gauche à
+    droite. None si pattern_lower n'est pas une sous-séquence de hay_lower."""
+    pos = 0
+    first = -1
+    last = -1
+    for ch in pattern_lower:
+        pos = hay_lower.find(ch, pos)
+        if pos == -1:
+            return None
+        if first == -1:
+            first = pos
+        last = pos
+        pos += 1
+    return first, last - first
+
+
+def _match_bonus(text, i):
+    if i == 0:
+        return BONUS_BOUNDARY
+    prev, cur = text[i - 1], text[i]
+    if prev in BOUNDARY_CHARS:
+        return BONUS_BOUNDARY
+    if prev.islower() and cur.isupper():
+        return BONUS_CAMEL
+    return 0.0
+
+
+def fuzzy_score(text, pattern_lower):
+    """Score exact (programmation dynamique) d'un appariement flou de
+    pattern_lower (déjà en minuscules) dans text. None si ce n'est pas une
+    sous-séquence ; sinon un score où plus haut = correspondance plus nette
+    (lettres consécutives, début de mot ou de camelCase)."""
+    hay = text.casefold()
+    n, m = len(hay), len(pattern_lower)
+    if m == 0:
+        return 0.0
+    if m > n:
+        return None
+
+    bonus = [_match_bonus(text, j) for j in range(n)]
+    prev_row = [NEG_INF] * n
+
+    for i, pch in enumerate(pattern_lower):
+        cur_row = [NEG_INF] * n
+        running_max = NEG_INF  # max_{k<j} (prev_row[k] + GAP_PENALTY * k)
+        for j in range(n):
+            if i > 0 and j > 0:
+                prior = prev_row[j - 1] + GAP_PENALTY * (j - 1)
+                if prior > running_max:
+                    running_max = prior
+            if hay[j] != pch:
+                continue
+            if i == 0:
+                cur_row[j] = SCORE_MATCH + bonus[j] - LEADING_GAP_PENALTY * j
+                continue
+            options = []
+            if j > 0 and prev_row[j - 1] != NEG_INF:
+                options.append(prev_row[j - 1] + BONUS_CONSECUTIVE)
+            if running_max != NEG_INF:
+                options.append(running_max - GAP_PENALTY * (j - 1))
+            if options:
+                cur_row[j] = SCORE_MATCH + bonus[j] + max(options)
+        prev_row = cur_row
+
+    best = max(prev_row)
+    return best if best != NEG_INF else None
+
+
+EXTENSION_GROUPS = {
+    "documents": {
+        ".pdf", ".doc", ".docx", ".docm", ".dot", ".dotx",
+        ".xls", ".xlsx", ".xlsm", ".xlt", ".xltx", ".xltm",
+        ".ppt", ".pptx", ".pptm", ".pps", ".ppsx", ".pot", ".potx",
+        ".odt", ".ott", ".ods", ".ots", ".odp", ".otp", ".odg", ".odf",
+        ".rtf", ".csv", ".tsv", ".pages", ".numbers", ".key",
+    },
+    "images": {".png", ".jpg", ".jpeg", ".gif", ".webp", ".svg", ".bmp", ".tiff"},
+    "videos": {".mp4", ".mkv", ".webm", ".avi", ".mov", ".ogv"},
+    "music": {".mp3", ".flac", ".ogg", ".wav", ".m4a", ".opus"},
+    "archives": {
+        ".zip", ".zipx", ".rar", ".7z", ".tar", ".tgz", ".tbz", ".txz",
+        ".gz", ".bz2", ".xz", ".zst", ".lz", ".lz4", ".lzma", ".lzh",
+        ".cab", ".ar", ".cpio", ".deb", ".rpm", ".apk", ".msi", ".jar",
+        ".war", ".ear", ".dmg", ".iso", ".img", ".bin", ".cue", ".nrg",
+        ".vdi", ".vhd", ".vhdx",
+    },
+    "code": {".css", ".scss", ".sass", ".less", ".sh", ".bash", ".zsh",
+             ".html", ".htm", ".js", ".ts", ".py", ".rs", ".go", ".c",
+             ".h", ".cpp", ".java", ".json", ".xml", ".yaml", ".yml",
+             ".md", ".markdown", ".mdown", ".mkdn", ".mdwn", ".mdtxt",
+             ".mdtext", ".textile", ".rst", ".adoc", ".asciidoc"},
+}
+
+
+def passes_category(name, category):
+    if category == "all":
+        return True
+    extension = os.path.splitext(name)[1].casefold()
+    if category == "other":
+        return not any(extension in extensions for extensions in EXTENSION_GROUPS.values())
+    extensions = EXTENSION_GROUPS.get(category)
+    return extensions is not None and extension in extensions
+
+
+def passes_date(mtime, date_filter):
+    if date_filter == "all":
+        return True
+    now = datetime.now()
+    if date_filter == "hour":
+        return mtime >= time.time() - 3600
+    if date_filter == "today":
+        return datetime.fromtimestamp(mtime).date() == now.date()
+    if date_filter == "yesterday":
+        return datetime.fromtimestamp(mtime).date() == (now - timedelta(days=1)).date()
+    if date_filter == "week":
+        return mtime >= time.time() - 7 * 86400
+    if date_filter == "month":
+        return mtime >= time.time() - 30 * 86400
+    if date_filter == "older":
+        return mtime < time.time() - 30 * 86400
+    return True
+
+
+# ---------- Contenu des archives (bsdtar -tvf, sans rien extraire) ----------
+ARCHIVE_SUFFIXES = (
+    ".zip", ".zipx", ".7z", ".rar",
+    ".tar", ".tar.gz", ".tgz", ".tar.bz2", ".tbz", ".tbz2",
+    ".tar.xz", ".txz", ".tar.zst", ".tzst",
+    ".tar.lz", ".tar.lz4", ".tar.lzma",
+)
+ARCHIVE_MAX_ENTRIES = 1000
+ARCHIVE_TIMEOUT = 20  # secondes
+
+
+def _is_archive_name(name):
+    return name.casefold().endswith(ARCHIVE_SUFFIXES)
+
+
+# bsdtar génère lui-même ce format de ligne (mode, liens, propriétaire, groupe,
+# taille, date, nom), indépendamment du type d'archive lu : c'est le même
+# code de formatage de libarchive pour zip, tar, 7z et rar.
+_BSDTAR_LINE_RE = re.compile(
+    r"^(?P<mode>\S+)\s+\S+\s+\S+\s+\S+\s+(?P<size>\d+)\s+"
+    r"(?P<month>\w{3})\s+(?P<day>\d{1,2})\s+(?P<time_or_year>\S+)\s+(?P<name>.+)$"
+)
+_MONTHS = {m: i for i, m in enumerate(
+    ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], 1)}
+
+
+def _bsdtar_mtime(month, day, time_or_year):
+    """bsdtar affiche « mois jour heure:minute » pour un fichier récent
+    (année sous-entendue = année courante) ou « mois jour année » pour un
+    fichier plus ancien — la même ambiguïté que `ls -l`."""
+    month_num = _MONTHS.get(month)
+    if month_num is None:
+        return None
+    try:
+        day_num = int(day)
+        if ":" in time_or_year:
+            hour, _, minute = time_or_year.partition(":")
+            year = datetime.now().year
+            dt = datetime(year, month_num, day_num, int(hour), int(minute))
+            if dt > datetime.now() + timedelta(days=1):
+                dt = dt.replace(year=year - 1)
+        else:
+            dt = datetime(int(time_or_year), month_num, day_num)
+        return dt.timestamp()
+    except ValueError:
+        return None
+
+
+def _parse_bsdtar_line(line):
+    """Renvoie (chemin, taille, mtime_ou_None, est_dossier) ou None si la
+    ligne ne correspond pas au format habituel de `bsdtar -tv`."""
+    match = _BSDTAR_LINE_RE.match(line.rstrip("\n"))
+    if match is None:
+        return None
+    mode = match.group("mode")
+    name = match.group("name")
+    is_dir = mode.startswith("d") or name.endswith("/")
+    mtime = _bsdtar_mtime(match.group("month"), match.group("day"), match.group("time_or_year"))
+    return name, int(match.group("size")), mtime, is_dir
+
+
+def make_spinner(size):
+    spinner = Adw.Spinner() if hasattr(Adw, "Spinner") else Gtk.Spinner(spinning=True)
+    spinner.set_size_request(size, size)
+    return spinner
+
+
+def office_preview(path):
+    """Extract readable DOCX/ODT content without running document payloads."""
+    extension = os.path.splitext(path)[1].casefold()
+    if extension == ".docx":
+        document_name = "word/document.xml"
+        namespaces = {
+            "w": "http://schemas.openxmlformats.org/wordprocessingml/2006/main"
+        }
+        paragraph_tag = "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}p"
+        text_tag = "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}t"
+        break_tag = "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}br"
+        table_row_tag = "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}tr"
+        table_cell_tag = "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}tc"
+    elif extension == ".odt":
+        document_name = "content.xml"
+        namespaces = {
+            "text": "urn:oasis:names:tc:opendocument:xmlns:text:1.0"
+        }
+        paragraph_tag = "{urn:oasis:names:tc:opendocument:xmlns:text:1.0}p"
+        text_tag = None
+        break_tag = "{urn:oasis:names:tc:opendocument:xmlns:text:1.0}line-break"
+        table_row_tag = "{urn:oasis:names:tc:opendocument:xmlns:table:1.0}table-row"
+        table_cell_tag = "{urn:oasis:names:tc:opendocument:xmlns:table:1.0}table-cell"
+    else:
+        return None
+
+    with zipfile.ZipFile(path) as archive:
+        root = ElementTree.fromstring(archive.read(document_name))
+
+    lines = []
+    for element in root.iter():
+        if element.tag == paragraph_tag:
+            if text_tag is None:
+                # ODT : contrairement à DOCX (tout le texte d'un run est dans
+                # <w:t>), l'ODF porte le texte sur .text/.tail d'à peu près
+                # tous les éléments d'un paragraphe (mise en forme, liens...),
+                # donc il faut les récupérer tous, pas seulement .text.
+                parts = [element.text or ""]
+                for child in element.iter():
+                    if child is element:
+                        continue
+                    parts.append("\n" if child.tag == break_tag else (child.text or ""))
+                    parts.append(child.tail or "")
+                text = "".join(parts).strip()
+            else:
+                text = "".join(
+                    (child.text or "") if child.tag == text_tag else
+                    ("\n" if child.tag == break_tag else "")
+                    for child in element.iter()
+                ).strip()
+            if text:
+                lines.append(text)
+        elif element.tag == table_row_tag:
+            cells = []
+            for cell in element.findall(f".//{table_cell_tag}"):
+                value = " ".join("".join(cell.itertext()).split())
+                if value:
+                    cells.append(value)
+            if cells:
+                lines.append(" | ".join(cells))
+    return "\n\n".join(lines)[:PREVIEW_BYTES]
+
+
+# ---------- Aperçu ODS / XLSX (lecture du XML par zipfile, sans bibliothèque
+# externe ; valeurs affichées uniquement, jamais les formules) ----------
+PREVIEW_ROWS = 50
+
+
+def _ods_sheet_rows(table, ns):
+    cell_tag = f"{{{ns['table']}}}table-cell"
+    covered_tag = f"{{{ns['table']}}}covered-table-cell"
+    row_tag = f"{{{ns['table']}}}table-row"
+    text_p_tag = f"{{{ns['text']}}}p"
+    rep_cols_attr = f"{{{ns['table']}}}number-columns-repeated"
+    rows = []
+    for row in table.findall(row_tag):
+        if len(rows) >= PREVIEW_ROWS:
+            break
+        cells = []
+        for cell in row:
+            if cell.tag == cell_tag:
+                text = " ".join(
+                    "".join(p.itertext()).strip() for p in cell.findall(text_p_tag)
+                ).strip()
+            elif cell.tag == covered_tag:
+                text = ""  # cellule couverte par une fusion : rien à afficher
+            else:
+                continue
+            repeat = int(cell.get(rep_cols_attr, "1"))
+            cells.extend([text] * (min(repeat, 200) if text else 1))
+        while cells and not cells[-1]:
+            cells.pop()
+        if cells:
+            rows.append(" | ".join(cells))
+    return rows
+
+
+def _ods_preview(path):
+    ns = {
+        "office": "urn:oasis:names:tc:opendocument:xmlns:office:1.0",
+        "table": "urn:oasis:names:tc:opendocument:xmlns:table:1.0",
+        "text": "urn:oasis:names:tc:opendocument:xmlns:text:1.0",
+    }
+    with zipfile.ZipFile(path) as archive:
+        root = ElementTree.fromstring(archive.read("content.xml"))
+    spreadsheet = root.find(f"{{{ns['office']}}}body/{{{ns['office']}}}spreadsheet")
+    if spreadsheet is None:
+        return [], 0
+    table_tag = f"{{{ns['table']}}}table"
+    name_attr = f"{{{ns['table']}}}name"
+    tables = spreadsheet.findall(table_tag)
+    blocks = []
+    for index, table in enumerate(tables, start=1):
+        name = table.get(name_attr) or f"Feuille {index}"
+        rows = _ods_sheet_rows(table, ns)
+        blocks.append(name + "\n" + ("\n".join(rows) if rows else "(feuille vide)"))
+    return blocks, len(tables)
+
+
+def _column_index(cell_ref):
+    """« B12 » -> 1 (0-indexé) : numérotation bijective en base 26."""
+    index = 0
+    for ch in cell_ref:
+        if not ch.isalpha():
+            break
+        index = index * 26 + (ord(ch.upper()) - ord("A") + 1)
+    return index - 1
+
+
+_XLSX_NS = "http://schemas.openxmlformats.org/spreadsheetml/2006/main"
+_XLSX_REL_NS = "http://schemas.openxmlformats.org/officeDocument/2006/relationships"
+_XLSX_PKGREL_NS = "http://schemas.openxmlformats.org/package/2006/relationships"
+
+
+def _xlsx_shared_strings(archive):
+    try:
+        root = ElementTree.fromstring(archive.read("xl/sharedStrings.xml"))
+    except KeyError:
+        return []
+    strings = []
+    for si in root.findall(f"{{{_XLSX_NS}}}si"):
+        direct = si.find(f"{{{_XLSX_NS}}}t")
+        if direct is not None:
+            strings.append(direct.text or "")
+        else:
+            strings.append("".join(
+                run.text or "" for run in si.findall(f"{{{_XLSX_NS}}}r/{{{_XLSX_NS}}}t")))
+    return strings
+
+
+def _xlsx_sheet_targets(archive):
+    """Ordre et nom des feuilles (workbook.xml) puis fichier associé à
+    chacune (_rels/workbook.xml.rels), plus fiable qu'une simple
+    correspondance sheetN.xml <-> N-ième onglet."""
+    workbook = ElementTree.fromstring(archive.read("xl/workbook.xml"))
+    sheets = workbook.findall(f"{{{_XLSX_NS}}}sheets/{{{_XLSX_NS}}}sheet")
+    try:
+        rels_root = ElementTree.fromstring(archive.read("xl/_rels/workbook.xml.rels"))
+        id_to_target = {
+            rel.get("Id"): rel.get("Target")
+            for rel in rels_root.findall(f"{{{_XLSX_PKGREL_NS}}}Relationship")
+        }
+    except KeyError:
+        id_to_target = {}
+    targets = []
+    for position, sheet in enumerate(sheets, start=1):
+        name = sheet.get("name") or f"Feuille {position}"
+        rid = sheet.get(f"{{{_XLSX_REL_NS}}}id")
+        target = id_to_target.get(rid) or f"worksheets/sheet{position}.xml"
+        member = target.lstrip("/") if target.startswith("/") else "xl/" + target
+        targets.append((name, member))
+    return targets
+
+
+def _xlsx_sheet_rows(archive, member, shared_strings):
+    try:
+        root = ElementTree.fromstring(archive.read(member))
+    except KeyError:
+        return ["(feuille introuvable dans le classeur)"]
+    rows = []
+    for row in root.findall(f"{{{_XLSX_NS}}}sheetData/{{{_XLSX_NS}}}row"):
+        if len(rows) >= PREVIEW_ROWS:
+            break
+        values = {}
+        max_col = -1
+        next_col = 0
+        for cell in row.findall(f"{{{_XLSX_NS}}}c"):
+            ref = cell.get("r") or ""
+            col = _column_index(ref) if ref else next_col
+            next_col = col + 1
+            cell_type = cell.get("t", "n")
+            value_el = cell.find(f"{{{_XLSX_NS}}}v")
+            if cell_type == "inlineStr":
+                inline = cell.find(f"{{{_XLSX_NS}}}is")
+                text = "".join(inline.itertext()) if inline is not None else ""
+            elif value_el is None or value_el.text is None:
+                text = ""
+            elif cell_type == "s":
+                try:
+                    text = shared_strings[int(value_el.text)]
+                except (ValueError, IndexError):
+                    text = ""
+            elif cell_type == "b":
+                text = "VRAI" if value_el.text == "1" else "FAUX"
+            else:
+                text = value_el.text  # type "n" (numérique) ou "str"/"e" : valeur, jamais <f>
+            if text:
+                values[col] = text
+                max_col = max(max_col, col)
+        cells = [values.get(i, "") for i in range(max_col + 1)]
+        while cells and not cells[-1]:
+            cells.pop()
+        if cells:
+            rows.append(" | ".join(cells))
+    return rows
+
+
+def _xlsx_preview(path):
+    with zipfile.ZipFile(path) as archive:
+        shared_strings = _xlsx_shared_strings(archive)
+        targets = _xlsx_sheet_targets(archive)
+        blocks = []
+        for name, member in targets:
+            rows = _xlsx_sheet_rows(archive, member, shared_strings)
+            blocks.append(name + "\n" + ("\n".join(rows) if rows else "(feuille vide)"))
+    return blocks, len(targets)
+
+
+def spreadsheet_preview(path):
+    """Aperçu texte d'un ODS/XLSX : nom de chaque feuille puis ses premières
+    lignes (~PREVIEW_ROWS), cellules séparées par « | », valeurs affichées
+    (jamais les formules). Renvoie (texte, nombre_de_feuilles)."""
+    extension = os.path.splitext(path)[1].casefold()
+    blocks, sheet_count = _ods_preview(path) if extension == ".ods" else _xlsx_preview(path)
+    return "\n\n".join(blocks)[:PREVIEW_BYTES], sheet_count
+
+
+class Result(GObject.Object):
+    def __init__(self, path, mtime=None):
+        super().__init__()
+        self.path = path
+        self.name = os.path.basename(path)
+        folder = os.path.dirname(path)
+        if HOME != "/" and (folder == HOME or folder.startswith(HOME + os.sep)):
+            folder = "~" + folder[len(HOME):]
+        self.folder = folder
+        self.content_type = Gio.content_type_guess(self.name, None)[0]
+        if mtime is None:
+            try:
+                mtime = os.stat(path).st_mtime
+            except OSError:
+                mtime = 0
+        self.mtime = mtime
+
+
+class ArchiveEntry(GObject.Object):
+    def __init__(self, path, size, mtime, is_dir):
+        super().__init__()
+        self.path = path
+        self.size = size
+        self.mtime = mtime
+        self.is_dir = is_dir
+
+
+class RadarWindow(Adw.ApplicationWindow):
+    def __init__(self, **kwargs):
+        super().__init__(title="Radar", default_width=1000, default_height=680, **kwargs)
+        self.set_size_request(360, 294)
+
+        self._gen = 0
+        self._pattern = ""
+        self._category = "all"
+        self._path_filter = ""
+        self._search_roots = [ROOT]
+        self._date_filter = "all"
+        self._show_hidden = False
+        self._preview_gen = 0
+        self._pdf_preview_path = None
+        self._truncated = False
+
+        # Index en mémoire : liste de (chemin, nom, nom_cf, masque_de_bits),
+        # construite une seule fois par (racine, fichiers cachés), puis
+        # reclassée en pur Python à chaque frappe — plus de find par lettre.
+        self._index = []
+        self._index_gen = 0
+        self._index_proc = None
+        self._index_ready = False
+        self._last_live_refresh = 0.0
+
+        # ---------- Barre latérale : recherche + résultats ----------
+        self._store = Gio.ListStore.new(Result)
+        self._selection = Gtk.SingleSelection(model=self._store, autoselect=False, can_unselect=True)
+        self._selection.connect("selection-changed", self._on_selection_changed)
+
+        factory = Gtk.SignalListItemFactory()
+        factory.connect("setup", self._row_setup)
+        factory.connect("bind", self._row_bind)
+        self._list = Gtk.ListView(model=self._selection, factory=factory, css_classes=["navigation-sidebar"])
+        self._list.connect("activate", lambda *_: self._launch(False))
+
+        self._search = Gtk.SearchEntry(placeholder_text="Nom du fichier (facultatif)", hexpand=True, search_delay=400)
+        self._search.connect("search-changed", lambda e: self._run_search(e.get_text().strip()))
+        self._search.connect("activate", lambda e: self._run_search(e.get_text().strip()))
+        self._search.connect("next-match", self._on_next_match)
+        self._search.connect("stop-search", lambda e: e.set_text(""))
+        self._search.set_key_capture_widget(self)
+
+        start = Adw.StatusPage(icon_name="system-search-symbolic", title="Rechercher un fichier",
+                               description="Quelques lettres suffisent, même dans le désordre.",
+                               css_classes=["compact"])
+        self._empty = Adw.StatusPage(icon_name="system-search-symbolic", title="Aucun résultat",
+                                     css_classes=["compact"])
+        busy = Adw.StatusPage(title="Recherche en cours…", child=make_spinner(32), css_classes=["compact"])
+
+        self._results_stack = Gtk.Stack()
+        self._results_stack.add_named(start, "start")
+        self._results_stack.add_named(busy, "busy")
+        self._results_stack.add_named(self._empty, "empty")
+        self._results_stack.add_named(Gtk.ScrolledWindow(child=self._list), "results")
+
+        menu = Gio.Menu()
+        menu.append("À propos de Radar", "app.about")
+        menu.append("Quitter", "app.quit")
+
+        self._side_title = Adw.WindowTitle(title="Radar", subtitle="")
+        self._busy_spinner = make_spinner(16)
+        self._busy_spinner.set_visible(False)
+        side_header = Adw.HeaderBar(title_widget=self._side_title)
+        side_header.pack_start(self._busy_spinner)
+        side_header.pack_end(Gtk.MenuButton(icon_name="open-menu-symbolic", primary=True,
+                                            tooltip_text="Menu principal", menu_model=menu))
+
+        self._category_keys = ("all", "documents", "images", "videos", "music", "archives", "code", "other")
+        self._category_combo = Gtk.DropDown.new_from_strings(
+            ["Tous les types", "Bureautique", "Images", "Vidéos", "Musique", "Archives", "Code", "Autres fichiers"])
+        self._category_combo.set_selected(0)
+        self._category_combo.connect("notify::selected", self._on_filter_changed)
+
+        self._date_keys = ("all", "hour", "today", "yesterday", "week", "month", "older")
+        self._date_combo = Gtk.DropDown.new_from_strings(
+            ["Toutes les dates", "Dernière heure", "Aujourd’hui", "Hier", "7 derniers jours", "30 derniers jours", "Plus de 30 jours"])
+        self._date_combo.set_selected(0)
+        self._date_combo.connect("notify::selected", self._on_filter_changed)
+
+        self._path_combo = Gtk.DropDown()
+        self._populate_path_choices()
+        self._path_combo.connect("notify::selected", self._on_filter_changed)
+        for combo in (self._category_combo, self._date_combo, self._path_combo):
+            combo.set_size_request(112, -1)
+            combo.set_hexpand(True)
+
+        search_bar = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6, css_classes=["toolbar"])
+        search_bar.append(self._search)
+        filter_row = Gtk.Box(spacing=6)
+        filter_row.append(self._category_combo)
+        filter_row.append(self._date_combo)
+        filter_row.append(self._path_combo)
+        search_bar.append(filter_row)
+
+        side_view = Adw.ToolbarView(content=self._results_stack)
+        side_view.add_top_bar(side_header)
+        side_view.add_top_bar(search_bar)
+        side_page = Adw.NavigationPage(title="Radar", child=side_view)
+
+        # ---------- Contenu : aperçu ----------
+        self._file_title = Adw.WindowTitle(title="Aperçu", subtitle="")
+        content_header = Adw.HeaderBar(title_widget=self._file_title)
+        self._open_button = Gtk.Button(label="Ouvrir", action_name="win.open",
+                                       css_classes=["suggested-action"],
+                                       tooltip_text="Ouvrir avec l’application par défaut (Ctrl+O)")
+        content_header.pack_end(self._open_button)
+        content_header.pack_end(Gtk.Button(icon_name="folder-open-symbolic", action_name="win.show-folder",
+                                           tooltip_text="Afficher dans le dossier (Ctrl+Maj+O)"))
+        content_header.pack_end(Gtk.Button(icon_name="edit-copy-symbolic", action_name="win.copy-path",
+                                           tooltip_text="Copier le chemin (Ctrl+Maj+C)"))
+
+        if GtkSource:
+            self._buffer = GtkSource.Buffer()
+            self._text = GtkSource.View(buffer=self._buffer, show_line_numbers=True)
+            style = Adw.StyleManager.get_default()
+            style.connect("notify::dark", lambda *_: self._update_scheme())
+            self._update_scheme()
+        else:
+            self._buffer = Gtk.TextBuffer()
+            self._text = Gtk.TextView(buffer=self._buffer)
+        self._text.set_editable(False)
+        self._text.set_cursor_visible(False)
+        self._text.set_monospace(True)
+        self._text.set_wrap_mode(Gtk.WrapMode.WORD_CHAR)
+        self._text.set_top_margin(12)
+        self._text.set_bottom_margin(12)
+        self._text.set_left_margin(12)
+        self._text.set_right_margin(12)
+
+        self._media = Adw.Bin()
+        self._message = Adw.StatusPage()
+        no_selection = Adw.StatusPage(icon_name="text-x-generic-symbolic", title="Aucun fichier sélectionné",
+                                      description="Choisissez un résultat pour afficher son aperçu.")
+
+        # ---------- Contenu d'archive : liste native (icône, chemin, taille, date) ----------
+        self._archive_store = Gio.ListStore.new(ArchiveEntry)
+        self._archive_view = Gtk.ColumnView(model=Gtk.NoSelection(model=self._archive_store),
+                                            show_row_separators=True)
+
+        name_factory = Gtk.SignalListItemFactory()
+        name_factory.connect("setup", self._archive_name_setup)
+        name_factory.connect("bind", self._archive_name_bind)
+        self._archive_view.append_column(
+            Gtk.ColumnViewColumn(title="Chemin", factory=name_factory, expand=True))
+
+        size_factory = Gtk.SignalListItemFactory()
+        size_factory.connect("setup", self._archive_size_setup)
+        size_factory.connect("bind", self._archive_size_bind)
+        self._archive_view.append_column(Gtk.ColumnViewColumn(title="Taille", factory=size_factory))
+
+        date_factory = Gtk.SignalListItemFactory()
+        date_factory.connect("setup", self._archive_date_setup)
+        date_factory.connect("bind", self._archive_date_bind)
+        self._archive_view.append_column(Gtk.ColumnViewColumn(title="Date", factory=date_factory))
+
+        self._preview = Gtk.Stack()
+        self._preview.add_named(no_selection, "none")
+        self._preview.add_named(Gtk.ScrolledWindow(child=self._text), "text")
+        self._preview.add_named(self._media, "media")
+        self._preview.add_named(self._message, "message")
+        self._preview.add_named(Gtk.ScrolledWindow(child=self._archive_view), "archive")
+
+        self._info = Gtk.Label(css_classes=["dim-label", "caption"], ellipsize=Pango.EllipsizeMode.END, xalign=0)
+        info_bar = Gtk.Box(css_classes=["toolbar"])
+        info_bar.append(self._info)
+
+        self._content_view = Adw.ToolbarView(content=self._preview, reveal_bottom_bars=False)
+        self._content_view.add_top_bar(content_header)
+        self._content_view.add_bottom_bar(info_bar)
+        content_page = Adw.NavigationPage(title="Aperçu", child=self._content_view)
+
+        # ---------- Assemblage adaptatif ----------
+        self._split = Gtk.Paned(orientation=Gtk.Orientation.HORIZONTAL, wide_handle=True)
+        self._split.set_start_child(side_page)
+        self._split.set_end_child(content_page)
+        self._split.set_resize_start_child(True)
+        self._split.set_shrink_start_child(False)
+        self._split.set_shrink_end_child(True)
+        self._split.set_position(380)
+
+        self._toasts = Adw.ToastOverlay(child=self._split)
+        self.set_content(self._toasts)
+
+        self._context_menu = Gio.Menu()
+        self._context_menu.append("Supprimer", "win.delete")
+        self._context_popover = Gtk.PopoverMenu(menu_model=self._context_menu)
+        self._context_popover.set_parent(self._list)
+
+        # ---------- Actions ----------
+        self._file_actions = []
+        for name, callback, needs_file in (
+            ("open", lambda *_: self._launch(False), True),
+            ("show-folder", lambda *_: self._launch(True), True),
+            ("copy-path", self._copy_path, True),
+            ("delete", self._delete_selected, True),
+            ("focus-search", lambda *_: self._search.grab_focus(), False),
+            ("toggle-hidden", self._toggle_hidden, False),
+        ):
+            action = Gio.SimpleAction.new(name, None)
+            action.connect("activate", callback)
+            self.add_action(action)
+            if needs_file:
+                action.set_enabled(False)
+                self._file_actions.append(action)
+
+        self._search.grab_focus()
+        self.connect("close-request", self._on_close_request)
+        self._start_indexing()
+
+    def _on_close_request(self, *_args):
+        if self._index_proc is not None:
+            try:
+                self._index_proc.kill()
+            except OSError:
+                pass
+        return False
+
+    # ---------- Liste des résultats ----------
+    def _row_setup(self, _factory, item):
+        icon = Gtk.Image()
+        name = Gtk.Label(xalign=0, ellipsize=Pango.EllipsizeMode.END)
+        folder = Gtk.Label(xalign=0, ellipsize=Pango.EllipsizeMode.MIDDLE, css_classes=["dim-label", "caption"])
+        text = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=2, hexpand=True, valign=Gtk.Align.CENTER)
+        text.append(name)
+        text.append(folder)
+        row = Gtk.Box(spacing=12, margin_top=6, margin_bottom=6)
+        row.append(icon)
+        row.append(text)
+        gesture = Gtk.GestureClick(button=3)
+        gesture.connect("pressed", self._on_row_context, item)
+        row.add_controller(gesture)
+        item.set_child(row)
+
+    def _on_row_context(self, gesture, _n_press, x, y, item):
+        position = item.get_position()
+        if position == Gtk.INVALID_LIST_POSITION:
+            return
+        self._selection.set_selected(position)
+        # x, y sont relatifs à la ligne cliquée, mais le popover est
+        # rattaché à toute la liste (self._list) : il faut convertir ces
+        # coordonnées dans le repère de la liste, sinon set_pointing_to
+        # les prend pour des coordonnées de la liste elle-même et le
+        # popover se plante près de son coin haut-gauche.
+        row = gesture.get_widget()
+        translated = row.translate_coordinates(self._list, x, y)
+        list_x, list_y = translated if translated is not None else (x, y)
+        # Gdk.Rectangle(x, y, w, h) avec des arguments positionnels est
+        # ignoré par cette version de PyGObject (DeprecationWarning, le
+        # rectangle reste (0,0,0,0)) : il faut construire l'objet vide puis
+        # affecter ses champs un par un.
+        rect = Gdk.Rectangle()
+        rect.x, rect.y, rect.width, rect.height = int(list_x), int(list_y), 1, 1
+        self._context_popover.set_pointing_to(rect)
+        self._context_popover.popup()
+
+    @staticmethod
+    def _selected_filter(dropdown, values, default):
+        index = dropdown.get_selected()
+        return values[index] if 0 <= index < len(values) else default
+
+    def _on_filter_changed(self, *_args):
+        self._category = self._selected_filter(self._category_combo, self._category_keys, "all")
+        self._date_filter = self._selected_filter(self._date_combo, self._date_keys, "all")
+        self._path_filter = ""
+        selected_root = self._selected_filter(self._path_combo, self._path_values, ROOT)
+        roots_changed = [selected_root] != self._search_roots
+        self._search_roots = [selected_root]
+        if roots_changed:
+            self._start_indexing()
+        self._run_search(self._search.get_text().strip(), force=True)
+
+    def _populate_path_choices(self):
+        choices = [("all", "Tout le système (/)", ROOT)]
+        if os.path.isdir(HOME):
+            choices.append(("home", "Dossier personnel", HOME))
+        if os.path.isdir("/boot"):
+            choices.append(("boot", "/boot", "/boot"))
+        candidates = set()
+        for parent in ("/run/media", "/media", "/mnt"):
+            if os.path.isdir(parent):
+                for user_dir in (os.listdir(parent) if parent == "/run/media" else [None]):
+                    base = os.path.join(parent, user_dir) if user_dir else parent
+                    try:
+                        candidates.update(
+                            os.path.join(base, name)
+                            for name in os.listdir(base)
+                            if os.path.isdir(os.path.join(base, name)))
+                    except OSError:
+                        continue
+        for path in sorted(candidates):
+            choices.append((path, f"Disque monté · {os.path.basename(path) or path}", path))
+        self._path_values = tuple(path for _identifier, _label, path in choices)
+        self._path_combo.set_model(Gtk.StringList.new([label for _identifier, label, _path in choices]))
+        self._path_combo.set_selected(0)
+
+    def _row_bind(self, _factory, item):
+        result = item.get_item()
+        row = item.get_child()
+        icon = row.get_first_child()
+        text = icon.get_next_sibling()
+        name = text.get_first_child()
+        folder = name.get_next_sibling()
+        icon.set_from_gicon(Gio.content_type_get_symbolic_icon(result.content_type))
+        name.set_label(result.name)
+        folder.set_label(result.folder)
+        row.set_tooltip_text(result.path)
+
+    # ---------- Colonnes de la liste d'archive ----------
+    def _archive_name_setup(self, _factory, item):
+        icon = Gtk.Image()
+        label = Gtk.Label(xalign=0, ellipsize=Pango.EllipsizeMode.MIDDLE)
+        box = Gtk.Box(spacing=6, margin_top=4, margin_bottom=4, margin_start=6)
+        box.append(icon)
+        box.append(label)
+        item.set_child(box)
+
+    def _archive_name_bind(self, _factory, item):
+        entry = item.get_item()
+        box = item.get_child()
+        icon, label = box.get_first_child(), box.get_last_child()
+        if entry.is_dir:
+            icon.set_from_icon_name("folder-symbolic")
+        else:
+            content_type = Gio.content_type_guess(os.path.basename(entry.path.rstrip("/")), None)[0]
+            icon.set_from_gicon(Gio.content_type_get_symbolic_icon(content_type))
+        label.set_label(entry.path)
+        label.set_tooltip_text(entry.path)
+
+    def _archive_size_setup(self, _factory, item):
+        item.set_child(Gtk.Label(xalign=1, margin_end=6))
+
+    def _archive_size_bind(self, _factory, item):
+        entry = item.get_item()
+        item.get_child().set_label("" if entry.is_dir else GLib.format_size(entry.size))
+
+    def _archive_date_setup(self, _factory, item):
+        item.set_child(Gtk.Label(xalign=0, margin_end=6))
+
+    def _archive_date_bind(self, _factory, item):
+        entry = item.get_item()
+        label = item.get_child()
+        if entry.mtime is None:
+            label.set_label("")
+        else:
+            label.set_label(datetime.fromtimestamp(entry.mtime).strftime("%d/%m/%Y %H:%M"))
+
+    def _on_next_match(self, _entry):
+        if self._store.get_n_items() == 0:
+            return
+        if self._selection.get_selected() == Gtk.INVALID_LIST_POSITION:
+            self._selection.set_selected(0)
+        self._list.grab_focus()
+
+    def _set_count(self):
+        n = self._store.get_n_items()
+        if n == 0:
+            if not self._index_ready and self._index:
+                idx_count = f"{len(self._index):,}".replace(",", " ")
+                self._side_title.set_subtitle(f"Indexation en cours... {idx_count} fichiers")
+            else:
+                self._side_title.set_subtitle("")
+            return
+        count = f"{n:,}".replace(",", "\u202f") + ("+" if self._truncated else "")
+        self._side_title.set_subtitle(f"{count} résultat{'s' if n > 1 else ''}")
+
+    # ---------- Indexation (un find complet, une seule fois) ----------
+    def _start_indexing(self):
+        self._index_gen += 1
+        gen = self._index_gen
+        if self._index_proc is not None:
+            try:
+                self._index_proc.kill()
+            except OSError:
+                pass
+            self._index_proc = None
+        self._index = []
+        self._index_ready = False
+        try:
+            proc = subprocess.Popen(
+                index_command(self._show_hidden, self._search_roots),
+                stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
+        except OSError as err:
+            self._toast(f"Impossible de lancer find : {err.strerror}")
+            return
+        self._index_proc = proc
+        threading.Thread(target=self._index_thread, args=(proc, gen), daemon=True).start()
+
+    def _index_thread(self, proc, gen):
+        batch, last = [], time.monotonic()
+        for raw in proc.stdout:
+            if gen != self._index_gen:
+                break
+            path = os.fsdecode(raw.rstrip(b"\n"))
+            try:
+                path.encode()
+            except UnicodeEncodeError:
+                continue
+            name = os.path.basename(path)
+            name_cf = name.casefold()
+            batch.append((path, name, name_cf, _char_bitmask(name_cf)))
+            now = time.monotonic()
+            if len(batch) >= INDEX_BATCH or now - last > 0.15:
+                GLib.idle_add(self._on_index_batch, gen, batch)
+                batch, last = [], now
+        if gen != self._index_gen:
+            proc.kill()
+        proc.wait()
+        proc.stdout.close()
+        GLib.idle_add(self._on_index_batch, gen, batch)
+        GLib.idle_add(self._on_index_done, gen)
+
+    def _on_index_batch(self, gen, batch):
+        if gen != self._index_gen:
+            return GLib.SOURCE_REMOVE
+        if batch:
+            self._index.extend(batch)
+            self._set_count()
+            active = bool(self._pattern or self._path_filter or self._category != "all" or self._date_filter != "all")
+            now = time.monotonic()
+            if active and now - self._last_live_refresh > 0.4:
+                self._last_live_refresh = now
+                self._run_search(self._pattern, force=True)
+        return GLib.SOURCE_REMOVE
+
+    def _on_index_done(self, gen):
+        if gen != self._index_gen:
+            return GLib.SOURCE_REMOVE
+        self._index_proc = None
+        self._index_ready = True
+        self._set_count()
+        active = bool(self._pattern or self._path_filter or self._category != "all" or self._date_filter != "all")
+        if active:
+            self._run_search(self._pattern, force=True)
+        return GLib.SOURCE_REMOVE
+
+    # ---------- Recherche (classement flou en mémoire) ----------
+    def _run_search(self, pattern, force=False):
+        if pattern == self._pattern and not force:
+            return
+        self._pattern = pattern
+        self._gen += 1
+        gen = self._gen
+        self._truncated = False
+        self._store.remove_all()
+        self._set_count()
+        if not pattern and not self._path_filter and self._category == "all" and self._date_filter == "all":
+            self._busy_spinner.set_visible(False)
+            self._results_stack.set_visible_child_name("start")
+            return
+        self._busy_spinner.set_visible(True)
+        self._results_stack.set_visible_child_name("busy")
+        threading.Thread(
+            target=self._query_thread,
+            args=(gen, pattern, self._category, self._path_filter, self._date_filter, self._index),
+            daemon=True,
+        ).start()
+
+    def _query_thread(self, gen, pattern, category, path_filter, date_filter, index):
+        pattern_lower = pattern.casefold()
+        has_pattern = bool(pattern_lower)
+        required = _char_bitmask(pattern_lower) if has_pattern else 0
+        path_filter_cf = os.path.expanduser(path_filter).casefold() if path_filter else ""
+
+        candidates = []
+        for path, name, name_cf, mask in index:
+            if gen != self._gen:
+                return
+            if path_filter_cf and path_filter_cf not in path.casefold():
+                continue
+            if category != "all" and not passes_category(name, category):
+                continue
+            if has_pattern:
+                if (mask & required) != required:
+                    continue
+                hit = _subsequence_span(name_cf, pattern_lower)
+                if hit is None:
+                    continue
+                first, span = hit
+            else:
+                first, span = 0, 0
+            candidates.append((span, first, path, name))
+
+        if gen != self._gen:
+            return
+
+        candidates.sort(key=lambda t: (t[0], t[1], t[2]))
+
+        if has_pattern:
+            scored = []
+            for span, first, path, name in candidates[:SHORTLIST]:
+                score = fuzzy_score(name, pattern_lower)
+                if score is not None:
+                    scored.append((-score, len(name), path, name))
+            scored.sort()
+            ranked = [(path, name) for _s, _l, path, name in scored]
+            ranked += [(path, name) for _span, _first, path, name in candidates[SHORTLIST:]]
+        else:
+            ranked = sorted(((path, name) for _s, _f, path, name in candidates),
+                            key=lambda t: t[1].casefold())
+
+        results, considered = [], 0
+        for path, name in ranked:
+            if gen != self._gen:
+                return
+            considered += 1
+            try:
+                mtime = os.stat(path).st_mtime
+            except OSError:
+                continue  # supprimé/inaccessible depuis l'indexation : on l'ignore
+            if not passes_date(mtime, date_filter):
+                continue
+            results.append((path, mtime))
+            if len(results) >= MAX_RESULTS:
+                break
+        truncated = considered < len(ranked)
+        GLib.idle_add(self._on_query_done, gen, results, truncated)
+
+    def _on_query_done(self, gen, results, truncated):
+        if gen != self._gen:
+            return GLib.SOURCE_REMOVE
+        self._truncated = truncated
+        if results:
+            self._store.splice(0, 0, [Result(path, mtime) for path, mtime in results])
+            self._results_stack.set_visible_child_name("results")
+        self._busy_spinner.set_visible(False)
+        self._set_count()
+        if self._store.get_n_items() == 0:
+            self._empty.set_description(
+                f"Aucun fichier ne correspond à « {GLib.markup_escape_text(self._pattern)} ».")
+            self._results_stack.set_visible_child_name("empty")
+        return GLib.SOURCE_REMOVE
+
+    # ---------- Aperçu ----------
+    def _selected(self):
+        return self._selection.get_selected_item()
+
+    def _on_selection_changed(self, _selection, _pos, _n):
+        result = self._selected()
+        self._preview_gen += 1
+        self._cleanup_pdf_preview()
+        for action in self._file_actions:
+            action.set_enabled(result is not None)
+        self._media.set_child(None)
+        self._update_open_button(result)
+        if result is None:
+            self._file_title.set_title("Aperçu")
+            self._file_title.set_subtitle("")
+            self._show("none", info=None)
+            return
+        self._file_title.set_title(result.name)
+        self._file_title.set_subtitle(result.folder)
+        self._show_preview(result)
+
+    def _update_open_button(self, result):
+        if result is None:
+            self._open_button.set_label("Ouvrir")
+            self._open_button.set_tooltip_text("Ouvrir avec l’application par défaut (Ctrl+O)")
+            return
+        app = Gio.AppInfo.get_default_for_type(result.content_type, False)
+        label = f"Ouvrir avec {app.get_display_name()}" if app is not None else "Ouvrir"
+        self._open_button.set_label(label)
+        self._open_button.set_tooltip_text(f"{label} (Ctrl+O)")
+
+    def _show(self, page, info):
+        self._preview.set_visible_child_name(page)
+        self._info.set_label(info or "")
+        self._content_view.set_reveal_bottom_bars(bool(info))
+
+    def _type_icon_name(self, content_type):
+        theme = Gtk.IconTheme.get_for_display(self.get_display())
+        for name in Gio.content_type_get_symbolic_icon(content_type).get_names():
+            if theme.has_icon(name):
+                return name
+        return "text-x-generic-symbolic"
+
+    def _show_message(self, icon, title, description, info=None):
+        self._message.set_icon_name(icon)
+        self._message.set_title(title)
+        self._message.set_description(GLib.markup_escape_text(description))
+        self._show("message", info)
+
+    def _cleanup_pdf_preview(self):
+        if not self._pdf_preview_path:
+            return
+        try:
+            directory = os.path.dirname(self._pdf_preview_path)
+            os.unlink(self._pdf_preview_path)
+            os.rmdir(directory)
+        except OSError:
+            pass
+        self._pdf_preview_path = None
+
+    def _update_scheme(self):
+        dark = Adw.StyleManager.get_default().get_dark()
+        scheme = GtkSource.StyleSchemeManager.get_default().get_scheme("Adwaita-dark" if dark else "Adwaita")
+        self._buffer.set_style_scheme(scheme)
+
+    def _show_preview(self, result):
+        path, content_type = result.path, result.content_type
+        try:
+            size = os.stat(path).st_size
+            details = f"{GLib.format_size(size)} · {Gio.content_type_get_description(content_type)}"
+            extension = os.path.splitext(path)[1].casefold()
+            if content_type.startswith("image/"):
+                picture = Gtk.Picture(file=Gio.File.new_for_path(path), content_fit=Gtk.ContentFit.CONTAIN,
+                                      alternative_text=result.name)
+                self._media.set_child(picture)
+                return self._show("media", details)
+            if content_type == "application/pdf":
+                self._show_pdf_preview(result.path, details)
+                return
+            if extension in (".docx", ".odt"):
+                try:
+                    document_text = office_preview(path)
+                except (KeyError, OSError, ValueError, zipfile.BadZipFile,
+                        ElementTree.ParseError) as err:
+                    return self._show_message(
+                        "x-office-document-symbolic",
+                        "Aperçu bureautique indisponible",
+                        f"Le document ne peut pas être lu : {err}",
+                        details,
+                    )
+                if not document_text:
+                    return self._show_message(
+                        "x-office-document-symbolic",
+                        "Document vide",
+                        "Aucun texte ou tableau lisible n’a été trouvé.",
+                        details,
+                    )
+                if GtkSource:
+                    self._buffer.set_language(None)
+                self._buffer.set_text(document_text)
+                self._show("text", details + " · texte et tableaux extraits")
+                return
+            if extension in (".ods", ".xlsx"):
+                try:
+                    document_text, sheet_count = spreadsheet_preview(path)
+                except (KeyError, OSError, ValueError, zipfile.BadZipFile,
+                        ElementTree.ParseError) as err:
+                    return self._show_message(
+                        "x-office-spreadsheet-symbolic",
+                        "Aperçu de tableur indisponible",
+                        f"Le classeur ne peut pas être lu : {err}",
+                        details,
+                    )
+                if not document_text:
+                    return self._show_message(
+                        "x-office-spreadsheet-symbolic",
+                        "Classeur vide",
+                        "Aucune cellule lisible n’a été trouvée.",
+                        details,
+                    )
+                if GtkSource:
+                    self._buffer.set_language(None)
+                self._buffer.set_text(document_text)
+                sheets_label = f"{sheet_count} feuille{'s' if sheet_count > 1 else ''}"
+                self._show("text", f"{details} · {sheets_label} · premières lignes")
+                return
+            if _is_archive_name(result.name):
+                self._show_archive_preview(path, details)
+                return
+            if content_type.startswith(("video/", "audio/")):
+                self._media.set_child(Gtk.Video(file=Gio.File.new_for_path(path), autoplay=False))
+                return self._show("media", details)
+            if size == 0:
+                return self._show_message("text-x-generic-symbolic", "Fichier vide", "", details)
+            with open(path, "rb") as handle:
+                data = handle.read(PREVIEW_BYTES)
+        except OSError as err:
+            return self._show_message("dialog-error-symbolic", "Lecture impossible", err.strerror)
+
+        if b"\0" in data[:8192]:
+            return self._show_message(self._type_icon_name(content_type), "Aperçu indisponible",
+                                      "Utilisez « Ouvrir » pour afficher ce fichier.", details)
+
+        lines = data.decode("utf-8", errors="replace").splitlines()
+        truncated = len(lines) > PREVIEW_LINES or size > len(data)
+        self._buffer.set_text("\n".join(lines[:PREVIEW_LINES]))
+        if GtkSource:
+            language = GtkSource.LanguageManager.get_default().guess_language(result.name, content_type)
+            self._buffer.set_language(language)
+        if truncated:
+            details += f" · {PREVIEW_LINES} premières lignes"
+        self._show("text", details)
+
+    def _show_pdf_preview(self, path, details):
+        self._show_message("application-pdf-symbolic", "Génération de l’aperçu PDF…", "", details)
+        generation = self._preview_gen
+
+        def render():
+            try:
+                directory = tempfile.mkdtemp(prefix="radar-pdf-")
+                output = os.path.join(directory, "page")
+                subprocess.run(["pdftoppm", "-f", "1", "-singlefile", "-png",
+                                "-scale-to", "1600", path, output],
+                               check=True, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
+                image_path = output + ".png"
+            except (OSError, subprocess.CalledProcessError) as err:
+                GLib.idle_add(self._show_message, "application-pdf-symbolic",
+                              "Aperçu PDF indisponible",
+                              "Installez le paquet poppler pour activer l’affichage des PDF.",
+                              details)
+                return
+            GLib.idle_add(self._on_pdf_ready, image_path, details, generation)
+
+        threading.Thread(target=render, daemon=True).start()
+
+    def _on_pdf_ready(self, image_path, details, generation):
+        if generation != self._preview_gen:
+            try:
+                os.unlink(image_path)
+                os.rmdir(os.path.dirname(image_path))
+            except OSError:
+                pass
+            return GLib.SOURCE_REMOVE
+        self._cleanup_pdf_preview()
+        self._pdf_preview_path = image_path
+        self._media.set_child(Gtk.Picture.new_for_filename(image_path))
+        self._show("media", details + " · première page")
+        return GLib.SOURCE_REMOVE
+
+    def _show_archive_preview(self, path, details):
+        self._show_message("package-x-generic-symbolic", "Lecture du contenu de l’archive…", "", details)
+        generation = self._preview_gen
+
+        def list_archive():
+            try:
+                proc = subprocess.run(["bsdtar", "-tvf", path], capture_output=True,
+                                      text=True, errors="replace", timeout=ARCHIVE_TIMEOUT)
+            except OSError as err:
+                GLib.idle_add(self._on_archive_error, generation, details, err.strerror)
+                return
+            except subprocess.TimeoutExpired:
+                GLib.idle_add(self._on_archive_error, generation, details,
+                              "délai dépassé : archive trop volumineuse ou illisible")
+                return
+            entries = []
+            for line in proc.stdout.splitlines():
+                parsed = _parse_bsdtar_line(line)
+                if parsed is not None:
+                    entries.append(parsed)
+            if proc.returncode != 0:
+                stderr_lines = [l for l in proc.stderr.strip().splitlines() if l.strip()]
+                message = stderr_lines[-1] if stderr_lines else "format d’archive non reconnu"
+                GLib.idle_add(self._on_archive_error, generation, details, message)
+                return
+            truncated = len(entries) > ARCHIVE_MAX_ENTRIES
+            if truncated:
+                entries = entries[:ARCHIVE_MAX_ENTRIES]
+            GLib.idle_add(self._on_archive_ready, generation, entries, truncated, details)
+
+        threading.Thread(target=list_archive, daemon=True).start()
+
+    def _on_archive_error(self, generation, details, message):
+        if generation != self._preview_gen:
+            return GLib.SOURCE_REMOVE
+        self._show_message("package-x-generic-symbolic", "Contenu de l’archive indisponible",
+                           f"Archive chiffrée ou illisible ({message}).", details)
+        return GLib.SOURCE_REMOVE
+
+    def _on_archive_ready(self, generation, entries, truncated, details):
+        if generation != self._preview_gen:
+            return GLib.SOURCE_REMOVE
+        self._archive_store.remove_all()
+        file_count = sum(1 for _path, _size, _mtime, is_dir in entries if not is_dir)
+        total_size = sum(size for _path, size, _mtime, is_dir in entries if not is_dir)
+        self._archive_store.splice(0, 0, [
+            ArchiveEntry(entry_path, size, mtime, is_dir)
+            for entry_path, size, mtime, is_dir in entries
+        ])
+        count_label = f"{file_count} fichier{'s' if file_count > 1 else ''}"
+        suffix = " · liste tronquée" if truncated else ""
+        self._show("archive", f"{details} · {count_label} · {GLib.format_size(total_size)} décompressés{suffix}")
+        return GLib.SOURCE_REMOVE
+
+    # ---------- Actions ----------
+    def _toast(self, message):
+        self._toasts.add_toast(Adw.Toast.new(GLib.markup_escape_text(message)))
+
+    def _launch(self, containing_folder):
+        result = self._selected()
+        if result is None:
+            return
+        launcher = Gtk.FileLauncher.new(Gio.File.new_for_path(result.path))
+
+        def done(source, async_result):
+            try:
+                if containing_folder:
+                    source.open_containing_folder_finish(async_result)
+                else:
+                    source.launch_finish(async_result)
+            except GLib.Error as err:
+                if not err.matches(Gtk.dialog_error_quark(), Gtk.DialogError.DISMISSED):
+                    self._toast(f"Impossible d’ouvrir le fichier : {err.message}")
+
+        if containing_folder:
+            launcher.open_containing_folder(self, None, done)
+        else:
+            launcher.launch(self, None, done)
+
+    def _copy_path(self, *_):
+        result = self._selected()
+        if result is not None:
+            self.get_clipboard().set(result.path)
+            self._toast("Chemin copié")
+
+    def _toggle_hidden(self, *_):
+        self._show_hidden = not self._show_hidden
+        self._start_indexing()
+        self._run_search(self._search.get_text().strip(), force=True)
+        self._toast("Fichiers cachés affichés" if self._show_hidden else "Fichiers cachés masqués")
+
+    def _delete_selected(self, *_):
+        result = self._selected()
+        if result is None:
+            return
+        dialog = Adw.AlertDialog(
+            heading="Supprimer ce fichier ?",
+            body=f"« {result.name} » sera supprimé définitivement.",
+        )
+        dialog.add_response("cancel", "Annuler")
+        dialog.add_response("delete", "Supprimer")
+        dialog.set_response_appearance("delete", Adw.ResponseAppearance.DESTRUCTIVE)
+        dialog.set_default_response("cancel")
+        dialog.connect("response", self._on_delete_response, result)
+        dialog.present(self)
+
+    def _on_delete_response(self, _dialog, response, result):
+        if response != "delete":
+            return
+        try:
+            os.remove(result.path)
+        except OSError as err:
+            self._toast(f"Suppression impossible : {err.strerror}")
+            return
+        for index in range(self._store.get_n_items()):
+            if self._store.get_item(index).path == result.path:
+                self._store.remove(index)
+                break
+        self._index = [entry for entry in self._index if entry[0] != result.path]
+        self._set_count()
+        self._toast("Fichier supprimé")
+
+
+class RadarApp(Adw.Application):
+    def __init__(self):
+        super().__init__(application_id=APP_ID, flags=Gio.ApplicationFlags.DEFAULT_FLAGS)
+
+    def do_startup(self):
+        Adw.Application.do_startup(self)
+        for name, callback in (("about", self._on_about), ("quit", lambda *_: self.quit())):
+            action = Gio.SimpleAction.new(name, None)
+            action.connect("activate", callback)
+            self.add_action(action)
+        for action, accels in (("app.quit", ["<Ctrl>q"]), ("win.open", ["<Ctrl>o"]),
+                               ("win.show-folder", ["<Ctrl><Shift>o"]),
+                               ("win.copy-path", ["<Ctrl><Shift>c"]),
+                               ("win.focus-search", ["<Ctrl>f"]),
+                               ("win.toggle-hidden", ["<Ctrl>h"])):
+            self.set_accels_for_action(action, accels)
+
+    def do_activate(self):
+        window = self.props.active_window or RadarWindow(application=self)
+        window.present()
+
+    def _on_about(self, *_):
+        about = Adw.AboutDialog(application_name="Radar", application_icon="radar",
+                                version="1.0", comments="Recherche de fichiers avec aperçu.",
+                                license_type=Gtk.License.GPL_3_0)
+        about.present(self.props.active_window)
+
+
+if __name__ == "__main__":
+    sys.exit(RadarApp().run(sys.argv))

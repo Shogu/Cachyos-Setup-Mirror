@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<schemalist>
+  <schema id="org.gnome.shell.extensions.session-keeper" path="/org/gnome/shell/extensions/session-keeper/">
+    <key name="save-session-trigger" type="b">
+      <default>false</default>
+      <summary>Déclencheur d’enregistrement de la session</summary>
+      <description>Utilisé pour déclencher l’enregistrement de la session</description>
+    </key>
+    <key name="restore-session-trigger" type="b">
+      <default>false</default>
+      <summary>Déclencheur de restauration de la session</summary>
+      <description>Utilisé pour déclencher la restauration de la session</description>
+    </key>
+    <key name="delete-session-trigger" type="b">
+      <default>false</default>
+      <summary>Déclencheur de suppression de la session</summary>
+      <description>Utilisé pour déclencher la suppression de la session</description>
+    </key>
+    <key name="show-notification-trigger" type="b">
+      <default>false</default>
+      <summary>Déclencheur d’affichage de la notification</summary>
+      <description>Utilisé pour déclencher l’affichage de la notification</description>
+    </key>
+    <key name="debug-mode" type="b">
+      <default>false</default>
+      <summary>Mode débogage</summary>
+      <description>Active le mode débogage afin d’afficher les boutons de test</description>
+    </key>
+    <key name="save-session-mode" type="u">
+      <default>0</default>
+      <summary>Mode d’enregistrement de la session</summary>
+      <description>0 – enregistrer automatiquement la session en continu et effectuer un flush final à la déconnexion ; 1 – enregistrer la session manuellement</description>
+      <range min="0" max="1"/>
+    </key>
+    <key name="restore-session-mode" type="u">
+      <default>1</default>
+      <summary>Restauration automatique de la session</summary>
+      <description>Moment de la restauration automatique : 0 – jamais ; 1 – à la connexion ; 2 – au démarrage ; 3 – afficher une notification avec un bouton de restauration</description>
+      <range min="0" max="3"/>
+    </key>
+    <key name="last-restore-mode" type="u">
+      <default>1</default>
+      <summary>Dernier mode de restauration actif</summary>
+      <description>Mode rétabli quand on réactive la restauration depuis le bouton Quick Settings (1 – à la connexion ; 2 – au démarrage ; 3 – notification)</description>
+      <range min="1" max="3"/>
+    </key>
+    <key name="autostart-delay" type="i">
+      <default>3</default>
+      <summary>Délai de restauration automatique</summary>
+      <description>Délai en secondes avant la restauration de la session au démarrage</description>
+    </key>
+    <key name="exclude-enabled" type="b">
+      <default>false</default>
+      <summary>Activer l’exclusion d’applications</summary>
+      <description>Si activé, les applications sélectionnées seront ignorées lors de l’enregistrement et de la restauration de la session.</description>
+    </key>
+    <key name="excluded-apps" type="as">
+      <default>[]</default>
+      <summary>Liste des applications exclues</summary>
+      <description>Liste des identifiants d’applications de bureau (par ex. org.gnome.Terminal) à exclure de la restauration de session.</description>
+    </key>
+  </schema>
+</schemalist>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE policyconfig PUBLIC
+ "-//freedesktop//DTD PolicyKit Policy Configuration 1.0//EN"
+ "http://www.freedesktop.org/standards/PolicyKit/1/policyconfig.dtd">
+<policyconfig>
+  <vendor>Vidange</vendor>
+  <icon_name>io.gitlab.shogu.Vidange</icon_name>
+  <action id="io.gitlab.shogu.Vidange.helper">
+    <description>Run Vidange system cleanup</description>
+    <description xml:lang="fr">Exécuter le nettoyage système de Vidange</description>
+    <message>Authentication is required to clean the system</message>
+    <message xml:lang="fr">Une authentification est nécessaire pour nettoyer le système</message>
+    <defaults>
+      <allow_any>auth_admin</allow_any>
+      <allow_inactive>auth_admin</allow_inactive>
+      <allow_active>auth_admin_keep</allow_active>
+    </defaults>
+    <annotate key="org.freedesktop.policykit.exec.path">/usr/lib/vidange/vidange-helper</annotate>
+  </action>
+</policyconfig>

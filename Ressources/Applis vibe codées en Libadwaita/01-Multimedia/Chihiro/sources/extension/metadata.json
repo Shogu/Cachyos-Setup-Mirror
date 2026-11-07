@@ -1,0 +1,8 @@
+{
+  "uuid": "chihiro-quicksettings-launch-toggle@ogu",
+  "name": "Chihiro Quick Settings Launch Toggle",
+  "description": "Tuile Réglages rapides on/off : lance l'application Chihiro (fr.ogu.Chihiro) ou la ferme par son action D-Bus « quit ». L'état suit la présence de l'application sur le bus de session.",
+  "version": 1,
+  "shell-version": ["50", "51"],
+  "url": "https://gitlab.com/Shogu"
+}

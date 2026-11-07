@@ -1,0 +1,7 @@
+{
+  "uuid": "sursis@localhost",
+  "name": "Sursis",
+  "description": "Laisse la notification de capture d'écran affichée 15 secondes au lieu de 4, le temps de cliquer dessus.",
+  "shell-version": ["50", "51"],
+  "version": 1
+}

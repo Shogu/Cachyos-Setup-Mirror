@@ -1,0 +1,125 @@
+/* Livret — uniquement des variables CSS libadwaita, aucune couleur codée en dur. */
+
+.pastille {
+  min-width: 10px;
+  min-height: 10px;
+  border-radius: 999px;
+}
+.pastille.vide {
+  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, currentColor 40%, transparent);
+}
+.pastille.brouillon {
+  background-color: var(--warning-bg-color);
+}
+.pastille.termine {
+  background-color: var(--success-bg-color);
+}
+
+/* Éditeurs d'appréciation */
+.editeur-cadre {
+  border-radius: 12px;
+}
+.editeur-cadre:focus-within {
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent-color) 60%, transparent);
+}
+textview.editeur,
+textview.editeur > text {
+  background: none;
+  color: var(--card-fg-color);
+}
+textview.editeur {
+  font-size: 1.05em;
+  min-height: 7.5em;
+}
+textview.editeur.bilan {
+  min-height: 9em;
+}
+.historique {
+  border-radius: 9px;
+  padding: 8px 12px;
+  background-color: color-mix(in srgb, var(--window-fg-color) 5%, transparent);
+  border-left: 3px solid color-mix(in srgb, var(--accent-bg-color) 55%, transparent);
+}
+.historique .periode {
+  font-weight: 700;
+  font-size: 0.85em;
+  color: var(--accent-color);
+}
+.compteur {
+  font-feature-settings: "tnum";
+}
+
+/* Listes de droite */
+.liste-entete {
+  padding: 10px 12px 4px 12px;
+}
+.moyenne {
+  font-feature-settings: "tnum";
+  font-weight: 700;
+}
+.moyenne.cumul {
+  font-weight: 400;
+  opacity: var(--dim-opacity);
+  font-size: 0.85em;
+}
+
+/* Bandeau de progression */
+.progression {
+  padding: 6px 12px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+/* Mode conseil */
+.conseil-nom {
+  font-size: 2.4em;
+  font-weight: 800;
+}
+.conseil-moyenne {
+  font-size: 2.2em;
+  font-weight: 800;
+  color: var(--accent-color);
+  font-feature-settings: "tnum";
+}
+.conseil-texte {
+  font-size: 1.25em;
+}
+.conseil-matiere {
+  padding: 12px 14px;
+}
+.conseil-matiere .texte {
+  font-size: 1.05em;
+}
+
+/* PFMP : étapes de convention */
+.etape {
+  min-width: 16px;
+  min-height: 6px;
+  border-radius: 3px;
+  background-color: color-mix(in srgb, currentColor 15%, transparent);
+}
+.etape.faite {
+  background-color: var(--accent-bg-color);
+}
+.etapes.finalisee .etape {
+  background-color: var(--success-bg-color);
+}
+.badge {
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.85em;
+  font-weight: 700;
+}
+.badge.en-cours {
+  background-color: color-mix(in srgb, var(--warning-bg-color) 25%, transparent);
+  color: var(--warning-color);
+}
+.badge.terminee {
+  background-color: color-mix(in srgb, var(--success-bg-color) 25%, transparent);
+  color: var(--success-color);
+}
+.quota {
+  font-size: 1.25em;
+  font-weight: 800;
+  font-feature-settings: "tnum";
+  color: var(--accent-color);
+}

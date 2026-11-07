@@ -1,0 +1,182 @@
+/* Generated with AI for personal use. Do NOT upload to extensions.gnome.org (EGO) unless you understand JavaScript and can maintain this code. */
+.tcw-column { spacing: 6px; }
+.tcw-right { width: 320px; padding: 0 4px 0 12px; margin-left: 6px; border-left: 1px solid rgba(128, 128, 128, 0.2); }
+.tcw-left { padding: 0 4px; }
+.tcw-stack { width: 30em; spacing: 6px; padding-right: 8px; margin-right: 6px; border-right: 1px solid rgba(128, 128, 128, 0.2); }
+
+.tcw-media { spacing: 6px; }
+/* Pochette du lecteur GNOME (48 px par défaut) : 64 et 80 px, en em comme le thème. */
+.tcw-cover-medium .media-message .message-icon { icon-size: 4.36em; }
+.tcw-cover-large .media-message .message-icon { icon-size: 5.45em; }
+/* Pochette arrondie : image de fond au rayon des éléments de GNOME ($base_border_radius). */
+.tcw-cover-image { width: 48px; height: 48px; border-radius: 8px; background-size: cover; background-position: center; }
+.tcw-cover-medium .tcw-cover-image { width: 4.36em; height: 4.36em; }
+.tcw-cover-large .tcw-cover-image { width: 5.45em; height: 5.45em; }
+.tcw-drawer { spacing: 4px; }
+/* Fond repris de la carte native (.events-button), comme les cartes de notes. */
+.tcw-drawer-row { spacing: 6px; border-radius: 12px; padding: 9px 12px; margin: 0 18px 4px 4px; }
+.tcw-drawer-content { spacing: 10px; }
+.tcw-drawer-expander { border-radius: 9px; padding: 4px 4px; }
+.tcw-drawer-expander:hover, .tcw-drawer-arrow-button:hover, .tcw-dnd-button:hover { background-color: rgba(128, 128, 128, 0.18); }
+.tcw-drawer-divider { width: 1px; height: 20px; background-color: rgba(128, 128, 128, 0.35); }
+.tcw-dnd-box { spacing: 8px; }
+.tcw-dnd-button { border-radius: 9px; padding: 4px 6px; }
+.tcw-drawer-arrow-button { border-radius: 9px; padding: 4px; }
+.tcw-drawer-icon, .tcw-drawer-arrow { icon-size: 16px; }
+.tcw-badge { border-radius: 99px; padding: 0 7px; font-size: 0.85em; font-weight: bold; background-color: -st-accent-color; color: -st-accent-fg-color; }
+
+/* Même rendu que l'en-tête des cartes de GNOME (lecteur « Semitone », notifications). */
+/* Tailles en em comme le thème GNOME : elles suivent la mise à l'échelle du texte. */
+.tcw-header { spacing: 0.55em; padding: 4px 14px 4px 4px; min-height: 1.64em; color: #9a9a9e; }
+.tcw-header-icon { icon-size: 1.09em; -st-icon-style: symbolic; }
+.tcw-header-title { font-weight: bold; }
+
+.tcw-entry { margin: 0 14px 4px 0; padding: 6px 0; }
+.tcw-hint { padding: 8px 18px; font-size: 0.85em; color: rgba(128, 128, 128, 1); }
+.tcw-error { padding: 4px 8px; font-size: 0.85em; color: #e62d42; }
+
+
+.tcw-list { spacing: 6px; padding-right: 14px; }
+.tcw-scroll { max-height: 540px; }
+
+.tcw-line { spacing: 2px; }
+.tcw-card.events-button { padding: 9px 12px; text-align: left; }
+.tcw-heading { spacing: 6px; }
+.tcw-title { font-weight: bold; }
+.tcw-date { font-size: 0.85em; color: rgba(128, 128, 128, 1); }
+.tcw-preview { font-size: 0.85em; padding-top: 2px; color: rgba(128, 128, 128, 1); }
+.tcw-pin-icon { icon-size: 12px; }
+.tcw-tasks { spacing: 4px; padding-top: 4px; font-size: 0.85em; color: rgba(128, 128, 128, 1); }
+.tcw-tasks-icon { icon-size: 12px; }
+
+/* Paires de boutons de l'en-tête et des notes : même espacement, même bord droit. */
+.tcw-button-pair { spacing: 2px; }
+.tcw-icon-button { padding: 8px; }
+.tcw-icon-button StIcon { icon-size: 16px; }
+.tcw-icon-button:checked { background-color: rgba(128, 128, 128, 0.25); }
+
+.tcw-actions { padding: 4px 0 2px 12px; spacing: 2px; }
+.tcw-action { border-radius: 9px; padding: 6px 10px; }
+.tcw-action:hover, .tcw-action:focus { background-color: rgba(128, 128, 128, 0.18); }
+.tcw-action:active { background-color: rgba(128, 128, 128, 0.28); }
+.tcw-action-box { spacing: 10px; }
+.tcw-action-icon { icon-size: 16px; }
+.tcw-separator { height: 1px; margin: 3px 10px; background-color: rgba(128, 128, 128, 0.2); }
+.tcw-destructive { color: #e62d42; }
+
+.tcw-categories { spacing: 4px; padding: 0 14px 4px 0; }
+.tcw-chip { border-radius: 99px; padding: 3px 12px; font-size: 0.9em; }
+.tcw-chip:checked { background-color: -st-accent-color; color: -st-accent-fg-color; }
+.tcw-section { font-weight: bold; font-size: 0.85em; color: rgba(128, 128, 128, 1); padding: 8px 6px 0 6px; }
+
+.tcw-dot { width: 8px; height: 8px; border-radius: 4px; }
+.tcw-colors { spacing: 2px; padding: 2px 6px 6px 6px; }
+.tcw-color-button { border-radius: 99px; padding: 4px; border: 2px solid transparent; }
+.tcw-color-button:hover { background-color: rgba(128, 128, 128, 0.18); }
+.tcw-color-button:checked { border-color: rgba(128, 128, 128, 0.8); }
+.tcw-color-swatch { width: 16px; height: 16px; border-radius: 8px; }
+.tcw-color-none { icon-size: 16px; color: rgba(128, 128, 128, 1); }
+
+.tcw-tasklist { spacing: 2px; padding: 4px 6px 2px 18px; }
+.tcw-task { font-size: 1em; }
+
+.tcw-undo { spacing: 12px; padding: 8px 8px 8px 14px; margin: 4px 14px 6px 0; border-radius: 12px; background-color: rgba(128, 128, 128, 0.22); }
+.tcw-undo-button { padding: 4px 12px; }
+
+/* Lecteur : barre de progression et boutons Aléatoire / Répéter ajoutés à la carte GNOME. */
+.tcw-progress { spacing: 8px; padding: 2px 6px 0 6px; }
+.tcw-progress-time { font-size: 0.85em; font-feature-settings: "tnum"; color: rgba(128, 128, 128, 1); min-width: 2.6em; }
+.tcw-progress-slider { height: 1.4em; -barlevel-height: 0.3em; -slider-handle-radius: 0.4em; }
+.tcw-media-controls { spacing: 12px; padding-top: 2px; }
+/* Boutons ronds : les boutons de GNOME sont des pilules faites pour la colonne de droite. */
+.tcw-media-controls .message-media-control { padding: 10px; border-radius: 999px; }
+.tcw-media .message-media-control:checked { color: -st-accent-color; }
+
+
+/* Rendez-vous du calendrier et hauteur de leur liste. */
+/* ---------------------------------------------------------------------------
+   Rendez-vous du panneau calendrier (v28)
+   ---------------------------------------------------------------------------
+   L'agenda s'identifie par un point devant le titre, plus par un fond.
+
+   1. Le « grand cartouche gris » autour des rendez-vous est `.events-button`
+      (#47474c, rayon 12px, padding 0.818em) : c'est la carte native du bloc,
+      qui est UN seul bouton cliquable vers GNOME Calendar. Aplati ici, et
+      aussi en style en ligne par calendarEvents.js — le style en ligne prime
+      sur le thème (y compris :hover/:active) et ne dépend pas du rechargement
+      de cette feuille. Le bouton garde sa zone de clic et sa mise en page, on
+      ne retire que le fond.
+
+   2. Le point est un carré arrondi plein, dimensionné et coloré **uniquement
+      en style en ligne** par calendarEvents.js (`dotStyle`) : ni sa taille ni
+      sa couleur ne passent par cette feuille. Aligné sur la ligne du titre,
+      l'heure reste sous le texte du titre car elle vit dans la colonne voisine
+      du point.
+
+   Le thème natif fournit toute la hiérarchie de texte : `.event-summary` en
+   700, `.event-time` en 0.818em gris #b2b2b4. Aucun lettrage n'est recoloré.
+   --------------------------------------------------------------------------- */
+.events-button.tcw-calendar-events,
+.events-button.tcw-calendar-events:hover,
+.events-button.tcw-calendar-events:active,
+.events-button.tcw-calendar-events:focus {
+  background-color: transparent;
+  box-shadow: none;
+}
+
+/* `.event-box` n'a par défaut ni fond ni padding : ce retrait fait respirer la
+   ligne, et cale le point sous le titre de la section. */
+.tcw-calendar-events .event-box {
+  padding: 4px 8px;
+}
+
+/* Garde le titre de la section aligné sur le début des lignes, décalé par le
+   padding ci-dessus. */
+.tcw-calendar-events .events-title {
+  padding-left: 8px;
+}
+
+/* Liste des rendez-vous du calendrier : hauteur gérée par l'extension (adaptative) et fondu de bord réduit,
+   au lieu des 68 px de flou natifs qui rendaient les événements illisibles. */
+.datemenu-displays-section {
+  -st-vfade-offset: 14px;
+}
+
+.datemenu-displays-section.vfade {
+  -st-vfade-offset: 14px;
+}
+
+/* Icône animée du lecteur dans la rangée de Quick Settings. */
+.tcw-equalizer {
+  height: 16px;
+}
+
+/* Part écoulée d'une plage de plusieurs jours en cours (vacances…). */
+.tcw-event-progress { height: 2px; margin-top: 4px; border-radius: 1px; background-color: rgba(128, 128, 128, 0.25); }
+.tcw-event-progress-fill { height: 2px; border-radius: 1px; }
+
+/* Lecteur : ⋯ dans l'en-tête, actions dépliées, morceau suivant. */
+.tcw-player-more { padding: 4px; }
+.tcw-player-actions { padding: 4px 4px 2px 4px; }
+.tcw-next-track { font-size: 0.85em; padding-top: 2px; color: rgba(128, 128, 128, 1); }
+
+/* Rendez-vous rapide : + à droite de « Aujourd'hui » et formulaire sous la liste. */
+.tcw-events-header { spacing: 6px; }
+.tcw-quick-event { spacing: 8px; padding: 10px 12px; margin: 4px 0 8px 0; border-radius: 12px; background-color: rgba(128, 128, 128, 0.14); }
+.tcw-quick-event-row { spacing: 8px; }
+.tcw-quick-event-day { font-weight: bold; }
+.tcw-quick-event-label { color: rgba(128, 128, 128, 1); }
+.tcw-time-entry { width: 4.5em; }
+.tcw-calendar-chip-box { spacing: 8px; }
+.tcw-dot { width: 8px; height: 8px; border-radius: 4px; background-color: rgba(128, 128, 128, 1); }
+.tcw-quick-event-actions { spacing: 8px; }
+.tcw-flat-button { border-radius: 99px; padding: 4px 12px; background-color: transparent; }
+.tcw-suggested-button { border-radius: 99px; padding: 4px 14px; background-color: -st-accent-color; color: -st-accent-fg-color; }
+
+/* Boutons Copier / ⋮ dans la carte de note, sur la ligne de l'aperçu (sans marge négative). */
+.tcw-card-bottom { spacing: 6px; }
+.tcw-card-buttons { spacing: 2px; }
+.tcw-card-button { padding: 6px; border-radius: 99px; }
+.tcw-card-button StIcon { icon-size: 16px; }
+.tcw-card-button:hover, .tcw-card-button:focus { background-color: rgba(128, 128, 128, 0.22); }
+.tcw-card-button:checked { background-color: rgba(128, 128, 128, 0.32); }

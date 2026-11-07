@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+ <g transform="rotate(-9 50 70)"><rect x="14" y="28" width="84" height="86" rx="7" fill="#c0bfbc"/><rect x="14" y="25" width="84" height="86" rx="7" fill="#e8e8e7"/></g>
+ <path d="M35 17h50.5l30 30v60.5a6 6 0 0 1-6 6H35a6 6 0 0 1-6-6V23a6 6 0 0 1 6-6z" fill="#d6d5d2"/>
+ <path d="M35 14h50.5l30 30v60.5a6 6 0 0 1-6 6H35a6 6 0 0 1-6-6V20a6 6 0 0 1 6-6z" fill="#fafafa"/>
+ <path d="M85.5 14v22a8 8 0 0 0 8 8h22z" fill="#e6e5e3"/>
+ <g fill="#c6c6cb"><rect x="42" y="36" width="31" height="5.6" rx="2.8"/><rect x="42" y="50.4" width="58" height="5.6" rx="2.8"/>
+  <rect x="42" y="62.7" width="41" height="5.6" rx="2.8"/><rect x="42" y="74.4" width="30" height="5.6" rx="2.8"/></g>
+ <rect x="68" y="88" width="42" height="17" rx="4" fill="#c01c28"/><rect x="68" y="86.5" width="42" height="17" rx="4" fill="#f53a3a"/>
+ <g fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M74 99.5V90.5h3.6a2.4 2.4 0 0 1 0 4.8H74"/>
+  <path d="M84.5 90.5v9h2.6a4.5 4.5 0 0 0 0-9z"/>
+  <path d="M100.5 90.5h-5v9M95.5 95h4"/></g>
+</svg>

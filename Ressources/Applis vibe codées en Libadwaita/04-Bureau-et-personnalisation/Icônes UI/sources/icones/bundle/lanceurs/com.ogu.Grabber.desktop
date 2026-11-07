@@ -1,0 +1,25 @@
+[Desktop Entry]
+Name=Grabber
+Comment=Interface libadwaita minimale pour JDownloader
+Exec=/home/ogu/.local/bin/Grabber.AppImage
+Icon=com.ogu.Grabber
+Terminal=false
+Type=Application
+Categories=Network;FileTransfer;GTK;
+StartupNotify=true
+StartupWMClass=Grabber
+X-GNOME-Application-ID=com.ogu.Grabber
+Name[fr]=Grabber
+Name[fr_FR]=Grabber
+Name[fr_FR.UTF-8]=Grabber
+Comment[fr]=Interface libadwaita minimale pour JDownloader
+Comment[fr_FR]=Interface libadwaita minimale pour JDownloader
+Comment[fr_FR.UTF-8]=Interface libadwaita minimale pour JDownloader
+PrefersNonDefaultGPU=false
+Hidden=false
+NoDisplay=false
+Keywords=download;jdownloader
+Keywords[fr]=download;jdownloader
+Keywords[fr_FR]=download;jdownloader
+Keywords[fr_FR.UTF-8]=download;jdownloader
+

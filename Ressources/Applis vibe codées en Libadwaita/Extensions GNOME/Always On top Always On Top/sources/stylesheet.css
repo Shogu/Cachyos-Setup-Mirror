@@ -1,0 +1,12 @@
+/* Copie des règles de l'indicateur de Copyous (copyous-indicator-box) :
+ * on conserve la géométrie native de PanelMenu.Button et on neutralise
+ * uniquement le padding/margin propres à l'icône.
+ */
+.aot-indicator-box {
+    spacing: 6px;
+}
+
+.aot-indicator-box .system-status-icon {
+    padding: 0;
+    margin: 0;
+}

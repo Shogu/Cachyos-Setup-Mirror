@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE policyconfig PUBLIC
+ "-//freedesktop//DTD PolicyKit Policy Configuration 1.0//EN"
+ "http://www.freedesktop.org/standards/PolicyKit/1.0/policyconfig.dtd">
+<policyconfig>
+  <vendor>Snapper-GTK4</vendor>
+  <vendor_url>https://gitlab.com/Zesko/limine-snapper-sync</vendor_url>
+  <icon_name>io.github.Shogu.SnapperGtk4</icon_name>
+
+  <action id="io.github.Shogu.SnapperGtk4.helper">
+    <description>Manage system snapshots with Snapper</description>
+    <description xml:lang="fr">Gérer les snapshots système avec Snapper</description>
+    <message>Authentication is required to manage system snapshots</message>
+    <message xml:lang="fr">Une authentification est nécessaire pour gérer les snapshots système</message>
+    <defaults>
+      <allow_any>auth_admin</allow_any>
+      <allow_inactive>auth_admin</allow_inactive>
+      <allow_active>auth_admin_keep</allow_active>
+    </defaults>
+    <annotate key="org.freedesktop.policykit.exec.path">/usr/lib/snapper-gtk4/snapper-gtk4-helper</annotate>
+  </action>
+</policyconfig>

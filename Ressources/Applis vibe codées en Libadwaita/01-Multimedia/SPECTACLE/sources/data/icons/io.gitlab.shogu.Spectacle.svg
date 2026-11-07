@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="dl" x1="0" x2="1"><stop offset="0" stop-color="#c01c28"/><stop offset=".55" stop-color="#ed333b"/><stop offset="1" stop-color="#e01b24"/></linearGradient>
+    <linearGradient id="dr" x1="1" x2="0"><stop offset="0" stop-color="#c01c28"/><stop offset=".55" stop-color="#ed333b"/><stop offset="1" stop-color="#e01b24"/></linearGradient>
+  </defs>
+  <g transform="translate(64 64) scale(0.97) translate(-64 -64)">
+    <path d="M32 34 H96 V110 a4 4 0 0 1 -4 4 H36 a4 4 0 0 1 -4 -4 Z" fill="#241f31"/>
+    <path d="M32 30 H96 V106 a4 4 0 0 1 -4 4 H36 a4 4 0 0 1 -4 -4 Z" fill="#1a5fb4"/>
+    <path d="M14 30 H58 C56 62 46 92 34 116 H20 a6 6 0 0 1 -6 -6 Z" fill="#a51d2d"/>
+    <path d="M114 30 H70 C72 62 82 92 94 116 H108 a6 6 0 0 0 6 -6 Z" fill="#a51d2d"/>
+    <path d="M14 26 H58 C56 58 46 88 34 112 H20 a6 6 0 0 1 -6 -6 Z" fill="url(#dl)"/>
+    <path d="M114 26 H70 C72 58 82 88 94 112 H108 a6 6 0 0 0 6 -6 Z" fill="url(#dr)"/>
+    <path d="M30 28 C30 60 26 86 22 108 M44 28 C42 58 38 82 32 104 M98 28 C98 60 102 86 106 108 M84 28 C86 58 90 82 96 104" fill="none" stroke="#a51d2d" stroke-width="2.5" stroke-linecap="round" opacity=".55"/>
+    <rect x="10" y="16" width="108" height="18" rx="6" fill="#e5a50a"/>
+    <rect x="10" y="12" width="108" height="18" rx="6" fill="#f6d32d"/>
+    <path d="M57 69 L76 80 L57 91 Z" fill="#f6d32d" stroke="#f6d32d" stroke-width="6" stroke-linejoin="round"/>
+  </g>
+</svg>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <enum id="org.gnome.shell.extensions.batterytimepercentagecompact.panel-format">
+    <value nick="time-percent" value="0"/>
+    <value nick="percent-time" value="1"/>
+    <value nick="time" value="2"/>
+    <value nick="percent" value="3"/>
+  </enum>
+  <schema id="org.gnome.shell.extensions.batterytimepercentagecompact" path="/org/gnome/shell/extensions/batterytimepercentagecompact/">
+    <key name="panel-format" enum="org.gnome.shell.extensions.batterytimepercentagecompact.panel-format">
+      <default>'time-percent'</default>
+      <summary>Affichage dans la barre du haut</summary>
+      <description>Temps - pourcentage, pourcentage - temps, temps seul ou pourcentage seul.</description>
+    </key>
+    <key name="quick-show-watts" type="b">
+      <default>true</default>
+      <summary>Afficher la puissance dans Quick Settings</summary>
+      <description>Ajoute la puissance instantanée (W) après le temps restant dans le bouton batterie de Quick Settings.</description>
+    </key>
+  </schema>
+</schemalist>

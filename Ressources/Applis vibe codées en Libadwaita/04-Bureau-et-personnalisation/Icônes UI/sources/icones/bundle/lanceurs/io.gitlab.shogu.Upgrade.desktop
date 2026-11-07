@@ -1,0 +1,18 @@
+[Desktop Entry]
+Type=Application
+Icon=io.gitlab.shogu.Upgrade
+Name=Upgrade
+Name[fr]=Upgrade
+Name[fr_FR]=Upgrade
+Name[fr_FR.UTF-8]=Upgrade
+Comment=upgrade update
+Comment[fr]=upgrade update
+Comment[fr_FR]=upgrade update
+Comment[fr_FR.UTF-8]=upgrade update
+Exec=/usr/bin/fish /home/ogu/.local/upgrade.sh
+PrefersNonDefaultGPU=false
+Hidden=false
+NoDisplay=false
+StartupNotify=false
+Terminal=true
+

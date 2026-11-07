@@ -1,0 +1,32 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: always-on-top-always-on-top\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: extension.js
+msgid "Always on Top"
+msgstr "Toujours au premier plan"
+
+#: extension.js
+msgid "Could not register the Super+T shortcut."
+msgstr "Impossible d’enregistrer le raccourci Super+T."
+
+#: prefs.js
+msgid "General"
+msgstr "Général"
+
+#: prefs.js
+msgid "Keyboard shortcut"
+msgstr "Raccourci clavier"
+
+#: prefs.js
+msgid "Enable the Super+T shortcut"
+msgstr "Activer le raccourci Super+T"
+
+#: prefs.js
+msgid "Toggles Always on Top on the focused window, like the top bar button. Does nothing on a maximized window."
+msgstr "Bascule « Toujours au premier plan » sur la fenêtre active, comme le bouton de la barre supérieure. Sans effet sur une fenêtre maximisée."

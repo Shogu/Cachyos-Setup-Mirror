@@ -1,0 +1,70 @@
+[Desktop Entry]
+Version=1.0
+Name=Office
+GenericName=Document Editor
+GenericName[ru]=Редактор документов
+Comment=OnlyOffice - Edit office documents
+Comment[ru]=Редактировать офисные документы
+Type=Application
+Exec=/usr/bin/onlyoffice-desktopeditors %F
+Terminal=false
+Icon=onlyoffice-desktopeditors
+Keywords=Text;Document;OpenDocument Text;Microsoft Word;Microsoft Works;odt;doc;docx;rtf;
+Categories=Office;WordProcessor;Spreadsheet;Presentation;
+MimeType=application/msword;application/msword-template;application/vnd.ms-word.document.macroEnabled.12;application/vnd.ms-word.template.macroEnabled.12;application/vnd.ms-xpsdocument;application/vnd.ms-excel;application/vnd.ms-excel.sheet.macroEnabled.12;application/vnd.ms-excel.sheet.binary.macroEnabled.12;application/vnd.ms-excel.template.macroEnabled.12;application/vnd.ms-powerpoint;application/vnd.ms-powerpoint.presentation.macroEnabled.12;application/vnd.ms-powerpoint.slideshow.macroEnabled.12;application/vnd.ms-powerpoint.template.macroEnabled.12;application/vnd.ms-visio.drawing.main+xml;application/vnd.ms-visio.drawing.macroEnabled.main+xml;application/vnd.ms-visio.stencil.main+xml;application/vnd.ms-visio.stencil.macroEnabled.main+xml;application/vnd.ms-visio.template.main+xml;application/vnd.ms-visio.template.macroEnabled.main+xml;application/vnd.openxmlformats-officedocument.wordprocessingml.document;application/vnd.openxmlformats-officedocument.wordprocessingml.template;application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;application/vnd.openxmlformats-officedocument.spreadsheetml.template;application/vnd.openxmlformats-officedocument.presentationml.presentation;application/vnd.openxmlformats-officedocument.presentationml.slideshow;application/vnd.openxmlformats-officedocument.presentationml.template;application/vnd.apple.pages;application/vnd.apple.numbers;application/vnd.apple.keynote;application/vnd.oasis.opendocument.text;application/vnd.oasis.opendocument.text-flat-xml;application/vnd.oasis.opendocument.text-template;application/vnd.oasis.opendocument.spreadsheet;application/vnd.oasis.opendocument.spreadsheet-flat-xml;application/vnd.oasis.opendocument.spreadsheet-template;application/vnd.oasis.opendocument.presentation;application/vnd.oasis.opendocument.presentation-flat-xml;application/vnd.oasis.opendocument.presentation-template;application/vnd.oasis.opendocument.graphics;application/vnd.sun.xml.writer;application/vnd.sun.xml.writer.template;application/vnd.sun.xml.calc;application/vnd.sun.xml.impress;application/wps-office.wps;application/wps-office.wpt;application/wps-office.et;application/wps-office.ett;application/wps-office.dps;application/wps-office.dpt;application/x-hwp;application/epub+zip;application/oxps;application/pdf;application/rtf;application/x-fictionbook+xml;image/vnd.djvu;text/csv;text/markdown;text/plain;text/tab-separated-values;x-scheme-handler/oo-office;
+Actions=NewDocument;NewSpreadsheet;NewPresentation;NewForm;
+StartupWMClass=ONLYOFFICE
+Name[fr]=Office
+Name[fr_FR]=Office
+Name[fr_FR.UTF-8]=Office
+Comment[fr]=OnlyOffice - Edit office documents
+Comment[fr_FR]=OnlyOffice - Edit office documents
+Comment[fr_FR.UTF-8]=OnlyOffice - Edit office documents
+Keywords[fr]=Text;Document;OpenDocument Text;Microsoft Word;Microsoft Works;odt;doc;docx;rtf;
+Keywords[fr_FR]=Text;Document;OpenDocument Text;Microsoft Word;Microsoft Works;odt;doc;docx;rtf;
+Keywords[fr_FR.UTF-8]=Text;Document;OpenDocument Text;Microsoft Word;Microsoft Works;odt;doc;docx;rtf;
+PrefersNonDefaultGPU=false
+Hidden=false
+NoDisplay=false
+StartupNotify=false
+
+[Desktop Action NewDocument]
+Name=Nouveau document
+Name[de]=Neues Dokument
+Name[fr]=Nouveau document
+Name[es]=Nuevo documento
+Name[ru]=Новый документ
+Exec=/usr/bin/onlyoffice-desktopeditors --new:word
+Name[fr_FR]=Nouveau document
+Name[fr_FR.UTF-8]=Nouveau document
+
+[Desktop Action NewSpreadsheet]
+Name=Nouveau classeur
+Name[de]=Neue Tabelle
+Name[fr]=Nouveau classeur
+Name[es]=Nueva hoja de cálculo
+Name[ru]=Новая таблица
+Exec=/usr/bin/onlyoffice-desktopeditors --new:cell
+Name[fr_FR]=Nouveau classeur
+Name[fr_FR.UTF-8]=Nouveau classeur
+
+[Desktop Action NewPresentation]
+Name=Nouvelle présentation
+Name[de]=Neue Präsentation
+Name[fr]=Nouvelle présentation
+Name[es]=Nueva presentación
+Name[ru]=Новая презентация
+Exec=/usr/bin/onlyoffice-desktopeditors --new:slide
+Name[fr_FR]=Nouvelle présentation
+Name[fr_FR.UTF-8]=Nouvelle présentation
+
+[Desktop Action NewForm]
+Name=Nouveau PDF
+Name[de]=Neues PDF
+Name[fr]=Nouveau PDF
+Name[es]=Nuevo PDF
+Name[ru]=Новый PDF
+Exec=/usr/bin/onlyoffice-desktopeditors --new:form
+Name[fr_FR]=Nouveau PDF
+Name[fr_FR.UTF-8]=Nouveau PDF
+

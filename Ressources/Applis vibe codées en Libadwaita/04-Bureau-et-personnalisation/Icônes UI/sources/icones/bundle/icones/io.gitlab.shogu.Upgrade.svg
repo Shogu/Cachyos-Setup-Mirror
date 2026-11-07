@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+ <!-- Upgrade : coquille Shelly, version plate, flèche arrondie. Palette GNOME. -->
+ <g transform="translate(0 -2)">
+ <path d="M64 114 L6.6 86.5 A24.3 24.3 0 0 1 22.5 46.2Z" fill="#1a8fa0"/>
+ <path d="M64 114 L22.5 46.2 A19.7 19.7 0 0 1 48.9 23.0Z" fill="#1a8fa0"/>
+ <path d="M64 114 L48.9 23.0 A16.9 16.9 0 0 1 79.1 23.0Z" fill="#1a8fa0"/>
+ <path d="M64 114 L79.1 23.0 A19.7 19.7 0 0 1 105.5 46.2Z" fill="#1a8fa0"/>
+ <path d="M64 114 L105.5 46.2 A24.3 24.3 0 0 1 121.4 86.5Z" fill="#1a8fa0"/>
+ <path d="M44 107Q64 99 84 107L72 122Q64 127 56 122Z" fill="#1a8fa0"/>
+ <path d="M64 108 L6.6 80.5 A24.3 24.3 0 0 1 22.5 40.2Z" fill="#7fe0ea"/>
+ <path d="M64 108 L22.5 40.2 A19.7 19.7 0 0 1 48.9 17.0Z" fill="#2ec2d6"/>
+ <path d="M64 108 L48.9 17.0 A16.9 16.9 0 0 1 79.1 17.0Z" fill="#7fe0ea"/>
+ <path d="M64 108 L79.1 17.0 A19.7 19.7 0 0 1 105.5 40.2Z" fill="#2ec2d6"/>
+ <path d="M64 108 L105.5 40.2 A24.3 24.3 0 0 1 121.4 80.5Z" fill="#7fe0ea"/>
+ <g fill="#f6f5f4" transform="translate(64 84) scale(1.18) translate(-64 -84)">
+  <circle cx="64" cy="84" r="17"/><circle cx="48" cy="90" r="10"/><circle cx="80" cy="90" r="10"/>
+  <circle cx="51" cy="77" r="10"/><circle cx="77" cy="77" r="10"/><circle cx="64" cy="70" r="10"/>
+ </g>
+ <path d="M44 101Q64 93 84 101L72 116Q64 121 56 116Z" fill="#7fe0ea"/>
+ <path d="M64 67 78 82h-8v13H58V82h-8z" fill="#3584e4" stroke="#3584e4" stroke-width="5" stroke-linejoin="round"/>
+ </g>
+</svg>

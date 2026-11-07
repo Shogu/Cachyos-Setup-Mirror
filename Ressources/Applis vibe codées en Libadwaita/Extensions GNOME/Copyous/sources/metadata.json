@@ -1,0 +1,16 @@
+{
+        "name": "Copyous (multiclipboard)",
+        "description": "Fork of Copyous with an Accumulate Mode (multi-copy, single paste) and a multi-paste picker",
+        "uuid": "copyous-multiclipboard@shogu",
+        "shell-version": [
+                "48",
+                "49",
+                "50",
+                "51"
+        ],
+        "settings-schema": "org.gnome.shell.extensions.copyous-multiclipboard",
+        "gettext-domain": "copyous-multiclipboard@shogu",
+        "url": "https://github.com/boerdereinar/copyous",
+        "version-name": "2.0.1-mc.13",
+        "version": 13
+}

@@ -1,0 +1,46 @@
+.diff-view,
+.diff-gutter {
+  background: transparent;
+  font-size: 0.95em;
+}
+
+.diff-gutter {
+  opacity: 0.6;
+}
+
+.pac-column-headers {
+  background: alpha(currentColor, 0.03);
+}
+
+.pac-badge {
+  padding: 1px 7px;
+  border-radius: 9999px;
+  background: alpha(currentColor, 0.1);
+}
+
+.pac-badge-pacnew {
+  color: @accent_color;
+  background: alpha(@accent_color, 0.15);
+}
+
+.pac-badge-pacsave,
+.pac-badge-pacorig {
+  color: @warning_color;
+  background: alpha(@warning_color, 0.15);
+}
+
+.pac-swatch {
+  border-radius: 3px;
+}
+
+.pac-legend-delete {
+  background: alpha(@error_color, 0.45);
+}
+
+.pac-legend-insert {
+  background: alpha(@accent_color, 0.45);
+}
+
+.pac-legend-replace {
+  background: alpha(@success_color, 0.45);
+}

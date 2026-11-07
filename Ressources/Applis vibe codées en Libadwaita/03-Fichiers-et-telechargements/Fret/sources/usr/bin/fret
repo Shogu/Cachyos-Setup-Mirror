@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+launcher_dir="$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)"
+system_app_dir=""
+if [ -f "$launcher_dir/../lib/fret/fret.py" ]; then
+    system_app_dir="$(CDPATH= cd -- "$launcher_dir/../lib/fret" && pwd)"
+fi
+
+if [ -n "${FRET_APP_DIR:-}" ]; then
+    app_dir="$FRET_APP_DIR"
+elif [ -f "$system_app_dir/fret.py" ]; then
+    app_dir="$system_app_dir"
+else
+    app_dir="${XDG_DATA_HOME:-$HOME/.local/share}/fret"
+fi
+
+exec python3 "$app_dir/fret.py" "$@"

@@ -1,0 +1,162 @@
+/* SPDX-License-Identifier: GPL-2.0-or-later */
+/* Copyous multi-paste picker, Adwaita style */
+
+.copyous-paste-picker .popup-menu-content {
+	border-radius: 14px;
+	padding: 6px;
+}
+
+.copyous-picker-filter {
+	margin-bottom: 4px;
+}
+
+.copyous-picker-item {
+	spacing: 12px;
+	padding: 7px 10px;
+	border-radius: 9px;
+	min-height: 36px;
+}
+
+.copyous-picker-check {
+	width: 18px;
+	height: 18px;
+	border-radius: 9px;
+	padding: 0;
+	box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.35);
+}
+
+.copyous-picker-check:hover {
+	box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.6);
+}
+
+.copyous-picker-check:checked {
+	background-color: -st-accent-color;
+	box-shadow: none;
+}
+
+.copyous-picker-check-mark {
+	icon-size: 12px;
+	color: transparent;
+}
+
+.copyous-picker-check:checked .copyous-picker-check-mark {
+	color: -st-accent-fg-color;
+}
+
+.copyous-picker-icon {
+	icon-size: 16px;
+}
+
+.copyous-picker-thumb {
+	width: 32px;
+	height: 32px;
+	border-radius: 6px;
+	background-size: cover;
+}
+
+.copyous-picker-subtitle {
+	font-size: smaller;
+	color: rgba(255, 255, 255, 0.55);
+	padding-top: 1px;
+}
+
+.copyous-picker-pin {
+	icon-size: 16px;
+	color: -st-accent-color;
+}
+
+.copyous-picker-footer {
+	border-top: 1px solid rgba(255, 255, 255, 0.1);
+	margin-top: 4px;
+	padding: 8px 4px 2px 10px;
+}
+
+.copyous-picker-hint {
+	spacing: 4px;
+	font-size: smaller;
+	color: rgba(255, 255, 255, 0.5);
+}
+
+.copyous-picker-key {
+	padding: 1px 6px;
+	border-radius: 5px;
+	background-color: rgba(255, 255, 255, 0.09);
+	color: rgba(255, 255, 255, 0.75);
+}
+
+.copyous-picker-key-action {
+	margin-right: 10px;
+}
+
+.copyous-picker-actions {
+	spacing: 8px;
+}
+
+.copyous-picker-count {
+	color: rgba(255, 255, 255, 0.7);
+}
+
+.copyous-picker-pill {
+	padding: 7px 16px;
+	border-radius: 999px;
+	font-weight: bold;
+	background-color: rgba(255, 255, 255, 0.08);
+}
+
+.copyous-picker-pill:hover {
+	background-color: rgba(255, 255, 255, 0.14);
+}
+
+.copyous-picker-pill-accent,
+.copyous-picker-pill-accent:hover {
+	background-color: -st-accent-color;
+	color: -st-accent-fg-color;
+}
+
+/* Light Shell style */
+.copyous-picker-light .copyous-picker-check {
+	box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.3);
+}
+
+.copyous-picker-light .copyous-picker-check:hover {
+	box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.5);
+}
+
+.copyous-picker-light .copyous-picker-check:checked {
+	box-shadow: none;
+}
+
+.copyous-picker-light .copyous-picker-subtitle {
+	color: rgba(0, 0, 0, 0.55);
+}
+
+.copyous-picker-light .copyous-picker-footer {
+	border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.copyous-picker-light .copyous-picker-hint {
+	color: rgba(0, 0, 0, 0.55);
+}
+
+.copyous-picker-light .copyous-picker-key {
+	background-color: rgba(0, 0, 0, 0.07);
+	color: rgba(0, 0, 0, 0.75);
+}
+
+.copyous-picker-light .copyous-picker-count {
+	color: rgba(0, 0, 0, 0.7);
+}
+
+.copyous-picker-light .copyous-picker-pill {
+	background-color: rgba(0, 0, 0, 0.06);
+}
+
+.copyous-picker-light .copyous-picker-pill:hover {
+	background-color: rgba(0, 0, 0, 0.11);
+}
+
+.copyous-picker-light .copyous-picker-pill-accent,
+.copyous-picker-light .copyous-picker-pill-accent:hover {
+	background-color: -st-accent-color;
+	color: -st-accent-fg-color;
+}
