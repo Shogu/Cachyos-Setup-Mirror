@@ -1,0 +1,24 @@
+# Maintainer: Ogu
+pkgname=spectacle-ogu
+pkgver=0.3.3
+pkgrel=1
+pkgdesc="Spectacle : lecteur YouTube minimaliste GTK4/libadwaita, en streaming sans téléchargement"
+arch=('any')
+url="https://gitlab.com/Shogu"
+license=('GPL-3.0-or-later')
+depends=('python' 'python-gobject' 'gtk4' 'libadwaita' 'gstreamer' 'gst-plugins-base' 'gst-plugins-good' 'libsoup3'
+         'gst-plugins-bad' 'gst-libav' 'gst-plugin-gtk4' 'quickjs-ng')
+install=spectacle-ogu.install
+source=("spectacle-ogu-$pkgver.tar.gz")
+sha256sums=('b12f2b1854afa1848f074b5f70966406198502cf37f2bd3828f1e4b154564797')
+
+package() {
+  cd "spectacle-ogu-$pkgver"
+  install -Dm644 spectacle.py "$pkgdir/usr/lib/spectacle-ogu/spectacle.py"
+  install -Dm644 -t "$pkgdir/usr/lib/spectacle-ogu/spectacle" spectacle/*.py
+  install -Dm755 spectacle-cmd "$pkgdir/usr/bin/spectacle-ogu"
+  install -Dm644 data/io.gitlab.shogu.Spectacle.desktop "$pkgdir/usr/share/applications/io.gitlab.shogu.Spectacle.desktop"
+  install -Dm644 data/icons/io.gitlab.shogu.Spectacle.svg "$pkgdir/usr/share/icons/hicolor/scalable/apps/io.gitlab.shogu.Spectacle.svg"
+  install -Dm644 data/icons/io.gitlab.shogu.Spectacle-symbolic.svg "$pkgdir/usr/share/icons/hicolor/symbolic/apps/io.gitlab.shogu.Spectacle-symbolic.svg"
+  install -Dm644 README.md "$pkgdir/usr/share/doc/spectacle-ogu/README.md"
+}

@@ -1,0 +1,28 @@
+# Maintainer: Ogu
+pkgname=chihiro
+pkgver=0.6.1
+pkgrel=1
+pkgdesc="Petit lecteur GTK4 sans décoration : vidéo de Chihiro en boucle, bande son Lofi Girl en direct"
+arch=('any')
+url="https://gitlab.com/Shogu"
+license=('custom')
+depends=('python' 'python-gobject' 'gtk4' 'libadwaita' 'gstreamer' 'gst-plugins-base' 'gst-plugins-good' 'libsoup3'
+         'gst-plugins-bad' 'gst-libav' 'gst-plugin-gtk4' 'quickjs-ng')
+install=chihiro.install
+source=("chihiro-$pkgver.tar.gz")
+sha256sums=('7d4b83877e6a16ee151ec31ece2bf6c4a749cc2ed4f5a0f2baefa57f86f7d79c')
+
+package() {
+  cd "chihiro-$pkgver"
+  install -Dm644 chihiro.py "$pkgdir/usr/lib/chihiro/chihiro.py"
+  install -Dm644 -t "$pkgdir/usr/lib/chihiro/chihiro" chihiro/*.py
+  install -Dm755 chihiro-cmd "$pkgdir/usr/bin/chihiro"
+  install -Dm644 -t "$pkgdir/usr/share/chihiro/media" data/media/*.mp4
+  install -Dm644 data/fr.ogu.Chihiro.desktop "$pkgdir/usr/share/applications/fr.ogu.Chihiro.desktop"
+  install -Dm644 icons/fr.ogu.Chihiro.svg "$pkgdir/usr/share/icons/hicolor/scalable/apps/fr.ogu.Chihiro.svg"
+  install -Dm644 icons/fr.ogu.Chihiro-symbolic.svg "$pkgdir/usr/share/icons/hicolor/symbolic/apps/fr.ogu.Chihiro-symbolic.svg"
+  local ext="$pkgdir/usr/share/gnome-shell/extensions/chihiro-quicksettings-launch-toggle@ogu"
+  install -Dm644 -t "$ext" extension/metadata.json extension/extension.js
+  install -Dm644 extension/icons/chihiro-symbolic.svg "$ext/icons/chihiro-symbolic.svg"
+  install -Dm644 README.md "$pkgdir/usr/share/doc/chihiro/README.md"
+}

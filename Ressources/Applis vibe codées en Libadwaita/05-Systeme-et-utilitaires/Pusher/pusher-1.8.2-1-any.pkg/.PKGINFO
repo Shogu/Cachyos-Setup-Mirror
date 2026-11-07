@@ -1,0 +1,27 @@
+pkgname = pusher
+pkgbase = pusher
+xdata = pkgtype=pkg
+pkgver = 1.8.2-1
+pkgdesc = Application GNOME/libadwaita pour cloner CACHYOS-Setup dans ~/Gitlab et le pousser
+url = https://gitlab.com/Shogu/pusher
+builddate = 1793531323
+packager = Unknown Packager
+size = 509933
+arch = any
+license = GPL-3.0-or-later
+replaces = gitlab-sync
+conflict = gitlab-sync
+provides = gitlab-sync
+depend = python
+depend = python-gobject
+depend = gtk4
+depend = libadwaita
+depend = libsecret
+depend = git
+depend = openssh
+depend = hicolor-icon-theme
+makedepend = meson
+makedepend = ninja
+makedepend = glib2-devel
+makedepend = desktop-file-utils
+makedepend = appstream
