@@ -611,56 +611,44 @@ L’outil Icônes UI et le gestionnaire d’icônes des dossiers personnels sont
 
 ### 11.33 — Perceptron — interface GNOME pour OpenCode
 
-**Perceptron** (`opencode-perceptron`) est une interface GTK4/libadwaita pour [OpenCode](https://opencode.ai), qui intègre l’interface web dans une vue **WebKitGTK 6.0**. Elle démarre `opencode serve`, effectue l’appairage avec `opencode pair`, puis charge l’interface web d’OpenCode dans sa fenêtre GNOME. La logique de programmation, les modèles et les sessions restent gérés par OpenCode, qui doit être installé séparément et accessible dans le `PATH`.
+**Perceptron** est une interface GTK4/libadwaita pour [OpenCode](https://opencode.ai). Elle démarre `opencode serve`, effectue l’appairage avec `opencode pair`, puis affiche l’interface web d’OpenCode dans une vue **WebKitGTK 6.0**. OpenCode doit être installé séparément et accessible dans le `PATH`. Les modèles, les conversations et les sessions restent gérés par OpenCode.
 
-Fonctions d’interface :
-- indicateur de chargement natif et page d’erreur avec bouton **Réessayer** ;
-- cookies persistants pendant 30 jours dans `~/.local/share/opencode-perceptron` ;
-- suivi du thème clair/sombre GNOME ;
-- mémorisation de la taille de fenêtre ;
-- icône couleur et variante symbolique `org.gnome.Perceptron`.
+**Dépendances système :** `python`, `python-gobject`, `gtk4`, `libadwaita` et `webkitgtk-6.0`. Le binaire `opencode` est indispensable, mais doit être installé séparément.
 
-**Dépendances système :** `python`, `python-gobject`, `gtk4`, `libadwaita` et `webkitgtk-6.0`. Le binaire `opencode` est une dépendance fonctionnelle obligatoire, mais reste installé séparément.
-
-Pour ouvrir directement une session OpenCode depuis Nautilus, le dépôt fournit aussi l’extension contextuelle **« Ouvrir dans OpenCode »** : clic droit sur un dossier ou dans une zone vide pour lancer `opencode` dans le répertoire correspondant avec Ptyxis. Son installation manuelle (dépendance `nautilus-python`, copie de `opencode_open.py` dans `~/.local/share/nautilus-python/extensions/`, puis rechargement de Nautilus) est détaillée dans [9.2 — Ouvrir dans OpenCode](09-nautilus-workflow.md#92--ouvrir-dans-opencode). Le script source se trouve dans [`Ressources/Nautilus extensions/OpenCode/`](../Ressources/Nautilus%20extensions/OpenCode/).
-
-**Paquet fourni :** `opencode-perceptron-0.4.0-1-any.pkg.tar.zst`.
-
-Depuis la racine du dépôt, installer le paquet :
+Le dossier [Perceptron](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/05-Systeme-et-utilitaires/Perceptron/) conserve l’archive de la variante WebKit. Le paquet Arch compilé est ajouté séparément ; lorsqu’il est présent dans le dossier, installer l’unique paquet correspondant :
 
 ```fish
-sudo pacman -U "Ressources/Applis vibe codées en Libadwaita/05-Systeme-et-utilitaires/Perceptron-opencode/opencode-perceptron-0.4.0-1-any.pkg.tar.zst"
+set paquets_perceptron (find "Ressources/Applis vibe codées en Libadwaita/05-Systeme-et-utilitaires/Perceptron" -maxdepth 1 -type f -name 'perceptron*.pkg.tar.zst')
+if test (count $paquets_perceptron) -eq 1
+    sudo pacman -U "$paquets_perceptron[1]"
+else
+    echo 'Vérifier que le dossier Perceptron contient exactement un paquet perceptron*.pkg.tar.zst.'
+end
 ```
 
-Vérifier qu’OpenCode est disponible, puis lancer Perceptron depuis le menu GNOME ou avec :
+Vérifier qu’OpenCode est installé, puis lancer Perceptron depuis la grille d’applications GNOME :
 
 ```fish
 opencode --version
-opencode-perceptron
 ```
-
-**Client Android :** pour permettre au téléphone de joindre le service OpenCode, ouvrir le port TCP 49374 dans UFW, puis relancer l’appairage depuis le terminal :
-
-```fish
-sudo ufw allow 49374/tcp comment 'opencode service'
-opencode-pair
-```
-
-Raccourcis : `Ctrl+R` pour recharger, `Ctrl++` / `Ctrl+-` / `Ctrl+0` pour le zoom, `F11` pour le plein écran, `Ctrl+?` pour l’aide des raccourcis et `Ctrl+Q` pour quitter.
 
 ### Extension compagnon pour Vivaldi
 
 Une extension compagnon Vivaldi permet d’envoyer l’URL de l’onglet courant ou une sélection de texte vers **une nouvelle session dédiée dans Perceptron**. Les fichiers de l’extension et sa notice sont regroupés dans [Ressources/Logiciels/Vivaldi/Perceptron](../Ressources/Logiciels/Vivaldi/Perceptron/README.md).
 
-Pour reconstruire le paquet depuis les sources présentes dans le dossier, utiliser `makepkg -si` (avec `fakeroot`) ou `./build.sh` selon les instructions du README du projet.
+### Dépannage : génération automatique du titre des sessions
+
+Si OpenCode ne génère plus automatiquement de titre pour les nouvelles sessions, vérifier `~/.config/opencode/opencode.jsonc`. Une ancienne configuration peut employer le bloc singulier `agent` ou le champ historique `prompt`, alors que la configuration actuelle attend `agents.title`. La correction doit être appliquée à la structure de configuration en vigueur ; conserver une sauvegarde du fichier avant toute modification.
+
+Cette correction ne renomme pas rétroactivement les sessions existantes. Elles peuvent être renommées manuellement avec `Ctrl+R`. Le modèle de génération peut être épinglé dans la configuration ; la variable `OPENCODE_TITLE_MODEL` avait notamment été utilisée avec `albert/gpt-oss-120b`.
+
+Pour les dépendances, l’installation, l’extension compagnon et les notes de dépannage, voir le [README de Perceptron](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/05-Systeme-et-utilitaires/Perceptron/README.md).
 
 **Désinstallation :**
 
 ```fish
-sudo pacman -Rns opencode-perceptron
+sudo pacman -Rns perceptron
 ```
-
----
 
 ### 11.28 — Vidange
 
