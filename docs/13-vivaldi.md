@@ -10,6 +10,7 @@
 - [13.4 Personnaliser les icônes des extensions](#134--personnaliser-les-icônes-des-extensions)
 - [13.5 Installer les extensions et associer les liens magnet](#135--installer-les-extensions-et-associer-les-liens-magnet)
 - [13.6 CopierURL — extension Vivaldi pour Grabber](#136--copierurl--extension-vivaldi-pour-grabber)
+- [13.7 Perceptron — extension compagnon pour OpenCode](#137--perceptron--extension-compagnon-pour-opencode)
 
 ## 13.1 — Synchronisation, cache et réglages internes
 

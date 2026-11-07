@@ -53,7 +53,7 @@ mkdir -p build
 cd build
 bsdtar -xf ../pusher-1.8.2-1-any.pkg.tar.zst
 cp ../pusher-1.8.3-pusher.py usr/lib/pusher/pusher.py
-sed -i 's/^pkgver = 1.8.2$/pkgver = 1.8.3/' .PKGINFO
+sed -i 's/^pkgver = 1.8.2-1$/pkgver = 1.8.3-1/' .PKGINFO
 rm -f usr/lib/pusher/__pycache__/*
 bsdtar -czf .MTREE --format=mtree \
   --options='!all,use-set,type,uid,gid,mode,time,size,md5,sha256,link' .
