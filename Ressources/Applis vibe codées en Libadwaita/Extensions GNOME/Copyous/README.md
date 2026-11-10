@@ -1,5 +1,7 @@
 # Copyous — fork GNOME 51
 
+**Version du fork : v14.** Cette version corrige une erreur au chargement : le signal `focus-out` était écouté sur `IBusManager`, alors que cet objet ne fournit pas ce signal. Le branchement fautif est corrigé.
+
 Archive fournie : `copyous-gnome51.zip` (à ajouter manuellement à ce dossier).
 
 Ce fork apporte un correctif de transition GNOME 51, un mode **Cumul** du multi-copiage et un sélecteur multi-presse-papiers.
@@ -29,4 +31,4 @@ gnome-extensions enable copyous@boerdereinar.dev
 
 La copie préparée pour le dépôt ajoute `"51"` à `shell-version` dans `metadata.json`. Cette correction de métadonnées ne constitue pas un test fonctionnel : le comportement doit être vérifié dans une session GNOME 51.
 
-**Version :** 2.0.1-mc.11
+**Version précédente documentée :** 2.0.1-mc.11 · **Correctif :** v14

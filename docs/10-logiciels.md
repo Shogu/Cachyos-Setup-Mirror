@@ -170,7 +170,7 @@ Voir [11.22 — Extension Manager](11-applications-vibe-coded.md#1122--extension
 
 ### 10.1.4 — Messagerie : Mail
 
-**Mail (`mail-postcard`)** est le client de messagerie retenu pour ce setup, compilé avec **Claude** depuis les sources de [Postcard](https://github.com/gxanshu/postcard). Il ne s’agit pas d’une application créée de zéro par vibe coding : la base upstream est conservée, avec quelques ajouts : 
+**Mail (`mail-postcard`) 1.13.0-13** est le client de messagerie retenu pour ce setup, compilé avec **Claude** depuis les sources de [Postcard](https://github.com/gxanshu/postcard). Cette version ferme correctement les réponses HTTP **404** et utilise `Gdk.MemoryTexture` à la place de l'ancienne méthode `new_for_pixbuf` pour créer les textures d'images. Il ne s’agit pas d’une application créée de zéro par vibe coding : la base upstream est conservée, avec quelques ajouts : 
 
 - **Recherche et affichage des pièces jointes**.
 - **Aperçu des pièces jointes à droite** : PDF, images, texte et documents Word/LibreOffice.
@@ -186,7 +186,7 @@ Ces ajouts ont été réalisés avec **Claude**.
 sudo pacman -Syu --needed poppler-glib
 ```
 
-Le paquet Arch compilé avec Claude est à ajouter manuellement dans [le dossier Mail](../Ressources/Logiciels/Mail/). Sa version exacte n’est pas précisée ici.
+Le paquet Arch compilé avec Claude est à ajouter manuellement dans [le dossier Mail](../Ressources/Logiciels/Mail/). Le paquet Arch de référence est `mail-postcard-1.13.0-13` (nom exact de l’archive à vérifier dans le dossier Mail).
 
 Depuis le dossier contenant le paquet, installer le fichier correspondant puis lancer Mail :
 

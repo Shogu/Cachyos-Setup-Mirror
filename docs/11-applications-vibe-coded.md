@@ -459,7 +459,7 @@ Une réservation d'adresse IP dans la box facilite les connexions répétées. L
 
 Frontend GTK4/libadwaita minimaliste pour JDownloader 2. Il permet de récupérer des liens, sélectionner les fichiers utiles, les ajouter à la file de téléchargement et suivre les téléchargements. L'AppImage embarque son propre Java et JDownloader. Une extension complémentaire pour Vivaldi envoie les URL au logiciel via le protocole `grabber://`.
 
-**AppImage fournie : `Grabber.AppImage`.**
+**AppImage fournie : `Grabber.AppImage`.** Le runtime est le runtime officiel AppImage **type 2**, compatible **FUSE 3**. Cette mise à jour du runtime ne modifie pas le code de Grabber. Les sources de référence sont désormais dans `sources/jd_adwaita` ; les anciens dossiers `sources/` et `Grabber-sources/` étaient périmés.
 
 ![Interface de Grabber](../Ressources/screenshots/vibe-coded/grabber.png)
 
@@ -616,7 +616,7 @@ sudo pacman -Rns perceptron
 
 ### 11.28 — Vidange
 
-**Vidange** est une application GTK4/libadwaita en Python pour nettoyer CachyOS sous GNOME 51. Elle centralise les tâches d'entretien dans une fenêtre, estime l'espace récupérable avant le nettoyage et affiche un récapitulatif final.
+**Vidange 1.4.2-1** est une application GTK4/libadwaita en Python pour nettoyer CachyOS sous GNOME 51. Cette version ajoute la page **« Bilan après une mise à jour »**, consultable dans l'application ou avec `vidange --bilan`. Un hook pacman affiche ce bilan après une mise à jour des paquets. Les textes de cette page sont affichés en texte brut, sans interprétation de balisage. Elle centralise les tâches d'entretien dans une fenêtre, estime l'espace récupérable avant le nettoyage et affiche un récapitulatif final.
 
 - **Paquets orphelins** : trois niveaux, des orphelins classiques (`pacman -Qtdq`) aux dépendances utilisées uniquement entre elles et aux paquets explicitement installés qui ne sont utilisés par aucun autre paquet.
 - **Cache pacman** : garder deux versions, retirer les versions désinstallées ou vider entièrement le cache.
@@ -639,7 +639,7 @@ else
 end
 ```
 
-Le nom et la version du paquet seront déterminés par l’archive réellement déposée. Les détails internes du helper ne sont pas nécessaires pour l’installation.
+Paquet de référence : `vidange-1.4.2-1-any.pkg.tar.zst`. Les détails internes du helper ne sont pas nécessaires pour l’installation.
 
 ---
 
@@ -811,7 +811,7 @@ Frontend GTK4/libadwaita pour **Snapper** et l’intégration **Limine**. L’ap
 
 Le cœur de la restauration n’est pas réimplémenté dans l’interface : Snapper GTK4 s’appuie sur les outils système Snapper/Limine et utilise un helper privilégié via Polkit pour les opérations qui nécessitent les droits administrateur.
 
-**Paquet natif courant du setup : `snapper-gtk4-1.4.0-5-any.pkg.tar.zst`.**
+**Version : 1.4.0-7.** Le code de l'application est désormais installé sous `/usr/lib/snapper-gtk4/` ; le fichier `.pyc` parasite présent dans une version précédente a été retiré. Le paquet Arch de référence est `snapper-gtk4-1.4.0-7-any.pkg.tar.zst`.
 
 ### Fonctions principales
 
@@ -825,7 +825,7 @@ Le cœur de la restauration n’est pas réimplémenté dans l’interface : Sna
 ### Installation
 
 ```fish
-sudo pacman -U ./snapper-gtk4-1.4.0-5-any.pkg.tar.zst
+sudo pacman -U ./snapper-gtk4-1.4.0-7-any.pkg.tar.zst
 ```
 
 L’application se lance ensuite sans `sudo` :
@@ -879,7 +879,7 @@ Extension GNOME Shell de productivité destinée à sauvegarder automatiquement 
 
 Cette version part de **Session Keeper 1.0.6 d’ALT Linux** et a été adaptée pour **GNOME 50**. Le moteur reste entièrement natif GNOME/Linux : GJS, Mutter, Gio et GLib, sans daemon ni outil externe.
 
-**Paquet Arch fourni :** `gnome-shell-extension-session-keeper-1.2.2-1-any.pkg.tar.zst`. UUID : `session-keeper@altlinux.org`.
+**Version : 1.3.1-2.** Paquet Arch : `gnome-shell-extension-session-keeper-1.3.1-2-any.pkg.tar.zst`. UUID : `session-keeper@altlinux.org`. Le sélecteur d'applications utilise `Adw.Dialog` à la place de `Gtk.AppChooserDialog` ; les classes CSS sont appliquées avec `add_css_class()`.
 
 ### Fonctions principales
 
@@ -902,7 +902,7 @@ Le fichier `metadata.json` contient aussi le mot-clé `productivity` afin que **
 Depuis la racine du dépôt, installer le paquet Arch fourni :
 
 ```fish
-sudo pacman -U "./Ressources/Applis vibe codées en Libadwaita/Extensions GNOME/Session Keeper/gnome-shell-extension-session-keeper-1.2.2-1-any.pkg.tar.zst"
+sudo pacman -U "./Ressources/Applis vibe codées en Libadwaita/Extensions GNOME/Session Keeper/gnome-shell-extension-session-keeper-1.3.1-2-any.pkg.tar.zst"
 ```
 
 Sous Wayland, se déconnecter puis se reconnecter, puis activer l’extension :

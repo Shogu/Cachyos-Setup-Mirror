@@ -447,3 +447,10 @@ chmod +x ./grabber.AppImage
 Cette commande explicite installe une icône persistante et le lanceur `com.ogu.Grabber.desktop` dans le profil utilisateur. Les anciens lanceurs Grabber sont sauvegardés puis actualisés pour conserver les favoris existants ; leurs doublons sont masqués du menu. Aucun privilège administrateur requis. Relancer la commande après avoir déplacé l’AppImage. Le démarrage normal ne crée pas de lanceur.
 
 Cette installation du lanceur est également nécessaire pour l’extension **CopierURL — Grabber pour Vivaldi**, désormais fournie dans [`Ressources/Logiciels/Vivaldi/CopierURL Grabber/`](../../../Logiciels/Vivaldi/CopierURL%20Grabber/README.md). Elle copie les URL dans le presse-papiers et propose aussi des commandes contextuelles pour les transmettre à Grabber via `grabber://`. L’installation de l’association de protocole se fait une seule fois depuis l’emplacement définitif de l’AppImage.
+
+
+## Mise à jour AppImage — runtime FUSE 3
+
+L'AppImage distribuée utilise désormais le **runtime officiel AppImage type 2**, compatible avec **FUSE 3**. Le changement concerne le runtime d'exécution et l'emballage : **le code applicatif de Grabber est inchangé**.
+
+L'organisation des sources a été assainie : le répertoire maintenu est désormais `sources/jd_adwaita`. Il remplace les anciens répertoires `sources/` et `Grabber-sources/`, qui contenaient des copies périmées. Pour les évolutions, prendre `sources/jd_adwaita` comme référence.

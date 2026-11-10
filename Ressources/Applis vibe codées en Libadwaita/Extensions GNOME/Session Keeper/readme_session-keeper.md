@@ -4,11 +4,15 @@ Extension GNOME Shell de sauvegarde et de restauration de session, adaptée pour
 
 - **Nom :** Session Keeper
 - **UUID :** `session-keeper@altlinux.org`
-- **Paquet Arch fourni :** `gnome-shell-extension-session-keeper-1.2.2-1-any.pkg.tar.zst`
+- **Version :** 1.3.1-2
+- **Paquet Arch fourni :** `gnome-shell-extension-session-keeper-1.3.1-2-any.pkg.tar.zst`
 - **Base upstream :** Session Keeper 1.0.6 d’ALT Linux
 - **Catégorie Manager Extensions :** Productivité
 
 ## Principales adaptations
+
+- Le sélecteur d'applications utilise désormais `Adw.Dialog` à la place de `Gtk.AppChooserDialog`, supprimé/inadapté dans l'environnement GNOME ciblé.
+- Les classes CSS sont ajoutées avec l'API `add_css_class()`.
 
 - interface et réglages en français ;
 - sauvegarde continue événementielle sans polling ;
@@ -29,7 +33,7 @@ L’extension utilise uniquement les mécanismes natifs **GNOME Shell / GJS / Mu
 Depuis la racine du dépôt, installer le paquet Arch fourni :
 
 ```fish
-sudo pacman -U "./Ressources/Applis vibe codées en Libadwaita/Extensions GNOME/Session Keeper/gnome-shell-extension-session-keeper-1.2.2-1-any.pkg.tar.zst"
+sudo pacman -U "./Ressources/Applis vibe codées en Libadwaita/Extensions GNOME/Session Keeper/gnome-shell-extension-session-keeper-1.3.1-2-any.pkg.tar.zst"
 ```
 
 Sous Wayland, se déconnecter puis se reconnecter, puis activer l’extension :

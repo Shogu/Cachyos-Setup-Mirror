@@ -1,5 +1,9 @@
 # Vidange
 
+**Version : 1.4.2-1**
+
+La version 1.4.2-1 ajoute une page **« Bilan après une mise à jour »**, accessible depuis l'application et en ligne de commande avec `vidange --bilan`. Un hook pacman permet de présenter ce bilan après une mise à jour des paquets. Les textes affichés par cette page sont traités comme du texte brut, et non comme du balisage.
+
 **Vidange** est une application de nettoyage système pour CachyOS et GNOME, développée en Python avec GTK4/libadwaita. Toute l'interface et les messages sont en français. Elle rassemble dans une fenêtre les opérations courantes de maintenance et affiche une estimation de l'espace récupérable avant chaque nettoyage.
 
 ## Fonctions
