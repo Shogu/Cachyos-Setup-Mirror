@@ -319,6 +319,6 @@ Le serveur écoute sur le port **2121** par défaut. Il utilise un mot de passe 
 
 L'application propose deux tuiles : **Quai**, pour les réglages et le démarrage du serveur, et **Quai ON/OFF**, un interrupteur direct sans écran. Le service de premier plan affiche l'adresse FTP dans une notification. Le démarrage automatique tente de suivre le démarrage de la TV et le branchement tardif des disques, mais certains téléviseurs TCL peuvent bloquer le lancement automatique des applications installées manuellement.
 
-Dans Fret, saisir l'adresse affichée par Quai avec Ctrl+L, par exemple ftp://192.168.1.x:2121, puis fournir le mot de passe de Quai.
+Dans Fret, saisir l'adresse affichée par Quai avec Ctrl+L, par exemple ftp://192.168.1.x:2121, puis fournir le mot de passe de Quai. Le dossier [Quai](../Quai/) accueillera l'APK et sa documentation.
 
 **Sécurité :** FTP transmet les identifiants et les fichiers en clair. Quai est destiné à un usage personnel sur le réseau local : ne jamais exposer le port sur Internet et arrêter le serveur après utilisation. Android TV 6 (API 23) ou supérieur.

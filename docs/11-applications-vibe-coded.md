@@ -302,7 +302,7 @@ Voir le [README de SPECTACLE](../Ressources/Applis%20vibe%20codées%20en%20Libad
 
 La version 0.3.0 ajoute les actions sur les notes (renommer, dupliquer, déplacer, afficher dans Fichiers, épingler dans le widget, créer un rendez-vous et supprimer avec annulation pendant 5 secondes), le renommage des dossiers épinglés et l’accès aux notes depuis la recherche GNOME. Les notes épinglées sont également consultables dans le menu de l’horloge GNOME avec [Widget Topbar](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Widget%20Topbar/) : catégories, recherche, tâches, couleurs, rendez-vous et corbeille, avec le raccourci `Super+Alt+N`. L’icône violette est fournie à toutes les tailles, dock compris.
 
-**Paquet fourni : `grimoire-ogu-0.3.0-1-x86_64.pkg.tar.zst`.
+**Paquet fourni : `grimoire-ogu-0.3.0-1-x86_64.pkg.tar.zst`.**
 
 Pour le widget de notes dans le menu de l'horloge, installer également **Widget Topbar**. Voir les README dédiés de [Grimoire](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/02-Bureautique-et-redaction/Grimoire/readme_grimoire.md) et de [Widget Topbar](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Widget%20Topbar/).
 
