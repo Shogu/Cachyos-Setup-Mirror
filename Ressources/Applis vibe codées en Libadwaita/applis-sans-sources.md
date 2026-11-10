@@ -20,9 +20,7 @@ Les sources ne sont donc pas récupérables depuis le paquet/zip.
 
 ## Notes
 
-- **Icônes UI** et **PLACES** : livrés en `.pyz` (zipapp python) — le code Python est
-  **embarqué** dans le `.pyz` (le zipapp EST la source) ; il a été extrait dans `sources/`
-  pour un versionnage plus lisible, mais ce n'est pas un « vrai » arbre de sources séparé.
+- **Iconostase** remplace les deux anciens outils autonomes **Icônes UI** et **PLACES**. Leurs dossiers de distribution séparés ont été retirés ; le paquet, les sources et la documentation d’Iconostase seront ajoutés dans son propre dossier.
 - Pour les applis upstream (Decibel, dconf-editor, Extension Manager), les sources
   officielles existent en amont si tu veux les référencer plus tard.
 - Si tu retrouves les arbres de sources d'origine des applis compilées (Dactylo, Grille,

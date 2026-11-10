@@ -34,7 +34,7 @@
 - `gnome-calendar` : agenda GNOME.
 - **[Mail (`mail-postcard`)](#1014--messagerie--mail)** : client compilé avec Claude depuis Postcard, avec recherche, aperçu des pièces jointes à droite, vue à trois volets, sélection multiple, clic droit, purge des copies locales à la fermeture, contraste entre panneaux et francisation complète.
 - **Alexandrie** : visionneuse de Wikipédia en français pour préparer des cours, avec panier d'extraits et export de fiches PDF. Voir [11.30 — Alexandrie](11-applications-vibe-coded.md#1130--alexandrie) ; le paquet sera ajouté manuellement dans [son dossier](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/02-Bureautique-et-redaction/Alexandrie/).
-- **Grimoire** : installer [l’éditeur Markdown maison](11-applications-vibe-coded.md#113--grimoire). Ses dossiers épinglés peuvent aussi alimenter les notes du menu de l’horloge grâce à [Topbar Center Widget 1.7](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Topbar%20Center%20Widget%20(Grimoire%20Semitone)/README.md).
+- **Grimoire** : installer [l’éditeur Markdown maison](11-applications-vibe-coded.md#113--grimoire). Ses dossiers épinglés peuvent aussi alimenter les notes du menu de l’horloge grâce à [Widget Topbar](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Widget%20Topbar/README.md).
 
 ### 10.1.5 — Visionneuse d’images : Polaroid
 
@@ -65,7 +65,7 @@ Voir [11.32 — Polaroid](11-applications-vibe-coded.md#1132--polaroid) pour les
 
 - **Amplifaya** : moteur audio PipeWire sans démon ni service utilisateur depuis la v0.5.0, avec interface GTK4/libadwaita facultative et bascule casque/haut-parleurs via WirePlumber en v0.5.1. Voir [la documentation détaillée](11-applications-vibe-coded.md#1122--amplifaya--moteur-audio-pipewire). Le paquet 0.5.1 sera ajouté manuellement dans [son dossier](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/01-Multimedia/Amplifaya/).
 
-- **Semitone** : lecteur musical GTK4/libadwaita, fork de Gapless, compilé avec Claude. Il remplace `gapless` ; le paquet Arch sera ajouté manuellement dans [son dossier](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/01-Multimedia/Semitone/). Voir [11.29 — Semitone](11-applications-vibe-coded.md#1129--semitone). La version mise à jour expose le chemin du fichier local, l’identifiant du morceau, les changements d’état de l’aléatoire et le titre suivant pour enrichir l’intégration MPRIS. Pour intégrer Semitone et les autres lecteurs MPRIS au menu de l’horloge et afficher l’icône animée dans la barre supérieure, voir [Topbar Center Widget 1.7](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Topbar%20Center%20Widget%20(Grimoire%20Semitone)/README.md).
+- **Semitone** : lecteur musical GTK4/libadwaita, fork de Gapless, compilé avec Claude. Il remplace `gapless` ; le paquet Arch sera ajouté manuellement dans [son dossier](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/01-Multimedia/Semitone/). Voir [11.29 — Semitone](11-applications-vibe-coded.md#1129--semitone). La version mise à jour expose le chemin du fichier local, l’identifiant du morceau, les changements d’état de l’aléatoire et le titre suivant pour enrichir l’intégration MPRIS. Pour intégrer Semitone et les autres lecteurs MPRIS au menu de l’horloge et afficher l’icône animée dans la barre supérieure, voir [Widget Topbar](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Widget%20Topbar/README.md).
 - **Decibel** : installer [le fork maison du lecteur audio GNOME](11-applications-vibe-coded.md#117--decibel), fourni dans le dépôt.
 - **Disquaire** : installer [l’éditeur de tags MP3/FLAC](11-applications-vibe-coded.md#1128--disquaire), qui ne conserve que les sept champs retenus.
 - [**Showtime**](https://apps.gnome.org/Showtime/) (`showtime`) : lecteur vidéo GNOME GTK4/libadwaita.
@@ -93,7 +93,7 @@ Voir [11.32 — Polaroid](11-applications-vibe-coded.md#1132--polaroid) pour les
 - **Radar** : installer [l’outil maison de recherche de fichiers](11-applications-vibe-coded.md#1110--radar).
 - **Pusher** : installer [l’interface maison du dépôt GitLab](11-applications-vibe-coded.md#1111--pusher).
 - **Nautilus Bookmark Icons** : installer [l’extension maison de personnalisation des icônes de favoris Nautilus](11-applications-vibe-coded.md#1112--nautilus-bookmark-icons).
-- **Icônes UI** : outil Python pour importer, appliquer, restaurer et exporter les icônes couleur et symboliques des applications installées ([instructions et lancement](11-applications-vibe-coded.md#1126--icônes-ui)).
+- **Iconostase** : application unifiée pour les icônes des applications, les dossiers et les lanceurs `.desktop`, qui remplace les anciens outils Icônes UI et PLACES ([présentation](11-applications-vibe-coded.md#1125--iconostase)).
 - **Sismographe** : installer [l’outil maison d’analyse du démarrage et des journaux](11-applications-vibe-coded.md#1113--sismographe).
 - **Snapper GTK4** : installer [l’interface GTK4/libadwaita pour Snapper et Limine](11-applications-vibe-coded.md#1114--snapper-gtk4).
 

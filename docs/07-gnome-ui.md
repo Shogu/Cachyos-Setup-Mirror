@@ -85,13 +85,11 @@ Désactiver le rappel de don GNOME si la clé existe dans la version installée 
 gsettings set org.gnome.settings-daemon.plugins.housekeeping donation-reminder-enabled false
 ```
 
-### Réglages rapides avec Focus & Boutons
+### Réglages rapides avec Quick Settings
 
-Le renommage manuel du fichier de traduction GNOME Shell n’est plus nécessaire. L’extension maison **Focus & Boutons** peut remplacer directement le libellé **Mode puissance** par **Énergie** et réorganiser la rangée système de Quick Settings.
+L’extension maison **Quick Settings** remplace **Focus & Boutons** et **Battery Time Compact — Ogu**. Elle reprend les personnalisations du panneau des réglages rapides et y réunit l’affichage compact de la batterie : autonomie, pourcentage et puissance instantanée en watts.
 
-Focus & Boutons fournit les boutons scindés **Réglages** et **Power**, la fermeture automatique de Quick Settings et du panneau Calendrier/Notifications, les options d’affichage du calendrier et une icône musicale animée dans Quick Settings. Pour les fonctions supplémentaires de la barre supérieure, voir [Topbar Center Widget](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Topbar%20Center%20Widget%20(Grimoire%20Semitone)/README.md).
-
-Voir [Extensions GNOME — Focus & Boutons](08-gnome-extensions.md#87--focus--boutons) et [Applications Vibe Coded — Focus & Boutons](11-applications-vibe-coded.md#1117--focus--boutons).
+Voir [Extensions GNOME — Quick Settings](08-gnome-extensions.md#87--quick-settings), [Applications Vibe Coded — Quick Settings](11-applications-vibe-coded.md#1117--quick-settings) et [son dossier](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Quick%20Settings/). Pour les widgets de la barre supérieure et du menu de l’horloge, voir [Widget Topbar](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Widget%20Topbar/README.md).
 
 ## 7.7 — Bouton d'alimentation, capot et veille (suspension)
 
@@ -186,24 +184,11 @@ Utiliser ce setup d’icônes d’applications et de dossiers afin de conserver 
 </p>
 
 
-### Icônes UI — icônes des applications
+### Iconostase — icônes, dossiers et lanceurs
 
-Le petit outil Python **Icônes UI** gère les icônes couleur et symboliques des applications installées. Il permet d’importer ou modifier une icône, d’appliquer les changements, de restaurer l’état précédent et d’exporter un nouvel ensemble d’icônes incluant les imports.
+**Iconostase** réunit les fonctions auparavant réparties entre Icônes UI et PLACES / Dossiers Ogu : gestion des icônes des applications installées, personnalisation des dossiers et gestion des lanceurs `.desktop`. Elle est destinée à remplacer Libre Menu Editor dans ce setup.
 
-Depuis le dossier contenant `icones-ogu.pyz`, lancer :
-
-```fish
-python3 icones-ogu.pyz
-```
-
-Python 3, GTK4 et PyGObject sont nécessaires. Sur CachyOS GNOME, ils sont normalement déjà présents ; sinon :
-
-```fish
-sudo pacman -S python-gobject gtk4
-```
-
-**Important :** cette application gère les icônes des applications, pas les icônes des dossiers personnels. Pour ces dernières, utiliser le gestionnaire distinct [PLACES — Dossiers Ogu](11-applications-vibe-coded.md#1126--places--dossiers-ogu), dont le fichier `dossiers-ogu.pyz` est à conserver dans `Ressources/Applis vibe codées en Libadwaita/03-Fichiers-et-telechargements/PLACES/`.
-
+Le dossier [Iconostase](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/04-Bureau-et-personnalisation/Iconostase/) accueillera son paquet, ses sources et son README. Les anciennes applications séparées ne sont plus distribuées indépendamment.
 ---
 
 [Accueil](../README.md) · [Précédent](06-network.md) · [Suivant](08-gnome-extensions.md)
