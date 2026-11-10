@@ -1,8 +1,0 @@
-[Desktop Entry]
-Type=Application
-Name=rundll32
-MimeType=application/pkix-cert;
-Exec=env "WINEPREFIX=/home/ogu/build-ClientPronote2026/AppDir/prefix" wine start /ProgIDOpen "CERFile" %f
-NoDisplay=true
-StartupNotify=true
-Icon=5742_rundll32.0

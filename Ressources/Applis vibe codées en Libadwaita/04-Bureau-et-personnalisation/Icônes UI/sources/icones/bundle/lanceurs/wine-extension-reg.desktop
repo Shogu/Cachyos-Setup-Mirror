@@ -1,7 +1,0 @@
-[Desktop Entry]
-Type=Application
-Name=A Wine application
-MimeType=text/x-ms-regedit;
-Exec=env "WINEPREFIX=/home/ogu/build-ClientPronote2026/AppDir/prefix" wine start /ProgIDOpen "regfile" %f
-NoDisplay=true
-StartupNotify=true
