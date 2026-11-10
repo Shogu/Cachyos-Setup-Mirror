@@ -15,7 +15,19 @@ Application GTK4/libadwaita en Python (PyGObject) de nettoyage système pour Cac
 - vidange/main.py : Adw.Application, actions app.about et app.quit.
 - vidange/window.py : fenêtre, listes de paquets orphelins et récapitulatif.
 - vidange/backend.py : estimations, recherches pacman, nettoyages utilisateur et appel du helper ; ne doit pas importer gi.
+- vidange/taches.py : in_background(func, done, *args).
+- vidange/lignes.py : rangee(classe, **props) crée une Adw.ActionRow/ExpanderRow en texte brut (use_markup=False réglé avant le texte).
+- vidange/bilan_page.py : page « Bilan après une mise à jour » (options, applis à lancer, dossiers d'AppImage, résultats).
+- vidange/bilan/ : bilan sans Gtk (Gio seulement, pour D-Bus et les .desktop), utilisable en CLI par `vidange --bilan`.
+  - commun.py : niveaux OK/INFO/A_CORRIGER/CASSE, Constat, Element, réglages ~/.config/vidange/bilan.json, état ~/.local/state/vidange/bilan.json.
+  - paquets.py : inventaire pacman -Qm/-Qlm/-Qi, ldd, fichiers sous /usr/lib/python3.X, appel de sources.py.
+  - sources.py : syntaxe Python (compile + SyntaxWarning) et API GTK/libadwaita dépréciées.
+  - lancement.py : lancement de quelques secondes dans une session de processus à part (killpg), relevé des messages ; AppImage.
+  - extensions.py : org.gnome.Shell.Extensions (ListExtensions, ShellVersion), journal du Shell, shell-version.
+  - rapport.py : faire_bilan(), versions suivies, element_python(), texte du rapport, bilan_conseille().
+  - cli.py : `vidange --bilan [--sans-lancement] [--delai S]`, code 0/1/2.
 - helper/vidange-helper : helper privilégié, Python -I, entrée JSON sur stdin.
+- helper/vidange-bilan-hook + data/vidange-bilan.hook : hook pacman PostTransaction ; retient les versions dans /var/lib/vidange/versions.json, écrit /var/lib/vidange/bilan-conseille.json quand une branche change, notifie les sessions graphiques (runuser + gdbus).
 - data/ : lanceur, fichier desktop, politique Polkit et icônes.
 - Réglages dans ~/.config/vidange/settings.json, sans schéma GSettings.
 
@@ -43,12 +55,15 @@ Les noms de paquets sont validés strictement, au plus 2000 noms. PATH=/usr/bin 
 - pacman -Qtdq renvoie 1 lorsqu'il n'y a rien ; ce n'est pas une erreur.
 - profile-cleaner libère peu d'espace estimable ; le récapitulatif mesure avant/après.
 - Adw.Spinner demande libadwaita ≥ 1.6.
-- Les textes provenant de pacman sont affichés avec use_markup=False.
+- Les textes provenant de pacman sont affichés en texte brut avec rangee() : passé au constructeur, use_markup=False arrive trop tard.
+- Le bilan ne lance jamais une appli déjà ouverte (NameHasOwner sur son identifiant) et n'a besoin d'aucun droit root.
+- Gtk.StyleContext.add_provider_for_display() n'est pas déprécié : sources.py ne le signale pas.
+- Le hook ne notifie que pour un changement de branche (gnome-shell et nautilus : 1re composante ; les autres : deux premières).
 
 ## Construire et vérifier
 
 ~~~fish
-python3 -m py_compile vidange/*.py helper/vidange-helper data/vidange
+python3 -m py_compile vidange/*.py vidange/bilan/*.py helper/vidange-helper helper/vidange-bilan-hook data/vidange
 python3 -m pyflakes vidange/ helper/vidange-helper
 makepkg -si
 ~~~
