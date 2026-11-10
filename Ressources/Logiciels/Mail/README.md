@@ -1,6 +1,6 @@
 # Mail — mail-postcard
 
-**Mail (`mail-postcard`)** est le client de messagerie retenu pour ce setup, compilé avec **Claude** depuis les sources de [Postcard](https://github.com/gxanshu/postcard). Il ne s’agit pas d’une application créée de zéro par vibe coding : la base upstream est conservée, avec quelques ajouts : 
+**Mail (`mail-postcard`) 1.13.0-13** est le client de messagerie retenu pour ce setup, compilé avec **Claude** depuis les sources de [Postcard](https://github.com/gxanshu/postcard). Cette version ferme correctement les réponses HTTP **404** et utilise `Gdk.MemoryTexture` à la place de l'ancienne méthode `new_for_pixbuf`. Il ne s’agit pas d’une application créée de zéro par vibe coding : la base upstream est conservée, avec quelques ajouts : 
 
 - **Recherche et affichage des pièces jointes**.
 - **Aperçu des pièces jointes à droite** : PDF, images, texte et documents Word/LibreOffice.
@@ -18,7 +18,7 @@ sudo pacman -Syu --needed poppler-glib
 
 ## Paquet et installation
 
-Le paquet Arch compilé avec Claude est à ajouter manuellement dans ce dossier. Sa version exacte n’est pas précisée ici.
+Le paquet Arch de référence est `mail-postcard-ogu-1.13.0-13-any.pkg.tar.zst` ; vérifie que cette archive est bien présente dans le dossier avant installation.
 
 Depuis le dossier contenant le paquet, installer le fichier correspondant puis lancer Mail :
 
