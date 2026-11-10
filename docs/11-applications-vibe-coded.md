@@ -246,7 +246,7 @@ Fonctions annoncées par le projet :
 - Signal de changement d’état de l’aléatoire : l’interface suit l’état réel, et sa désactivation restaure le tri antérieur plutôt qu’un tri par titre.
 - Exposition du titre suivant, y compris le premier morceau après le dernier avec « Tout répéter ».
 
-Le paquet Arch compilé n’est pas inclus pour le moment : il sera ajouté manuellement dans le dossier [Semitone](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/01-Multimedia/Semitone/), comme les autres paquets maison. Pour retrouver le lecteur dans le menu de l’horloge et afficher une icône musicale animée tout à gauche de la barre supérieure, voir [Widget Topbar](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Widget%20Topbar/README.md). Les ajouts MPRIS sont destinés à l’intégration avec [Widget Topbar](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Widget%20Topbar/README.md). La comparaison effectuée indique que les bibliothèques utilisées sont identiques à celles de l’ancien paquet et que l’interface intégrée est identique octet pour octet. **La nouvelle intégration n’a pas encore été testée en session GNOME Shell.** Une fois le fichier `semitone-*.pkg.tar.zst` copié dans ce dossier, ouvrir un terminal dans ce dossier et installer le paquet :
+Le paquet Arch compilé n’est pas inclus pour le moment : il sera ajouté manuellement dans le dossier [Semitone](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/01-Multimedia/Semitone/), comme les autres paquets maison. Pour retrouver le lecteur dans le menu de l’horloge et afficher une icône musicale animée tout à gauche de la barre supérieure, voir [Widget Topbar](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Widget%20Topbar/). Les ajouts MPRIS sont destinés à l’intégration avec [Widget Topbar](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Widget%20Topbar/). La comparaison effectuée indique que les bibliothèques utilisées sont identiques à celles de l’ancien paquet et que l’interface intégrée est identique octet pour octet. **La nouvelle intégration n’a pas encore été testée en session GNOME Shell.** Une fois le fichier `semitone-*.pkg.tar.zst` copié dans ce dossier, ouvrir un terminal dans ce dossier et installer le paquet :
 
 ```fish
 set paquets_semitone (find . -maxdepth 1 -type f -name 'semitone*.pkg.tar.zst')
@@ -300,18 +300,11 @@ Voir le [README de SPECTACLE](../Ressources/Applis%20vibe%20codées%20en%20Libad
 
 Éditeur Markdown local GTK4/libadwaita utilisant **GtkSourceView 5** et **WebKitGTK 6**. **Version documentée : 0.3.0.** Il permet de parcourir des dossiers de documents Markdown, d’éditer les fichiers et d’afficher leur rendu.
 
-La version 0.3.0 ajoute les actions sur les notes (renommer, dupliquer, déplacer, afficher dans Fichiers, épingler dans le widget, créer un rendez-vous et supprimer avec annulation pendant 5 secondes), le renommage des dossiers épinglés et l’accès aux notes depuis la recherche GNOME. Les notes épinglées sont également consultables dans le menu de l’horloge GNOME avec [Widget Topbar](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Widget%20Topbar/README.md) : catégories, recherche, tâches, couleurs, rendez-vous et corbeille, avec le raccourci `Super+Alt+N`. L’icône violette est fournie à toutes les tailles, dock compris.
+La version 0.3.0 ajoute les actions sur les notes (renommer, dupliquer, déplacer, afficher dans Fichiers, épingler dans le widget, créer un rendez-vous et supprimer avec annulation pendant 5 secondes), le renommage des dossiers épinglés et l’accès aux notes depuis la recherche GNOME. Les notes épinglées sont également consultables dans le menu de l’horloge GNOME avec [Widget Topbar](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Widget%20Topbar/) : catégories, recherche, tâches, couleurs, rendez-vous et corbeille, avec le raccourci `Super+Alt+N`. L’icône violette est fournie à toutes les tailles, dock compris.
 
 **Paquet fourni : `grimoire-ogu-0.3.0-1-x86_64.pkg.tar.zst`.
 
-Installation depuis le dossier du paquet :
-
-```fish
-sudo pacman -U ./grimoire-ogu-0.3.0-1-x86_64.pkg.tar.zst
-grimoire
-```
-
-Pour le widget de notes dans le menu de l'horloge, installer également **Widget Topbar**. Voir les README dédiés de [Grimoire](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/02-Bureautique-et-redaction/Grimoire/readme_grimoire.md) et de [Widget Topbar](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Widget%20Topbar/README.md).
+Pour le widget de notes dans le menu de l'horloge, installer également **Widget Topbar**. Voir les README dédiés de [Grimoire](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/02-Bureautique-et-redaction/Grimoire/readme_grimoire.md) et de [Widget Topbar](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Widget%20Topbar/).
 
 ### Installation
 

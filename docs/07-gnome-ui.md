@@ -89,7 +89,7 @@ gsettings set org.gnome.settings-daemon.plugins.housekeeping donation-reminder-e
 
 L’extension maison **Quick Settings** remplace **Focus & Boutons** et **Battery Time Compact — Ogu**. Elle reprend les personnalisations du panneau des réglages rapides et y réunit l’affichage compact de la batterie : autonomie, pourcentage et puissance instantanée en watts.
 
-Voir [Extensions GNOME — Quick Settings](08-gnome-extensions.md#87--quick-settings), [Applications Vibe Coded — Quick Settings](11-applications-vibe-coded.md#1117--quick-settings) et [son dossier](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Quick%20Settings/). Pour les widgets de la barre supérieure et du menu de l’horloge, voir [Widget Topbar](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Widget%20Topbar/README.md).
+Voir [Extensions GNOME — Quick Settings](08-gnome-extensions.md#87--quick-settings), [Applications Vibe Coded — Quick Settings](11-applications-vibe-coded.md#1117--quick-settings) et [son dossier](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Quick%20Settings/). Pour les widgets de la barre supérieure et du menu de l’horloge, voir [Widget Topbar](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Widget%20Topbar/).
 
 ## 7.7 — Bouton d'alimentation, capot et veille (suspension)
 
