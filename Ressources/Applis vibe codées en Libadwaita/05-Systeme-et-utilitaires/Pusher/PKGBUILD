@@ -1,7 +1,7 @@
 # Maintainer: Ogu
 pkgname=pusher-ogu
 pkgver=1.8.3
-pkgrel=1
+pkgrel=3
 pkgdesc='Gestionnaire GTK4/libadwaita du dépôt GitLab CACHYOS-Setup'
 arch=('any')
 url='https://gitlab.com/Shogu/CACHYOS-Setup'
@@ -10,8 +10,12 @@ depends=('python' 'python-gobject' 'gtk4' 'libadwaita' 'libsecret' 'git' 'openss
 provides=('pusher')
 conflicts=('pusher')
 replaces=('pusher')
-source=('pusher-1.8.3-pusher.py' 'pusher-askpass' 'io.gitlab.shogu.Pusher.desktop' 'io.gitlab.shogu.Pusher.svg')
-sha256sums=('a95368993695b34ad53abe6dad5f3eaf5dbe2ba6cc1aaacb9bf49ce677992cbb' 'SKIP' 'SKIP' 'SKIP')
+source=('pusher-1.8.3-pusher.py' 'pusher-askpass' 'io.gitlab.shogu.Pusher.desktop'
+        'io.gitlab.shogu.Pusher.svg' 'io.gitlab.shogu.Pusher-symbolic.svg'
+        'gitlab-symbolic.svg')
+sha256sums=('a95368993695b34ad53abe6dad5f3eaf5dbe2ba6cc1aaacb9bf49ce677992cbb' 'SKIP' 'SKIP' 'SKIP'
+            '6360881d9b8fc55055d00b09af839b01e0256b5b5cce9171e746cb7f6d9c062f'
+            '6be84e83754a37e263aceb9de1947363ea947948a500faabb2c8e84521eb62de')
 
 package() {
   install -Dm755 "$srcdir/pusher-1.8.3-pusher.py" "$pkgdir/usr/lib/pusher/pusher.py"
@@ -24,4 +28,8 @@ LAUNCHER
   install -Dm755 "$srcdir/pusher-askpass" "$pkgdir/usr/lib/pusher-askpass"
   install -Dm644 "$srcdir/io.gitlab.shogu.Pusher.desktop" "$pkgdir/usr/share/applications/io.gitlab.shogu.Pusher.desktop"
   install -Dm644 "$srcdir/io.gitlab.shogu.Pusher.svg" "$pkgdir/usr/share/icons/hicolor/scalable/apps/io.gitlab.shogu.Pusher.svg"
+  # Icône symbolique de l'application (utilisée par la topbar GNOME).
+  install -Dm644 "$srcdir/io.gitlab.shogu.Pusher-symbolic.svg" "$pkgdir/usr/share/icons/hicolor/symbolic/apps/io.gitlab.shogu.Pusher-symbolic.svg"
+  # Icône symbolique du bouton Push (dessin GitLab) : absente des thèmes du système.
+  install -Dm644 "$srcdir/gitlab-symbolic.svg" "$pkgdir/usr/share/icons/hicolor/symbolic/apps/gitlab-symbolic.svg"
 }

@@ -9,10 +9,18 @@ Le nom du paquet Arch est **pusher-ogu** pour éviter la collision avec le paque
 Depuis ce dossier :
 
 ```fish
-sudo pacman -U ./pusher-ogu-1.8.3-1-any.pkg.tar.zst
+sudo pacman -U ./pusher-ogu-1.8.3-3-any.pkg.tar.zst
 ```
 
 ## Changelog
+
+### 1.8.3-3 — Icône symbolique de l'application
+
+Pusher fournit désormais `io.gitlab.shogu.Pusher-symbolic.svg`, la version monochrome de son icône (tanuki GitLab), sur la même grille 16 px que ses autres icônes symboliques. Elle est utilisée par la barre supérieure GNOME, qui cherche `<icône de l'app>-symbolic` et retombait sinon sur l'icône générique `application-x-executable-symbolic`. Le dessin est un simple remplissage, sans masque ni contour, pour rester recolorable par le thème.
+
+### 1.8.3-2 — Icône du bouton Push
+
+Le bouton **Push** affichait un carré « image manquante » : il demande `gitlab-symbolic`, une icône que ni Adwaita ni hicolor ne fournissent sur CachyOS. Le paquet installe désormais sa propre icône symbolique (dessin GitLab) dans `/usr/share/icons/hicolor/symbolic/apps/gitlab-symbolic.svg`, qui est recolorée par le thème comme le reste du bouton.
 
 ### 1.8.3 — Protection contre les conflits Git résiduels
 
@@ -42,10 +50,10 @@ Depuis ce dossier :
 makepkg -f
 ```
 
-Le paquet obtenu est `pusher-ogu-1.8.3-1-any.pkg.tar.zst`. Pour l’installer :
+Le paquet obtenu est `pusher-ogu-1.8.3-3-any.pkg.tar.zst`. Pour l’installer :
 
 ```fish
-sudo pacman -U ./pusher-ogu-1.8.3-1-any.pkg.tar.zst
+sudo pacman -U ./pusher-ogu-1.8.3-3-any.pkg.tar.zst
 ```
 
 Dépendances d’exécution : `python`, `python-gobject`, `gtk4`, `libadwaita`, `libsecret`, `git` et `openssh`.
