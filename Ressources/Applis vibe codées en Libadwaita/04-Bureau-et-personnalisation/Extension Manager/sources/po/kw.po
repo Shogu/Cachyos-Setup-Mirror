@@ -1,0 +1,837 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the extension-manager package.
+# Cirilla <cirilla@tuta.io>, 2025.
+# Flynn <cirilla@tuta.io>, 2025, 2026.
+msgid ""
+msgstr ""
+"Project-Id-Version: extension-manager\n"
+"Report-Msgid-Bugs-To: https://github.com/mjakeman/extension-manager/issues\n"
+"POT-Creation-Date: 2026-10-31 19:17+0100\n"
+"PO-Revision-Date: 2026-01-28 11:51+0000\n"
+"Last-Translator: Flynn <cirilla@tuta.io>\n"
+"Language-Team: Cornish <https://hosted.weblate.org/projects/extension-"
+"manager/app/kw/>\n"
+"Language: kw\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=(n == 0) ? 0 : ((n == 1) ? 1 : (((n % 100 "
+"== 2 || n % 100 == 22 || n % 100 == 42 || n % 100 == 62 || n % 100 == 82) || "
+"n % 1000 == 0 && (n % 100000 >= 1000 && n % 100000 <= 20000 || n % 100000 == "
+"40000 || n % 100000 == 60000 || n % 100000 == 80000) || n != 0 && n % "
+"1000000 == 100000) ? 2 : ((n % 100 == 3 || n % 100 == 23 || n % 100 == 43 || "
+"n % 100 == 63 || n % 100 == 83) ? 3 : ((n != 1 && (n % 100 == 1 || n % 100 "
+"== 21 || n % 100 == 41 || n % 100 == 61 || n % 100 == 81)) ? 4 : 5))));\n"
+"X-Generator: Weblate 5.16-dev\n"
+
+#: data/com.mattjakeman.ExtensionManager.desktop.in.in:2
+#: data/com.mattjakeman.ExtensionManager.metainfo.xml.in.in:6
+#: src/exm-window.blp:7
+msgid "Extension Manager"
+msgstr "Dyghtyer Ystynnans"
+
+#: data/com.mattjakeman.ExtensionManager.desktop.in.in:12
+msgid "Manage GNOME Shell Extensions"
+msgstr "Dyghtya Ystynansow GNOME"
+
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons. The list MUST also end with a semicolon.
+#. Make sure to leave the original strings and add your translations afterwards, so that users can search both in English and your language.
+#: data/com.mattjakeman.ExtensionManager.desktop.in.in:15
+msgid "extension;manager;shell;"
+msgstr "ystynnans;dyghtyer;"
+
+#: data/com.mattjakeman.ExtensionManager.metainfo.xml.in.in:7
+msgid "Install GNOME Extensions"
+msgstr "Lea Ystynansow GNOME"
+
+#: data/com.mattjakeman.ExtensionManager.metainfo.xml.in.in:13
+msgid "Browse and install GNOME Shell extensions to customise your desktop."
+msgstr "Peuri ha lea Ystynnans GNOME rag personelhe dha amontyell."
+
+#: data/com.mattjakeman.ExtensionManager.metainfo.xml.in.in:14
+msgid "Features:"
+msgstr "Nasyow:"
+
+#: data/com.mattjakeman.ExtensionManager.metainfo.xml.in.in:16
+#: data/com.mattjakeman.ExtensionManager.metainfo.xml.in.in:26
+msgid "Browse extensions.gnome.org right inside the app"
+msgstr "Peuri extensions.gnome.org a-bervedh an app"
+
+#: data/com.mattjakeman.ExtensionManager.metainfo.xml.in.in:17
+#: data/com.mattjakeman.ExtensionManager.metainfo.xml.in.in:22
+msgid "Manage the extensions you already have installed"
+msgstr "Dyghtya an ystynnansow dre ty leys kyns lemmyn"
+
+#: data/com.mattjakeman.ExtensionManager.metainfo.xml.in.in:30
+msgid "See all the details of your extensions"
+msgstr "Gweles oll manylyon dha ystynnansow"
+
+#: data/com.mattjakeman.ExtensionManager.metainfo.xml.in.in:34
+msgid "Check your extensions compatibility with the next version of GNOME"
+msgstr "Checkya mar dha ystynnansow oberi gans an versyon nessa GNOME"
+
+#: src/exm-application.c:236
+msgid "Browse, install, and manage GNOME Shell Extensions."
+msgstr "Peuri, lea, ha dyghtya ystynansow GNOME."
+
+#. Translators: Use 'Name email@domain.com' or 'Name https://website.example' (without single quotes). Do not delete existing names, write yours on a new line.
+#: src/exm-application.c:239
+msgid "translator-credits"
+msgstr "'Flynn cirilla@tuta.io'"
+
+#: src/exm-application.c:241
+msgid "Contributors"
+msgstr ""
+
+#: src/exm-author-page.blp:95
+#, fuzzy
+#| msgid "Unsupported Extension"
+msgid "Authored Extensions"
+msgstr "Ystynnans Anskoodhys"
+
+#: src/exm-author-page.blp:126
+#, fuzzy
+#| msgid "No Extensions Installed"
+msgid "No Extensions Found"
+msgstr "Ystynnansow Leys Vyth"
+
+#: src/exm-author-page.blp:159 src/exm-browse-page.blp:190
+#: src/exm-comment-dialog.blp:34 src/exm-detail-view.blp:61
+#: src/exm-detail-view.blp:499 src/exm-upgrade-assistant.blp:99
+msgid "Connection Error"
+msgstr "Error Mell"
+
+#: src/exm-browse-page.blp:16
+msgid "Search for Extensions"
+msgstr "Hwithra rag Ystynansow"
+
+#: src/exm-browse-page.blp:17
+msgid ""
+"Enter a keyword to search 'extensions.gnome.org' for GNOME Shell Extensions"
+msgstr ""
+"Ynworra unn ger alhwedh dhe hwilas 'extensions.gnome.org' rag Ystynnansow "
+"GNOME"
+
+#: src/exm-browse-page.blp:49 src/exm-browse-page.c:498
+msgid "Descending Order"
+msgstr "Yn Aray Diyskynnus"
+
+#: src/exm-browse-page.blp:58
+msgctxt "Sort search results"
+msgid "None"
+msgstr "Vyth"
+
+#: src/exm-browse-page.blp:59
+msgid "Popularity"
+msgstr "Gwerinegeth"
+
+#: src/exm-browse-page.blp:60
+msgctxt "Sort search results"
+msgid "Downloads"
+msgstr "Iskargow"
+
+#: src/exm-browse-page.blp:61
+msgid "Updated"
+msgstr "Nowedhys"
+
+#: src/exm-browse-page.blp:62
+msgid "Created"
+msgstr "Gulys"
+
+#: src/exm-browse-page.blp:69
+msgid "Sort search results"
+msgstr "Sortya sewyansow hwithransow"
+
+#: src/exm-browse-page.blp:115
+msgid "_Load More Results"
+msgstr "_Lea Moy Sewyansow"
+
+#: src/exm-browse-page.blp:149 src/exm-installed-page.blp:70
+msgid "No Results Found"
+msgstr "Sewyansow Kavos Vyth"
+
+#: src/exm-browse-page.blp:156
+msgid "Try a different search"
+msgstr "Assaya aral hwithrans"
+
+#: src/exm-browse-page.c:493
+msgid "Ascending Order"
+msgstr "Yn Aray Yskynnus"
+
+#: src/exm-comment-dialog.blp:13 src/exm-detail-view.blp:456
+msgid "Reviews and Comments"
+msgstr "Breusyansow ha kampol"
+
+#: src/exm-comment-dialog.blp:25 src/exm-detail-view.c:1054
+#: src/exm-install-button.c:147
+msgid "Loading"
+msgstr "Ow Karga"
+
+#: src/exm-comment-tile.blp:35 src/exm-detail-view.blp:157
+msgid "Author"
+msgstr "Awtour"
+
+#: src/exm-detail-view.blp:52
+msgid "Loading Details"
+msgstr "Ow Karga Manylyon"
+
+#: src/exm-detail-view.blp:71 src/exm-window.c:504
+msgid "An Error Occurred"
+msgstr "Unn Error Hwarvys"
+
+#: src/exm-detail-view.blp:72
+msgid "No extension details available"
+msgstr "Manylyon ystynnans ankavadow"
+
+#. Translators: Banner title shown when the extension has a runtime error
+#: src/exm-detail-view.blp:85
+msgid "This extension has an error"
+msgstr ""
+
+#: src/exm-detail-view.blp:86
+#, fuzzy
+#| msgid "_Details"
+msgid "_View Details"
+msgstr "_Manylyon"
+
+#: src/exm-detail-view.blp:115
+#, fuzzy
+#| msgid "Extension Manager"
+msgid "Extension Icon"
+msgstr "Dyghtyer Ystynnans"
+
+#: src/exm-detail-view.blp:142
+msgid "Name"
+msgstr "Hanow"
+
+#. Translators: Button tooltip to remove an installed extension
+#: src/exm-detail-view.blp:190
+#, fuzzy
+#| msgid "Use Extensions"
+msgid "Remove Extension"
+msgstr "Devnydhya Ystynansow"
+
+#. Translators: Button tooltip to open extension preferences
+#. Translators: Button's tooltip to open extension's preferences dialog
+#: src/exm-detail-view.blp:202 src/exm-extension-row.blp:72
+msgid "Open extension preferences"
+msgstr "Ygeri settyansow ystynnans"
+
+#. Translators: Switch tooltip to enable or disable the extension
+#. Translators: Switch's tooltip to enable/disable this extension
+#: src/exm-detail-view.blp:210 src/exm-extension-row.blp:83
+#, fuzzy
+#| msgid "Use Extensions"
+msgid "Toggle Extension"
+msgstr "Devnydhya Ystynansow"
+
+#: src/exm-detail-view.blp:234
+msgid "Enlarge Image"
+msgstr "Brashe Imach"
+
+#: src/exm-detail-view.blp:242 src/exm-screenshot.blp:23
+#, fuzzy
+#| msgid "%s Screenshot"
+msgid "Extension Screenshot"
+msgstr "Imach %s"
+
+#: src/exm-detail-view.blp:256
+msgid "Description"
+msgstr "Deskrifans"
+
+#: src/exm-detail-view.blp:284
+msgctxt "Number of downloads"
+msgid "Downloads"
+msgstr "Iskargow"
+
+#: src/exm-detail-view.blp:304
+msgid "Version"
+msgstr "Versyon"
+
+#. Translators: Icon's tooltip when an extension update is available
+#: src/exm-detail-view.blp:321 src/exm-extension-row.blp:26
+msgid "A newer version of this extension is available"
+msgstr "Unn versyon nowydh a'n ystynnans ma yw kavadow"
+
+#. Translators: Icon's tooltip when an extension is incompatible
+#: src/exm-detail-view.blp:335 src/exm-extension-row.blp:43
+#: src/exm-install-button.c:142
+msgid "This extension is incompatible with your current version of GNOME"
+msgstr "An ystynnans ma yw ankesplegadow gans dha versyon GNOME a-lemmyn"
+
+#: src/exm-detail-view.blp:357
+msgid "Session Modes"
+msgstr "Fordhow Esedhek"
+
+#: src/exm-detail-view.blp:372
+msgid "Location"
+msgstr ""
+
+#: src/exm-detail-view.blp:386
+msgid "Links"
+msgstr "Kevrennow"
+
+#: src/exm-detail-view.blp:396
+msgid "Homepage"
+msgstr "Folen Chi"
+
+#: src/exm-detail-view.blp:412 src/exm-detail-view.blp:427
+msgid "Donate"
+msgstr "Argevri"
+
+#: src/exm-detail-view.blp:438
+msgid "View on Extensions"
+msgstr "Gwel war Ystynnansow"
+
+#: src/exm-detail-view.blp:479
+msgid "Reviews and comments are disabled for this extension"
+msgstr "Breusyansow ha kampollow yw ungallosegi rag an ystynnans ma"
+
+#: src/exm-detail-view.blp:522
+msgid "There are no reviews or comments"
+msgstr "Ena vyth breusyansow po kampollow"
+
+#: src/exm-detail-view.blp:551
+msgid "_Show All"
+msgstr "_Diskwedhes Oll"
+
+#: src/exm-detail-view.c:561
+msgid "Unlock Dialog"
+msgstr "Fenester Dialhwedha"
+
+#: src/exm-detail-view.c:562
+msgid "GDM"
+msgstr "GDM"
+
+#: src/exm-detail-view.c:664 src/exm-detail-view.c:770
+#: src/exm-detail-view.c:948
+msgid "Unsupported"
+msgstr "Anskoodhys"
+
+#: src/exm-detail-view.c:819
+msgid "Unknown"
+msgstr ""
+
+#. Translators: '%s' = extension name
+#: src/exm-detail-view.c:917
+#, c-format
+msgid "%s Icon"
+msgstr "Arwodhik %s"
+
+#. Translators: '%s' = extension name
+#: src/exm-detail-view.c:937
+#, c-format
+msgid "%s Screenshot"
+msgstr "Imach %s"
+
+#. Success indicator
+#: src/exm-detail-view.c:1228 src/exm-error-dialog.c:126
+#: src/exm-extension-error-dialog.c:82 src/exm-upgrade-assistant.c:350
+msgid "Copied"
+msgstr "Dasskrifys"
+
+#: src/exm-error-dialog.blp:7
+msgid "Error Report"
+msgstr "Derivas Error"
+
+#: src/exm-error-dialog.blp:22
+msgid "An unexpected error occurred in Extension Manager"
+msgstr "Unn error anwaytys hwarvys yn Dyghtyer Ystynnans"
+
+#: src/exm-error-dialog.blp:36 src/exm-extension-error-dialog.blp:36
+msgid "Copy to Clipboard"
+msgstr "Disskrifa dhe Astel Glypp"
+
+#: src/exm-error-dialog.blp:77
+msgid "_New Issue"
+msgstr "_Derivas Nowydh"
+
+#: src/exm-error-dialog.c:174
+msgid "Please open a new issue and attach the following information:"
+msgstr "Skrifa unn derivas nowydh mar pleg ha tackya an kedhlow a sew:"
+
+#. Translators: '%s' = Name of Distributor (e.g. "Packager123")
+#: src/exm-error-dialog.c:178
+#, c-format
+msgid ""
+"You are using a third-party build of Extension Manager. Please <span "
+"weight=\"bold\">contact the package distributor (%s) first</span> before "
+"filing an issue. Be sure to attach the following information:"
+msgstr ""
+"Ty ow devnydhya unn versyon parti nessa rag Dyghtyer Ystynnans. <span "
+"weight=\"bold\">Kestav an lesrennyas (%s) kynsa </span> mar pleg a-dherag "
+"restrenna unn derivas. Tackya an kedhlow a sew:"
+
+#: src/exm-extension-error-dialog.blp:9
+#, fuzzy
+#| msgid "Extension Manager"
+msgid "Extension Error"
+msgstr "Dyghtyer Ystynnans"
+
+#. Translators: Button to report an extension error to its developer
+#: src/exm-extension-error-dialog.blp:77
+#, fuzzy
+#| msgid "_New Issue"
+msgid "_Report Issue"
+msgstr "_Derivas Nowydh"
+
+#: src/exm-extension-error-dialog.c:54
+#, c-format
+msgid "“%s” Failed to Load"
+msgstr ""
+
+#: src/exm-extension-error-dialog.c:55
+msgid "Extension Failed to Load"
+msgstr ""
+
+#. Translators: Button's tooltip to view an extension's error details
+#: src/exm-extension-row.blp:58
+msgid "An error occurred while loading this extension"
+msgstr "Unn error hwarvys dres ow karga an ystynnans ma"
+
+#: src/exm-install-button.c:125
+msgid "Install…"
+msgstr "Lea…"
+
+#: src/exm-install-button.c:130
+msgid "Installing"
+msgstr "Ow Lea"
+
+#: src/exm-install-button.c:134
+msgctxt "State"
+msgid "Installed"
+msgstr "Leys"
+
+#: src/exm-install-button.c:138
+msgid "Unsupported…"
+msgstr "Anskoodhys…"
+
+#: src/exm-installed-page.blp:16
+msgid "_Log Out…"
+msgstr "_Omdenna…"
+
+#: src/exm-installed-page.blp:28
+msgid "Use Extensions"
+msgstr "Devnydhya Ystynansow"
+
+#: src/exm-installed-page.blp:29
+msgid "Extensions can cause performance and stability issues"
+msgstr "Ystynnansow re kawsya kudynnow skavder ha faster"
+
+#: src/exm-installed-page.blp:35 src/exm-upgrade-assistant.blp:135
+msgid "User-Installed Extensions"
+msgstr "Ystynnansow Leys gans Hwi"
+
+#. Translators: Tooltip of the Select button in the user-installed extensions group
+#: src/exm-installed-page.blp:46 src/exm-window.c:602
+#, fuzzy
+#| msgid "Use Extensions"
+msgid "Select Extensions"
+msgstr "Devnydhya Ystynansow"
+
+#: src/exm-installed-page.blp:52 src/exm-upgrade-assistant.blp:139
+msgid "System Extensions"
+msgstr "Ystynnansow Leys gans an System"
+
+#: src/exm-installed-page.blp:71
+msgid "Try a different search or search online"
+msgstr "Assaya aral hwithras po hwilas warlinen"
+
+#: src/exm-installed-page.blp:78 src/exm-installed-page.blp:99
+msgid "_Search Online"
+msgstr "_Hwilas Warlinen"
+
+#: src/exm-installed-page.blp:91 src/exm-upgrade-assistant.c:489
+msgid "No Extensions Installed"
+msgstr "Ystynnansow Leys Vyth"
+
+#: src/exm-installed-page.blp:92
+msgid "Search online to install extensions"
+msgstr "Hwilas warlinen dhe lea ystynnansow"
+
+#. Translators: '%d' = number of extensions that will be updated
+#: src/exm-installed-page.c:393
+#, c-format
+msgid "%d extension will be updated on next login"
+msgid_plural "%d extensions will be updated on next login"
+msgstr[0] "%d ystynnansow nowedhi wosa omgelmi nessa"
+msgstr[1] "%d ystynnans nowedhi wosa omgelmi nessa"
+msgstr[2] "%d ystynnans nowedhi wosa omgelmi nessa"
+msgstr[3] "%d ystynnans nowedhi wosa omgelmi nessa"
+msgstr[4] "%d ystynnans nowedhi wosa omgelmi nessa"
+msgstr[5] "%d ystynnans nowedhi wosa omgelmi nessa"
+
+#: src/exm-rating.c:142
+#, c-format
+msgid "%i Star"
+msgid_plural "%i Stars"
+msgstr[0] "%i Sterennow"
+msgstr[1] "%i Steren"
+msgstr[2] "%i Sterennow"
+msgstr[3] "%i Sterennow"
+msgstr[4] "%i Sterennow"
+msgstr[5] "%i Sterennow"
+
+#. Translators: Button's tooltip to zoom out screenshots
+#: src/exm-screenshot-view.blp:37
+msgid "Zoom Out"
+msgstr "Lehe"
+
+#. Translators: Button's tooltip to zoom in screenshots
+#: src/exm-screenshot-view.blp:51
+msgid "Zoom In"
+msgstr "Moghhe"
+
+#: src/exm-shortcuts-dialog.blp:6
+msgctxt "shortcuts dialog"
+msgid "Views"
+msgstr "Gwelyow"
+
+#: src/exm-shortcuts-dialog.blp:9
+msgctxt "shortcuts dialog"
+msgid "Switch to Installed"
+msgstr "Skwychella dhe Leys"
+
+#: src/exm-shortcuts-dialog.blp:14
+msgctxt "shortcuts dialog"
+msgid "Switch to Browse"
+msgstr "Skwychella dhe Peuri"
+
+#: src/exm-shortcuts-dialog.blp:20
+msgctxt "shortcuts dialog"
+msgid "Screenshot View"
+msgstr "Vu Imach"
+
+#: src/exm-shortcuts-dialog.blp:23
+msgctxt "shortcuts dialog"
+msgid "Zoom In"
+msgstr "Moghhe"
+
+#: src/exm-shortcuts-dialog.blp:28
+msgctxt "shortcuts dialog"
+msgid "Zoom Out"
+msgstr "Lehe"
+
+#: src/exm-shortcuts-dialog.blp:33
+msgctxt "shortcuts dialog"
+msgid "Reset Zoom"
+msgstr "Digorra Brashyans"
+
+#: src/exm-shortcuts-dialog.blp:39
+msgctxt "shortcuts dialog"
+msgid "App"
+msgstr "App"
+
+#: src/exm-shortcuts-dialog.blp:42
+msgctxt "shortcuts dialog"
+msgid "Toggle Search"
+msgstr "Dewis Hwithrans"
+
+#: src/exm-shortcuts-dialog.blp:47
+msgctxt "shortcuts dialog"
+msgid "Keyboard Shortcuts"
+msgstr "Kesunyansow Bysowek"
+
+#: src/exm-shortcuts-dialog.blp:52
+msgctxt "shortcuts dialog"
+msgid "Close Window"
+msgstr "Degea Fenester"
+
+#: src/exm-shortcuts-dialog.blp:57
+msgctxt "shortcuts dialog"
+msgid "Quit"
+msgstr "Kwytya"
+
+#: src/exm-upgrade-assistant.blp:11
+msgid "Upgrade Assistant"
+msgstr "Darbarer Ughradha"
+
+#: src/exm-upgrade-assistant.blp:65
+msgid "_Check Compatibility"
+msgstr "_Checkya Kesplegadyans"
+
+#: src/exm-upgrade-assistant.blp:145
+msgid "_Copy to Clipboard"
+msgstr "_Dasskrifa dhe Astel Glypp"
+
+#: src/exm-upgrade-assistant.c:192
+#, c-format
+msgid "Checked %d/%d Extensions"
+msgstr "Checkys %d/%d Ystynnansow"
+
+#. Set percentage text
+#: src/exm-upgrade-assistant.c:211
+#, c-format
+msgid "%d%% Compatible"
+msgstr "%d%% Kesplegadow"
+
+#: src/exm-upgrade-assistant.c:227
+#, c-format
+msgid ""
+"<b>%d out of %d</b> extensions currently installed on this system have been "
+"marked as supporting <b>GNOME %s</b>"
+msgstr ""
+"<b>%d yn-mes a %d</b> ystynnansow leys y'n eur ma yn an amontyell ma yw "
+"merkys avel ow skoodhya <b>GNOME %s</b>"
+
+#: src/exm-upgrade-assistant.c:234
+#, c-format
+msgid "If you switch to GNOME %s now, all of your extensions should work"
+msgstr ""
+"Mar ty skwychella dhe GNOME %s lemmyn, oll dha ystynnansow bos gweythresek"
+
+#: src/exm-upgrade-assistant.c:239
+#, c-format
+msgid "If you switch to GNOME %s now, %d of your extensions might not work"
+msgstr ""
+"Mar ty skwychella dhe GNOME %s lemmyn, %d a dha ystynnansow ny bos "
+"gweythresek martesen"
+
+#. Translators: Icon's tooltip when an extension is compatible
+#: src/exm-upgrade-assistant.c:586
+msgid "A compatible version of the extension exists"
+msgstr "Unn versyon kesplegadow a'n ystyanns bys"
+
+#. Translators: Icon's tooltip when an extension is not compatible
+#: src/exm-upgrade-assistant.c:593
+msgid "No compatible version of the extension exists"
+msgstr "Versyon kesplegadow vyth a'n ystynnans bys"
+
+#. Translators: Icon's tooltip when an extension compatibility is unknown
+#: src/exm-upgrade-assistant.c:600
+msgid ""
+"This extension is not hosted on extensions.gnome.org. Its compatibility "
+"cannot be determined."
+msgstr ""
+"An ystynnans ma yw na war extensions.gnome.org. Y kesplegadyans yw ankoth."
+
+#: src/exm-upgrade-assistant.c:691
+#, c-format
+msgid ""
+"You are currently running <b>GNOME %s</b>. Select a version of GNOME below "
+"and check whether your extensions will continue to be available."
+msgstr ""
+"Ty yw owth eksekutya <b> GNOME %s</b>. Dewis unn versyon a GNOME a-woles dhe "
+"ha checkya mar dha ystynnansow durya bos kavadow."
+
+#: src/exm-versions-dialog.blp:13
+#, fuzzy
+#| msgid "Version"
+msgid "Version History"
+msgstr "Versyon"
+
+#: src/exm-versions-dialog.blp:25
+#, fuzzy
+#| msgid "Loading Details"
+msgid "Loading Versions"
+msgstr "Ow Karga Manylyon"
+
+#: src/exm-versions-dialog.blp:34
+msgid "No Version History"
+msgstr ""
+
+#: src/exm-versions-dialog.blp:71
+#, fuzzy
+#| msgid "_Load More Results"
+msgid "_Load More Versions"
+msgstr "_Lea Moy Sewyansow"
+
+#. Translators: Tooltip on the installed-version indicator in the versions dialog
+#: src/exm-versions-dialog.c:240
+#, fuzzy
+#| msgid "User-Installed Extensions"
+msgid "Installed Version"
+msgstr "Ystynnansow Leys gans Hwi"
+
+#: src/exm-window.blp:61
+msgid "Cancel"
+msgstr ""
+
+#. Translators: Tooltip of the search icon in the header bar
+#: src/exm-window.blp:69
+msgid "Search Installed Extensions"
+msgstr "Hwilas Ystynnansow Leys"
+
+#: src/exm-window.blp:78
+msgid "Main Menu"
+msgstr "Penn Rol"
+
+#: src/exm-window.blp:88
+msgid "Search for installed extensions"
+msgstr "Hwilas rag ystynnans leys"
+
+#: src/exm-window.blp:99
+msgctxt "Navigation"
+msgid "_Installed"
+msgstr "_Leys"
+
+#: src/exm-window.blp:111
+msgctxt "Navigation"
+msgid "_Browse"
+msgstr "_Peuri"
+
+#: src/exm-window.blp:129
+#, fuzzy
+#| msgid "Install…"
+msgid "Uninstall…"
+msgstr "Lea…"
+
+#: src/exm-window.blp:159
+msgid "GNOME Shell Unavailable"
+msgstr ""
+
+#: src/exm-window.blp:160
+msgid "Log in to a GNOME session to manage extensions"
+msgstr ""
+
+#: src/exm-window.blp:169
+msgid "_Discover GNOME"
+msgstr ""
+
+#: src/exm-window.blp:186
+msgid "Sort _Enabled First"
+msgstr "Sortya _Gallosegys Kynsa"
+
+#: src/exm-window.blp:192
+#, fuzzy
+#| msgid "Unsupported"
+msgid "_Show Unsupported"
+msgstr "Anskoodhys"
+
+#: src/exm-window.blp:199
+msgid "_Upgrade Assistant"
+msgstr "_Darbarer Ughradha"
+
+#: src/exm-window.blp:200
+msgid "_Keyboard Shortcuts"
+msgstr "_Kesunyansow Bysowek"
+
+#: src/exm-window.blp:201
+msgid "_About Extension Manager"
+msgstr "_A-dro Dyghtyer Ystynnans"
+
+#: src/exm-window.blp:206
+msgid "Uninstall Extension?"
+msgstr "Heb lea Ystynnans?"
+
+#: src/exm-window.blp:208
+msgid ""
+"The extension's features and functionality will no longer be accessible. Are "
+"you sure you want to uninstall?"
+msgstr ""
+"An nasyow ha gweythresyow ystynnans yw na fella kavadow. Os ta sur ty mynnes "
+"dislea y?"
+
+#: src/exm-window.blp:214 src/exm-window.blp:225
+msgid "_No"
+msgstr "_Na"
+
+#: src/exm-window.blp:215 src/exm-window.blp:226
+msgid "_Yes"
+msgstr "_Ea"
+
+#: src/exm-window.blp:220
+#, fuzzy
+#| msgid "Uninstall Extension?"
+msgid "Uninstall Extensions?"
+msgstr "Heb lea Ystynnans?"
+
+#: src/exm-window.blp:231
+msgid "Unsupported Extension"
+msgstr "Ystynnans Anskoodhys"
+
+#: src/exm-window.blp:232
+msgid ""
+"This extension does not support your GNOME Shell version. It may cause "
+"errors if installed."
+msgstr ""
+"An ystynnans na skoodhya agar versyon GNOME. Y re kawysa errors p'eur leys."
+
+#: src/exm-window.blp:238
+msgid "_Install Anyway"
+msgstr "_Lea War Neb Kor"
+
+#: src/exm-window.blp:239
+msgid "_Go Back"
+msgstr "_Dehweles"
+
+#: src/exm-window.c:505
+msgid "_Details"
+msgstr "_Manylyon"
+
+#. Translators: "%u" = number of selected extensions; shown as the header bar title
+#: src/exm-window.c:605
+#, c-format
+msgid "%u Selected"
+msgid_plural "%u Selected"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+msgstr[4] ""
+msgstr[5] ""
+
+#: src/exm-window.c:652
+#, fuzzy, c-format
+#| msgid ""
+#| "The extension's features and functionality will no longer be accessible. "
+#| "Are you sure you want to uninstall?"
+msgid ""
+"The extension's features and functionality will no longer be accessible. Are "
+"you sure you want to uninstall %u extension?"
+msgid_plural ""
+"Their features and functionality will no longer be accessible. Are you sure "
+"you want to uninstall %u extensions?"
+msgstr[0] ""
+"An nasyow ha gweythresyow ystynnans yw na fella kavadow. Os ta sur ty mynnes "
+"dislea y?"
+msgstr[1] ""
+"An nasyow ha gweythresyow ystynnans yw na fella kavadow. Os ta sur ty mynnes "
+"dislea y?"
+msgstr[2] ""
+"An nasyow ha gweythresyow ystynnans yw na fella kavadow. Os ta sur ty mynnes "
+"dislea y?"
+msgstr[3] ""
+"An nasyow ha gweythresyow ystynnans yw na fella kavadow. Os ta sur ty mynnes "
+"dislea y?"
+msgstr[4] ""
+"An nasyow ha gweythresyow ystynnans yw na fella kavadow. Os ta sur ty mynnes "
+"dislea y?"
+msgstr[5] ""
+"An nasyow ha gweythresyow ystynnans yw na fella kavadow. Os ta sur ty mynnes "
+"dislea y?"
+
+#: src/web/exm-request-handler.c:145
+msgid ""
+"Check <a href='https://status.gnome.org/'>GNOME infrastructure status</a> "
+"and try again later"
+msgstr ""
+"Checkya <a href='https://status.gnome.org/'>studh isframweyth GNOME </a> ha "
+"assaya aral diwettha"
+
+#: src/web/exm-request-handler.c:146
+msgid "Check your network status and try again"
+msgstr "Checkya dha studh kesrosweyth hag assaya arta"
+
+#~ msgid "Error"
+#~ msgstr "Error"
+
+#~ msgid "See Details"
+#~ msgstr "Gweles Manylyon"
+
+#~ msgid "Remove…"
+#~ msgstr "Remova…"
+
+#~ msgid ""
+#~ "This extension will run while the screen is locked and no user is logged "
+#~ "in"
+#~ msgstr ""
+#~ "An ystynnans ma eksekutya prys an skrin yw alhwedhys ha devnydhyer vyth "
+#~ "yw omgelmys"
+
+#~ msgid "This extension will run while the screen is locked"
+#~ msgstr "An ystynanns ma yw eksekutya prys an skrin yw alhwedhys"
+
+#~ msgid "This extension will run while no user is logged in"
+#~ msgstr "An ystynnans ma eksekutya prys devnydhyer vyth yw omgelmys"

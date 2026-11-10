@@ -1,0 +1,70 @@
+using Gtk 4.0;
+
+template $ExmCommentTile: Gtk.Widget {
+  focusable: true;
+
+  accessibility {
+    labelled-by: author;
+    described-by: comment_label;
+  }
+
+  Gtk.Box {
+    orientation: vertical;
+    spacing: 6;
+
+    Gtk.Box {
+      orientation: horizontal;
+
+      Gtk.Label author {
+        styles [
+          "heading",
+        ]
+
+        label: bind template.comment as <$ExmComment>.author;
+        max-width-chars: 20;
+        wrap: true;
+        wrap-mode: word;
+        xalign: 0;
+      }
+
+      Gtk.Label author_badge {
+        styles [
+          "author-badge",
+        ]
+
+        label: _("Author");
+        valign: center;
+        visible: bind template.comment as <$ExmComment>.is_extension_creator;
+      }
+
+      $ExmRating rating {
+        halign: end;
+        hexpand: true;
+        rating: bind template.comment as <$ExmComment>.rating;
+        visible: bind template.comment as <$ExmComment>.rating as <bool>;
+      }
+    }
+
+    Gtk.Label comment_label {
+      styles [
+        "multiline",
+      ]
+
+      label: bind template.comment as <$ExmComment>.comment;
+      use-markup: true;
+      wrap: true;
+      wrap-mode: word_char;
+      xalign: 0;
+      max-width-chars: 30;
+    }
+
+    Gtk.Label date {
+      styles [
+        "dimmed",
+      ]
+
+      label: bind $format_comment_date(template.comment as <$ExmComment>.date) as <string>;
+      xalign: 0;
+    }
+  }
+}

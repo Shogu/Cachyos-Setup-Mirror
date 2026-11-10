@@ -1,0 +1,60 @@
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'data/com.mattjakeman.ExtensionManager.desktop.in.in'
+      - 'data/com.mattjakeman.ExtensionManager.metainfo.xml.in.in'
+      - 'po/POTFILES'
+      - 'src/*.c'
+      - 'src/*.blp'
+  workflow_dispatch:
+  workflow_call:
+
+name: Translations
+
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
+
+jobs:
+  update_pot:
+    name: Update Template
+    runs-on: ubuntu-latest
+    container: debian:sid
+    steps:
+      - name: Install Dependencies
+        run: |
+          apt update
+          apt install -y git meson gcc gettext cmake appstream desktop-file-utils \
+            libadwaita-1-dev libglycin-2-dev libglycin-gtk4-2-dev libgtk-4-dev \
+            libjson-glib-dev libsoup-3.0-dev libxml2-dev blueprint-compiler
+
+      - name: Setup Repository
+        run: |
+          git clone -b ${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}} \
+            ${{ github.server_url }}/${{ github.repository }} .
+
+      - uses: actions/checkout@v4.2.2
+        with:
+          ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Update POTFILES
+        run: |
+          cd po
+          bash ./print-source-files.sh > ./POTFILES
+          cd ..
+
+      - name: Update Translation Template
+        run: |
+          meson setup _build -Dbacktrace=false
+          meson compile -C _build extension-manager-pot
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v7.0.8
+        with:
+          commit-message: 'po: Update template'
+          title: 'po: Update template'
+          branch: update-pot
+          base: master
+          delete-branch: true

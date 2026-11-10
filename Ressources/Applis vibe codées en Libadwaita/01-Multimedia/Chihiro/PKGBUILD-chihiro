@@ -1,6 +1,6 @@
 # Maintainer: Ogu
 pkgname=chihiro
-pkgver=0.6.1
+pkgver=0.7.0
 pkgrel=1
 pkgdesc="Petit lecteur GTK4 sans décoration : vidéo de Chihiro en boucle, bande son Lofi Girl en direct"
 arch=('any')
@@ -10,7 +10,7 @@ depends=('python' 'python-gobject' 'gtk4' 'libadwaita' 'gstreamer' 'gst-plugins-
          'gst-plugins-bad' 'gst-libav' 'gst-plugin-gtk4' 'quickjs-ng')
 install=chihiro.install
 source=("chihiro-$pkgver.tar.gz")
-sha256sums=('7d4b83877e6a16ee151ec31ece2bf6c4a749cc2ed4f5a0f2baefa57f86f7d79c')
+sha256sums=('6ee3b7dc0a03be5399ba21e7457a320e3cfa18dce7ae5535d78d06bfbbccc466')
 
 package() {
   cd "chihiro-$pkgver"

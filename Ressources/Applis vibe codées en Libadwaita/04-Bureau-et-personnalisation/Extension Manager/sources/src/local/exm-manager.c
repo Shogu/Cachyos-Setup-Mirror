@@ -1,0 +1,1064 @@
+/*
+ * exm-manager.c
+ *
+ * Copyright 2022-2025 Matthew Jakeman <mjakeman26@outlook.co.nz>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ */
+
+#include "exm-manager.h"
+
+#include "shell-dbus-interface.h"
+
+#include "../exm-types.h"
+#include "../exm-enums.h"
+
+struct _ExmManager
+{
+    GObject parent_instance;
+
+    ShellExtensions *proxy;
+    GListModel *ext_model;
+
+    gchar *shell_version;
+    gboolean extensions_enabled;
+    gboolean is_supported;
+    gboolean is_ready;
+
+    guint update_callback_id;
+    GCancellable *list_cancellable;
+};
+
+G_DEFINE_FINAL_TYPE (ExmManager, exm_manager, G_TYPE_OBJECT)
+
+enum {
+    PROP_0,
+    PROP_EXTENSIONS,
+    PROP_EXTENSIONS_ENABLED,
+    PROP_SHELL_VERSION,
+    PROP_IS_SUPPORTED,
+    PROP_IS_READY,
+    N_PROPS
+};
+
+static GParamSpec *properties [N_PROPS];
+
+enum {
+    SIGNAL_0,
+    SIGNAL_UPDATES_AVAILABLE,
+    SIGNAL_ERROR_OCCURRED,
+    SIGNAL_INSTALL_STATUS,
+    N_SIGNALS
+};
+
+static guint signals [N_SIGNALS];
+
+ExmManager *
+exm_manager_new (void)
+{
+    return g_object_new (EXM_TYPE_MANAGER, NULL);
+}
+
+static void
+exm_manager_dispose (GObject *object)
+{
+    ExmManager *self = EXM_MANAGER (object);
+
+    g_clear_handle_id (&self->update_callback_id, g_source_remove);
+
+    if (self->list_cancellable)
+        g_cancellable_cancel (self->list_cancellable);
+    g_clear_object (&self->list_cancellable);
+
+    if (self->proxy)
+        g_signal_handlers_disconnect_by_data (self->proxy, self);
+
+    g_clear_object (&self->proxy);
+    g_clear_object (&self->ext_model);
+
+    G_OBJECT_CLASS (exm_manager_parent_class)->dispose (object);
+}
+
+static void
+exm_manager_finalize (GObject *object)
+{
+    ExmManager *self = EXM_MANAGER (object);
+
+    g_clear_pointer (&self->shell_version, g_free);
+
+    G_OBJECT_CLASS (exm_manager_parent_class)->finalize (object);
+}
+
+static void
+exm_manager_get_property (GObject    *object,
+                          guint       prop_id,
+                          GValue     *value,
+                          GParamSpec *pspec)
+{
+    ExmManager *self = EXM_MANAGER (object);
+
+    switch (prop_id)
+    {
+    case PROP_EXTENSIONS:
+        g_value_set_object (value, self->ext_model);
+        break;
+    case PROP_SHELL_VERSION:
+        g_value_set_string (value, self->shell_version);
+        break;
+    case PROP_EXTENSIONS_ENABLED:
+        g_value_set_boolean (value, self->extensions_enabled);
+        break;
+    case PROP_IS_SUPPORTED:
+        g_value_set_boolean (value, self->is_supported);
+        break;
+    case PROP_IS_READY:
+        g_value_set_boolean (value, self->is_ready);
+        break;
+    default:
+        G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+    }
+}
+
+static void
+exm_manager_set_property (GObject      *object,
+                          guint         prop_id,
+                          const GValue *value,
+                          GParamSpec   *pspec)
+{
+    ExmManager *self = EXM_MANAGER (object);
+
+    switch (prop_id)
+    {
+    case PROP_SHELL_VERSION:
+        g_free (self->shell_version);
+        self->shell_version = g_value_dup_string (value);
+        break;
+    case PROP_EXTENSIONS_ENABLED:
+        self->extensions_enabled = g_value_get_boolean (value);
+        break;
+    default:
+        G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+    }
+}
+
+typedef struct
+{
+    ExmExtension *extension;
+    ExmManager *manager;
+} ExmCallbackData;
+
+static ExmCallbackData *
+create_callback_data (ExmManager *manager,
+                      ExmExtension *extension)
+{
+    ExmCallbackData *data;
+    data = g_slice_new0 (ExmCallbackData);
+
+    data->manager = g_object_ref (manager);
+    data->extension = g_object_ref (extension);
+
+	return data;
+}
+
+static void
+free_callback_data (ExmCallbackData *data)
+{
+	if (!data)
+		return;
+
+    g_clear_object (&data->manager);
+    g_clear_object (&data->extension);
+
+    g_slice_free (ExmCallbackData, data);
+}
+
+#define notify_error(self_, f_, ...) \
+    G_STMT_START { \
+        char *error_text; \
+        error_text = g_strdup_printf (f_, ##__VA_ARGS__); \
+        g_critical ("%s", error_text); \
+        g_signal_emit (G_OBJECT (self_), signals [SIGNAL_ERROR_OCCURRED], 0, error_text); \
+        g_free (error_text); \
+    } G_STMT_END
+
+static void
+enable_extension_done (ShellExtensions *proxy,
+                       GAsyncResult    *res,
+                       ExmCallbackData *data)
+{
+    GError *error = NULL;
+    gboolean success;
+    shell_extensions_call_enable_extension_finish (proxy, &success, res, &error);
+
+    if (!success)
+    {
+        g_autofree gchar *uuid = NULL;
+        g_object_get (data->extension, "uuid", &uuid, NULL);
+        if (error)
+        {
+            notify_error (data->manager, "Could not enable extension '%s': %s\n", uuid, error->message);
+        }
+        else
+        {
+            notify_error (data->manager, "Could not enable extension '%s': unknown failure", uuid);
+        }
+    }
+
+    g_clear_error (&error);
+    free_callback_data (data);
+}
+
+void
+exm_manager_enable_extension (ExmManager   *self,
+                              ExmExtension *extension)
+{
+    g_autofree gchar *uuid = NULL;
+
+    if (self->proxy == NULL)
+    {
+        notify_error (self, "Extension manager is not ready yet\n");
+        return;
+    }
+
+    g_object_get (extension, "uuid", &uuid, NULL);
+
+    shell_extensions_call_enable_extension (self->proxy,
+                                            uuid,
+                                            NULL,
+                                            (GAsyncReadyCallback) enable_extension_done,
+                                            create_callback_data (self, extension));
+}
+
+static void
+disable_extension_done (ShellExtensions *proxy,
+                        GAsyncResult    *res,
+                        ExmCallbackData *data)
+{
+    GError *error = NULL;
+    gboolean success;
+    shell_extensions_call_disable_extension_finish (proxy, &success, res, &error);
+
+    if (!success)
+    {
+        g_autofree gchar *uuid = NULL;
+        g_object_get (data->extension, "uuid", &uuid, NULL);
+        if (error)
+        {
+            notify_error (data->manager, "Could not disable extension '%s': %s\n", uuid, error->message);
+        }
+        else
+        {
+            notify_error (data->manager, "Could not disable extension '%s': unknown failure", uuid);
+        }
+    }
+
+    g_clear_error (&error);
+    free_callback_data (data);
+}
+
+void
+exm_manager_disable_extension (ExmManager   *self,
+                               ExmExtension *extension)
+{
+    g_autofree gchar *uuid = NULL;
+
+    if (self->proxy == NULL)
+    {
+        notify_error (self, "Extension manager is not ready yet\n");
+        return;
+    }
+
+    g_object_get (extension, "uuid", &uuid, NULL);
+
+    shell_extensions_call_disable_extension (self->proxy,
+                                             uuid,
+                                             NULL,
+                                             (GAsyncReadyCallback) disable_extension_done,
+                                             create_callback_data (self, extension));
+}
+
+static void
+remove_extension_done (ShellExtensions *proxy,
+                       GAsyncResult    *res,
+                       ExmCallbackData *data)
+{
+    GError *error = NULL;
+    gboolean success;
+    shell_extensions_call_uninstall_extension_finish (proxy, &success, res, &error);
+
+    if (!success)
+    {
+        g_autofree gchar *uuid = NULL;
+        g_object_get (data->extension, "uuid", &uuid, NULL);
+        if (error)
+        {
+            notify_error (data->manager, "Could not remove extension '%s': %s\n", uuid, error->message);
+        }
+        else
+        {
+            notify_error (data->manager, "Could not remove extension '%s': unknown failure", uuid);
+        }
+    }
+
+    g_clear_error (&error);
+    free_callback_data (data);
+}
+
+void
+exm_manager_remove_extension (ExmManager   *self,
+                              ExmExtension *extension)
+{
+    g_autofree gchar *uuid = NULL;
+
+    if (self->proxy == NULL)
+    {
+        notify_error (self, "Extension manager is not ready yet\n");
+        return;
+    }
+
+    g_object_get (extension, "uuid", &uuid, NULL);
+
+    shell_extensions_call_uninstall_extension (self->proxy,
+                                               uuid,
+                                               NULL,
+                                               (GAsyncReadyCallback) remove_extension_done,
+                                               create_callback_data (self, extension));
+}
+
+static void
+open_prefs_done (ShellExtensions *proxy,
+                 GAsyncResult    *res,
+                 ExmCallbackData *data)
+{
+    GError *error = NULL;
+    shell_extensions_call_launch_extension_prefs_finish (proxy, res, &error);
+
+    // TODO: Don't enable until we can export the window handle over dbus
+    /*if (error)
+    {
+        gchar *uuid;
+        g_object_get (data->extension, "uuid", &uuid, NULL);
+        notify_error (data->manager, "Could not open extension '%s' preferences: %s\n", uuid, error->message);
+    }*/
+
+    g_clear_error (&error);
+    free_callback_data (data);
+}
+
+void
+exm_manager_open_prefs (ExmManager   *self,
+                        ExmExtension *extension)
+{
+    g_autofree gchar *uuid = NULL;
+
+    if (self->proxy == NULL)
+    {
+        notify_error (self, "Extension manager is not ready yet\n");
+        return;
+    }
+
+    g_object_get (extension, "uuid", &uuid, NULL);
+
+    shell_extensions_call_launch_extension_prefs (self->proxy,
+                                                  uuid,
+                                                  NULL,
+                                                  (GAsyncReadyCallback) open_prefs_done,
+                                                  create_callback_data (self, extension));
+}
+
+static gpointer
+list_model_get_by_uuid (GListModel  *model,
+                        const gchar *uuid)
+{
+    if (model == NULL)
+        return NULL;
+
+    int n_items = g_list_model_get_n_items (model);
+    for (int i = 0; i < n_items; i++)
+    {
+        ExmExtension *ext = g_list_model_get_item (model, i);
+
+        g_autofree gchar *cmp_uuid = NULL;
+        g_object_get (ext, "uuid", &cmp_uuid, NULL);
+
+        if (strcmp (uuid, cmp_uuid) == 0)
+            return ext;
+
+        g_object_unref (ext);
+    }
+
+    return NULL;
+}
+
+static gboolean
+list_model_contains (GListModel  *model,
+                     const gchar *uuid)
+{
+    gpointer result = list_model_get_by_uuid (model, uuid);
+
+    if (result == NULL)
+        return FALSE;
+
+    g_object_unref (result);
+    return TRUE;
+}
+
+ExmExtension *
+exm_manager_get_by_uuid (ExmManager  *self,
+                         const gchar *uuid)
+{
+    ExmExtension *result = NULL;
+
+    if ((result = list_model_get_by_uuid (self->ext_model, uuid)) != NULL)
+        return result;
+
+    return NULL;
+}
+
+gboolean
+exm_manager_is_installed_uuid (ExmManager  *self,
+                               const gchar *uuid)
+{
+    if (list_model_contains (self->ext_model, uuid))
+        return TRUE;
+
+    return FALSE;
+}
+
+void
+exm_manager_install_async (ExmManager          *self,
+                           const gchar         *uuid,
+                           GCancellable        *cancellable,
+                           GAsyncReadyCallback  callback,
+                           gpointer             user_data)
+{
+    if (self->proxy == NULL)
+    {
+        g_task_report_new_error (self, callback, user_data, exm_manager_install_async,
+                                 g_quark_from_static_string ("exm-manager"), -1,
+                                 "Extension manager is not ready yet");
+        return;
+    }
+
+    shell_extensions_call_install_remote_extension (self->proxy,
+                                                    uuid,
+                                                    cancellable,
+                                                    callback,
+                                                    user_data);
+}
+
+gboolean
+exm_manager_install_finish (GObject       *self,
+                            GAsyncResult  *result,
+                            GError       **error)
+{
+    gchar *out_result = NULL;
+    gboolean success;
+
+    if (EXM_IS_MANAGER (self))
+    {
+        g_task_propagate_boolean (G_TASK (result), error);
+        return FALSE;
+    }
+
+    g_return_val_if_fail (SHELL_IS_EXTENSIONS (self), FALSE);
+
+    success = shell_extensions_call_install_remote_extension_finish (SHELL_EXTENSIONS (self),
+                                                                     &out_result,
+                                                                     result,
+                                                                     error);
+
+    if (g_strcmp0 (out_result, "cancelled") == 0)
+        success = FALSE;
+
+    g_free (out_result);
+
+    return success;
+}
+
+static int
+list_model_get_number_of_updates (GListModel *model)
+{
+    int num_updates = 0;
+
+    if (model == NULL)
+        return 0;
+
+    int n_items = g_list_model_get_n_items (model);
+    for (int i = 0; i < n_items; i++)
+    {
+        ExmExtension *ext = g_list_model_get_item (model, i);
+
+        gboolean has_update;
+        g_object_get (ext, "has-update", &has_update, NULL);
+
+        if (has_update)
+            num_updates++;
+
+        g_object_unref (ext);
+    }
+
+    return num_updates;
+}
+
+static guint
+notify_extension_updates (ExmManager *self)
+{
+    // Checks for updates in the background and if found then
+    // emits the 'updates-available' signal with the number of updates
+    int n_updates = 0;
+
+    n_updates += list_model_get_number_of_updates (self->ext_model);
+
+    g_info ("There are %d new updates available.", n_updates);
+
+    if (n_updates > 0)
+        g_signal_emit (G_OBJECT (self), signals [SIGNAL_UPDATES_AVAILABLE], 0, n_updates);
+
+    self->update_callback_id = 0;
+
+    return G_SOURCE_REMOVE;
+}
+
+static void
+queue_notify_extension_updates (ExmManager *self)
+{
+    // See: notify_extension_updates
+
+    if (self->update_callback_id != 0)
+        return;
+
+    self->update_callback_id = g_timeout_add (0, G_SOURCE_FUNC (notify_extension_updates), self);
+}
+
+static void
+check_for_updates_done (ShellExtensions *proxy,
+                        GAsyncResult    *res,
+                        ExmManager      *manager)
+{
+    GError *error = NULL;
+    shell_extensions_call_check_for_updates_finish (proxy, res, &error);
+
+    if (error)
+    {
+        notify_error (manager, "Could not check for updates: %s\n", error->message);
+        g_clear_error (&error);
+    }
+
+    // Notify the user if updates are detected
+    queue_notify_extension_updates (manager);
+}
+
+void
+exm_manager_check_for_updates (ExmManager *self)
+{
+    if (self->proxy == NULL)
+    {
+        notify_error (self, "Extension manager is not ready yet\n");
+        return;
+    }
+
+    shell_extensions_call_check_for_updates (self->proxy,
+                                             NULL,
+                                             (GAsyncReadyCallback) check_for_updates_done,
+                                             self);
+}
+
+static void
+exm_manager_class_init (ExmManagerClass *klass)
+{
+    GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+    object_class->dispose = exm_manager_dispose;
+    object_class->finalize = exm_manager_finalize;
+    object_class->get_property = exm_manager_get_property;
+    object_class->set_property = exm_manager_set_property;
+
+    properties [PROP_EXTENSIONS]
+        = g_param_spec_object ("extensions",
+                               "Extensions List Model",
+                               "Extensions List Model",
+                               G_TYPE_LIST_MODEL,
+                               G_PARAM_READABLE);
+
+    properties [PROP_SHELL_VERSION]
+        = g_param_spec_string ("shell-version",
+                               "Shell Version",
+                               "Shell Version",
+                               NULL,
+                               G_PARAM_READWRITE);
+
+    properties [PROP_EXTENSIONS_ENABLED]
+        = g_param_spec_boolean ("extensions-enabled",
+                                "Extensions Enabled",
+                                "Extensions Enabled",
+                                FALSE,
+                                G_PARAM_READWRITE);
+
+    properties [PROP_IS_SUPPORTED]
+        = g_param_spec_boolean ("is-supported",
+                                "Is Supported",
+                                "Whether GNOME Shell is running and owns the extensions D-Bus name",
+                                FALSE,
+                                G_PARAM_READABLE);
+
+    properties [PROP_IS_READY]
+        = g_param_spec_boolean ("is-ready",
+                                "Is Ready",
+                                "Whether the D-Bus proxy has been created (or failed to be)",
+                                FALSE,
+                                G_PARAM_READABLE);
+
+    g_object_class_install_properties (object_class, N_PROPS, properties);
+
+    signals [SIGNAL_UPDATES_AVAILABLE]
+        = g_signal_new ("updates-available",
+                        G_TYPE_FROM_CLASS (object_class),
+                        G_SIGNAL_RUN_LAST|G_SIGNAL_NO_RECURSE|G_SIGNAL_NO_HOOKS,
+                        0, NULL, NULL, NULL,
+                        G_TYPE_NONE, 1,
+                        G_TYPE_INT);
+
+    signals [SIGNAL_ERROR_OCCURRED]
+        = g_signal_new ("error-occurred",
+                        G_TYPE_FROM_CLASS (object_class),
+                        G_SIGNAL_RUN_LAST|G_SIGNAL_NO_RECURSE|G_SIGNAL_NO_HOOKS,
+                        0, NULL, NULL, NULL,
+                        G_TYPE_NONE, 1,
+                        G_TYPE_STRING);
+
+    signals [SIGNAL_INSTALL_STATUS]
+        = g_signal_new ("install-status",
+                        G_TYPE_FROM_CLASS (object_class),
+                        G_SIGNAL_RUN_LAST|G_SIGNAL_NO_RECURSE|G_SIGNAL_NO_HOOKS,
+                        0, NULL, NULL, NULL,
+                        G_TYPE_NONE, 1,
+                        EXM_TYPE_INSTALL_BUTTON_STATE);
+}
+
+static void
+parse_single_extension (ExmExtension **extension,
+                        const gchar   *extension_uuid,
+                        GVariantIter  *variant_iter,
+                        gboolean      *is_uninstall_operation)
+{
+    gchar *prop_name;
+    GVariant *prop_value;
+
+    // Well-Defined Properties
+    gchar *uuid = NULL;
+    gchar *name = NULL;
+    gchar *description = NULL;
+    ExmExtensionState state = EXM_EXTENSION_STATE_INITIALIZED;
+    gboolean enabled = FALSE;
+    gchar *path = NULL;
+    gchar *url = NULL;
+    gchar *version = NULL;
+    gchar *version_name = NULL;
+    gchar *error = NULL;
+    gboolean has_prefs = FALSE;
+    gboolean has_update = FALSE;
+    gboolean can_change = TRUE;
+    gboolean is_user = FALSE;
+    ExmExtensionType type = EXM_EXTENSION_TYPE_SYSTEM;
+    GPtrArray *session_modes = g_ptr_array_new_with_free_func (g_free);
+    GHashTable *donations = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, (GDestroyNotify) g_ptr_array_unref);
+
+    if (extension && *extension)
+    {
+        g_autofree gchar *uuid_cmp = NULL;
+        g_object_get (*extension, "uuid", &uuid_cmp, NULL);
+        g_assert (strcmp (extension_uuid, uuid_cmp) == 0);
+    }
+    else
+    {
+        *extension = exm_extension_new (extension_uuid);
+    }
+
+    g_debug ("Found extension '%s' with properties:\n", uuid);
+
+    while (g_variant_iter_loop (variant_iter, "{sv}", &prop_name, &prop_value))
+    {
+        g_autofree gchar *prop_value_str = g_variant_print (prop_value, 0);
+        g_debug (" - Property: %s=%s\n", prop_name, prop_value_str);
+
+        // Compare with DBus property names
+        if (g_strcmp0 (prop_name, "uuid") == 0)
+        {
+            g_variant_get (prop_value, "s", &uuid);
+
+            // Assert that this is the same as the extension uuid
+            g_assert (g_strcmp0 (extension_uuid, uuid) == 0);
+        }
+        else if (g_strcmp0 (prop_name, "name") == 0)
+        {
+            g_variant_get (prop_value, "s", &name);
+        }
+        else if (g_strcmp0 (prop_name, "description") == 0)
+        {
+            g_variant_get (prop_value, "s", &description);
+        }
+        else if (g_strcmp0 (prop_name, "state") == 0)
+        {
+            gdouble val;
+            g_variant_get (prop_value, "d", &val);
+            state = (ExmExtensionState)val;
+        }
+        else if (g_strcmp0 (prop_name, "enabled") == 0)
+        {
+            g_variant_get (prop_value, "b", &enabled);
+        }
+        else if (g_strcmp0 (prop_name, "path") == 0)
+        {
+            g_variant_get (prop_value, "s", &path);
+        }
+        else if (g_strcmp0 (prop_name, "url") == 0)
+        {
+            g_variant_get (prop_value, "s", &url);
+        }
+        else if (g_strcmp0 (prop_name, "version") == 0)
+        {
+            gdouble val;
+            g_variant_get (prop_value, "d", &val);
+            version = g_strdup_printf ("%d", (gint)val);
+        }
+        else if (g_strcmp0 (prop_name, "version-name") == 0)
+        {
+            g_variant_get (prop_value, "s", &version_name);
+        }
+        else if (g_strcmp0 (prop_name, "error") == 0)
+        {
+            g_variant_get (prop_value, "s", &error);
+        }
+        else if (g_strcmp0 (prop_name, "hasPrefs") == 0)
+        {
+            g_variant_get (prop_value, "b", &has_prefs);
+        }
+        else if (g_strcmp0 (prop_name, "hasUpdate") == 0)
+        {
+            g_variant_get (prop_value, "b", &has_update);
+        }
+        else if (g_strcmp0 (prop_name, "canChange") == 0)
+        {
+            g_variant_get (prop_value, "b", &can_change);
+        }
+        else if (g_strcmp0 (prop_name, "type") == 0)
+        {
+            gdouble val;
+            g_variant_get (prop_value, "d", &val);
+            type = (ExmExtensionType)val;
+        }
+        else if (g_strcmp0 (prop_name, "sessionModes") == 0)
+        {
+            GVariantIter iter;
+            GVariant *variant;
+            gchar *mode;
+            g_variant_iter_init (&iter, prop_value);
+            while (g_variant_iter_loop (&iter, "v", &variant))
+            {
+                mode = g_variant_dup_string (variant, NULL);
+                g_ptr_array_add (session_modes, mode);
+            }
+        }
+        else if (g_strcmp0 (prop_name, "donations") == 0)
+        {
+            GVariantIter iter;
+            GVariant *donation_entry;
+            gchar *key;
+            g_variant_iter_init (&iter, prop_value);
+
+            while (g_variant_iter_loop (&iter, "{sv}", &key, &donation_entry))
+            {
+                GPtrArray *usernames = g_ptr_array_new_with_free_func (g_free);
+
+                if (g_variant_is_of_type (donation_entry, G_VARIANT_TYPE_STRING))
+                {
+                    g_ptr_array_add (usernames, g_variant_dup_string (donation_entry, NULL));
+                }
+                else if (g_variant_is_container (donation_entry))
+                {
+                    for (gsize j = 0; j < g_variant_n_children (donation_entry); j++)
+                    {
+                        GVariant *child_v = g_variant_get_child_value (donation_entry, j);
+                        GVariant *child_s = g_variant_get_variant (child_v);
+                        g_ptr_array_add (usernames, g_variant_dup_string (child_s, NULL));
+                        g_variant_unref (child_s);
+                        g_variant_unref (child_v);
+                    }
+                }
+
+                g_hash_table_insert (donations, g_strdup (key), usernames);
+            }
+        }
+    }
+
+    is_user = (type == EXM_EXTENSION_TYPE_PER_USER);
+    *is_uninstall_operation = (state == EXM_EXTENSION_STATE_UNINSTALLED);
+
+    g_object_set (*extension,
+                  "name", name,
+                  "description", description,
+                  "state", state,
+                  "enabled", enabled,
+                  "path", path,
+                  "url", url,
+                  "version", version,
+                  "version-name", version_name,
+                  "error", error,
+                  "has-prefs", has_prefs,
+                  "has-update", has_update,
+                  "can-change", can_change,
+                  "is-user", is_user,
+                  "session-modes", session_modes,
+                  "donations", donations,
+                  NULL);
+
+    g_free (uuid);
+    g_free (name);
+    g_free (description);
+    g_free (path);
+    g_free (url);
+    g_free (version);
+    g_free (version_name);
+    g_free (error);
+    g_ptr_array_unref (session_modes);
+}
+
+static void
+parse_extension_list (GVariant    *exlist,
+                      GListModel **ext_model)
+{
+    GListStore *ext_store;
+
+    /* format: a{sa{sv}}
+     * array of interfaces, where each interface is an array of properties
+     * each interface corresponds to one extension
+     * this is terrible >:(
+     * see also: https://stackoverflow.com/questions/54131543/how-can-i-get-the-g-dbus-connection-signal-subscribe-function-to-tell-me-about-p
+     */
+    GVariantIter *iter, *iter2;
+    gchar *exname;
+
+    ext_store = g_list_store_new (EXM_TYPE_EXTENSION);
+
+    g_variant_get (exlist, "a{sa{sv}}", &iter);
+    while (g_variant_iter_loop (iter, "{sa{sv}}", &exname, &iter2)) {
+        gboolean is_uninstall_operation;
+        ExmExtension *extension = NULL;
+
+        parse_single_extension (&extension, exname, iter2, &is_uninstall_operation);
+
+        if (is_uninstall_operation)
+        {
+            g_warning ("Invalid extension: '%s' is being uninstalled.", exname);
+            g_clear_object (&extension);
+            continue;
+        }
+
+        g_list_store_append (ext_store, extension);
+        g_object_unref (extension);
+    }
+    g_variant_iter_free (iter);
+
+    *ext_model = G_LIST_MODEL (ext_store);
+}
+
+static void
+on_list_extensions_ready (GObject      *source,
+                          GAsyncResult *res,
+                          gpointer      user_data)
+{
+    ExmManager *self = EXM_MANAGER (user_data);
+    GError *error = NULL;
+    GVariant *exlist = NULL;
+
+    shell_extensions_call_list_extensions_finish (SHELL_EXTENSIONS (source), &exlist, res, &error);
+
+    if (error != NULL)
+    {
+        if (!g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED))
+            notify_error (self, "Could not list extensions: %s\n", error->message);
+
+        g_clear_error (&error);
+        g_object_unref (self);
+        return;
+    }
+
+    // Unref object if exists
+    g_clear_object (&self->ext_model);
+
+    parse_extension_list (exlist, &self->ext_model);
+    g_variant_unref (exlist);
+
+    g_object_notify_by_pspec (G_OBJECT (self), properties [PROP_EXTENSIONS]);
+
+    queue_notify_extension_updates (self);
+
+    g_object_unref (self);
+}
+
+static void
+update_extension_list (ExmManager *self)
+{
+    if (self->list_cancellable)
+        g_cancellable_cancel (self->list_cancellable);
+    g_clear_object (&self->list_cancellable);
+    self->list_cancellable = g_cancellable_new ();
+
+    shell_extensions_call_list_extensions (self->proxy, self->list_cancellable,
+                                           on_list_extensions_ready, g_object_ref (self));
+}
+
+static void
+on_state_changed (ShellExtensions *object G_GNUC_UNUSED,
+                  const gchar     *arg_uuid,
+                  GVariant        *arg_state,
+                  ExmManager      *self)
+{
+    ExmExtension *extension;
+    gboolean is_new;
+    gboolean is_uninstall_operation;
+    GListStore *list_store;
+
+    g_debug ("State Changed for extension '%s'\n", arg_uuid);
+
+    // Parse the new extension state and update only that element in
+    // the list model. This will automatically update any bound
+    // listboxes or listviews.
+
+    if (self->ext_model == NULL)
+        return;
+
+    // This is NULL if it does not exist
+    extension = exm_manager_get_by_uuid (self, arg_uuid);
+    is_new = (extension == NULL);
+
+    GVariantIter *iter;
+    g_variant_get (arg_state, "a{sv}", &iter);
+    parse_single_extension (&extension, arg_uuid, iter, &is_uninstall_operation);
+    g_variant_iter_free (iter);
+
+    list_store = G_LIST_STORE (self->ext_model);
+
+    if (is_new)
+    {
+        g_list_store_insert_sorted (list_store, extension, (GCompareDataFunc)compare_extension, NULL);
+        g_object_unref (extension);
+        return;
+    }
+
+    guint position;
+
+    if (is_uninstall_operation)
+    {
+        if (g_list_store_find_with_equal_func (list_store, extension, (GEqualFunc)is_extension_equal, &position))
+            g_list_store_remove (list_store, position);
+
+        g_object_unref (extension);
+        return;
+    }
+
+    // Emit items-changed signal to re-sort extension list
+    if (g_list_store_find_with_equal_func (list_store, extension, (GEqualFunc)is_extension_equal, &position))
+        g_list_model_items_changed (G_LIST_MODEL (list_store), position, 0, 0);
+
+    // If the extension that has changed has an update, then
+    // one or more extensions have updates available. Lazily
+    // check the exact number and emit the 'updates-available'
+    // signal.
+    gboolean has_update;
+    g_object_get (extension, "has-update", &has_update, NULL);
+
+    if (has_update)
+        queue_notify_extension_updates (self);
+
+    g_object_unref (extension);
+}
+
+static void
+update_is_supported (ExmManager *self)
+{
+    gchar *owner;
+    gboolean supported;
+
+    owner = g_dbus_proxy_get_name_owner (G_DBUS_PROXY (self->proxy));
+    supported = (owner != NULL);
+    g_free (owner);
+
+    if (supported == self->is_supported)
+        return;
+
+    self->is_supported = supported;
+    g_object_notify_by_pspec (G_OBJECT (self), properties [PROP_IS_SUPPORTED]);
+
+    if (supported)
+        update_extension_list (self);
+}
+
+static void
+on_proxy_created (GObject      *source G_GNUC_UNUSED,
+                  GAsyncResult *res,
+                  gpointer      user_data)
+{
+    ExmManager *self = EXM_MANAGER (user_data);
+    GError *error = NULL;
+
+    self->proxy = shell_extensions_proxy_new_for_bus_finish (res, &error);
+
+    if (error != NULL)
+    {
+        notify_error (self, "Could not create proxy: %s\n", error->message);
+        g_clear_error (&error);
+        self->is_ready = TRUE;
+        g_object_notify_by_pspec (G_OBJECT (self), properties [PROP_IS_READY]);
+        g_object_unref (self);
+        return;
+    }
+
+    g_signal_connect_swapped (self->proxy, "notify::g-name-owner",
+                              G_CALLBACK (update_is_supported), self);
+    update_is_supported (self);
+
+    self->is_ready = TRUE;
+    g_object_notify_by_pspec (G_OBJECT (self), properties [PROP_IS_READY]);
+
+    g_object_bind_property (self->proxy, "shell-version",
+                            self, "shell-version",
+                            G_BINDING_SYNC_CREATE);
+
+    g_object_bind_property (self->proxy, "user-extensions-enabled",
+                            self, "extensions-enabled",
+                            G_BINDING_BIDIRECTIONAL|G_BINDING_SYNC_CREATE);
+
+    g_signal_connect (self->proxy,
+                      "extension-state-changed",
+                      G_CALLBACK (on_state_changed),
+                      self);
+
+    g_object_unref (self);
+}
+
+static void
+exm_manager_init (ExmManager *self)
+{
+    self->update_callback_id = 0;
+
+    shell_extensions_proxy_new_for_bus (G_BUS_TYPE_SESSION,
+                                        G_DBUS_PROXY_FLAGS_NONE,
+                                        "org.gnome.Shell.Extensions",
+                                        "/org/gnome/Shell/Extensions",
+                                        NULL, on_proxy_created, g_object_ref (self));
+}

@@ -1,0 +1,85 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $ExmErrorDialog: Adw.Window {
+  default-width: 500;
+  default-height: 500;
+  title: _("Error Report");
+
+  Adw.ToolbarView {
+    [top]
+    Adw.HeaderBar {}
+
+    content: Adw.ToastOverlay toast_overlay {
+      child: Adw.PreferencesPage {
+        Adw.PreferencesGroup {
+          Gtk.Label {
+            styles [
+              "title-4",
+            ]
+
+            justify: center;
+            label: _("An unexpected error occurred in Extension Manager");
+            selectable: true;
+            wrap: true;
+          }
+        }
+
+        Adw.PreferencesGroup instructions {
+          header-suffix: Gtk.Button copy_button {
+            styles [
+              "flat",
+            ]
+
+            clicked => $on_copy_button_clicked();
+            icon-name: "edit-copy-symbolic";
+            tooltip-text: _("Copy to Clipboard");
+            valign: center;
+          };
+
+          Gtk.ScrolledWindow {
+            styles [
+              "card",
+            ]
+
+            overflow: hidden;
+            vexpand: true;
+
+            child: Gtk.TextView text_view {
+              styles [
+                "inline",
+              ]
+
+              bottom-margin: 12;
+              editable: false;
+              left-margin: 12;
+              monospace: true;
+              right-margin: 12;
+              top-margin: 12;
+              vexpand: true;
+              wrap-mode: word_char;
+
+              accessibility {
+                labelled-by: instructions;
+              }
+            };
+          }
+
+          Gtk.Button new_issue_button {
+            styles [
+              "pill",
+              "suggested-action",
+            ]
+
+            can-shrink: true;
+            clicked => $on_new_issue_button_clicked() swapped;
+            halign: center;
+            label: _("_New Issue");
+            margin-top: 12;
+            use-underline: true;
+          }
+        }
+      };
+    };
+  }
+}

@@ -1,0 +1,666 @@
+/*
+ * exm-browse-page.c
+ *
+ * Copyright 2022-2025 Matthew Jakeman <mjakeman26@outlook.co.nz>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ */
+
+#include "exm-browse-page.h"
+
+#include "exm-config.h"
+#include "exm-search-row.h"
+#include "exm-utils.h"
+#include "local/exm-manager.h"
+#include "web/exm-image-resolver.h"
+#include "web/exm-search-provider.h"
+#include "web/model/exm-search-result.h"
+
+#include <adwaita.h>
+#include <glib/gi18n.h>
+
+#define PAGE_SIZE 10
+#define SHELL_VERSION_WAIT_SECONDS 3
+
+struct _ExmBrowsePage
+{
+    GtkWidget parent_instance;
+
+    ExmSearchProvider *search;
+    ExmImageResolver *resolver;
+    ExmManager *manager;
+
+    GtkStringList *suggestions;
+    GSettings *settings;
+    GListModel *search_results_model;
+    gboolean wait_expired;
+    guint wait_source;
+
+    int current_page;
+    int max_pages;
+
+    GCancellable *cancellable;
+    GCancellable *support_cancellable;
+
+    // Template Widgets
+    AdwBreakpoint       *breakpoint;
+    AdwStatusPage       *status_page;
+    GtkSearchEntry      *search_entry;
+    GtkListBox          *search_results;
+    GtkStack            *search_stack;
+    GtkButton           *order_btn;
+    GtkDropDown         *search_dropdown;
+    GtkListBox          *more_results_list;
+    AdwButtonRow        *more_results_btn;
+    GtkLabel            *error_label;
+};
+
+G_DEFINE_FINAL_TYPE (ExmBrowsePage, exm_browse_page, GTK_TYPE_WIDGET)
+
+enum {
+    PROP_0,
+    PROP_MANAGER,
+    N_PROPS
+};
+
+static GParamSpec *properties [N_PROPS];
+
+ExmBrowsePage *
+exm_browse_page_new (void)
+{
+    return g_object_new (EXM_TYPE_BROWSE_PAGE, NULL);
+}
+
+static void
+exm_browse_page_dispose (GObject *object)
+{
+    GtkWidget *child;
+    ExmBrowsePage *self = EXM_BROWSE_PAGE (object);
+
+    g_cancellable_cancel (self->cancellable);
+    g_clear_object (&self->cancellable);
+    g_cancellable_cancel (self->support_cancellable);
+    g_clear_object (&self->support_cancellable);
+    g_clear_handle_id (&self->wait_source, g_source_remove);
+
+    if (self->manager)
+        g_signal_handlers_disconnect_by_data (self->manager, self);
+
+    if (self->search)
+        g_signal_handlers_disconnect_by_data (self->search, self);
+
+    if (self->settings)
+        g_signal_handlers_disconnect_by_data (self->settings, self);
+
+    g_clear_object (&self->search);
+    g_clear_object (&self->settings);
+    g_clear_object (&self->search_results_model);
+
+    gtk_widget_dispose_template (GTK_WIDGET (self), EXM_TYPE_BROWSE_PAGE);
+
+    child = gtk_widget_get_first_child (GTK_WIDGET (self));
+    if (child != NULL)
+        gtk_widget_unparent (child);
+
+    G_OBJECT_CLASS (exm_browse_page_parent_class)->dispose (object);
+}
+
+static void
+exm_browse_page_get_property (GObject    *object,
+                              guint       prop_id,
+                              GValue     *value,
+                              GParamSpec *pspec)
+{
+    ExmBrowsePage *self = EXM_BROWSE_PAGE (object);
+
+    switch (prop_id)
+    {
+    case PROP_MANAGER:
+        g_value_set_object (value, self->manager);
+        break;
+    default:
+        G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+    }
+}
+
+static void
+exm_browse_page_set_property (GObject      *object,
+                              guint         prop_id,
+                              const GValue *value,
+                              GParamSpec   *pspec)
+{
+    ExmBrowsePage *self = EXM_BROWSE_PAGE (object);
+
+    switch (prop_id)
+    {
+    case PROP_MANAGER:
+        self->manager = g_value_get_object (value);
+        break;
+    default:
+        G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+    }
+}
+
+static GtkWidget *
+search_widget_factory (ExmSearchResult *result,
+                       ExmBrowsePage   *self)
+{
+    ExmSearchRow *row;
+    GValue value = G_VALUE_INIT;
+
+    row = exm_search_row_new (self->manager, result);
+
+    g_value_init (&value, G_TYPE_BOOLEAN);
+    g_value_set_boolean (&value, TRUE);
+    adw_breakpoint_add_setter (self->breakpoint, G_OBJECT (row), "compact", &value);
+
+    return GTK_WIDGET (row);
+}
+
+static void
+update_load_more_btn (ExmBrowsePage *self)
+{
+    // Hide button if we are the last page
+    gtk_widget_set_visible (GTK_WIDGET (self->more_results_list), self->current_page != self->max_pages);
+
+    // Make it clickable
+    gtk_widget_set_sensitive (GTK_WIDGET (self->more_results_btn), TRUE);
+}
+
+static void
+refresh_search (ExmBrowsePage *self)
+{
+    if (!self->manager)
+        return;
+
+    if (!self->search_results_model || g_list_model_get_n_items (self->search_results_model) == 0)
+    {
+        // No Results Found
+        gtk_stack_set_visible_child_name (self->search_stack, "page_empty");
+        return;
+    }
+
+    gtk_list_box_bind_model (self->search_results, self->search_results_model,
+                             (GtkListBoxCreateWidgetFunc) search_widget_factory,
+                             g_object_ref (self), g_object_unref);
+
+    // Hide Loading Indicator
+    gtk_stack_set_visible_child_name (self->search_stack, "page_results");
+}
+
+static gboolean
+only_supported (ExmBrowsePage *self)
+{
+    return !g_settings_get_boolean (self->settings, "show-unsupported");
+}
+
+static gboolean
+shell_version_known (ExmBrowsePage *self)
+{
+    g_autofree gchar *shell_version = NULL;
+
+    g_object_get (self->search, "shell-version", &shell_version, NULL);
+
+    return shell_version != NULL;
+}
+
+static void
+check_support (ExmBrowsePage *self,
+               guint          start)
+{
+    if (only_supported (self) || !self->search_results_model)
+        return;
+
+    exm_search_provider_mark_unsupported (self->search, self->search_results_model, start, self->support_cancellable);
+}
+
+static void
+on_first_page_result (GObject       *source,
+                      GAsyncResult  *res,
+                      ExmBrowsePage *self)
+{
+    GError *error = NULL;
+    GListModel *to_append;
+
+    to_append = exm_search_provider_query_finish (EXM_SEARCH_PROVIDER (source), res, &self->max_pages, &error);
+
+    if (!self->search_results)
+    {
+        g_clear_object (&to_append);
+        g_clear_error (&error);
+        g_object_unref (self);
+        return;
+    }
+
+    if (error)
+    {
+        gtk_label_set_text (self->error_label, error->message);
+        gtk_label_set_use_markup (self->error_label, TRUE);
+        gtk_stack_set_visible_child_name (self->search_stack, "page_error");
+
+        g_clear_error (&error);
+
+        g_object_unref (self);
+        return;
+    }
+
+    if (!to_append)
+    {
+        GCancellable *request_cancellable = g_task_get_cancellable (G_TASK (res));
+
+        if (!request_cancellable || !g_cancellable_is_cancelled (request_cancellable))
+            gtk_stack_set_visible_child_name (self->search_stack, "page_empty");
+
+        g_object_unref (self);
+        return;
+    }
+
+    if (G_IS_LIST_MODEL (to_append))
+    {
+        // Populate list model
+        self->search_results_model = to_append;
+    }
+
+    // Refresh search
+    refresh_search (self);
+
+    update_load_more_btn (self);
+
+    check_support (self, 0);
+
+    g_object_unref (self);
+}
+
+static void
+on_next_page_result (GObject       *source,
+                     GAsyncResult  *res,
+                     ExmBrowsePage *self)
+{
+    GError *error = NULL;
+    GListModel *to_append;
+    int n_items;
+    guint n_before;
+    int i;
+
+    to_append = exm_search_provider_query_finish (EXM_SEARCH_PROVIDER (source), res, &self->max_pages, &error);
+
+    if (!self->search_results)
+    {
+        g_clear_object (&to_append);
+        g_clear_error (&error);
+        g_object_unref (self);
+        return;
+    }
+
+    if (error)
+    {
+        g_clear_error (&error);
+        g_object_unref (self);
+        return;
+    }
+
+    if (G_IS_LIST_MODEL (to_append))
+    {
+        GtkWidget *child;
+        GtkAdjustment *adjustment = NULL;
+        double scroll_pos = 0.0;
+
+        // Save scrolled window position
+        child = gtk_widget_get_first_child (GTK_WIDGET (self->status_page));
+        if (child != NULL && GTK_IS_SCROLLED_WINDOW (child))
+        {
+            adjustment = gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW (child));
+            if (adjustment != NULL)
+                scroll_pos = gtk_adjustment_get_value (adjustment);
+        }
+
+        n_items = g_list_model_get_n_items (G_LIST_MODEL (to_append));
+        n_before = g_list_model_get_n_items (self->search_results_model);
+
+        // Append to list model
+        for (i = 0; i < n_items; i++) {
+            GObject *item;
+
+            item = g_list_model_get_object (to_append, i);
+            g_list_store_append (G_LIST_STORE (self->search_results_model), item);
+
+            if (i == 0)
+               gtk_widget_grab_focus (gtk_widget_get_last_child (GTK_WIDGET (self->search_results)));
+        }
+
+        // Restore scrolled window position
+        if (adjustment != NULL)
+            gtk_adjustment_set_value (adjustment, scroll_pos);
+
+        // Remove unnecessary model
+        g_list_store_remove_all (G_LIST_STORE (to_append));
+        g_clear_object (&to_append);
+
+        check_support (self, n_before);
+    }
+
+    update_load_more_btn (self);
+
+    g_object_unref (self);
+}
+
+static void
+on_load_more_results (AdwButtonRow  *row G_GNUC_UNUSED,
+                      ExmBrowsePage *self)
+{
+    const char *query;
+    ExmSearchSort sort;
+    gtk_widget_set_sensitive (GTK_WIDGET (self->more_results_btn), FALSE);
+
+    // If we have a current operation, cancel it
+    g_cancellable_cancel (self->cancellable);
+    self->cancellable = g_cancellable_new ();
+
+    query = gtk_editable_get_text (GTK_EDITABLE (self->search_entry));
+    sort = (ExmSearchSort) gtk_drop_down_get_selected (self->search_dropdown);
+    exm_search_provider_query_async (self->search, query, ++self->current_page, PAGE_SIZE, sort, only_supported (self), self->cancellable,
+                                     (GAsyncReadyCallback) on_next_page_result,
+                                     g_object_ref (self));
+}
+
+static void on_search_changed (ExmBrowsePage *self);
+
+static gboolean
+on_shell_version_wait_expired (ExmBrowsePage *self)
+{
+    self->wait_source = 0;
+    self->wait_expired = TRUE;
+    on_search_changed (self);
+
+    return G_SOURCE_REMOVE;
+}
+
+static void
+search (ExmBrowsePage *self,
+        const gchar   *query,
+        ExmSearchSort  sort)
+{
+    // Show Loading Indicator
+    gtk_stack_set_visible_child_name (self->search_stack, "page_spinner");
+    self->current_page = 1;
+
+    if (self->search_results_model)
+        g_clear_object (&self->search_results_model);
+
+    // If we have a current operation, cancel it
+    g_cancellable_cancel (self->cancellable);
+    self->cancellable = g_cancellable_new ();
+
+    g_cancellable_cancel (self->support_cancellable);
+    g_clear_object (&self->support_cancellable);
+    self->support_cancellable = g_cancellable_new ();
+
+    if (only_supported (self) && !self->wait_expired && !shell_version_known (self))
+    {
+        if (!self->wait_source)
+            self->wait_source = g_timeout_add_seconds (SHELL_VERSION_WAIT_SECONDS,
+                                                       (GSourceFunc) on_shell_version_wait_expired,
+                                                       self);
+        return;
+    }
+
+    g_clear_handle_id (&self->wait_source, g_source_remove);
+
+    exm_search_provider_query_async (self->search, query, 1, PAGE_SIZE, sort, only_supported (self), self->cancellable,
+                                     (GAsyncReadyCallback) on_first_page_result,
+                                     g_object_ref (self));
+}
+
+void
+exm_browse_page_search (ExmBrowsePage *self,
+                        const gchar   *query)
+{
+    gtk_editable_set_text (GTK_EDITABLE (self->search_entry), query);
+}
+
+void
+exm_browse_page_focus_entry (ExmBrowsePage *self)
+{
+    gtk_widget_grab_focus (GTK_WIDGET (self->search_entry));
+}
+
+static void
+on_search_changed (ExmBrowsePage *self)
+{
+    if (!gtk_widget_get_realized (GTK_WIDGET (self->search_entry)))
+        return;
+
+    const char *query = gtk_editable_get_text (GTK_EDITABLE (self->search_entry));
+    ExmSearchSort sort = (ExmSearchSort) gtk_drop_down_get_selected (self->search_dropdown);
+    const char *icon_name = gtk_button_get_icon_name (self->order_btn);
+
+    gtk_widget_set_visible (GTK_WIDGET (self->order_btn), sort != EXM_SEARCH_SORT_NONE);
+
+    if (g_strcmp0 (icon_name, "view-sort-ascending-symbolic") == 0)
+    {
+        switch (sort)
+        {
+        case EXM_SEARCH_SORT_CREATED_DES:
+            sort = EXM_SEARCH_SORT_CREATED_ASC;
+            break;
+        case EXM_SEARCH_SORT_DOWNLOADS_DES:
+            sort = EXM_SEARCH_SORT_DOWNLOADS_ASC;
+            break;
+        case EXM_SEARCH_SORT_POPULARITY_DES:
+            sort = EXM_SEARCH_SORT_POPULARITY_ASC;
+            break;
+        case EXM_SEARCH_SORT_UPDATED_DES:
+            sort = EXM_SEARCH_SORT_UPDATED_ASC;
+            break;
+        default:
+            sort = EXM_SEARCH_SORT_NONE;
+        }
+    }
+    search (self, query, sort);
+}
+
+static void
+on_shell_version_notify (ExmBrowsePage *self)
+{
+    if (only_supported (self))
+        on_search_changed (self);
+    else
+        check_support (self, 0);
+}
+
+static void
+on_order_button_clicked (GtkButton     *button,
+                         ExmBrowsePage *self)
+{
+    const char *icon_name = gtk_button_get_icon_name (button);
+
+    if (g_strcmp0 (icon_name, "view-sort-descending-symbolic") == 0)
+    {
+        gtk_button_set_icon_name (button, "view-sort-ascending-symbolic");
+        gtk_widget_set_tooltip_text (GTK_WIDGET (button), _("Ascending Order"));
+    }
+    else
+    {
+        gtk_button_set_icon_name (button, "view-sort-descending-symbolic");
+        gtk_widget_set_tooltip_text (GTK_WIDGET (button), _("Descending Order"));
+    }
+
+    on_search_changed (self);
+}
+
+static void
+on_search_entry_realize (GtkSearchEntry *search_entry,
+                         ExmBrowsePage  *self)
+{
+    const char *suggestion;
+    int random_index;
+    int num_suggestions;
+
+    // Get random suggestion
+    num_suggestions = g_list_model_get_n_items (G_LIST_MODEL (self->suggestions));
+    random_index = g_random_int_range (0, num_suggestions);
+    suggestion = gtk_string_list_get_string (self->suggestions, random_index);
+
+    // Set placeholder value
+    gtk_search_entry_set_placeholder_text (search_entry, suggestion);
+
+    // Fire off a default search
+    search (self, "", EXM_SEARCH_SORT_POPULARITY_DES);
+}
+
+static void
+on_extensions_ready (ExmBrowsePage *self)
+{
+    GListModel *ext_model = NULL;
+
+    g_object_get (self->manager,
+                  "extensions", &ext_model,
+                  NULL);
+
+    if (ext_model)
+    {
+        g_signal_connect_object (ext_model,
+                                 "items-changed",
+                                 G_CALLBACK (refresh_search),
+                                 self,
+                                 G_CONNECT_SWAPPED);
+
+        g_object_unref (ext_model);
+    }
+
+    refresh_search (self);
+}
+
+static void
+on_manager_shell_version_changed (ExmBrowsePage *self)
+{
+    g_autofree gchar *shell_version = NULL;
+
+    g_object_get (self->manager, "shell-version", &shell_version, NULL);
+    g_object_set (self->search, "shell-version", shell_version, NULL);
+}
+
+static void
+on_bind_manager (ExmBrowsePage *self)
+{
+    g_signal_connect_object (self->manager, "notify::shell-version",
+                             G_CALLBACK (on_manager_shell_version_changed), self,
+                             G_CONNECT_SWAPPED);
+
+    on_manager_shell_version_changed (self);
+
+    g_signal_connect_object (self->manager, "notify::extensions",
+                             G_CALLBACK (on_extensions_ready), self,
+                             G_CONNECT_SWAPPED);
+
+    on_extensions_ready (self);
+}
+
+static void
+load_suggestions (ExmBrowsePage *self)
+{
+    char *contents;
+    char *contents_nul_term;
+    char **suggest_array;
+    gsize length;
+
+    contents = exm_utils_read_resource (g_strdup_printf ("%s/suggestions.txt", RESOURCE_PATH), &length);
+    self->suggestions = gtk_string_list_new (NULL);
+
+    if (contents)
+    {
+        int iter;
+
+        contents_nul_term = g_strndup (contents, length);
+
+        // Load dynamically from resource
+        suggest_array = g_strsplit_set (contents_nul_term, "\n", -1);
+
+        for (iter = 0; suggest_array[iter] != NULL; iter++)
+            gtk_string_list_append (self->suggestions, suggest_array[iter]);
+
+        g_strfreev (suggest_array);
+        g_free (contents_nul_term);
+        g_free (contents);
+    }
+    else
+    {
+        // Hardcoded fallback suggestion
+        gtk_string_list_append (self->suggestions, "Blur my Shell");
+    }
+}
+
+static void
+exm_browse_page_class_init (ExmBrowsePageClass *klass)
+{
+    GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+    object_class->dispose = exm_browse_page_dispose;
+    object_class->get_property = exm_browse_page_get_property;
+    object_class->set_property = exm_browse_page_set_property;
+
+    properties [PROP_MANAGER]
+        = g_param_spec_object ("manager",
+                               "Manager",
+                               "Manager",
+                               EXM_TYPE_MANAGER,
+                               G_PARAM_READWRITE);
+
+    g_object_class_install_properties (object_class, N_PROPS, properties);
+
+    GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+
+    gtk_widget_class_set_template_from_resource (widget_class, g_strdup_printf ("%s/exm-browse-page.ui", RESOURCE_PATH));
+    gtk_widget_class_bind_template_child (widget_class, ExmBrowsePage, breakpoint);
+    gtk_widget_class_bind_template_child (widget_class, ExmBrowsePage, status_page);
+    gtk_widget_class_bind_template_child (widget_class, ExmBrowsePage, search_entry);
+    gtk_widget_class_bind_template_child (widget_class, ExmBrowsePage, search_results);
+    gtk_widget_class_bind_template_child (widget_class, ExmBrowsePage, search_stack);
+    gtk_widget_class_bind_template_child (widget_class, ExmBrowsePage, order_btn);
+    gtk_widget_class_bind_template_child (widget_class, ExmBrowsePage, search_dropdown);
+    gtk_widget_class_bind_template_child (widget_class, ExmBrowsePage, more_results_list);
+    gtk_widget_class_bind_template_child (widget_class, ExmBrowsePage, more_results_btn);
+    gtk_widget_class_bind_template_child (widget_class, ExmBrowsePage, error_label);
+
+    gtk_widget_class_bind_template_callback (widget_class, on_search_entry_realize);
+    gtk_widget_class_bind_template_callback (widget_class, on_order_button_clicked);
+    gtk_widget_class_bind_template_callback (widget_class, on_search_changed);
+    gtk_widget_class_bind_template_callback (widget_class, on_load_more_results);
+    gtk_widget_class_bind_template_callback (widget_class, on_bind_manager);
+
+    gtk_widget_class_set_layout_manager_type (widget_class, GTK_TYPE_BIN_LAYOUT);
+}
+
+static void
+exm_browse_page_init (ExmBrowsePage *self)
+{
+    gtk_widget_init_template (GTK_WIDGET (self));
+
+    self->search = exm_search_provider_new ();
+    self->settings = g_settings_new (APP_ID);
+
+    g_signal_connect_object (self->search, "notify::shell-version",
+                             G_CALLBACK (on_shell_version_notify), self,
+                             G_CONNECT_SWAPPED);
+    g_signal_connect_object (self->settings, "changed::show-unsupported",
+                             G_CALLBACK (on_search_changed), self,
+                             G_CONNECT_SWAPPED);
+
+    load_suggestions (self);
+
+    gtk_search_entry_set_key_capture_widget (self->search_entry, GTK_WIDGET (self));
+}
+

@@ -1,0 +1,1013 @@
+# Copyright (C) 2023 Matthew Jakeman
+# This file is distributed under the same license as the extension-manager package.
+# Ensup Choi <ensup@outlook.com>, 2023.
+# Pete Lee <welikeheon@gmail.com>, 2025.
+# Óscar Fernández Díaz <42654671+oscfdezdz@users.noreply.github.com>, 2025.
+msgid ""
+msgstr ""
+"Project-Id-Version: extension-manager\n"
+"Report-Msgid-Bugs-To: https://github.com/mjakeman/extension-manager/issues\n"
+"POT-Creation-Date: 2026-10-31 19:17+0100\n"
+"PO-Revision-Date: 2025-08-14 17:21+0000\n"
+"Last-Translator: Óscar Fernández Díaz "
+"<42654671+oscfdezdz@users.noreply.github.com>\n"
+"Language-Team: Korean <https://hosted.weblate.org/projects/extension-manager/"
+"app/ko/>\n"
+"Language: ko\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.13-dev\n"
+
+#: data/com.mattjakeman.ExtensionManager.desktop.in.in:2
+#: data/com.mattjakeman.ExtensionManager.metainfo.xml.in.in:6
+#: src/exm-window.blp:7
+msgid "Extension Manager"
+msgstr "확장 프로그램 관리자"
+
+#: data/com.mattjakeman.ExtensionManager.desktop.in.in:12
+msgid "Manage GNOME Shell Extensions"
+msgstr "GNOME Shell 확장 프로그램 관리"
+
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons. The list MUST also end with a semicolon.
+#. Make sure to leave the original strings and add your translations afterwards, so that users can search both in English and your language.
+#: data/com.mattjakeman.ExtensionManager.desktop.in.in:15
+msgid "extension;manager;shell;"
+msgstr "확장 프로그램;관리자;쉘;"
+
+#: data/com.mattjakeman.ExtensionManager.metainfo.xml.in.in:7
+#, fuzzy
+#| msgid "User-Installed Extensions"
+msgid "Install GNOME Extensions"
+msgstr "사용자 설치 확장 프로그램"
+
+#: data/com.mattjakeman.ExtensionManager.metainfo.xml.in.in:13
+#, fuzzy
+#| msgid "Browse, install, and manage GNOME Shell Extensions."
+msgid "Browse and install GNOME Shell extensions to customise your desktop."
+msgstr "GNOME Shell 확장 프로그램을 검색, 설치, 관리합니다."
+
+#: data/com.mattjakeman.ExtensionManager.metainfo.xml.in.in:14
+msgid "Features:"
+msgstr "특징:"
+
+#: data/com.mattjakeman.ExtensionManager.metainfo.xml.in.in:16
+#: data/com.mattjakeman.ExtensionManager.metainfo.xml.in.in:26
+msgid "Browse extensions.gnome.org right inside the app"
+msgstr "앱에서 바로 extensions.gnome.org 찾아보기"
+
+#: data/com.mattjakeman.ExtensionManager.metainfo.xml.in.in:17
+#: data/com.mattjakeman.ExtensionManager.metainfo.xml.in.in:22
+msgid "Manage the extensions you already have installed"
+msgstr "이미 설치한 확장 프로그램 관리"
+
+#: data/com.mattjakeman.ExtensionManager.metainfo.xml.in.in:30
+msgid "See all the details of your extensions"
+msgstr "확장 프로그램의 모든 세부 정보 보기"
+
+#: data/com.mattjakeman.ExtensionManager.metainfo.xml.in.in:34
+msgid "Check your extensions compatibility with the next version of GNOME"
+msgstr "다음 버전의 GNOME과 확장 프로그램의 호환성을 확인하세요"
+
+#: src/exm-application.c:236
+msgid "Browse, install, and manage GNOME Shell Extensions."
+msgstr "GNOME Shell 확장 프로그램을 검색, 설치, 관리합니다."
+
+#. Translators: Use 'Name email@domain.com' or 'Name https://website.example' (without single quotes). Do not delete existing names, write yours on a new line.
+#: src/exm-application.c:239
+msgid "translator-credits"
+msgstr ""
+"Pete Lee <welikeheon@gmail.com>\n"
+"Ensup Choi <ensup@outlook.com>"
+
+#: src/exm-application.c:241
+msgid "Contributors"
+msgstr ""
+
+#: src/exm-author-page.blp:95
+#, fuzzy
+#| msgid "Unsupported Extension"
+msgid "Authored Extensions"
+msgstr "지원하지 않는 확장 프로그램"
+
+#: src/exm-author-page.blp:126
+#, fuzzy
+#| msgid "No User Extensions Installed"
+msgid "No Extensions Found"
+msgstr "사용자 확장 프로그램이 설치되지 않았습니다"
+
+#: src/exm-author-page.blp:159 src/exm-browse-page.blp:190
+#: src/exm-comment-dialog.blp:34 src/exm-detail-view.blp:61
+#: src/exm-detail-view.blp:499 src/exm-upgrade-assistant.blp:99
+msgid "Connection Error"
+msgstr "연결 오류"
+
+#: src/exm-browse-page.blp:16
+msgid "Search for Extensions"
+msgstr "확장 프로그램 검색"
+
+#: src/exm-browse-page.blp:17
+msgid ""
+"Enter a keyword to search 'extensions.gnome.org' for GNOME Shell Extensions"
+msgstr "'extensions.gnome.org' 에서 GNOME 셸 확장 프로그램을 검색합니다"
+
+#: src/exm-browse-page.blp:49 src/exm-browse-page.c:498
+msgid "Descending Order"
+msgstr ""
+
+#: src/exm-browse-page.blp:58
+msgctxt "Sort search results"
+msgid "None"
+msgstr ""
+
+#: src/exm-browse-page.blp:59
+msgid "Popularity"
+msgstr ""
+
+#: src/exm-browse-page.blp:60
+msgctxt "Sort search results"
+msgid "Downloads"
+msgstr "다운로드순"
+
+#: src/exm-browse-page.blp:61
+msgid "Updated"
+msgstr ""
+
+#: src/exm-browse-page.blp:62
+msgid "Created"
+msgstr ""
+
+#: src/exm-browse-page.blp:69
+msgid "Sort search results"
+msgstr "검색 결과 정렬"
+
+#: src/exm-browse-page.blp:115
+msgid "_Load More Results"
+msgstr "_더 많은 결과 불러오기"
+
+#: src/exm-browse-page.blp:149 src/exm-installed-page.blp:70
+msgid "No Results Found"
+msgstr "결과 없음"
+
+#: src/exm-browse-page.blp:156
+msgid "Try a different search"
+msgstr "다른 검색을 시도해보세요"
+
+#: src/exm-browse-page.c:493
+msgid "Ascending Order"
+msgstr ""
+
+#: src/exm-comment-dialog.blp:13 src/exm-detail-view.blp:456
+msgid "Reviews and Comments"
+msgstr "리뷰와 의견"
+
+#: src/exm-comment-dialog.blp:25 src/exm-detail-view.c:1054
+#: src/exm-install-button.c:147
+msgid "Loading"
+msgstr "불러오는 중"
+
+#: src/exm-comment-tile.blp:35 src/exm-detail-view.blp:157
+msgid "Author"
+msgstr "저자"
+
+#: src/exm-detail-view.blp:52
+msgid "Loading Details"
+msgstr "잠시만 기다려주세요"
+
+#: src/exm-detail-view.blp:71 src/exm-window.c:504
+msgid "An Error Occurred"
+msgstr "오류가 발생했습니다"
+
+#: src/exm-detail-view.blp:72
+msgid "No extension details available"
+msgstr "확장 프로그램의 상세정보가 없습니다"
+
+#. Translators: Banner title shown when the extension has a runtime error
+#: src/exm-detail-view.blp:85
+msgid "This extension has an error"
+msgstr ""
+
+#: src/exm-detail-view.blp:86
+#, fuzzy
+#| msgid "_Details"
+msgid "_View Details"
+msgstr "_세부 사항"
+
+#: src/exm-detail-view.blp:115
+#, fuzzy
+#| msgid "Extension Manager"
+msgid "Extension Icon"
+msgstr "확장 프로그램 관리자"
+
+#: src/exm-detail-view.blp:142
+msgid "Name"
+msgstr "이름순"
+
+#. Translators: Button tooltip to remove an installed extension
+#: src/exm-detail-view.blp:190
+#, fuzzy
+#| msgid "Use Extensions"
+msgid "Remove Extension"
+msgstr "확장 프로그램 사용"
+
+#. Translators: Button tooltip to open extension preferences
+#. Translators: Button's tooltip to open extension's preferences dialog
+#: src/exm-detail-view.blp:202 src/exm-extension-row.blp:72
+msgid "Open extension preferences"
+msgstr "확장 프로그램 환경설정 열기"
+
+#. Translators: Switch tooltip to enable or disable the extension
+#. Translators: Switch's tooltip to enable/disable this extension
+#: src/exm-detail-view.blp:210 src/exm-extension-row.blp:83
+#, fuzzy
+#| msgid "Use Extensions"
+msgid "Toggle Extension"
+msgstr "확장 프로그램 사용"
+
+#: src/exm-detail-view.blp:234
+msgid "Enlarge Image"
+msgstr "확대된 이미지"
+
+#: src/exm-detail-view.blp:242 src/exm-screenshot.blp:23
+#, fuzzy
+#| msgid "%s Screenshot"
+msgid "Extension Screenshot"
+msgstr "%s의 스크린샷"
+
+#: src/exm-detail-view.blp:256
+msgid "Description"
+msgstr "설명"
+
+#: src/exm-detail-view.blp:284
+msgctxt "Number of downloads"
+msgid "Downloads"
+msgstr "다운로드수"
+
+#: src/exm-detail-view.blp:304
+msgid "Version"
+msgstr "버전"
+
+#. Translators: Icon's tooltip when an extension update is available
+#: src/exm-detail-view.blp:321 src/exm-extension-row.blp:26
+msgid "A newer version of this extension is available"
+msgstr "새로운 버전의 확장 프로그램을 사용할 수 있습니다"
+
+#. Translators: Icon's tooltip when an extension is incompatible
+#: src/exm-detail-view.blp:335 src/exm-extension-row.blp:43
+#: src/exm-install-button.c:142
+msgid "This extension is incompatible with your current version of GNOME"
+msgstr "이 확장 프로그램은 현재 설치된 GNOME 버전과 호환되지 않습니다"
+
+#: src/exm-detail-view.blp:357
+msgid "Session Modes"
+msgstr "세션 모드"
+
+#: src/exm-detail-view.blp:372
+msgid "Location"
+msgstr ""
+
+#: src/exm-detail-view.blp:386
+msgid "Links"
+msgstr "링크"
+
+#: src/exm-detail-view.blp:396
+msgid "Homepage"
+msgstr "홈페이지"
+
+#: src/exm-detail-view.blp:412 src/exm-detail-view.blp:427
+msgid "Donate"
+msgstr "기부하기"
+
+#: src/exm-detail-view.blp:438
+msgid "View on Extensions"
+msgstr "확장 프로그램 보기"
+
+#: src/exm-detail-view.blp:479
+msgid "Reviews and comments are disabled for this extension"
+msgstr "이 확장 프로그램은 리뷰와 댓글을 남길 수 없습니다"
+
+#: src/exm-detail-view.blp:522
+msgid "There are no reviews or comments"
+msgstr "댓글이 없습니다"
+
+#: src/exm-detail-view.blp:551
+msgid "_Show All"
+msgstr "_모든 리뷰 보기"
+
+#: src/exm-detail-view.c:561
+msgid "Unlock Dialog"
+msgstr "대화상자 잠금해제"
+
+#: src/exm-detail-view.c:562
+msgid "GDM"
+msgstr "GDM(GNOME Display Manager)"
+
+#: src/exm-detail-view.c:664 src/exm-detail-view.c:770
+#: src/exm-detail-view.c:948
+msgid "Unsupported"
+msgstr "지원 안됨"
+
+#: src/exm-detail-view.c:819
+msgid "Unknown"
+msgstr "알 수 없음"
+
+#. Translators: '%s' = extension name
+#: src/exm-detail-view.c:917
+#, c-format
+msgid "%s Icon"
+msgstr "%s 의 아이콘"
+
+#. Translators: '%s' = extension name
+#: src/exm-detail-view.c:937
+#, c-format
+msgid "%s Screenshot"
+msgstr "%s의 스크린샷"
+
+#. Success indicator
+#: src/exm-detail-view.c:1228 src/exm-error-dialog.c:126
+#: src/exm-extension-error-dialog.c:82 src/exm-upgrade-assistant.c:350
+msgid "Copied"
+msgstr "복사됨"
+
+#: src/exm-error-dialog.blp:7
+msgid "Error Report"
+msgstr "오류 보고"
+
+#: src/exm-error-dialog.blp:22
+msgid "An unexpected error occurred in Extension Manager"
+msgstr "확장 프로그램 관리자에서 예상하지 못한 오류가 발생했습니다"
+
+#: src/exm-error-dialog.blp:36 src/exm-extension-error-dialog.blp:36
+msgid "Copy to Clipboard"
+msgstr "_클립보드에 복사하기"
+
+#: src/exm-error-dialog.blp:77
+msgid "_New Issue"
+msgstr "_새 이슈"
+
+#: src/exm-error-dialog.c:174
+msgid "Please open a new issue and attach the following information:"
+msgstr "새 이슈를 열고 다음 정보를 첨부하십시오:"
+
+#. Translators: '%s' = Name of Distributor (e.g. "Packager123")
+#: src/exm-error-dialog.c:178
+#, c-format
+msgid ""
+"You are using a third-party build of Extension Manager. Please <span "
+"weight=\"bold\">contact the package distributor (%s) first</span> before "
+"filing an issue. Be sure to attach the following information:"
+msgstr ""
+"확장 프로그램 관리자의 타사 빌드를 사용하고 있습니다. 문제를 제기하기 전에 먼"
+"저 <span weight=\"bold\">패키지 배포업체 (%s)에 문의하십시오.</span> 다음 정"
+"보를 첨부해야 합니다:"
+
+#: src/exm-extension-error-dialog.blp:9
+#, fuzzy
+#| msgid "Extension Manager"
+msgid "Extension Error"
+msgstr "확장 프로그램 관리자"
+
+#. Translators: Button to report an extension error to its developer
+#: src/exm-extension-error-dialog.blp:77
+#, fuzzy
+#| msgid "_New Issue"
+msgid "_Report Issue"
+msgstr "_새 이슈"
+
+#: src/exm-extension-error-dialog.c:54
+#, c-format
+msgid "“%s” Failed to Load"
+msgstr ""
+
+#: src/exm-extension-error-dialog.c:55
+msgid "Extension Failed to Load"
+msgstr ""
+
+#. Translators: Button's tooltip to view an extension's error details
+#: src/exm-extension-row.blp:58
+msgid "An error occurred while loading this extension"
+msgstr "이 확장 프로그램을 불러오는 중 오류가 발생했습니다"
+
+#: src/exm-install-button.c:125
+msgid "Install…"
+msgstr "설치하기…"
+
+#: src/exm-install-button.c:130
+msgid "Installing"
+msgstr "설치중"
+
+#: src/exm-install-button.c:134
+msgctxt "State"
+msgid "Installed"
+msgstr "설치됨"
+
+#: src/exm-install-button.c:138
+msgid "Unsupported…"
+msgstr "지원하지 않음…"
+
+#: src/exm-installed-page.blp:16
+msgid "_Log Out…"
+msgstr "_로그아웃…"
+
+#: src/exm-installed-page.blp:28
+msgid "Use Extensions"
+msgstr "확장 프로그램 사용"
+
+#: src/exm-installed-page.blp:29
+msgid "Extensions can cause performance and stability issues"
+msgstr "확장 프로그램은 성능과 안정성 문제를 일으킬 수 있습니다"
+
+#: src/exm-installed-page.blp:35 src/exm-upgrade-assistant.blp:135
+msgid "User-Installed Extensions"
+msgstr "사용자 설치 확장 프로그램"
+
+#. Translators: Tooltip of the Select button in the user-installed extensions group
+#: src/exm-installed-page.blp:46 src/exm-window.c:602
+#, fuzzy
+#| msgid "Use Extensions"
+msgid "Select Extensions"
+msgstr "확장 프로그램 사용"
+
+#: src/exm-installed-page.blp:52 src/exm-upgrade-assistant.blp:139
+msgid "System Extensions"
+msgstr "시스템 확장 프로그램"
+
+#: src/exm-installed-page.blp:71
+msgid "Try a different search or search online"
+msgstr "다른 단어를 입력하거나 확장 프로그램 검색에서 찾아보세요"
+
+#: src/exm-installed-page.blp:78 src/exm-installed-page.blp:99
+msgid "_Search Online"
+msgstr "확장 프로그램 찾기"
+
+#: src/exm-installed-page.blp:91 src/exm-upgrade-assistant.c:489
+#, fuzzy
+#| msgid "No User Extensions Installed"
+msgid "No Extensions Installed"
+msgstr "사용자 확장 프로그램이 설치되지 않았습니다"
+
+#: src/exm-installed-page.blp:92
+#, fuzzy
+#| msgid "Search for installed extensions"
+msgid "Search online to install extensions"
+msgstr "설치된 확장 프로그램 검색"
+
+#. Translators: '%d' = number of extensions that will be updated
+#: src/exm-installed-page.c:393
+#, c-format
+msgid "%d extension will be updated on next login"
+msgid_plural "%d extensions will be updated on next login"
+msgstr[0] "%d개의 확장 프로그램이 다음 로그인할 때 업데이트 됩 예정입니다"
+
+#: src/exm-rating.c:142
+#, c-format
+msgid "%i Star"
+msgid_plural "%i Stars"
+msgstr[0] "%i점"
+
+#. Translators: Button's tooltip to zoom out screenshots
+#: src/exm-screenshot-view.blp:37
+msgid "Zoom Out"
+msgstr "줌 아웃"
+
+#. Translators: Button's tooltip to zoom in screenshots
+#: src/exm-screenshot-view.blp:51
+msgid "Zoom In"
+msgstr "줌 인"
+
+#: src/exm-shortcuts-dialog.blp:6
+msgctxt "shortcuts dialog"
+msgid "Views"
+msgstr ""
+
+#: src/exm-shortcuts-dialog.blp:9
+#, fuzzy
+#| msgctxt "shortcut window"
+#| msgid "Show Installed Page"
+msgctxt "shortcuts dialog"
+msgid "Switch to Installed"
+msgstr "설치된 목록 보기"
+
+#: src/exm-shortcuts-dialog.blp:14
+#, fuzzy
+#| msgctxt "shortcut window"
+#| msgid "Show Browse Page"
+msgctxt "shortcuts dialog"
+msgid "Switch to Browse"
+msgstr "확장 프로그램 검색 보기"
+
+#: src/exm-shortcuts-dialog.blp:20
+msgctxt "shortcuts dialog"
+msgid "Screenshot View"
+msgstr "스크린샷 보기"
+
+#: src/exm-shortcuts-dialog.blp:23
+msgctxt "shortcuts dialog"
+msgid "Zoom In"
+msgstr "줌 인"
+
+#: src/exm-shortcuts-dialog.blp:28
+msgctxt "shortcuts dialog"
+msgid "Zoom Out"
+msgstr "줌 아웃"
+
+#: src/exm-shortcuts-dialog.blp:33
+msgctxt "shortcuts dialog"
+msgid "Reset Zoom"
+msgstr "원래대로 되돌리기"
+
+#: src/exm-shortcuts-dialog.blp:39
+msgctxt "shortcuts dialog"
+msgid "App"
+msgstr ""
+
+#: src/exm-shortcuts-dialog.blp:42
+msgctxt "shortcuts dialog"
+msgid "Toggle Search"
+msgstr "검색창으로 이동"
+
+#: src/exm-shortcuts-dialog.blp:47
+#, fuzzy
+#| msgid "_Keyboard Shortcuts"
+msgctxt "shortcuts dialog"
+msgid "Keyboard Shortcuts"
+msgstr "키보드 단축키 보기"
+
+#: src/exm-shortcuts-dialog.blp:52
+msgctxt "shortcuts dialog"
+msgid "Close Window"
+msgstr "창 닫기"
+
+#: src/exm-shortcuts-dialog.blp:57
+msgctxt "shortcuts dialog"
+msgid "Quit"
+msgstr "종료하기"
+
+#: src/exm-upgrade-assistant.blp:11
+msgid "Upgrade Assistant"
+msgstr "업그레이드 도우미"
+
+#: src/exm-upgrade-assistant.blp:65
+msgid "_Check Compatibility"
+msgstr "_호한성 확인"
+
+#: src/exm-upgrade-assistant.blp:145
+msgid "_Copy to Clipboard"
+msgstr "_클립보드에 붙여넣기"
+
+#: src/exm-upgrade-assistant.c:192
+#, c-format
+msgid "Checked %d/%d Extensions"
+msgstr "%d/%d 확장 프로그램 확인 중"
+
+#. Set percentage text
+#: src/exm-upgrade-assistant.c:211
+#, c-format
+msgid "%d%% Compatible"
+msgstr "%d%% 호환됨"
+
+#: src/exm-upgrade-assistant.c:227
+#, fuzzy, c-format
+#| msgid ""
+#| "<b>GNOME %s</b> supports <b>%d out of %d</b> of the extensions currently "
+#| "installed on the system"
+msgid ""
+"<b>%d out of %d</b> extensions currently installed on this system have been "
+"marked as supporting <b>GNOME %s</b>"
+msgstr ""
+"<b>GNOME %s</b>은(는) 현재 시스템에 설치된 확장 프로그램 <b>%d개 중 %d</b>개"
+"를 지원합니다"
+
+#: src/exm-upgrade-assistant.c:234
+#, c-format
+msgid "If you switch to GNOME %s now, all of your extensions should work"
+msgstr ""
+
+#: src/exm-upgrade-assistant.c:239
+#, c-format
+msgid "If you switch to GNOME %s now, %d of your extensions might not work"
+msgstr ""
+
+#. Translators: Icon's tooltip when an extension is compatible
+#: src/exm-upgrade-assistant.c:586
+msgid "A compatible version of the extension exists"
+msgstr "호환되는 버전의 확장 프로그램이 있습니다"
+
+#. Translators: Icon's tooltip when an extension is not compatible
+#: src/exm-upgrade-assistant.c:593
+msgid "No compatible version of the extension exists"
+msgstr "호환되는 버전의 확장 프로그램이 없습니다"
+
+#. Translators: Icon's tooltip when an extension compatibility is unknown
+#: src/exm-upgrade-assistant.c:600
+msgid ""
+"This extension is not hosted on extensions.gnome.org. Its compatibility "
+"cannot be determined."
+msgstr ""
+"이 확장 프로그램은 extensions.gnome.org에 호스트 되지 않았습니다. 호환성을 확"
+"인할 수 없습니다."
+
+#: src/exm-upgrade-assistant.c:691
+#, c-format
+msgid ""
+"You are currently running <b>GNOME %s</b>. Select a version of GNOME below "
+"and check whether your extensions will continue to be available."
+msgstr ""
+"현재 <b>GNOME %s</b>을 사용중 입니다. 아래 GNOME 버전을 선택하고 확장 프로그"
+"램 기능을 계속 사용할 수 있는지 확인합니다."
+
+#: src/exm-versions-dialog.blp:13
+#, fuzzy
+#| msgid "Version"
+msgid "Version History"
+msgstr "버전"
+
+#: src/exm-versions-dialog.blp:25
+#, fuzzy
+#| msgid "Loading Details"
+msgid "Loading Versions"
+msgstr "잠시만 기다려주세요"
+
+#: src/exm-versions-dialog.blp:34
+msgid "No Version History"
+msgstr ""
+
+#: src/exm-versions-dialog.blp:71
+#, fuzzy
+#| msgid "_Load More Results"
+msgid "_Load More Versions"
+msgstr "_더 많은 결과 불러오기"
+
+#. Translators: Tooltip on the installed-version indicator in the versions dialog
+#: src/exm-versions-dialog.c:240
+#, fuzzy
+#| msgid "User-Installed Extensions"
+msgid "Installed Version"
+msgstr "사용자 설치 확장 프로그램"
+
+#: src/exm-window.blp:61
+msgid "Cancel"
+msgstr ""
+
+#. Translators: Tooltip of the search icon in the header bar
+#: src/exm-window.blp:69
+msgid "Search Installed Extensions"
+msgstr "설치된 확장 프로그램 검색"
+
+#: src/exm-window.blp:78
+msgid "Main Menu"
+msgstr "메인 메뉴"
+
+#: src/exm-window.blp:88
+msgid "Search for installed extensions"
+msgstr "설치된 확장 프로그램 검색"
+
+#: src/exm-window.blp:99
+msgctxt "Navigation"
+msgid "_Installed"
+msgstr "_설치된 확장 프로그램"
+
+#: src/exm-window.blp:111
+msgctxt "Navigation"
+msgid "_Browse"
+msgstr "_확장 프로그램 검색"
+
+#: src/exm-window.blp:129
+#, fuzzy
+#| msgid "Install…"
+msgid "Uninstall…"
+msgstr "설치하기…"
+
+#: src/exm-window.blp:159
+msgid "GNOME Shell Unavailable"
+msgstr ""
+
+#: src/exm-window.blp:160
+msgid "Log in to a GNOME session to manage extensions"
+msgstr ""
+
+#: src/exm-window.blp:169
+msgid "_Discover GNOME"
+msgstr ""
+
+#: src/exm-window.blp:186
+msgid "Sort _Enabled First"
+msgstr "Sort _활성화 순으로 정렬"
+
+#: src/exm-window.blp:192
+#, fuzzy
+#| msgid "_Show Unsupported"
+msgid "_Show Unsupported"
+msgstr "_지원하지 않는 확장 프로그램 표시"
+
+#: src/exm-window.blp:199
+msgid "_Upgrade Assistant"
+msgstr "_업그레이드 도우미"
+
+#: src/exm-window.blp:200
+msgid "_Keyboard Shortcuts"
+msgstr "키보드 단축키 보기"
+
+#: src/exm-window.blp:201
+msgid "_About Extension Manager"
+msgstr "_확장 프로그램 관리자에 대하여"
+
+#: src/exm-window.blp:206
+msgid "Uninstall Extension?"
+msgstr "확장 프로그램을 제거할까요?"
+
+#: src/exm-window.blp:208
+msgid ""
+"The extension's features and functionality will no longer be accessible. Are "
+"you sure you want to uninstall?"
+msgstr ""
+"확장 프로그램 프로그램의 특징과 기능에 더 이상 액세스할 수 없게 됩니다. 정말 "
+"제거하시겠습니까?"
+
+#: src/exm-window.blp:214 src/exm-window.blp:225
+msgid "_No"
+msgstr "_아니오"
+
+#: src/exm-window.blp:215 src/exm-window.blp:226
+msgid "_Yes"
+msgstr "_예"
+
+#: src/exm-window.blp:220
+#, fuzzy
+#| msgid "Uninstall Extension?"
+msgid "Uninstall Extensions?"
+msgstr "확장 프로그램을 제거할까요?"
+
+#: src/exm-window.blp:231
+msgid "Unsupported Extension"
+msgstr "지원하지 않는 확장 프로그램"
+
+#: src/exm-window.blp:232
+msgid ""
+"This extension does not support your GNOME Shell version. It may cause "
+"errors if installed."
+msgstr ""
+"이 확장 프로그램을 사용 중인 GNOME 셸 버전을 지원하지 않습니다. 설치하면 오류"
+"가 발생할 수 있습니다."
+
+#: src/exm-window.blp:238
+msgid "_Install Anyway"
+msgstr "_무시하고 설치하기"
+
+#: src/exm-window.blp:239
+msgid "_Go Back"
+msgstr "_돌아가기"
+
+#: src/exm-window.c:505
+msgid "_Details"
+msgstr "_세부 사항"
+
+#. Translators: "%u" = number of selected extensions; shown as the header bar title
+#: src/exm-window.c:605
+#, c-format
+msgid "%u Selected"
+msgid_plural "%u Selected"
+msgstr[0] ""
+
+#: src/exm-window.c:652
+#, fuzzy, c-format
+#| msgid ""
+#| "The extension's features and functionality will no longer be accessible. "
+#| "Are you sure you want to uninstall?"
+msgid ""
+"The extension's features and functionality will no longer be accessible. Are "
+"you sure you want to uninstall %u extension?"
+msgid_plural ""
+"Their features and functionality will no longer be accessible. Are you sure "
+"you want to uninstall %u extensions?"
+msgstr[0] ""
+"확장 프로그램 프로그램의 특징과 기능에 더 이상 액세스할 수 없게 됩니다. 정말 "
+"제거하시겠습니까?"
+
+#: src/web/exm-request-handler.c:145
+msgid ""
+"Check <a href='https://status.gnome.org/'>GNOME infrastructure status</a> "
+"and try again later"
+msgstr ""
+"<a href='https://status.gnome.org/'>GNOME 서버 상태 확인s</a> 을 확인하고 나"
+"중에 다시 시도하세요"
+
+#: src/web/exm-request-handler.c:146
+msgid "Check your network status and try again"
+msgstr "네트워크 상태를 확인하고 다시 시도하세요"
+
+#~ msgid "Error"
+#~ msgstr "오류"
+
+#~ msgid "See Details"
+#~ msgstr "자세히 보기"
+
+#~ msgid "Remove…"
+#~ msgstr "제거…"
+
+#~ msgid ""
+#~ "This extension will run while the screen is locked and no user is logged "
+#~ "in"
+#~ msgstr ""
+#~ "이 확장 프로그램은 화면이 잠겨 있거나 사용자가 로그인하지 않은 상태에서도 "
+#~ "실행됩니다"
+
+#~ msgid "This extension will run while the screen is locked"
+#~ msgstr "이 확장 프로그램은 화면이 잠겨 있을 때 실행됩니다"
+
+#~ msgid "This extension will run while no user is logged in"
+#~ msgstr "이 확장 프로그램은 로그인하지 않아도 실행됩니다"
+
+#~ msgctxt "shortcut window"
+#~ msgid "General"
+#~ msgstr "일반"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Show Keyboard Shortcuts"
+#~ msgstr "키보드 단축키 보기"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Zoom In"
+#~ msgstr "확대하기"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Zoom Out"
+#~ msgstr "축소하기"
+
+#~ msgid "Browse"
+#~ msgstr "찾아보기"
+
+#~ msgid "No System Extensions Installed"
+#~ msgstr "시스템 확장 프로그램이 설치되지 않았습니다"
+
+#~ msgid "Search Results"
+#~ msgstr "검색 결과"
+
+#~ msgid "Relevance"
+#~ msgstr "관련성"
+
+#~ msgid "Recent"
+#~ msgstr "최신 등록순"
+
+#~ msgid "Browse, install, and manage GNOME Shell Extensions"
+#~ msgstr "GNOME Shell 확장 프로그램을 검색, 설치, 관리합니다"
+
+#~ msgid "A utility for browsing and installing GNOME Shell Extensions."
+#~ msgstr "GNOME Shell 확장 프로그램 검색과 설치를 위한 프로그램."
+
+#~ msgid "Comments"
+#~ msgstr "댓글"
+
+#~ msgid "Loading Comments"
+#~ msgstr "댓글 불러오는 중"
+
+#~ msgid "User Reviews"
+#~ msgstr "사용자 리뷰"
+
+#, fuzzy
+#~| msgid "Comments"
+#~ msgid "No comments yet"
+#~ msgstr "댓글"
+
+#, fuzzy
+#~| msgid "Updates are available"
+#~ msgid "Updates Available"
+#~ msgstr "업데이트 가능"
+
+#~ msgid "Supported"
+#~ msgstr "지원됨"
+
+#~ msgid "A utility for managing GNOME Shell Extensions"
+#~ msgstr "GNOME Shell 확장 관리를 위한 프로그램"
+
+#, c-format
+#~ msgid "e.g. “%s”"
+#~ msgstr "예를 들어, “%s”"
+
+#~ msgid "This extension is incompatible with your current version of GNOME."
+#~ msgstr "이 확장은 현재 GNOME 버전과 호환되지 않습니다."
+
+#~ msgid "An error occurred."
+#~ msgstr "오류가 발생했습니다."
+
+#~ msgid "Return to view"
+#~ msgstr "보기로 돌아가기"
+
+#~ msgid "@app_title@"
+#~ msgstr "@app_title@"
+
+#~ msgid "HOTFIX: Fix broken 'recent' and 'popularity' search filters"
+#~ msgstr "HOTFIX: 고장난 '최근순'과 '인기순' 검색 필터 고침"
+
+#~ msgid "Various stability and correctness fixes"
+#~ msgstr "다양한 안정성과 정확성 고침"
+
+#~ msgid "Translation updates"
+#~ msgstr "번역 업데이트"
+
+#~ msgid "Upgrade Assistant scroll fix"
+#~ msgstr "업그레이드 도우미 고침"
+
+#~ msgid "Pixel perfect app icon"
+#~ msgstr "완벽한 픽셀 앱 아이콘"
+
+#~ msgid "Official snap support"
+#~ msgstr "공식 Snap 지원"
+
+#~ msgid "Improved error log generation"
+#~ msgstr "개선된 오류 로그 생성"
+
+#~ msgid "Fully adaptive mobile-friendly user interface"
+#~ msgstr "적응형 모바일 친화적인 사용자 인터페이스"
+
+#~ msgid "Paginated search results"
+#~ msgstr "페이지 매겨진 검색 결과"
+
+#~ msgid "Upgrade Assistant for checking extension compatibility"
+#~ msgstr "확장 프로그램 호환성 확인을 위한 업그레이드 도우미"
+
+#~ msgid "Unsupported extensions are hidden by default"
+#~ msgstr "지원되지 않는 확장은 기본적으로 숨겨져 있습니다"
+
+#~ msgid "Overhauled error and crash reporting"
+#~ msgstr "오류 및 충돌 보고 검사"
+
+#~ msgid "Full-screen image viewer"
+#~ msgstr "전체화면 이미지 뷰어"
+
+#~ msgid "Handles new <code>gnome-extensions://</code> URI scheme"
+#~ msgstr "새 <code>gnome-extensions://</code> URI scheme 처리"
+
+#~ msgid "Randomised extension suggestions"
+#~ msgstr "랜덤 확장 추천"
+
+#~ msgid "Performance and stability"
+#~ msgstr "성능과 안정성"
+
+#~ msgid "Various bug fixes"
+#~ msgstr "다양한 버그 고침"
+
+#~ msgid "Remove release notes dialog"
+#~ msgstr "릴리스 노트 대화 상자 제거"
+
+#~ msgid "Fix special characters in installed extension listings"
+#~ msgstr "설치된 확장 목록에서 특수 문자 수정"
+
+#~ msgid "The second feature update to extension-manager. Highlights include:"
+#~ msgstr ""
+#~ "확장 관리자에 대한 두 번째 기능 업데이트입니다. 하이라이트는 다음과 같습니"
+#~ "다:"
+
+#~ msgid "View comments and reviews"
+#~ msgstr "댓글과 리뷰 보기"
+
+#~ msgid "Support for in-app updates"
+#~ msgstr "인앱 업데이트 지원"
+
+#~ msgid "Better handling errors and out-of-date extensions"
+#~ msgstr "오류 및 오래된 확장 처리 능력 향상"
+
+#~ msgid "Allow installing 'unsupported' extensions"
+#~ msgstr "'지원되지 않는' 확장 설치 허용"
+
+#~ msgid "Display release notes on first run"
+#~ msgstr "첫 실행시 릴리즈 노트 띄우기"
+
+#~ msgid "New app icon"
+#~ msgstr "새 앱 아이콘"
+
+#~ msgid "Optionally sort extensions by enabled status"
+#~ msgstr "선택적으로 사용 가능한 상태별로 확장 정렬"
+
+#~ msgid "Fix special characters in search results"
+#~ msgstr "검색 결과에서 특수 문자 수정"
+
+#~ msgid "Fixes a crash that sometimes occurs while uninstalling an extension"
+#~ msgstr "확장을 제거하는 동안 종종 발생하는 충돌을 수정합니다"
+
+#~ msgid "The first feature update to extension-manager. Highlights include:"
+#~ msgstr ""
+#~ "확장 관리자에 대한 첫 번째 기능 업데이트입니다. 하이라이트는 다음을 포함합"
+#~ "니다:"
+
+#~ msgid "Dark theme and support for overriding the system colour scheme"
+#~ msgstr "어두운 테마와 시스템 색상 체계를 무시하기 위한 지원"
+
+#~ msgid "Shows screenshots in extension listings"
+#~ msgstr "확장 목록에 스크린샷을 표시합니다"
+
+#~ msgid "Shell version compatibility check"
+#~ msgstr "Shell 버전 호한성 체크"
+
+#~ msgid "Localised into seven languages"
+#~ msgstr "일곱 언어로 현지화되었습니다"
+
+#~ msgid "Global extension on/off toggle"
+#~ msgstr "전역 확장 on/off 토글"
+
+#~ msgid "Displays user and system extensions separately"
+#~ msgstr "사용자 및 시스템 확장을 별도로 표시합니다"
+
+#~ msgid "Extension Manager (Development)"
+#~ msgstr "확장 관리자 (개발 버전)"

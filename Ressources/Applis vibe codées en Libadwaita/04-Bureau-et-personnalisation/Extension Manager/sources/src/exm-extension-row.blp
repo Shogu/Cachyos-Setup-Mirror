@@ -1,0 +1,106 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $ExmExtensionRow: Adw.ActionRow {
+  title-lines: 1;
+  subtitle-lines: 1;
+  use-markup: false;
+  title: bind template.extension as <$ExmExtension>.name;
+  subtitle: bind template.extension as <$ExmExtension>.uuid;
+  activated => $on_row_activated();
+
+  [suffix]
+  Gtk.Image update_icon {
+    styles [
+      "update",
+    ]
+
+    icon-name: "software-update-available-symbolic";
+    valign: center;
+    halign: center;
+    focusable: true;
+    margin-start: 9;
+    margin-end: 9;
+    visible: bind template.extension as <$ExmExtension>.has-update;
+    // Translators: Icon's tooltip when an extension update is available
+    tooltip-text: _("A newer version of this extension is available");
+  }
+
+  [suffix]
+  Gtk.Image out_of_date_icon {
+    styles [
+      "error",
+    ]
+
+    icon-name: "clock-alt-symbolic";
+    valign: center;
+    halign: center;
+    focusable: true;
+    margin-start: 9;
+    margin-end: 9;
+    visible: bind $on_state_is_out_of_date(template.extension as <$ExmExtension>.state) as <bool>;
+    // Translators: Icon's tooltip when an extension is incompatible
+    tooltip-text: _("This extension is incompatible with your current version of GNOME");
+  }
+
+  [suffix]
+  Gtk.Button error_btn {
+    styles [
+      "flat",
+      "error",
+    ]
+
+    icon-name: "dialog-error-symbolic";
+    valign: center;
+    action-name: "row.show-error";
+    visible: bind $on_state_is_error(template.extension as <$ExmExtension>.state) as <bool>;
+    // Translators: Button's tooltip to view an extension's error details
+    tooltip-text: _("An error occurred while loading this extension");
+  }
+
+  [suffix]
+  Gtk.MenuButton category_btn {
+    styles [
+      "flat",
+    ]
+
+    icon-name: "view-more-symbolic";
+    valign: center;
+    halign: center;
+    visible: false;
+    // Translators: Tooltip of the menu button used to move an extension to another category
+    tooltip-text: _("Move to Category…");
+  }
+
+  [suffix]
+  Gtk.Button prefs_btn {
+    styles [
+      "flat",
+    ]
+
+    icon-name: "settings-symbolic";
+    valign: center;
+    halign: center;
+    action-name: "row.open-prefs";
+    // Translators: Button's tooltip to open extension's preferences dialog
+    tooltip-text: _("Open extension preferences");
+    visible: bind template.extension as <$ExmExtension>.has-prefs;
+  }
+
+  [suffix]
+  Gtk.Switch ext_toggle {
+    valign: center;
+    active: bind template.extension as <$ExmExtension>.enabled;
+    sensitive: bind template.extension as <$ExmExtension>.can-change;
+    state-set => $on_state_changed();
+    // Translators: Switch's tooltip to enable/disable this extension
+    tooltip-text: _("Toggle Extension");
+  }
+
+  [suffix]
+  Gtk.Image nav_icon {
+    icon-name: "go-next-symbolic";
+    valign: center;
+    halign: center;
+  }
+}

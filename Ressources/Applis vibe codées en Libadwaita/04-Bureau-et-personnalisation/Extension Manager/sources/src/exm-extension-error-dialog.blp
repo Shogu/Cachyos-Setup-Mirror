@@ -1,0 +1,85 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $ExmExtensionErrorDialog: Adw.Dialog {
+  content-width: 500;
+  content-height: 500;
+  width-request: 360;
+  height-request: 294;
+  title: _("Extension Error");
+
+  child: Adw.ToolbarView {
+    [top]
+    Adw.HeaderBar {}
+
+    content: Adw.ToastOverlay toast_overlay {
+      child: Adw.PreferencesPage {
+        Adw.PreferencesGroup {
+          Gtk.Label title_label {
+            styles [
+              "title-4",
+            ]
+
+            justify: center;
+            wrap: true;
+          }
+        }
+
+        Adw.PreferencesGroup trace_group {
+          header-suffix: Gtk.Button copy_button {
+            styles [
+              "flat",
+            ]
+
+            clicked => $on_copy_button_clicked();
+            icon-name: "edit-copy-symbolic";
+            tooltip-text: _("Copy to Clipboard");
+            valign: center;
+          };
+
+          Gtk.ScrolledWindow {
+            styles [
+              "card",
+            ]
+
+            overflow: hidden;
+            vexpand: true;
+
+            child: Gtk.TextView text_view {
+              styles [
+                "inline",
+              ]
+
+              bottom-margin: 12;
+              editable: false;
+              left-margin: 12;
+              monospace: true;
+              right-margin: 12;
+              top-margin: 12;
+              vexpand: true;
+              wrap-mode: word_char;
+
+              accessibility {
+                labelled-by: trace_group;
+              }
+            };
+          }
+
+          Gtk.Button report_btn {
+            styles [
+              "pill",
+            ]
+
+            can-shrink: true;
+            clicked => $on_report_button_clicked();
+            halign: center;
+            // Translators: Button to report an extension error to its developer
+            label: _("_Report Issue");
+            margin-top: 12;
+            use-underline: true;
+          }
+        }
+      };
+    };
+  };
+}

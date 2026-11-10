@@ -1,0 +1,157 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.SpinnerPaintable spinner {
+  widget: counter;
+}
+
+template $ExmUpgradeAssistant: Adw.Dialog {
+  content-width: 400;
+  content-height: 600;
+  title: _("Upgrade Assistant");
+  notify::manager => $on_bind_manager();
+
+  child: Adw.ToastOverlay toast_overlay {
+    child: Adw.NavigationView navigation_view {
+      Adw.NavigationPage {
+        title: bind template.title;
+
+        child: Adw.ToolbarView {
+          [top]
+          Adw.HeaderBar {}
+
+          content: Adw.Clamp {
+            child: Gtk.Box {
+              styles [
+                "detail",
+              ]
+
+              orientation: vertical;
+              spacing: 18;
+              vexpand: true;
+
+              Gtk.Image {
+                icon-name: "software-update-available-symbolic";
+                icon-size: large;
+                focusable: true;
+
+                accessibility {
+                  labelled-by: description;
+                }
+              }
+
+              Gtk.Box {
+                orientation: vertical;
+                spacing: 24;
+                vexpand: true;
+
+                Gtk.Label description {
+                  wrap: true;
+                }
+
+                Adw.PreferencesGroup {
+                  Adw.ComboRow drop_down {
+                    title: "GNOME";
+                  }
+                }
+              }
+
+              Gtk.Button run_button {
+                styles [
+                  "pill",
+                  "suggested-action",
+                ]
+
+                label: _("_Check Compatibility");
+                halign: center;
+                valign: end;
+                use-underline: true;
+                clicked => $do_compatibility_check() swapped;
+              }
+            };
+          };
+        };
+      }
+
+      Adw.NavigationPage {
+        title: bind template.title;
+        tag: "results";
+        hidden => $on_hidden_results();
+
+        child: Adw.ToolbarView {
+          [top]
+          Adw.HeaderBar {}
+
+          content: Gtk.Stack stack {
+            Gtk.StackPage waiting {
+              name: "waiting";
+
+              child: Adw.StatusPage counter {
+                paintable: spinner;
+              };
+            }
+
+            Gtk.StackPage error {
+              name: "error";
+
+              child: Adw.StatusPage error_status {
+                icon-name: "offline-symbolic";
+                title: _("Connection Error");
+              };
+            }
+
+            Gtk.StackPage results {
+              name: "results";
+
+              child: Adw.PreferencesPage prefs_page {
+                Adw.PreferencesGroup {
+                  Gtk.Box {
+                    orientation: vertical;
+                    spacing: 24;
+
+                    Gtk.Label summary_top {
+                      wrap: true;
+                    }
+
+                    Gtk.ProgressBar progress_bar {
+                      show-text: true;
+                      margin-start: 24;
+                      margin-end: 24;
+                      focusable: true;
+
+                      accessibility {
+                        labelled-by: summary_top;
+                        described-by: summary_bottom;
+                      }
+                    }
+
+                    Gtk.Label summary_bottom {
+                      wrap: true;
+                    }
+                  }
+                }
+
+                Adw.PreferencesGroup user_prefs_group {
+                  title: _("User-Installed Extensions");
+                }
+
+                Adw.PreferencesGroup system_prefs_group {
+                  title: _("System Extensions");
+                }
+
+                Adw.PreferencesGroup {
+                  Adw.ButtonRow copy_details {
+                    start-icon-name: "edit-copy-symbolic";
+                    title: _("_Copy to Clipboard");
+                    use-underline: true;
+                    activated => $copy_to_clipboard() swapped;
+                  }
+                }
+              };
+            }
+          };
+        };
+      }
+    };
+  };
+}

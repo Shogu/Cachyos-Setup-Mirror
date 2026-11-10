@@ -1,0 +1,1025 @@
+# Italian translation for extension-manager.
+# Copyright (C) 2022 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the extension-manager package.
+# musiclover <musiclover382@protonmail.com>, 2022.
+# albanobattistella <albano_battistella@hotmail.com>, 2024, 2025.
+# Óscar Fernández Díaz <oscfdezdz@tuta.io>, 2025.
+# Óscar Fernández Díaz <42654671+oscfdezdz@users.noreply.github.com>, 2025.
+# albanobattistella <albanobattistella@gmail.com>, 2025.
+# Osiride <usiride@gmail.com>, 2025.
+msgid ""
+msgstr ""
+"Project-Id-Version: extension-manager\n"
+"Report-Msgid-Bugs-To: https://github.com/mjakeman/extension-manager/issues\n"
+"POT-Creation-Date: 2026-10-31 19:17+0100\n"
+"PO-Revision-Date: 2025-10-12 09:54+0000\n"
+"Last-Translator: Osiride <usiride@gmail.com>\n"
+"Language-Team: Italian <https://hosted.weblate.org/projects/extension-"
+"manager/app/it/>\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.14-dev\n"
+
+#: data/com.mattjakeman.ExtensionManager.desktop.in.in:2
+#: data/com.mattjakeman.ExtensionManager.metainfo.xml.in.in:6
+#: src/exm-window.blp:7
+msgid "Extension Manager"
+msgstr "Gestore delle estensioni"
+
+#: data/com.mattjakeman.ExtensionManager.desktop.in.in:12
+msgid "Manage GNOME Shell Extensions"
+msgstr "Gestisci le estensioni di GNOME"
+
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons. The list MUST also end with a semicolon.
+#. Make sure to leave the original strings and add your translations afterwards, so that users can search both in English and your language.
+#: data/com.mattjakeman.ExtensionManager.desktop.in.in:15
+msgid "extension;manager;shell;"
+msgstr "estensione;gestore;shell;"
+
+#: data/com.mattjakeman.ExtensionManager.metainfo.xml.in.in:7
+msgid "Install GNOME Extensions"
+msgstr "Installa le estensioni GNOME"
+
+#: data/com.mattjakeman.ExtensionManager.metainfo.xml.in.in:13
+msgid "Browse and install GNOME Shell extensions to customise your desktop."
+msgstr ""
+"Sfoglia e installa le estensioni di GNOME Shell per personalizzare il tuo "
+"desktop."
+
+#: data/com.mattjakeman.ExtensionManager.metainfo.xml.in.in:14
+msgid "Features:"
+msgstr "Funzionalità:"
+
+#: data/com.mattjakeman.ExtensionManager.metainfo.xml.in.in:16
+#: data/com.mattjakeman.ExtensionManager.metainfo.xml.in.in:26
+msgid "Browse extensions.gnome.org right inside the app"
+msgstr "Sfoglia extensions.gnome.org direttamente nell'applicazione"
+
+#: data/com.mattjakeman.ExtensionManager.metainfo.xml.in.in:17
+#: data/com.mattjakeman.ExtensionManager.metainfo.xml.in.in:22
+msgid "Manage the extensions you already have installed"
+msgstr "Gestisci le estensioni già installate"
+
+#: data/com.mattjakeman.ExtensionManager.metainfo.xml.in.in:30
+msgid "See all the details of your extensions"
+msgstr "Visualizza tutti i dettagli delle tue estensioni"
+
+#: data/com.mattjakeman.ExtensionManager.metainfo.xml.in.in:34
+msgid "Check your extensions compatibility with the next version of GNOME"
+msgstr ""
+"Controlla la compatibilità delle tue estensioni con la prossima versione di "
+"GNOME"
+
+#: src/exm-application.c:236
+msgid "Browse, install, and manage GNOME Shell Extensions."
+msgstr "Sfoglia, installa e gestisci le estensioni di GNOME."
+
+#. Translators: Use 'Name email@domain.com' or 'Name https://website.example' (without single quotes). Do not delete existing names, write yours on a new line.
+#: src/exm-application.c:239
+msgid "translator-credits"
+msgstr ""
+"Musiclover382 <musiclover382@protonmail.com>\n"
+"Albano Battistella <albanobattistella@gmail.com>"
+
+#: src/exm-application.c:241
+msgid "Contributors"
+msgstr ""
+
+#: src/exm-author-page.blp:95
+#, fuzzy
+#| msgid "Unsupported Extension"
+msgid "Authored Extensions"
+msgstr "Estensione non supportata"
+
+#: src/exm-author-page.blp:126
+#, fuzzy
+#| msgid "No Extensions Installed"
+msgid "No Extensions Found"
+msgstr "Nessuna estensione installata"
+
+#: src/exm-author-page.blp:159 src/exm-browse-page.blp:190
+#: src/exm-comment-dialog.blp:34 src/exm-detail-view.blp:61
+#: src/exm-detail-view.blp:499 src/exm-upgrade-assistant.blp:99
+msgid "Connection Error"
+msgstr "Errore di connessione"
+
+#: src/exm-browse-page.blp:16
+msgid "Search for Extensions"
+msgstr "Cerca estensioni"
+
+#: src/exm-browse-page.blp:17
+msgid ""
+"Enter a keyword to search 'extensions.gnome.org' for GNOME Shell Extensions"
+msgstr "Inserire un termine per cercare estensioni su 'extensions.gnome.org'"
+
+#: src/exm-browse-page.blp:49 src/exm-browse-page.c:498
+msgid "Descending Order"
+msgstr "Ordine decrescente"
+
+#: src/exm-browse-page.blp:58
+msgctxt "Sort search results"
+msgid "None"
+msgstr "nessuna"
+
+#: src/exm-browse-page.blp:59
+msgid "Popularity"
+msgstr "Popolarità"
+
+#: src/exm-browse-page.blp:60
+msgctxt "Sort search results"
+msgid "Downloads"
+msgstr "Download"
+
+#: src/exm-browse-page.blp:61
+msgid "Updated"
+msgstr "Aggiornate"
+
+#: src/exm-browse-page.blp:62
+msgid "Created"
+msgstr "Create"
+
+#: src/exm-browse-page.blp:69
+msgid "Sort search results"
+msgstr "Ordinamento dei risultati di ricerca"
+
+#: src/exm-browse-page.blp:115
+msgid "_Load More Results"
+msgstr "Carica più risultati"
+
+#: src/exm-browse-page.blp:149 src/exm-installed-page.blp:70
+msgid "No Results Found"
+msgstr "Nessun risultato"
+
+#: src/exm-browse-page.blp:156
+msgid "Try a different search"
+msgstr "Prova una ricerca diversa"
+
+#: src/exm-browse-page.c:493
+msgid "Ascending Order"
+msgstr "Ordine crescente"
+
+#: src/exm-comment-dialog.blp:13 src/exm-detail-view.blp:456
+msgid "Reviews and Comments"
+msgstr "Recensioni e commenti"
+
+#: src/exm-comment-dialog.blp:25 src/exm-detail-view.c:1054
+#: src/exm-install-button.c:147
+msgid "Loading"
+msgstr "Caricamento"
+
+#: src/exm-comment-tile.blp:35 src/exm-detail-view.blp:157
+msgid "Author"
+msgstr "Autore"
+
+#: src/exm-detail-view.blp:52
+msgid "Loading Details"
+msgstr "Caricamento dei dettagli"
+
+#: src/exm-detail-view.blp:71 src/exm-window.c:504
+msgid "An Error Occurred"
+msgstr "Si è verificato un errore"
+
+#: src/exm-detail-view.blp:72
+msgid "No extension details available"
+msgstr "Nessun dettaglio disponibile sull'estensione"
+
+#. Translators: Banner title shown when the extension has a runtime error
+#: src/exm-detail-view.blp:85
+msgid "This extension has an error"
+msgstr ""
+
+#: src/exm-detail-view.blp:86
+#, fuzzy
+#| msgid "_Details"
+msgid "_View Details"
+msgstr "_Dettagli"
+
+#: src/exm-detail-view.blp:115
+#, fuzzy
+#| msgid "Extension Manager"
+msgid "Extension Icon"
+msgstr "Gestore delle estensioni"
+
+#: src/exm-detail-view.blp:142
+msgid "Name"
+msgstr "Nome"
+
+#. Translators: Button tooltip to remove an installed extension
+#: src/exm-detail-view.blp:190
+#, fuzzy
+#| msgid "Use Extensions"
+msgid "Remove Extension"
+msgstr "Estensioni"
+
+#. Translators: Button tooltip to open extension preferences
+#. Translators: Button's tooltip to open extension's preferences dialog
+#: src/exm-detail-view.blp:202 src/exm-extension-row.blp:72
+msgid "Open extension preferences"
+msgstr "Apri le preferenze dell'estensione"
+
+#. Translators: Switch tooltip to enable or disable the extension
+#. Translators: Switch's tooltip to enable/disable this extension
+#: src/exm-detail-view.blp:210 src/exm-extension-row.blp:83
+#, fuzzy
+#| msgid "Use Extensions"
+msgid "Toggle Extension"
+msgstr "Estensioni"
+
+#: src/exm-detail-view.blp:234
+msgid "Enlarge Image"
+msgstr "Ingrandisci immagine"
+
+#: src/exm-detail-view.blp:242 src/exm-screenshot.blp:23
+#, fuzzy
+#| msgid "%s Screenshot"
+msgid "Extension Screenshot"
+msgstr "%s Screenshot"
+
+#: src/exm-detail-view.blp:256
+msgid "Description"
+msgstr "Descrizione"
+
+#: src/exm-detail-view.blp:284
+msgctxt "Number of downloads"
+msgid "Downloads"
+msgstr "Download"
+
+#: src/exm-detail-view.blp:304
+msgid "Version"
+msgstr "Versione"
+
+#. Translators: Icon's tooltip when an extension update is available
+#: src/exm-detail-view.blp:321 src/exm-extension-row.blp:26
+msgid "A newer version of this extension is available"
+msgstr "È disponibile una nuova versione di questa estensione"
+
+#. Translators: Icon's tooltip when an extension is incompatible
+#: src/exm-detail-view.blp:335 src/exm-extension-row.blp:43
+#: src/exm-install-button.c:142
+msgid "This extension is incompatible with your current version of GNOME"
+msgstr "L'estensione non è compatibile con la versione attuale di GNOME"
+
+#: src/exm-detail-view.blp:357
+msgid "Session Modes"
+msgstr "Modalità di sessione"
+
+#: src/exm-detail-view.blp:372
+msgid "Location"
+msgstr ""
+
+#: src/exm-detail-view.blp:386
+msgid "Links"
+msgstr "Link"
+
+#: src/exm-detail-view.blp:396
+msgid "Homepage"
+msgstr "Home page"
+
+#: src/exm-detail-view.blp:412 src/exm-detail-view.blp:427
+msgid "Donate"
+msgstr "Donare"
+
+#: src/exm-detail-view.blp:438
+msgid "View on Extensions"
+msgstr "Pagina di GNOME Extensions"
+
+#: src/exm-detail-view.blp:479
+msgid "Reviews and comments are disabled for this extension"
+msgstr "Recensioni e commenti sono disabilitati per questa estensione"
+
+#: src/exm-detail-view.blp:522
+msgid "There are no reviews or comments"
+msgstr "Non ci sono recensioni o commenti"
+
+#: src/exm-detail-view.blp:551
+msgid "_Show All"
+msgstr "_Mostra tutto"
+
+#: src/exm-detail-view.c:561
+msgid "Unlock Dialog"
+msgstr "Sblocca dialogo"
+
+#: src/exm-detail-view.c:562
+msgid "GDM"
+msgstr "GDM"
+
+#: src/exm-detail-view.c:664 src/exm-detail-view.c:770
+#: src/exm-detail-view.c:948
+msgid "Unsupported"
+msgstr "Non compatibile"
+
+#: src/exm-detail-view.c:819
+msgid "Unknown"
+msgstr "Sconosciuta"
+
+#. Translators: '%s' = extension name
+#: src/exm-detail-view.c:917
+#, c-format
+msgid "%s Icon"
+msgstr "%s Icona"
+
+#. Translators: '%s' = extension name
+#: src/exm-detail-view.c:937
+#, c-format
+msgid "%s Screenshot"
+msgstr "%s Screenshot"
+
+#. Success indicator
+#: src/exm-detail-view.c:1228 src/exm-error-dialog.c:126
+#: src/exm-extension-error-dialog.c:82 src/exm-upgrade-assistant.c:350
+msgid "Copied"
+msgstr "Copiato"
+
+#: src/exm-error-dialog.blp:7
+msgid "Error Report"
+msgstr "Rapporto di errore"
+
+#: src/exm-error-dialog.blp:22
+msgid "An unexpected error occurred in Extension Manager"
+msgstr "Si è verificato un errore imprevisto nel gestore delle estensioni"
+
+#: src/exm-error-dialog.blp:36 src/exm-extension-error-dialog.blp:36
+msgid "Copy to Clipboard"
+msgstr "Copia negli appunti"
+
+#: src/exm-error-dialog.blp:77
+msgid "_New Issue"
+msgstr "_Nuovo problema"
+
+#: src/exm-error-dialog.c:174
+msgid "Please open a new issue and attach the following information:"
+msgstr "Apri una nuova discussione e allega le seguenti informazioni:"
+
+#. Translators: '%s' = Name of Distributor (e.g. "Packager123")
+#: src/exm-error-dialog.c:178
+#, c-format
+msgid ""
+"You are using a third-party build of Extension Manager. Please <span "
+"weight=\"bold\">contact the package distributor (%s) first</span> before "
+"filing an issue. Be sure to attach the following information:"
+msgstr ""
+"Stai utilizzando una build di terze parti del gestore delle estensioni. Per "
+"favore <span Weight=\"bold\">contatta prima il distributore del pacchetto "
+"(%s)</span> prima di segnalare un problema. Assicurati di allegare le "
+"seguenti informazioni:"
+
+#: src/exm-extension-error-dialog.blp:9
+#, fuzzy
+#| msgid "Extension Manager"
+msgid "Extension Error"
+msgstr "Gestore delle estensioni"
+
+#. Translators: Button to report an extension error to its developer
+#: src/exm-extension-error-dialog.blp:77
+#, fuzzy
+#| msgid "_New Issue"
+msgid "_Report Issue"
+msgstr "_Nuovo problema"
+
+#: src/exm-extension-error-dialog.c:54
+#, c-format
+msgid "“%s” Failed to Load"
+msgstr ""
+
+#: src/exm-extension-error-dialog.c:55
+msgid "Extension Failed to Load"
+msgstr ""
+
+#. Translators: Button's tooltip to view an extension's error details
+#: src/exm-extension-row.blp:58
+msgid "An error occurred while loading this extension"
+msgstr "Si è verificato un errore durante il caricamento dell'estensione"
+
+#: src/exm-install-button.c:125
+msgid "Install…"
+msgstr "Installa…"
+
+#: src/exm-install-button.c:130
+msgid "Installing"
+msgstr "Installazione"
+
+#: src/exm-install-button.c:134
+msgctxt "State"
+msgid "Installed"
+msgstr "Installata"
+
+#: src/exm-install-button.c:138
+msgid "Unsupported…"
+msgstr "Non compatibile…"
+
+#: src/exm-installed-page.blp:16
+msgid "_Log Out…"
+msgstr "_Termina sessione…"
+
+#: src/exm-installed-page.blp:28
+msgid "Use Extensions"
+msgstr "Estensioni"
+
+#: src/exm-installed-page.blp:29
+msgid "Extensions can cause performance and stability issues"
+msgstr "Le estensioni possono causare problemi di prestazioni e stabilità"
+
+#: src/exm-installed-page.blp:35 src/exm-upgrade-assistant.blp:135
+msgid "User-Installed Extensions"
+msgstr "Estensioni installate dall'utente"
+
+#. Translators: Tooltip of the Select button in the user-installed extensions group
+#: src/exm-installed-page.blp:46 src/exm-window.c:602
+#, fuzzy
+#| msgid "Use Extensions"
+msgid "Select Extensions"
+msgstr "Estensioni"
+
+#: src/exm-installed-page.blp:52 src/exm-upgrade-assistant.blp:139
+msgid "System Extensions"
+msgstr "Estensioni integrate"
+
+#: src/exm-installed-page.blp:71
+msgid "Try a different search or search online"
+msgstr "Prova una ricerca diversa o cerca online"
+
+#: src/exm-installed-page.blp:78 src/exm-installed-page.blp:99
+msgid "_Search Online"
+msgstr "_Cerca online"
+
+#: src/exm-installed-page.blp:91 src/exm-upgrade-assistant.c:489
+msgid "No Extensions Installed"
+msgstr "Nessuna estensione installata"
+
+#: src/exm-installed-page.blp:92
+msgid "Search online to install extensions"
+msgstr "Cerca online per installare le estensioni"
+
+#. Translators: '%d' = number of extensions that will be updated
+#: src/exm-installed-page.c:393
+#, c-format
+msgid "%d extension will be updated on next login"
+msgid_plural "%d extensions will be updated on next login"
+msgstr[0] "%d estensione sarà aggiornata al prossimo accesso"
+msgstr[1] "%d estensioni saranno aggiornate al prossimo accesso"
+
+#: src/exm-rating.c:142
+#, c-format
+msgid "%i Star"
+msgid_plural "%i Stars"
+msgstr[0] "%i Stella"
+msgstr[1] "%i Stelle"
+
+#. Translators: Button's tooltip to zoom out screenshots
+#: src/exm-screenshot-view.blp:37
+msgid "Zoom Out"
+msgstr "Rimpicciolisci"
+
+#. Translators: Button's tooltip to zoom in screenshots
+#: src/exm-screenshot-view.blp:51
+msgid "Zoom In"
+msgstr "Ingrandisci"
+
+#: src/exm-shortcuts-dialog.blp:6
+msgctxt "shortcuts dialog"
+msgid "Views"
+msgstr "Visualizzazioni"
+
+#: src/exm-shortcuts-dialog.blp:9
+msgctxt "shortcuts dialog"
+msgid "Switch to Installed"
+msgstr "Passa su installate"
+
+#: src/exm-shortcuts-dialog.blp:14
+msgctxt "shortcuts dialog"
+msgid "Switch to Browse"
+msgstr "Passa su sfoglia"
+
+#: src/exm-shortcuts-dialog.blp:20
+msgctxt "shortcuts dialog"
+msgid "Screenshot View"
+msgstr "Visualizza screenshot"
+
+#: src/exm-shortcuts-dialog.blp:23
+msgctxt "shortcuts dialog"
+msgid "Zoom In"
+msgstr "Ingrandisci"
+
+#: src/exm-shortcuts-dialog.blp:28
+msgctxt "shortcuts dialog"
+msgid "Zoom Out"
+msgstr "Rimpicciolisci"
+
+#: src/exm-shortcuts-dialog.blp:33
+msgctxt "shortcuts dialog"
+msgid "Reset Zoom"
+msgstr "Resetta zoom"
+
+#: src/exm-shortcuts-dialog.blp:39
+msgctxt "shortcuts dialog"
+msgid "App"
+msgstr "App"
+
+#: src/exm-shortcuts-dialog.blp:42
+msgctxt "shortcuts dialog"
+msgid "Toggle Search"
+msgstr "Attiva ricerca"
+
+#: src/exm-shortcuts-dialog.blp:47
+msgctxt "shortcuts dialog"
+msgid "Keyboard Shortcuts"
+msgstr "Scorciatoie da tastiera"
+
+#: src/exm-shortcuts-dialog.blp:52
+msgctxt "shortcuts dialog"
+msgid "Close Window"
+msgstr "Chiudi finestra"
+
+#: src/exm-shortcuts-dialog.blp:57
+msgctxt "shortcuts dialog"
+msgid "Quit"
+msgstr "Esci"
+
+#: src/exm-upgrade-assistant.blp:11
+msgid "Upgrade Assistant"
+msgstr "Assistente di aggiornamento"
+
+#: src/exm-upgrade-assistant.blp:65
+msgid "_Check Compatibility"
+msgstr "_Verifica compatibilità"
+
+#: src/exm-upgrade-assistant.blp:145
+msgid "_Copy to Clipboard"
+msgstr "_Copia negli appunti"
+
+#: src/exm-upgrade-assistant.c:192
+#, c-format
+msgid "Checked %d/%d Extensions"
+msgstr "Estensioni %d/%d controllate"
+
+#. Set percentage text
+#: src/exm-upgrade-assistant.c:211
+#, c-format
+msgid "%d%% Compatible"
+msgstr "%d%% compatibile"
+
+#: src/exm-upgrade-assistant.c:227
+#, c-format
+msgid ""
+"<b>%d out of %d</b> extensions currently installed on this system have been "
+"marked as supporting <b>GNOME %s</b>"
+msgstr ""
+"<b>%d su %d</b> estensioni attualmente installate su questo sistema sono "
+"state contrassegnate come supportate da <b>GNOME %s</b>"
+
+#: src/exm-upgrade-assistant.c:234
+#, c-format
+msgid "If you switch to GNOME %s now, all of your extensions should work"
+msgstr "Se passi a GNOME %s ora, tutte le tue estensioni dovrebbero funzionare"
+
+#: src/exm-upgrade-assistant.c:239
+#, c-format
+msgid "If you switch to GNOME %s now, %d of your extensions might not work"
+msgstr ""
+"Se passi a GNOME %s ora, %d delle tue estensioni potrebbero non funzionare"
+
+#. Translators: Icon's tooltip when an extension is compatible
+#: src/exm-upgrade-assistant.c:586
+msgid "A compatible version of the extension exists"
+msgstr "Esiste una versione compatibile dell'estensione"
+
+#. Translators: Icon's tooltip when an extension is not compatible
+#: src/exm-upgrade-assistant.c:593
+msgid "No compatible version of the extension exists"
+msgstr "Non è disponibile una versione compatibile di questa estensione"
+
+#. Translators: Icon's tooltip when an extension compatibility is unknown
+#: src/exm-upgrade-assistant.c:600
+msgid ""
+"This extension is not hosted on extensions.gnome.org. Its compatibility "
+"cannot be determined."
+msgstr ""
+"Questa estensione non è distribuita su extensions.gnome.org. Non è possibile "
+"verificarne la compatibilità."
+
+#: src/exm-upgrade-assistant.c:691
+#, c-format
+msgid ""
+"You are currently running <b>GNOME %s</b>. Select a version of GNOME below "
+"and check whether your extensions will continue to be available."
+msgstr ""
+"Attualmente stai usando <b>GNOME %s</b>. Selezionare un'altra versione di "
+"GNOME per verificare se le estensioni installate saranno ancora disponibili."
+
+#: src/exm-versions-dialog.blp:13
+#, fuzzy
+#| msgid "Version"
+msgid "Version History"
+msgstr "Versione"
+
+#: src/exm-versions-dialog.blp:25
+#, fuzzy
+#| msgid "Loading Details"
+msgid "Loading Versions"
+msgstr "Caricamento dei dettagli"
+
+#: src/exm-versions-dialog.blp:34
+msgid "No Version History"
+msgstr ""
+
+#: src/exm-versions-dialog.blp:71
+#, fuzzy
+#| msgid "_Load More Results"
+msgid "_Load More Versions"
+msgstr "Carica più risultati"
+
+#. Translators: Tooltip on the installed-version indicator in the versions dialog
+#: src/exm-versions-dialog.c:240
+#, fuzzy
+#| msgid "User-Installed Extensions"
+msgid "Installed Version"
+msgstr "Estensioni installate dall'utente"
+
+#: src/exm-window.blp:61
+msgid "Cancel"
+msgstr ""
+
+#. Translators: Tooltip of the search icon in the header bar
+#: src/exm-window.blp:69
+msgid "Search Installed Extensions"
+msgstr "Cerca estensioni installate"
+
+#: src/exm-window.blp:78
+msgid "Main Menu"
+msgstr "Menu principale"
+
+#: src/exm-window.blp:88
+msgid "Search for installed extensions"
+msgstr "Cerca estensioni installate"
+
+#: src/exm-window.blp:99
+msgctxt "Navigation"
+msgid "_Installed"
+msgstr "_Installate"
+
+#: src/exm-window.blp:111
+msgctxt "Navigation"
+msgid "_Browse"
+msgstr "_Sfoglia"
+
+#: src/exm-window.blp:129
+#, fuzzy
+#| msgid "Install…"
+msgid "Uninstall…"
+msgstr "Installa…"
+
+#: src/exm-window.blp:159
+msgid "GNOME Shell Unavailable"
+msgstr ""
+
+#: src/exm-window.blp:160
+msgid "Log in to a GNOME session to manage extensions"
+msgstr ""
+
+#: src/exm-window.blp:169
+msgid "_Discover GNOME"
+msgstr ""
+
+#: src/exm-window.blp:186
+msgid "Sort _Enabled First"
+msgstr "Prima _estensioni attive"
+
+#: src/exm-window.blp:192
+#, fuzzy
+#| msgid "_Show Unsupported"
+msgid "_Show Unsupported"
+msgstr "_Mostra non compatibili"
+
+#: src/exm-window.blp:199
+msgid "_Upgrade Assistant"
+msgstr "_Assistente di aggiornamento"
+
+#: src/exm-window.blp:200
+msgid "_Keyboard Shortcuts"
+msgstr "_Scorciatoie da tastiera"
+
+#: src/exm-window.blp:201
+msgid "_About Extension Manager"
+msgstr "_Informazioni"
+
+#: src/exm-window.blp:206
+msgid "Uninstall Extension?"
+msgstr "Disinstallare l'estensione?"
+
+#: src/exm-window.blp:208
+msgid ""
+"The extension's features and functionality will no longer be accessible. Are "
+"you sure you want to uninstall?"
+msgstr ""
+"Le caratteristiche e le funzionalità dell'estensione non saranno più "
+"accessibili. Sei sicuro di voler disinstallare?"
+
+#: src/exm-window.blp:214 src/exm-window.blp:225
+msgid "_No"
+msgstr "_No"
+
+#: src/exm-window.blp:215 src/exm-window.blp:226
+msgid "_Yes"
+msgstr "_Si"
+
+#: src/exm-window.blp:220
+#, fuzzy
+#| msgid "Uninstall Extension?"
+msgid "Uninstall Extensions?"
+msgstr "Disinstallare l'estensione?"
+
+#: src/exm-window.blp:231
+msgid "Unsupported Extension"
+msgstr "Estensione non supportata"
+
+#: src/exm-window.blp:232
+msgid ""
+"This extension does not support your GNOME Shell version. It may cause "
+"errors if installed."
+msgstr ""
+"Questa estensione non supporta la tua versione di GNOME. Potrebbe causare "
+"errori se installato."
+
+#: src/exm-window.blp:238
+msgid "_Install Anyway"
+msgstr "_Installa comunque"
+
+#: src/exm-window.blp:239
+msgid "_Go Back"
+msgstr "_Torna indietro"
+
+#: src/exm-window.c:505
+msgid "_Details"
+msgstr "_Dettagli"
+
+#. Translators: "%u" = number of selected extensions; shown as the header bar title
+#: src/exm-window.c:605
+#, c-format
+msgid "%u Selected"
+msgid_plural "%u Selected"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/exm-window.c:652
+#, fuzzy, c-format
+#| msgid ""
+#| "The extension's features and functionality will no longer be accessible. "
+#| "Are you sure you want to uninstall?"
+msgid ""
+"The extension's features and functionality will no longer be accessible. Are "
+"you sure you want to uninstall %u extension?"
+msgid_plural ""
+"Their features and functionality will no longer be accessible. Are you sure "
+"you want to uninstall %u extensions?"
+msgstr[0] ""
+"Le caratteristiche e le funzionalità dell'estensione non saranno più "
+"accessibili. Sei sicuro di voler disinstallare?"
+msgstr[1] ""
+"Le caratteristiche e le funzionalità dell'estensione non saranno più "
+"accessibili. Sei sicuro di voler disinstallare?"
+
+#: src/web/exm-request-handler.c:145
+msgid ""
+"Check <a href='https://status.gnome.org/'>GNOME infrastructure status</a> "
+"and try again later"
+msgstr ""
+"Controlla lo <a href='https://status.gnome.org/'>stato dell'infrastruttura "
+"GNOME</a> e riprova più tardi"
+
+#: src/web/exm-request-handler.c:146
+msgid "Check your network status and try again"
+msgstr "Controlla lo stato della tua rete e riprova"
+
+#~ msgid "Error"
+#~ msgstr "Errore"
+
+#~ msgid "See Details"
+#~ msgstr "Dettagli"
+
+#~ msgid "Remove…"
+#~ msgstr "Rimuovi…"
+
+#~ msgid ""
+#~ "This extension will run while the screen is locked and no user is logged "
+#~ "in"
+#~ msgstr ""
+#~ "Questa estensione verrà eseguita mentre lo schermo è bloccato e nessun "
+#~ "utente è connesso"
+
+#~ msgid "This extension will run while the screen is locked"
+#~ msgstr "Questa estensione verrà eseguita mentre lo schermo è bloccato"
+
+#~ msgid "This extension will run while no user is logged in"
+#~ msgstr "Questa estensione verrà eseguita quando nessun utente è connesso"
+
+#~ msgctxt "shortcut window"
+#~ msgid "General"
+#~ msgstr "Generale"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Show Keyboard Shortcuts"
+#~ msgstr "Mostra scorciatoie da tastiera"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Zoom In"
+#~ msgstr "Ingrandisci"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Zoom Out"
+#~ msgstr "Rimpicciolisci"
+
+#~ msgid "Browse"
+#~ msgstr "Sfoglia"
+
+#~ msgid "No System Extensions Installed"
+#~ msgstr "Nessuna estensione di sistema installata"
+
+#~ msgid "Search Results"
+#~ msgstr "Risultati della ricerca"
+
+#~ msgid "Relevance"
+#~ msgstr "Rilevanza"
+
+#~ msgid "Recent"
+#~ msgstr "Recenti"
+
+#~ msgid "Browse, install, and manage GNOME Shell Extensions"
+#~ msgstr "Sfoglia, installa e gestisci le estensioni di GNOME"
+
+#~ msgid "A utility for browsing and installing GNOME Shell Extensions."
+#~ msgstr "Uno strumento per cercare e installare estensioni per GNOME."
+
+#~ msgid "Comments"
+#~ msgstr "Commenti"
+
+#~ msgid "Loading Comments"
+#~ msgstr "Caricamento dei commenti"
+
+#~ msgid "User Reviews"
+#~ msgstr "Recensioni"
+
+#~ msgid "No comments yet"
+#~ msgstr "Ancora nessun commento"
+
+#~ msgid ""
+#~ "This extension could be activated in session modes such as the login "
+#~ "screen or the lock screen"
+#~ msgstr ""
+#~ "Questa estensione potrebbe essere attivata in modalità sessione come "
+#~ "schermata di accesso o schermata di blocco"
+
+#, c-format
+#~ msgid "%s by %s"
+#~ msgstr "%s di %s"
+
+#~ msgid "Updates Available"
+#~ msgstr "Aggiornamenti disponibili"
+
+#~ msgid "Supported"
+#~ msgstr "Compatibile"
+
+#~ msgid "A utility for managing GNOME Shell Extensions"
+#~ msgstr "Uno strumento per gestire le estensioni di GNOME"
+
+#, c-format
+#~ msgid "e.g. “%s”"
+#~ msgstr "es. “%s”"
+
+#~ msgid "This extension is incompatible with your current version of GNOME."
+#~ msgstr "L'estensione non è compatibile con la versione attuale di GNOME."
+
+#~ msgid "An error occurred."
+#~ msgstr "Si è verificato un errore."
+
+#~ msgid "Return to view"
+#~ msgstr "Esci"
+
+#~ msgid "@app_title@"
+#~ msgstr "@app_title@"
+
+#~ msgid "Translation updates"
+#~ msgstr "Traduzioni aggiornate"
+
+#~ msgid "Various bug fixes"
+#~ msgstr "Varie correzioni"
+
+#~ msgid "Performance and stability"
+#~ msgstr "Miglioramenti di prestazioni e stabilità"
+
+#~ msgid "Remove release notes dialog"
+#~ msgstr "Rimossa la notifica delle note di rilascio"
+
+#~ msgid "Fix special characters in installed extension listings"
+#~ msgstr ""
+#~ "Corretta visualizzazione di caratteri speciali nelle estensioni installate"
+
+#~ msgid "The second feature update to extension-manager. Highlights include:"
+#~ msgstr ""
+#~ "Il secondo aggiornamento che aggiunge funzionalità a Gestore di "
+#~ "estensioni, tra cui:"
+
+#~ msgid "View comments and reviews"
+#~ msgstr "Visualizza commenti e recensioni"
+
+#~ msgid "Support for in-app updates"
+#~ msgstr "Aggiornamenti all'interno dell'applicazione"
+
+#~ msgid "Better handling errors and out-of-date extensions"
+#~ msgstr "Migliore gestione degli errore e delle estensioni obsolete"
+
+#~ msgid "Allow installing 'unsupported' extensions"
+#~ msgstr "Possibilità di installare estensioni \"non supportate\""
+
+#~ msgid "Display release notes on first run"
+#~ msgstr "Mostra le novità al primo avvio"
+
+#~ msgid "New app icon"
+#~ msgstr "Nuova icona"
+
+#~ msgid "Optionally sort extensions by enabled status"
+#~ msgstr "Opzione per ordinare prima le estensioni attive"
+
+#~ msgid "Fix special characters in search results"
+#~ msgstr ""
+#~ "Corretta visualizzazione di caratteri speciali nei risultati di ricerca"
+
+#~ msgid "Fixes a crash that sometimes occurs while uninstalling an extension"
+#~ msgstr ""
+#~ "Corretto un arresto anomalo durante la disinstallazione di estensioni"
+
+#~ msgid "The first feature update to extension-manager. Highlights include:"
+#~ msgstr ""
+#~ "Il primo aggiornamento che aggiunge funzionalità a Gestore di estensioni, "
+#~ "tra cui:"
+
+#~ msgid "Dark theme and support for overriding the system colour scheme"
+#~ msgstr "Supporto per il tema scuro e per sovrascrivere il tema di sistema"
+
+#~ msgid "Shows screenshots in extension listings"
+#~ msgstr "Mostra le immagini nella lista delle estensioni"
+
+#~ msgid "Shell version compatibility check"
+#~ msgstr "Controllo di compatibilità con la versione di GNOME"
+
+#~ msgid "Localised into seven languages"
+#~ msgstr "Traduzione in sette lingue"
+
+#~ msgid "Global extension on/off toggle"
+#~ msgstr "Interruttore globale per le estensioni"
+
+#~ msgid "Displays user and system extensions separately"
+#~ msgstr ""
+#~ "Mostra separatamente le estensioni integrate e quelle installate "
+#~ "dall'utente"
+
+#~ msgid "Extension Manager (Development)"
+#~ msgstr "Gestore di estensioni (Development)"
+
+#~ msgid "Supported Versions"
+#~ msgstr "Versioni compatibili"
+
+#~ msgctxt "Navigation"
+#~ msgid "Browse"
+#~ msgstr "Sfoglia"
+
+#~ msgid "Theme"
+#~ msgstr "Tema"
+
+#~ msgid "Follow System"
+#~ msgstr "Sistema"
+
+#~ msgid "Light"
+#~ msgstr "Chiaro"
+
+#~ msgid "Dark"
+#~ msgstr "Scuro"
+
+#~ msgid "Are you sure you want to uninstall?"
+#~ msgstr "Disinstallare l'estensione?"
+
+#~ msgid ""
+#~ "A very simple tool for browsing, downloading, and managing GNOME shell "
+#~ "extensions."
+#~ msgstr ""
+#~ "Uno strumento molto semplice per cercare, scaricare e gestire le "
+#~ "estensioni di GNOME."
+
+#~ msgid "e.g. \"Blur my Shell\""
+#~ msgstr "es. \"Blur my Shell\""
+
+#~ msgid "What's New"
+#~ msgstr "Novità"
+
+#~ msgid "View Release Notes"
+#~ msgstr "Note di rilascio"
+
+#, c-format
+#~ msgid ""
+#~ "This is your first time using <b>Extension Manager %s</b>.\n"
+#~ "Would you like to see the release notes?"
+#~ msgstr ""
+#~ "È la prima volta che utilizzi <b>Gestore di estensioni %s</b>.\n"
+#~ "Vuoi leggere le note di rilascio?"

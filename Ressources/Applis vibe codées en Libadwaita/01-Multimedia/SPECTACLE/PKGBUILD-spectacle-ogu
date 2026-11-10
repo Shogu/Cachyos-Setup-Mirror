@@ -1,6 +1,6 @@
 # Maintainer: Ogu
 pkgname=spectacle-ogu
-pkgver=0.3.3
+pkgver=0.5.0
 pkgrel=1
 pkgdesc="Spectacle : lecteur YouTube minimaliste GTK4/libadwaita, en streaming sans téléchargement"
 arch=('any')
@@ -10,7 +10,7 @@ depends=('python' 'python-gobject' 'gtk4' 'libadwaita' 'gstreamer' 'gst-plugins-
          'gst-plugins-bad' 'gst-libav' 'gst-plugin-gtk4' 'quickjs-ng')
 install=spectacle-ogu.install
 source=("spectacle-ogu-$pkgver.tar.gz")
-sha256sums=('b12f2b1854afa1848f074b5f70966406198502cf37f2bd3828f1e4b154564797')
+sha256sums=('219cff6e11e0722bf6cd8baa7dd4fbc23e4c7877739d33da65a605711ecc5aa8')
 
 package() {
   cd "spectacle-ogu-$pkgver"
