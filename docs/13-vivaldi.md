@@ -181,7 +181,7 @@ L’extension Vivaldi **Perceptron** permet d’envoyer le contexte de la page c
 - envoyer l’URL de l’onglet courant ;
 - envoyer une sélection de texte.
 
-L’extension et sa notice sont regroupées dans [Ressources/Logiciels/Vivaldi/Perceptron/](../Ressources/Logiciels/Vivaldi/Perceptron/README.md). Le dossier est prévu pour recevoir les fichiers de l’extension ; les étapes de chargement dans Vivaldi seront précisées avec son README technique.
+L’archive [vivaldi-perceptron.zip](../Ressources/Logiciels/Vivaldi/Perceptron/vivaldi-perceptron.zip) et sa notice sont regroupées dans [Ressources/Logiciels/Vivaldi/Perceptron/](../Ressources/Logiciels/Vivaldi/Perceptron/README.md). Décompresser l’archive, puis charger le dossier extrait depuis `vivaldi://extensions` en mode développeur.
 
 ---
 

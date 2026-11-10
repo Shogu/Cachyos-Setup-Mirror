@@ -10,8 +10,8 @@
 - [8.4 Esthétiques](#84--esthétiques)
 - [8.5 Optionnelles](#85--optionnelles)
 - [8.6 Extension maison : Always on top, always on top](#86--extension-maison--always-on-top-always-on-top)
-- [8.7 Focus & Boutons](#87--focus--boutons)
-- [8.8 Battery Time Compact — Ogu](#88--battery-time-compact--ogu)
+- [8.7 Quick Settings](#87--quick-settings)
+- [8.8 Widget Topbar](#88--widget-topbar)
 - [8.9 Power Total](#89--power-total)
 - [8.10 UI Management](#810--ui-management)
 - [8.11 Classer les extensions avec Extension Manager](#811--classer-les-extensions-avec-extension-manager)
@@ -34,9 +34,8 @@ gsettings set org.gnome.shell disable-extension-version-validation false
 
 Extensions apportant des fonctions d'interface ou de système considérées comme centrales dans ce setup :
 
-- **Focus & Boutons** — extension maison GNOME 50/51 : auto-fermeture de Quick Settings et du panneau Calendrier/Notifications, boutons Réglages et Power scindés, pilule de mises à jour Shelly, icône musicale animée dans Quick Settings, masquage de Capture d’écran, libellé **Énergie** et carte RDV bleue. Voir [11.17](11-applications-vibe-coded.md#1117--focus--boutons) et [12.3 — Shelly et le lanceur de mise à jour](12-shell-terminal.md#123--shelly-et-le-lanceur-de-mise-à-jour).
-- **Topbar Center Widget 1.7** — extension GNOME 50/51 qui gère le contenu du menu de l’horloge : notes épinglées dans Grimoire, lecteur multimédia, notifications et rendez-vous par agenda ; elle ajoute aussi l’icône animée du lecteur à gauche de la barre supérieure. Voir [Topbar Center Widget 1.7](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Topbar%20Center%20Widget%20(Grimoire%20Semitone)/README.md).
-- [**Battery Time Compact — Ogu v54**](#88--battery-time-compact--ogu) — fork local GNOME 50/51 : top bar `temps - pourcentage`, bouton batterie Quick Settings `temps - watts`. Voir [11.19](11-applications-vibe-coded.md#1118--battery-time-compact--ogu).
+- **Quick Settings** — extension maison qui remplace Focus & Boutons et Battery Time Compact — Ogu : personnalisations du panneau des réglages rapides et affichage compact de l'autonomie, du pourcentage et de la puissance instantanée en watts. Voir [8.7](#87--quick-settings), [11.17](11-applications-vibe-coded.md#1117--quick-settings) et [son dossier](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Quick%20Settings/).
+- **Widget Topbar** — extension qui remplace Topbar Center Widget et regroupe les widgets de la barre supérieure et du menu de l'horloge, notamment les notes Grimoire, le lecteur Semitone et l'agenda. Voir [8.8](#88--widget-topbar), [11.18](11-applications-vibe-coded.md#1118--widget-topbar) et [son dossier](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Widget%20Topbar/).
 - **UI Management** — extension maison **GNOME 49/50/51**, classée dans **Bureau et fenêtres**. Elle remplace dans ce setup **Just Perfection**, **AutoActivities**, **Hot Edge** et **Quick Close Overview** en ne conservant que les fonctions réellement utilisées. Voir [8.10](#810--ui-management) et [11.21](11-applications-vibe-coded.md#1120--ui-management).
 - [Power Total](#89--power-total) — extension maison GNOME 50, catégorie **Système et énergie** : profils secteur/batterie, luminosité, thème et rétroéclairage. Voir [11.20](11-applications-vibe-coded.md#1119--power-total).
 - [Drag'n'Tile](https://extensions.gnome.org/extension/7863/dragntile/)
@@ -69,7 +68,7 @@ Extensions apportant des fonctions d'interface ou de système considérées comm
 
 - [Panel Corners](https://extensions.gnome.org/extension/4805/panel-corners/)
 
-**Just Perfection n’est plus installée séparément dans ce setup** : les options réellement utilisées ont été reprises dans **UI Management**. Le masquage du bouton Capture d’écran de Quick Settings reste, lui, géré par **Focus & Boutons**.
+**Just Perfection n’est plus installée séparément dans ce setup** : les options réellement utilisées ont été reprises dans **UI Management**. Le masquage du bouton Capture d’écran de Quick Settings est désormais intégré à **Quick Settings**.
 
 
 ## 8.5 — Optionnelles : à retirer après réglage
@@ -93,40 +92,17 @@ gnome-extensions enable always-on-top-always-on-top@localhost
 ```
 
 
-## 8.7 — Focus & Boutons
+## 8.7 — Quick Settings
 
-Extension GNOME Shell maison compatible **GNOME 50 et 51**, UUID `focus-et-boutons@ogu`.
+Extension GNOME Shell maison qui remplace **Focus & Boutons** et **Battery Time Compact — Ogu**. Elle regroupe les personnalisations de Quick Settings et l'affichage compact de la batterie, notamment l'autonomie, le pourcentage et la puissance instantanée en watts.
 
-Elle regroupe les réglages rapides et le panneau Calendrier/Notifications : fermeture automatique des menus, boutons scindés **Réglages** et **Power**, options d’affichage et icône musicale animée.
+Le dossier [Quick Settings](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Quick%20Settings/) accueillera l'archive, les sources et le README. Les détails d'installation seront ajoutés avec ces fichiers.
 
-**Version documentée :** v44.
+## 8.8 — Widget Topbar
 
-Depuis le dossier contenant l’archive :
+Extension GNOME Shell qui remplace **Topbar Center Widget**. Elle regroupe les widgets de la barre supérieure et du menu de l'horloge, notamment les notes épinglées dans Grimoire, le lecteur Semitone et les éléments d'agenda.
 
-```fish
-gnome-extensions install --force ./Focus-et-Boutons-v44.zip
-gnome-extensions enable focus-et-boutons@ogu
-gnome-extensions prefs focus-et-boutons@ogu
-```
-
-Se déconnecter puis se reconnecter à GNOME si les changements ne sont pas appliqués.
-
-## 8.8 — Battery Time Compact — Ogu
-
-Fork local de [**Battery Time (Percentage) Compact**](https://github.com/SaGrLand/gnome-shell-battery-time-percentage-compact), adapté à **GNOME 50 et 51**. La v54 remplace l’extension habituellement installée grâce au même UUID ; ne pas installer les deux variantes séparément. Après remplacement d’une version chargée, fermer puis rouvrir la session GNOME sous Wayland.
-
-- top bar : `9:27 - 56%` ;
-- Quick Settings : `9:27 - 4.2 W` ;
-- le pourcentage reste toujours visible dans la top bar ;
-- la puissance instantanée provient de `UPower.Device.EnergyRate` ;
-- la synchronisation v54 réapplique le texte après chaque actualisation UPower.
-
-Installation :
-
-```fish
-gnome-extensions install --force "Ressources/Applis vibe codées en Libadwaita/Extensions GNOME/Battery Time Compact Ogu/Battery-Time-Compact-Ogu-v54.zip"
-gnome-extensions enable batterytimepercentagecompact@sagrland.de
-```
+Le dossier [Widget Topbar](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Widget%20Topbar/) accueillera l'archive, les sources et le README. Les détails d'installation seront ajoutés avec ces fichiers.
 
 ## 8.9 — Power Total
 

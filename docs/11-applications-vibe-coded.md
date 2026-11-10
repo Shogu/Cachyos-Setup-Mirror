@@ -2,7 +2,7 @@
 
 [Accueil](../README.md) · [Précédent](10-logiciels.md) · [Suivant](12-shell-terminal.md)
 
-> **Dans ce chapitre :** applications personnelles développées avec l'aide du Vibe Coding, principalement en GTK4/libadwaita, dont l’interface native **Perceptron** pour OpenCode, le lecteur musical **Semitone** (fork de Gapless compilé avec Claude), le fork **Extension Manager**, les extensions GNOME maison « Always on top, always on top », **Session Keeper**, **Focus & Boutons** (pilule Shelly et icône musicale animée incluses), **Power Total**, **UI Management** et le fork **Battery Time Compact — Ogu**, ainsi qu’un build GTK4 upstream utilisé par le setup.
+> **Dans ce chapitre :** applications personnelles développées avec l'aide du Vibe Coding, principalement en GTK4/libadwaita, dont l’interface native **Perceptron** pour OpenCode, le lecteur musical **Semitone**, **Iconostase**, le gestionnaire de fichiers **Fret** et son compagnon Android TV **Quai**, ainsi que les extensions GNOME maison **Quick Settings**, **Widget Topbar**, **Session Keeper**, **Power Total** et **UI Management**.
 
 **Portage upstream adapté :** Mail (`mail-postcard`) est compilé avec Claude depuis Postcard. Ses fonctions et la procédure d’installation sont décrites dans [10.1.4 — Messagerie : Mail](10-logiciels.md#1014--messagerie--mail).
 
@@ -12,8 +12,8 @@ Les dossiers sont classés par usage principal. Les extensions GNOME Shell reste
 
 - **01 — Multimédia** : Amplifaya, Chihito, Decibel, Disquaire, SPECTACLE, Semitone, Polaroid.
 - **02 — Bureautique et rédaction** : Alexandrie, Grimoire, Grille, Dactylo, Maquette.
-- **03 — Fichiers et téléchargements** : Fret, Grabber, Nautilus Bookmark Icons, PLACES, Thumbnailer Sushi.
-- **04 — Bureau et personnalisation** : Extension Manager, Icônes UI.
+- **03 — Fichiers et téléchargements** : Fret, Quai, Grabber, Nautilus Bookmark Icons, Thumbnailer Sushi.
+- **04 — Bureau et personnalisation** : Extension Manager, Iconostase.
 - **05 — Système et utilitaires** : dconf-editor GTK4, Fisherman, Pacto, Perceptron, Pusher, Radar, Sismographe, Snapper GTK4, systemd-gui, Vidange.
 
 ## 01 — Multimédia
@@ -39,7 +39,7 @@ Les dossiers sont classés par usage principal. Les extensions GNOME Shell reste
 - [11.4 — Fret](#114--fret)
 - [11.2 — Grabber](#112--grabber)
 - [11.12 — Nautilus Bookmark Icons](#1112--nautilus-bookmark-icons)
-- [11.26 — PLACES — Dossiers Ogu](#1126--places--dossiers-ogu)
+- [11.37 — Quai — serveur FTP compagnon pour Fret](#1137--quai--serveur-ftp-compagnon-pour-fret)
 - [11.31 — Thumbnailer Sushi](#1131--thumbnailer-sushi)
 
 ### 11.31 — Thumbnailer Sushi
@@ -76,7 +76,7 @@ Pour l’utilisation dans le workflow Nautilus, voir [9.7 — Aperçu et miniatu
 ## 04 — Bureau et personnalisation
 
 - [11.21 — Extension Manager](#1121--extension-manager)
-- [11.25 — Icônes UI](#1125--icônes-ui)
+- [11.25 — Iconostase](#1125--iconostase)
 
 ## 05 — Système et utilitaires
 
@@ -95,8 +95,8 @@ Pour l’utilisation dans le workflow Nautilus, voir [9.7 — Aperçu et miniatu
 
 - [11.1 — Always on top, always on top](#111--always-on-top-always-on-top)
 - [11.16 — Session Keeper](#1116--session-keeper)
-- [11.17 — Focus & Boutons](#1117--focus--boutons)
-- [11.18 — Battery Time Compact — Ogu](#1118--battery-time-compact--ogu)
+- [11.17 — Quick Settings](#1117--quick-settings)
+- [11.18 — Widget Topbar](#1118--widget-topbar)
 - [11.19 — Power Total](#1119--power-total)
 - [11.20 — UI Management](#1120--ui-management)
 
@@ -241,12 +241,12 @@ Fonctions annoncées par le projet :
 - Paroles synchronisées au format LRC, avec 13 fournisseurs.
 - Égaliseur à six bandes et prise en charge de ReplayGain.
 - Gestion des playlists et intégration MPRIS avec GNOME.
-- Exposition du chemin du fichier local pour permettre « Ouvrir dans Disquaire » et « Afficher dans Fichiers » depuis Topbar Center Widget.
+- Exposition du chemin du fichier local pour permettre « Ouvrir dans Disquaire » et « Afficher dans Fichiers » depuis Widget Topbar.
 - Identifiant de morceau pour un positionnement précis dans la barre de progression.
 - Signal de changement d’état de l’aléatoire : l’interface suit l’état réel, et sa désactivation restaure le tri antérieur plutôt qu’un tri par titre.
 - Exposition du titre suivant, y compris le premier morceau après le dernier avec « Tout répéter ».
 
-Le paquet Arch compilé n’est pas inclus pour le moment : il sera ajouté manuellement dans le dossier [Semitone](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/01-Multimedia/Semitone/), comme les autres paquets maison. Pour retrouver le lecteur dans le menu de l’horloge et afficher une icône musicale animée tout à gauche de la barre supérieure, voir [Topbar Center Widget 1.7](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Topbar%20Center%20Widget%20(Grimoire%20Semitone)/README.md). Les ajouts MPRIS sont destinés à l’intégration avec [Topbar Center Widget 1.7](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Topbar%20Center%20Widget%20(Grimoire%20Semitone)/README.md). La comparaison effectuée indique que les bibliothèques utilisées sont identiques à celles de l’ancien paquet et que l’interface intégrée est identique octet pour octet. **La nouvelle intégration n’a pas encore été testée en session GNOME Shell.** Une fois le fichier `semitone-*.pkg.tar.zst` copié dans ce dossier, ouvrir un terminal dans ce dossier et installer le paquet :
+Le paquet Arch compilé n’est pas inclus pour le moment : il sera ajouté manuellement dans le dossier [Semitone](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/01-Multimedia/Semitone/), comme les autres paquets maison. Pour retrouver le lecteur dans le menu de l’horloge et afficher une icône musicale animée tout à gauche de la barre supérieure, voir [Widget Topbar](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Widget%20Topbar/README.md). Les ajouts MPRIS sont destinés à l’intégration avec [Widget Topbar](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Widget%20Topbar/README.md). La comparaison effectuée indique que les bibliothèques utilisées sont identiques à celles de l’ancien paquet et que l’interface intégrée est identique octet pour octet. **La nouvelle intégration n’a pas encore été testée en session GNOME Shell.** Une fois le fichier `semitone-*.pkg.tar.zst` copié dans ce dossier, ouvrir un terminal dans ce dossier et installer le paquet :
 
 ```fish
 set paquets_semitone (find . -maxdepth 1 -type f -name 'semitone*.pkg.tar.zst')
@@ -298,15 +298,11 @@ Voir le [README de SPECTACLE](../Ressources/Applis%20vibe%20codées%20en%20Libad
 
 ### 11.3 — Grimoire
 
-<<<<<<< Updated upstream
-Éditeur Markdown GTK4/libadwaita. **Version documentée : 0.3.0.**
+Éditeur Markdown local GTK4/libadwaita utilisant **GtkSourceView 5** et **WebKitGTK 6**. **Version documentée : 0.3.0.** Il permet de parcourir des dossiers de documents Markdown, d’éditer les fichiers et d’afficher leur rendu.
 
-La version 0.3.0 ajoute les actions sur les notes (renommer, dupliquer, déplacer, afficher dans Fichiers, épingler dans le widget, créer un rendez-vous et supprimer avec annulation pendant 5 secondes), le renommage des dossiers épinglés et l'accès aux notes depuis la recherche GNOME. L'icône violette est fournie à toutes les tailles, dock compris.
-=======
-Éditeur Markdown local GTK4/libadwaita utilisant GtkSourceView 5 et WebKitGTK 6. Il permet de parcourir des dossiers de documents Markdown, éditer les fichiers et afficher leur rendu. Les notes des dossiers épinglés peuvent également être consultées dans le menu de l’horloge GNOME avec [Topbar Center Widget 1.7](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Topbar%20Center%20Widget%20(Grimoire%20Semitone)/README.md) : catégories, recherche, tâches, couleurs, rendez-vous et corbeille, avec le raccourci `Super+Alt+N`.
+La version 0.3.0 ajoute les actions sur les notes (renommer, dupliquer, déplacer, afficher dans Fichiers, épingler dans le widget, créer un rendez-vous et supprimer avec annulation pendant 5 secondes), le renommage des dossiers épinglés et l’accès aux notes depuis la recherche GNOME. Les notes épinglées sont également consultables dans le menu de l’horloge GNOME avec [Widget Topbar](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Widget%20Topbar/README.md) : catégories, recherche, tâches, couleurs, rendez-vous et corbeille, avec le raccourci `Super+Alt+N`. L’icône violette est fournie à toutes les tailles, dock compris.
 
-**Paquet fourni : `grimoire-ogu-0.3.0-1-x86_64.pkg.tar.zst`.**
->>>>>>> Stashed changes
+**Paquet fourni : `grimoire-ogu-0.3.0-1-x86_64.pkg.tar.zst`.
 
 Installation depuis le dossier du paquet :
 
@@ -315,7 +311,7 @@ sudo pacman -U ./grimoire-ogu-0.3.0-1-x86_64.pkg.tar.zst
 grimoire
 ```
 
-Pour le widget de notes dans le menu de l'horloge, installer également **Topbar Center Widget 1.7**. Voir les README dédiés de [Grimoire](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/02-Bureautique-et-redaction/Grimoire/readme_grimoire.md) et de [Topbar Center Widget](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Topbar%20Center%20Widget%20(Grimoire%20Semitone)/README.md).
+Pour le widget de notes dans le menu de l'horloge, installer également **Widget Topbar**. Voir les README dédiés de [Grimoire](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/02-Bureautique-et-redaction/Grimoire/readme_grimoire.md) et de [Widget Topbar](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Widget%20Topbar/README.md).
 
 ### Installation
 
@@ -439,6 +435,30 @@ sudo pacman -S --needed gvfs-smb
 ```fish
 sudo pacman -Rns fret
 ```
+ 
+
+### 11.37 — Quai — serveur FTP compagnon pour Fret
+
+**Quai** est une application compagnon pour Android TV : elle démarre en un clic un serveur FTP sur le téléviseur afin de transférer des fichiers entre la TV et l’ordinateur depuis les deux panneaux de **Fret**.
+
+Le serveur utilise le port **2121** par défaut et un mot de passe aléatoire généré au premier lancement. Le nom d’utilisateur est libre ; seul le mot de passe est vérifié. Quai prend en charge la lecture et l’écriture, l’envoi, le téléchargement, la reprise, la création, le renommage et la suppression. Le stockage peut être interne ou correspondre à un disque externe branché à la TV.
+
+Deux tuiles sont installées :
+
+- **Quai** : réglages du serveur, adresse, mot de passe, port, choix du disque et démarrage automatique ;
+- **Quai ON/OFF** : interrupteur direct, sans écran de réglages.
+
+Le serveur fonctionne en service de premier plan et affiche son adresse dans une notification. Le démarrage automatique surveille notamment le branchement tardif des disques ; les téléviseurs TCL peuvent toutefois bloquer le lancement automatique des applications installées manuellement. Un arrêt volontaire reste respecté jusqu'au prochain démarrage manuel.
+
+#### Utilisation avec Fret
+
+1. Démarrer le serveur sur la TV avec **Quai ON/OFF** ou depuis **Quai**.
+2. Dans l'un des panneaux de Fret, ouvrir la saisie d'emplacement avec `Ctrl+L` et entrer l'adresse affichée, sous la forme `ftp://192.168.1.x:2121`.
+3. Saisir un nom d'utilisateur quelconque et le mot de passe affiché dans Quai.
+
+Une réservation d'adresse IP dans la box facilite les connexions répétées. Le dossier [Quai](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/03-Fichiers-et-telechargements/Quai/) est créé pour accueillir l'APK et sa documentation.
+
+**Sécurité :** FTP transmet le mot de passe et les fichiers en clair. Utiliser Quai uniquement sur le réseau local, ne jamais rediriger son port depuis Internet et arrêter le serveur lorsqu'il n'est pas utilisé. Android TV 6 (API 23) ou supérieur.
 
 ---
 
@@ -504,41 +524,6 @@ La sidebar de Nautilus n’étant pas couverte par une API d’extension officie
 
 ---
 
-### 11.26 — PLACES — Dossiers Ogu
-
-**Dossiers Ogu** est le gestionnaire personnel d’icônes et de dossiers, distinct d’**Icônes UI**, qui ne gère que les icônes des applications installées. L’application regroupe dans un fichier Python autonome le plan des dossiers, leurs icônes et les dossiers à masquer.
-
-### Fonctions
-
-- choisir une icône parmi les vignettes, ou revenir à l’icône standard de Fichiers ;
-- ajouter ou retirer une ligne du plan ;
-- importer des icônes, renommées selon la convention du gestionnaire ;
-- créer les dossiers manquants et appliquer les icônes ;
-- masquer les dossiers cochés en les renommant avec un point initial, puis mettre à jour `~/.config/user-dirs.dirs` ;
-- restaurer l’état antérieur à la dernière application ;
-- exporter un nouvel `.pyz` autonome avec le plan et les icônes à jour ;
-- relancer Nautilus pour actualiser l’affichage.
-
-Les dossiers Dropbox ne sont pas créés par l’application : attendre que Dropbox ait terminé sa synchronisation avant de lancer l’outil.
-
-### Lancement
-
-Depuis le dossier contenant `dossiers-ogu.pyz` :
-
-```fish
-python3 dossiers-ogu.pyz
-```
-
-Python 3, GTK4 et PyGObject sont nécessaires. Sur CachyOS GNOME, ils sont normalement déjà présents ; sinon :
-
-```fish
-sudo pacman -S python-gobject gtk4
-```
-
-Les icônes utilisées et le fichier `correspondances.txt` sont documentés dans le [LISEZMOI du gestionnaire](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/PLACES/LISEZMOI-dossiers.md). Le fichier `dossiers-ogu.pyz` et le tableau de correspondances sont à conserver dans le dossier PLACES du dépôt.
-
----
-
 ## 04 — Bureau et personnalisation
 
 ### 11.21 — Extension Manager
@@ -585,25 +570,11 @@ Archive, métadonnées, exécutable, lanceur et icônes contrôlés. **Lancement
 
 Les captures fournies avec cette mise à jour couvrent **Always on top, Grabber, Grimoire, Fret, systemd, Pacto, Radar et Pusher**. Les trois applications suivantes restent volontairement sans capture afin de ne pas fabriquer une représentation de leur interface : **Decibel et Fisherman**.
 
-### 11.25 — Icônes UI
+### 11.25 — Iconostase
 
-**Icônes UI** est une petite application Python/GTK4 issue du vibe coding pour gérer les icônes **des applications installées**. Elle présente l’icône actuelle et celle proposée, en couleur et en symbolique ; permet de modifier/importer les icônes, appliquer les changements avec possibilité de restauration, rétablir les lanceurs faits main manquants, et exporter un nouvel `.pyz` qui conserve les imports.
+**Iconostase** rassemble dans une seule application les outils auparavant séparés entre **Icônes UI** et **PLACES / Dossiers Ogu**. Elle centralise la gestion des icônes des applications installées et la personnalisation des dossiers, et prend en charge la gestion des lanceurs `.desktop`. Elle est destinée à remplacer Libre Menu Editor dans ce setup.
 
-### Lancement
-
-Depuis le dossier contenant le fichier :
-
-```fish
-python3 icones-ogu.pyz
-```
-
-Dépendances éventuelles :
-
-```fish
-sudo pacman -S python-gobject gtk4
-```
-
-L’outil Icônes UI et le gestionnaire d’icônes des dossiers personnels sont deux applications distinctes. Voir [11.26 — PLACES / Dossiers Ogu](#1126--places--dossiers-ogu) pour le second.
+Le dossier [Iconostase](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/04-Bureau-et-personnalisation/Iconostase/) est préparé pour accueillir le paquet, les sources et la documentation. Le README et les fichiers de distribution seront ajoutés séparément.
 
 ---
 
@@ -967,62 +938,19 @@ Session Keeper restaure les applications et leurs fenêtres, mais pas leur conte
 
 ---
 
-### 11.17 — Focus & Boutons
+### 11.17 — Quick Settings
 
-Extension GNOME Shell maison pour **GNOME 50 et 51**, dédiée à Quick Settings et au panneau Calendrier/Notifications.
+**Quick Settings** est l'extension GNOME Shell maison qui remplace **Focus & Boutons** et **Battery Time Compact — Ogu**. Elle regroupe les personnalisations des réglages rapides et du panneau associé, ainsi que l'affichage compact de la batterie : autonomie, pourcentage et puissance instantanée en watts.
 
-Fonctions principales : fermeture automatique des menus, boutons scindés **Réglages** et **Power**, options d’affichage du calendrier et icône musicale animée.
-
-**Version documentée :** Focus & Boutons v44.
-
-### Installation
-
-Depuis le dossier contenant l’archive :
-
-```fish
-gnome-extensions install --force ./Focus-et-Boutons-v44.zip
-gnome-extensions enable focus-et-boutons@ogu
-gnome-extensions prefs focus-et-boutons@ogu
-```
-
-Se déconnecter puis se reconnecter à GNOME si nécessaire.
-
-### Désinstallation
-
-```fish
-gnome-extensions uninstall focus-et-boutons@ogu
-```
+Le dossier [Quick Settings](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Quick%20Settings/) est préparé pour accueillir l'archive, les sources et le README. Les instructions d'installation seront ajoutées avec ces fichiers.
 
 ---
-### 11.18 — Battery Time Compact — Ogu
 
-Fork personnel de **Battery Time (Percentage) Compact** pour GNOME Shell **50 et 51**. Le UUID upstream est conservé afin de remplacer directement l’extension d’origine.
+### 11.18 — Widget Topbar
 
-**Archive fournie : `Battery-Time-Compact-Ogu-v54.zip`.** UUID : `batterytimepercentagecompact@sagrland.de`.
+**Widget Topbar** remplace l'ancienne extension **Topbar Center Widget**. Elle fournit les widgets et intégrations de la barre supérieure et du menu de l'horloge, notamment les notes épinglées de Grimoire, les informations du lecteur Semitone et les éléments d'agenda.
 
-### Affichage
-
-- **Top bar** : `9:27 - 56%` — autonomie restante puis pourcentage, sans parenthèses ;
-- **Quick Settings** : `9:27 - 4.2 W` — autonomie restante puis puissance instantanée, sans répétition du pourcentage.
-
-La puissance vient de `UPower.Device.EnergyRate`. La v54 réapplique l’affichage après chaque synchronisation UPower afin d’éviter que GNOME remette temporairement le pourcentage natif dans Quick Settings lorsque seule la puissance varie.
-
-### Installation
-
-```fish
-gnome-extensions install --force "Ressources/Applis vibe codées en Libadwaita/Extensions GNOME/Battery Time Compact Ogu/Battery-Time-Compact-Ogu-v54.zip"
-gnome-extensions enable batterytimepercentagecompact@sagrland.de
-```
-
-### Désinstallation
-
-Réinstaller l’archive upstream pour revenir au comportement d’origine, ou désinstaller l’extension :
-
-```fish
-gnome-extensions uninstall batterytimepercentagecompact@sagrland.de
-```
-
-
+Le dossier [Widget Topbar](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Widget%20Topbar/) est préparé pour accueillir l'archive, les sources et le README. Les instructions d'installation seront ajoutées avec ces fichiers.
 
 ---
 

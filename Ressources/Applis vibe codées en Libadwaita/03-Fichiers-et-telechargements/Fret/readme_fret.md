@@ -309,3 +309,16 @@ Puis reconstruire le paquet si nécessaire :
 Lors d’une nouvelle version, mettre à jour ensemble `pkgrel` dans `PKGBUILD`,
 le nom du paquet documenté ci-dessus et les sommes SHA-256 générées par
 `makepkg`.
+
+
+## Quai — compagnon Android TV
+
+**Quai** complète Fret en ouvrant un serveur FTP sur Android TV. Il permet de transférer des fichiers entre l'ordinateur et le téléviseur depuis le second panneau de Fret, sans câble ni manipulation complexe sur la TV.
+
+Le serveur écoute sur le port **2121** par défaut. Il utilise un mot de passe aléatoire généré au premier lancement ; le nom d'utilisateur est libre. Il permet l'envoi, le téléchargement, la reprise, la création, le renommage et la suppression de fichiers, sur le stockage interne ou un disque externe connecté à la TV.
+
+L'application propose deux tuiles : **Quai**, pour les réglages et le démarrage du serveur, et **Quai ON/OFF**, un interrupteur direct sans écran. Le service de premier plan affiche l'adresse FTP dans une notification. Le démarrage automatique tente de suivre le démarrage de la TV et le branchement tardif des disques, mais certains téléviseurs TCL peuvent bloquer le lancement automatique des applications installées manuellement.
+
+Dans Fret, saisir l'adresse affichée par Quai avec Ctrl+L, par exemple ftp://192.168.1.x:2121, puis fournir le mot de passe de Quai.
+
+**Sécurité :** FTP transmet les identifiants et les fichiers en clair. Quai est destiné à un usage personnel sur le réseau local : ne jamais exposer le port sur Internet et arrêter le serveur après utilisation. Android TV 6 (API 23) ou supérieur.
