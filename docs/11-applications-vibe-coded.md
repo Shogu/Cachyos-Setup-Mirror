@@ -565,9 +565,9 @@ Les captures fournies avec cette mise à jour couvrent **Always on top, Grabber,
 
 ### 11.25 — Iconostase
 
-**Iconostase** rassemble dans une seule application les outils auparavant séparés entre **Icônes UI** et **PLACES / Dossiers Ogu**. Elle centralise la gestion des icônes des applications installées et la personnalisation des dossiers, et prend en charge la gestion des lanceurs `.desktop`. Elle est destinée à remplacer Libre Menu Editor dans ce setup.
+**Iconostase** est l’application GNOME du setup dédiée à la gestion des icônes des applications installées, à la personnalisation des dossiers et à l’édition des lanceurs `.desktop`. Elle réunit ces fonctions dans une interface GTK4/libadwaita.
 
-Le dossier [Iconostase](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/04-Bureau-et-personnalisation/Iconostase/) est préparé pour accueillir le paquet, les sources et la documentation. Le README et les fichiers de distribution seront ajoutés séparément.
+Le dossier [Iconostase](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/04-Bureau-et-personnalisation/Iconostase/) contient le paquet, les sources et la documentation de l’application.
 
 ---
 
