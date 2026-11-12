@@ -2,7 +2,7 @@
 
 [Accueil](../README.md) · [Précédent](01-installation.md) · [Suivant](11-applications-vibe-coded.md)
 
-> **Dans ce chapitre :** logiciels installés classés par catégorie, builds GTK4 spécifiques au setup, Dropbox sans interface, Claude Code, et réglages propres à Fragments et aux lecteurs vidéo.
+> **Dans ce chapitre :** logiciels installés classés par catégorie, builds GTK4 spécifiques au setup, Dropbox intégré à Quick Settings, Claude Code, et réglages propres à Fragments et aux lecteurs vidéo.
 
 - [10.1 Logiciels à installer](#101--logiciels-à-installer)
   - [10.1.1 dconf-editor GTK4](#1011--dconf-editor-gtk4)
@@ -264,40 +264,24 @@ Le paquet système `fuse2` a depuis été supprimé de cette installation. L'obj
 
 ## 10.3 — Dropbox
 
-Utiliser le client officiel Dropbox en arrière-plan, avec un démarrage automatique par **XDG Autostart**. Cette méthode fonctionne dans la session GNOME : Dropbox démarre à l’ouverture de session et `dropbox-cli status` permet de vérifier la synchronisation. Les commandes ci-dessous s’exécutent dans **Fish**.
+Le client officiel Dropbox fonctionne en arrière-plan et démarre automatiquement avec la session GNOME. Son pilotage quotidien est désormais regroupé dans la tuile **Dropbox** de l’extension GNOME **Quick Settings** : il n’est plus nécessaire d’utiliser des commandes en terminal.
 
-### Configuration graphique initiale
+### Tuile Dropbox dans Quick Settings
 
-Installer temporairement l’intégration Nautilus avec **Shelly**, puis ouvrir Dropbox :
+- La tuile est bleue lorsque Dropbox fonctionne et grise lorsqu’il est arrêté.
+- Le sous-titre indique l’état de Dropbox.
+- Un clic ouvre le dossier `~/Dropbox`.
+- Le chevron affiche les **cinq derniers fichiers modifiés** : chacun peut être ouvert ou son lien de partage copié.
+- Le menu donne accès aux commandes **Mettre en pause** et **Reprendre**, ainsi qu’au site web Dropbox.
+- L’anneau des transferts de Quick Settings affiche également la progression de la synchronisation.
 
-```fish
-shelly aur install nautilus-dropbox dropbox-cli
-dropbox-cli start -i
-```
+**Particularité de Dropbox pour Linux :** le client ne propose pas de véritable fonction de pause. « Mettre en pause » quitte donc le client ; « Reprendre » le relance.
 
-L’extension GNOME **AppIndicator** permet d’afficher l’icône pour lier le compte, choisir le dossier `~/Dropbox`, régler la synchronisation sélective, la bande passante, la synchronisation LAN et les notifications. Les réglages sont conservés dans `~/.dropbox`. Quitter ensuite Dropbox depuis son icône.
+### Configuration initiale et démarrage
 
-**Désactiver la synchronisation LAN** : après le démarrage du client, exécuter la commande suivante. Cela évite que Dropbox utilise le réseau local pour synchroniser les appareils :
+Lors de la première ouverture du client graphique, lier le compte Dropbox et choisir le dossier `~/Dropbox`, puis régler si nécessaire la synchronisation sélective, la bande passante et les notifications. Ces préférences sont gérées par le client Dropbox.
 
-```fish
-dropbox-cli lansync n
-```
-
-
-
-### Conserver le démon et retirer l’intégration Nautilus
-
-Marquer `dropbox` comme installé explicitement avant de retirer son intégration, pour conserver cette dépendance :
-
-```fish
-sudo pacman -D --asexplicit dropbox
-sudo pacman -Rns nautilus-dropbox
-shelly aur install dropbox dropbox-cli
-```
-
-### Démarrage automatique par XDG
-
-Dropbox crée sa propre entrée. Autrement, créer le fichier `~/.config/autostart/dropbox.desktop` :
+Le démarrage automatique est assuré par l’entrée XDG Autostart créée par Dropbox. Si elle est absente, créer `~/.config/autostart/dropbox.desktop` :
 
 ```fish
 mkdir -p "$HOME/.config/autostart"
@@ -319,35 +303,10 @@ EOF
 desktop-file-validate "$HOME/.config/autostart/dropbox.desktop"
 ```
 
-
-Se déconnecter puis se reconnecter à GNOME pour vérifier le démarrage automatique. Pour tester immédiatement le lanceur :
-
-```fish
-/usr/bin/dropbox
-```
-
-### Vérification
+Pour vérifier que le processus est lancé :
 
 ```fish
-dropbox-cli status
 pgrep -a -f '[d]ropbox'
-```
-
-Le client doit indiquer l’état de synchronisation, idéalement **« À jour »**.
-
-Pour tester sans écraser un fichier existant :
-
-```fish
-set test_sync (mktemp "$HOME/Dropbox/test-sync-XXXXXX.txt")
-printf '%s\\n' 'Test de synchronisation Dropbox' > "$test_sync"
-dropbox-cli filestatus "$test_sync"
-```
-
-Attendre la synchronisation et vérifier le fichier sur le compte Dropbox, puis supprimer uniquement ce fichier de test :
-
-```fish
-rm -- "$test_sync"
-set -e test_sync
 ```
 
 ## 10.4 — Téléchargement : Grabber et Fragments

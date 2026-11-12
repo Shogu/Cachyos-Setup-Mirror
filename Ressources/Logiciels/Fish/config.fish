@@ -65,10 +65,6 @@ abbr --add clip --position anywhere '2>&1 | wl-copy'
 abbr --add -- delete 'trash-put'
 abbr --add -- rm 'rm -I'
 
-# === Dropbox-cli ===
-abbr --add dropbox-sync dropbox-cli status
-abbr --add dropbox-share dropbox-cli sharelink
-abbr --add dropbox-file dropbox-cli filestatus
 
 
 # === Relancer extensions GNOME après freeze du shell ===
