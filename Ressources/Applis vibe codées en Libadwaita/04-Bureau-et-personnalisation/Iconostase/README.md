@@ -3,8 +3,7 @@
 Iconostase rassemble en une seule appli GNOME (GTK4 / libadwaita, Python) tout ce qui touche à l'habillage du bureau :
 les icônes des applications, en couleur **et** en symbolique, les lanceurs du menu et les icônes des dossiers.
 
-C'est un fork de [Libre Menu Editor](https://codeberg.org/libre-menu-editor/libre-menu-editor) (GPL-3.0),
-nettoyé pour GNOME 50/51, auquel s'ajoutent les outils maison `icones-ogu` et `dossiers-ogu`.
+Application adaptée à GNOME 50/51 et enrichie avec les outils maison `icones-ogu` et `dossiers-ogu`.
 Usage strictement personnel.
 
 ## Installation
@@ -20,7 +19,7 @@ Le code est installé dans `/usr/lib/iconostase/`, avec un lanceur minimal `/usr
 
 ### Onglet Applications
 
-Toute l'édition des lanceurs `.desktop` de Libre Menu Editor : nom, commentaire, commande, répertoire de travail,
+Toute l'édition des lanceurs `.desktop` : nom, commentaire, commande, répertoire de travail,
 actions, mots-clés, catégories, terminal, visibilité, GPU dédié…
 
 La partie **Apparence** gère les deux icônes d'une appli :
@@ -135,4 +134,4 @@ pas d'appels shell évitables (seul `gtk-update-icon-cache` reste, faute d'API).
 
 ## Licence
 
-GPL-3.0-or-later, comme Libre Menu Editor (© 2022 Free Software Foundation).
+GPL-3.0-or-later (mentions de copyright d'origine : © 2022 Free Software Foundation).
