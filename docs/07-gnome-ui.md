@@ -186,9 +186,9 @@ Utiliser ce setup d’icônes d’applications et de dossiers afin de conserver 
 
 ### Iconostase — icônes, dossiers et lanceurs
 
-**Iconostase** réunit les fonctions auparavant réparties entre Icônes UI et PLACES / Dossiers Ogu : gestion des icônes des applications installées, personnalisation des dossiers et gestion des lanceurs `.desktop`. Elle est destinée à remplacer Libre Menu Editor dans ce setup.
+**Iconostase** est l’application GNOME du setup dédiée à la gestion des icônes des applications installées, à la personnalisation des dossiers et à l’édition des lanceurs `.desktop`.
 
-Le dossier [Iconostase](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/04-Bureau-et-personnalisation/Iconostase/) accueillera son paquet, ses sources et son README. Les anciennes applications séparées ne sont plus distribuées indépendamment.
+Le dossier [Iconostase](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/04-Bureau-et-personnalisation/Iconostase/) regroupe son paquet, ses sources et son README.
 ---
 
 [Accueil](../README.md) · [Précédent](06-network.md) · [Suivant](08-gnome-extensions.md)
