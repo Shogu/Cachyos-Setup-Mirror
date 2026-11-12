@@ -34,7 +34,7 @@ gsettings set org.gnome.shell disable-extension-version-validation false
 
 Extensions apportant des fonctions d'interface ou de système considérées comme centrales dans ce setup :
 
-- **Quick Settings** — extension maison qui remplace Focus & Boutons et Battery Time Compact — Ogu : personnalisations du panneau des réglages rapides et affichage compact de l'autonomie, du pourcentage et de la puissance instantanée en watts. Voir [8.7](#87--quick-settings), [11.17](11-applications-vibe-coded.md#1117--quick-settings) et [son dossier](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Quick%20Settings/).
+- **Quick Settings** — extension maison qui remplace Focus & Boutons et Battery Time Compact — Ogu. Outre les réglages rapides et l'affichage compact de la batterie (autonomie, pourcentage et puissance en watts), elle regroupe des commandes directes pour lancer la mise à jour Shelly, ouvrir Task Manager/Ressources, fermer les applications après confirmation, piloter Dropbox et activer ou régler l'éclairage nocturne. Voir [8.7](#87--quick-settings), [11.17](11-applications-vibe-coded.md#1117--quick-settings) et [son dossier](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Quick%20Settings/).
 - **Widget Topbar** — extension qui remplace Topbar Center Widget et regroupe les widgets de la barre supérieure et du menu de l'horloge, notamment les notes Grimoire, le lecteur Semitone et l'agenda. Voir [8.8](#88--widget-topbar), [11.18](11-applications-vibe-coded.md#1118--widget-topbar) et [son dossier](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Widget%20Topbar/).
 - **UI Management** — extension maison **GNOME 49/50/51**, classée dans **Bureau et fenêtres**. Elle remplace dans ce setup **Just Perfection**, **AutoActivities**, **Hot Edge** et **Quick Close Overview** en ne conservant que les fonctions réellement utilisées. Voir [8.10](#810--ui-management) et [11.21](11-applications-vibe-coded.md#1120--ui-management).
 - [Power Total](#89--power-total) — extension maison GNOME 50, catégorie **Système et énergie** : profils secteur/batterie, luminosité, thème et rétroéclairage. Voir [11.20](11-applications-vibe-coded.md#1119--power-total).
@@ -54,7 +54,7 @@ Extensions apportant des fonctions d'interface ou de système considérées comm
   gnome-extensions enable chihiro-quicksettings-launch-toggle@ogu
   ```
   Voir le [README de Chihito](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/01-Multimedia/Chihito/README.md).
-- **Copyous — fork corrigé pour GNOME 51** : ajoute le **Multi-Paste Picker**, une fenêtre multi-presse-papiers ouverte par **Super+V** (configurable), avec sélection multiple par Ctrl+clic ou Espace, aperçu des images et collage séquentiel (300 ms entre les entrées). Le raccourci peut être désactivé dans les préférences ou le menu contextuel de l’icône ; le dialogue principal historique reste accessible par **Super+Shift+V**. Le menu propose aussi les interrupteurs **Multi-Paste Picker**, **Mode accumule** et **Mode incognito**. L’archive fournie est à placer dans `Ressources/Applis vibe codées en Libadwaita/Extensions GNOME/Copyous/copyous-gnome51.zip` (fichier à ajouter manuellement au dépôt). Installer la dépendance puis l’extension :
+- **Copyous — fork corrigé pour GNOME 51** : ajoute le **Multi-Paste Picker natif Adwaita**, un sélecteur multi-presse-papiers dans une fenêtre au rendu GNOME/Adwaita, ouvert par **Super+V** (configurable), avec sélection multiple par Ctrl+clic ou Espace, aperçu des images et collage séquentiel (300 ms entre les entrées). Le raccourci peut être désactivé dans les préférences ou le menu contextuel de l’icône ; le dialogue principal historique reste accessible par **Super+Shift+V**. Le menu propose aussi les interrupteurs **Multi-Paste Picker**, **Mode accumule** et **Mode incognito**. L’archive fournie est à placer dans `Ressources/Applis vibe codées en Libadwaita/Extensions GNOME/Copyous/copyous-gnome51.zip` (fichier à ajouter manuellement au dépôt). Installer la dépendance puis l’extension :
   ```fish
   sudo pacman -S --needed libgda6
   gnome-extensions install --force "Ressources/Applis vibe codées en Libadwaita/Extensions GNOME/Copyous/copyous-gnome51.zip"
@@ -94,9 +94,15 @@ gnome-extensions enable always-on-top-always-on-top@localhost
 
 ## 8.7 — Quick Settings
 
-Extension GNOME Shell maison qui remplace **Focus & Boutons** et **Battery Time Compact — Ogu**. Elle regroupe les personnalisations de Quick Settings et l'affichage compact de la batterie, notamment l'autonomie, le pourcentage et la puissance instantanée en watts.
+Extension GNOME Shell maison qui remplace **Focus & Boutons** et **Battery Time Compact — Ogu**. Elle regroupe les personnalisations de Quick Settings, l'affichage compact de la batterie (autonomie, pourcentage et puissance instantanée en watts) et plusieurs commandes système accessibles directement dans le panneau :
 
-Le dossier [Quick Settings](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Quick%20Settings/) accueillera l'archive, les sources et le README. Les détails d'installation seront ajoutés avec ces fichiers.
+- **Mise à jour Shelly** : lancement du script de mise à jour configuré ;
+- **Task Manager / Ressources** : accès à l'application et aux mesures système ;
+- **Fermer les applis** : fermeture des fenêtres sélectionnées après confirmation ;
+- **Dropbox** : état du client, dossier synchronisé, derniers fichiers et liens de partage, pause/reprise (par arrêt et relancement du client Linux) ;
+- **Éclairage nocturne** : interrupteur marche/arrêt et réglage de la température de couleur.
+
+Chaque fonction peut être désactivée indépendamment dans les préférences. Voir le [README de Quick Settings](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Quick%20Settings/README.md) pour le détail des tuiles et réglages.
 
 ## 8.8 — Widget Topbar
 

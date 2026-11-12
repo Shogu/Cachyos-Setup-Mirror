@@ -9,6 +9,17 @@ Extension GNOME Shell qui regroupe les personnalisations de la barre supérieure
 
 Chaque fonction peut être désactivée indépendamment.
 
+## Commandes rapides dans le panneau
+
+Quick Settings regroupe également plusieurs interrupteurs et commandes système :
+
+- **Mise à jour Shelly** : lance le script de mise à jour configuré.
+- **Task Manager / Ressources** : ouvre l'application Ressources et donne accès à ses mesures système détaillées.
+- **Fermer les applis** : demande confirmation avant de fermer les fenêtres sélectionnées dans les préférences.
+- **Dropbox** : contrôle l'état du client, ouvre le dossier synchronisé, donne accès aux derniers fichiers et à leurs liens de partage, et permet de quitter ou relancer le client.
+- **Éclairage nocturne** : active ou désactive la lumière nocturne ; le chevron permet de régler la température de couleur.
+
+
 > **Validation :** les préférences s'ouvrent correctement. Les mesures de Ressources et le dialogue avec Dropbox ont été vérifiés séparément. L'extension n'a pas encore été exécutée dans une session GNOME Shell : le comportement intégré reste donc à confirmer.
 
 ## Fermeture automatique

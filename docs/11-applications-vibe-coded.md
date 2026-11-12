@@ -933,9 +933,15 @@ Session Keeper restaure les applications et leurs fenêtres, mais pas leur conte
 
 ### 11.17 — Quick Settings
 
-**Quick Settings** est l'extension GNOME Shell maison qui remplace **Focus & Boutons** et **Battery Time Compact — Ogu**. Elle regroupe les personnalisations des réglages rapides et du panneau associé, ainsi que l'affichage compact de la batterie : autonomie, pourcentage et puissance instantanée en watts.
+**Quick Settings** est l'extension GNOME Shell maison qui remplace **Focus & Boutons** et **Battery Time Compact — Ogu**. Elle regroupe les personnalisations des réglages rapides, l'affichage compact de la batterie (autonomie, pourcentage et puissance instantanée en watts) et plusieurs commandes système directement accessibles dans le panneau :
 
-Le dossier [Quick Settings](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Quick%20Settings/) est préparé pour accueillir l'archive, les sources et le README. Les instructions d'installation seront ajoutées avec ces fichiers.
+- **Mise à jour Shelly** : lancement du script de mise à jour configuré ;
+- **Task Manager / Ressources** : accès à l'application et aux mesures système ;
+- **Fermer les applis** : fermeture des fenêtres sélectionnées après confirmation ;
+- **Dropbox** : état du client, dossier synchronisé, derniers fichiers et liens de partage, pause/reprise par arrêt et relancement du client Linux ;
+- **Éclairage nocturne** : interrupteur marche/arrêt et réglage de la température de couleur.
+
+Chaque fonction peut être désactivée indépendamment. Voir le [README de Quick Settings](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Quick%20Settings/README.md) pour le détail des tuiles et réglages.
 
 ---
 

@@ -8,7 +8,7 @@ Ce fork apporte un correctif de transition GNOME 51, un mode **Cumul** du multi-
 
 ## Nouvelles fonctionnalités
 
-- **Multi-Paste Picker** : fenêtre contextuelle inspirée de GLEAN, ouvrable avec **Super+V** (raccourci configurable).
+- **Multi-Paste Picker natif Adwaita** : sélecteur multi-presse-papiers présenté dans une fenêtre au rendu natif GNOME/Adwaita, ouvrable avec **Super+V** (raccourci configurable).
 - **Sélection multiple** : sélectionner plusieurs entrées avec **Ctrl+clic** ou la **barre Espace** ; des cases à cocher indiquent la sélection.
 - **Collage séquentiel** : toutes les entrées sélectionnées sont collées successivement, avec un intervalle de **300 ms**.
 - **Aperçu des images** : les entrées contenant des images affichent leur aperçu dans la fenêtre.
