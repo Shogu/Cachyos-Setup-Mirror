@@ -86,7 +86,7 @@ Pour l'utiliser après avoir restauré la sauvegarde Iconostase :
 
 Le script copie les SVG dans `~/.local/share/iconostase/dossiers/`, pose les icônes sur les dossiers Dropbox prévus (séances, séquences, cartes, matières, classes et dossiers administratifs), puis attribue automatiquement une icône aux sous-dossiers reconnus sous `Dropbox/LYCEE` et `Dropbox/Dropboxable`. Il actualise aussi `dossiers.json` pour qu'Iconostase reprenne ces icônes dans ses prochaines sauvegardes.
 
-Le script cible une arborescence précise sous `~/Dropbox` : les dossiers absents sont signalés et ignorés, à l'exception des répertoires annuels `Dropboxable` qu'il crée. Il préserve les icônes personnalisées qui ne proviennent pas de ce kit. Il peut être relancé. Fichiers peut nécessiter un redémarrage de Nautilus pour rafraîchir l'affichage.
+Le script cible une arborescence précise sous `~/Dropbox` : les dossiers absents sont signalés et ignorés, à l'exception des répertoires annuels `Dropboxable` qu'il crée. Pour le classement automatique des sous-dossiers, il laisse intactes les icônes personnalisées qui ne proviennent pas de ce kit ; les dossiers explicitement listés reçoivent l'icône prévue par le script. Il peut être relancé. Fichiers peut nécessiter un redémarrage de Nautilus pour rafraîchir l'affichage.
 
 ## Sauvegarde
 
