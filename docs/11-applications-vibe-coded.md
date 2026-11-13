@@ -615,7 +615,7 @@ Les captures fournies avec cette mise à jour couvrent **Always on top, Grabber,
 
 Le dossier [Iconostase](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/04-Bureau-et-personnalisation/Iconostase/) contient le paquet, les sources, la documentation et une sauvegarde complète à restaurer dans l’application.
 
-Le sous-dossier `Backup icones` contient également le kit `icones-dossiers-kit_dropbox.zip` et son script autonome `icones-dossiers-kit_dropbox.sh`. Après restauration de la sauvegarde, décompresser le ZIP à côté du script, fermer Iconostase puis lancer `bash ./icones-dossiers-kit_dropbox.sh` depuis ce dossier. Le script réapplique les icônes aux dossiers Dropbox prédéfinis et classe automatiquement les sous-dossiers de séances, séquences, cartes, ressources et matières selon leur nom. Voir le [mode d’emploi détaillé](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/04-Bureau-et-personnalisation/Iconostase/README.md#kit-dicônes-des-dossiers-dropbox).
+Le sous-dossier `Backup icones` contient également le kit `icones-dossiers-kit_dropbox.zip` et son script autonome `icones-dossiers-kit_dropbox.sh`. Après restauration de la sauvegarde, décompresser le ZIP à côté du script, fermer Iconostase puis lancer `bash ./icones-dossiers-kit_dropbox.sh` depuis ce dossier. Le script réapplique les icônes aux dossiers Dropbox prédéfinis et classe automatiquement les sous-dossiers de séances, séquences, cartes, ressources et matières selon leur nom. Voir le [mode d’emploi détaillé](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/04-Bureau-et-personnalisation/Iconostase/README.md#kit-dicones-des-dossiers-dropbox).
 
 ---
 
