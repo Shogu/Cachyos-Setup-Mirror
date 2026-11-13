@@ -24,7 +24,7 @@ Le raccourci **Super+V** est entièrement configurable dans les préférences et
 - Supprime la ligne d’aide inférieure du sélecteur et son séparateur.
 - N’affiche le pied de fenêtre (compteur, Annuler, Coller) que lorsqu’au moins un élément est sélectionné.
 
-Ces points restent à valider en session GNOME réelle ; voir le [plan de tests](../../../../../../docs/tests-extensions.md).
+Ces points restent à valider en session GNOME réelle ; voir le [plan de tests](../../../../docs/tests-extensions.md).
 
 ## Installation
 

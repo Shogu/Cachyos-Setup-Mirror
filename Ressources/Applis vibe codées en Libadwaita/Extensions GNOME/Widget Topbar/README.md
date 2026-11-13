@@ -133,7 +133,7 @@ Les trois pages disponibles sont **Lecteur**, **Notes** et **Calendrier**.
 - Aligne le titre Notifications et sa cloche sur les autres en-têtes.
 - Améliore le rendu des cartes en thème clair du Shell.
 
-Les vérifications restent à effectuer en session GNOME réelle ; voir le [plan de tests](../../../../../../docs/tests-extensions.md).
+Les vérifications restent à effectuer en session GNOME réelle ; voir le [plan de tests](../../../../docs/tests-extensions.md).
 
 ## Historique
 

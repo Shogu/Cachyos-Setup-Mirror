@@ -121,7 +121,7 @@ Les deux pages disponibles sont **Réglages rapides** et **Barre du haut**. Les 
 - Remplace la tuile Charge batterie par la commande de limitation à 80 % dans le menu Énergie lorsque le matériel le permet.
 - Harmonise les libellés Tout fermer, Clavier, Style sombre, Mise à jour et Énergie.
 
-Les points de validation restent à vérifier en session GNOME réelle ; voir le [plan de tests](../../../../../../docs/tests-extensions.md).
+Les points de validation restent à vérifier en session GNOME réelle ; voir le [plan de tests](../../../../docs/tests-extensions.md).
 
 ## Historique
 

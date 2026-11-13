@@ -61,7 +61,7 @@ La désactivation conserve les derniers profil, thème et niveaux de luminosité
 - Ajout de la gestion des animations GNOME en mode Économie.
 - Retrait volontaire des profils par application et du relancement sur lap-detected.
 
-Les tests en session GNOME réelle restent à effectuer ; voir le [plan de tests](../../../../../../docs/tests-extensions.md).
+Les tests en session GNOME réelle restent à effectuer ; voir le [plan de tests](../../../../docs/tests-extensions.md).
 
 ## Validation et sources
 

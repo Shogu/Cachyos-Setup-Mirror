@@ -6,6 +6,8 @@ Les élèves déposent leurs fichiers depuis un lien Dropbox File Request, sans 
 
 ## Livrables
 
+Les archives binaires ont été fournies avec cette mise à jour, mais ne sont pas encore versionnées dans le dépôt ; elles restent à déposer dans ce dossier avant d’utiliser la commande d’installation ci-dessous.
+
 - casier-1.3.0-1-any.pkg.tar.zst — paquet Arch.
 - casier-1.3.0-sources.tar.gz — sources Python, tests, métadonnées desktop et ressources.
 
