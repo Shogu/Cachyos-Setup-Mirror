@@ -1,0 +1,64 @@
+--- a/grimoire.py	2026-11-07 21:12:42.948389043 +0100
++++ b/grimoire.py	2026-11-07 21:12:42.950088317 +0100
+@@ -439,7 +439,12 @@
+         # Keep the tab strip bounded by the current window width.  New tabs
+         # scroll horizontally instead of forcing the window to grow.
+         self.tabs_scroll = Gtk.ScrolledWindow()
+-        self.tabs_scroll.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.NEVER)
++        # Défilement sans barre : la barre de défilement se superposait aux titres
++        # des onglets. Le pavé tactile défile à l'horizontale, la molette aussi.
++        self.tabs_scroll.set_policy(Gtk.PolicyType.EXTERNAL, Gtk.PolicyType.NEVER)
++        wheel = Gtk.EventControllerScroll(flags=Gtk.EventControllerScrollFlags.VERTICAL)
++        wheel.connect('scroll', self.scroll_tabs)
++        self.tabs_scroll.add_controller(wheel)
+         self.tabs_scroll.set_propagate_natural_width(False)
+         self.tabs_scroll.set_min_content_width(180)
+         self.tabs_scroll.set_hexpand(True)
+@@ -1003,6 +1008,7 @@
+                 add.add_css_class('flat')
+                 add.connect('clicked', lambda *_: self.new())
+                 self.tabs.append(add)
++        GLib.idle_add(self.reveal_active_tab)
+ 
+     def close_tab(self, doc):
+         if doc not in self.documents:
+@@ -1056,6 +1062,39 @@
+         dialog.connect('response', response)
+         dialog.present(self)
+ 
++    def scroll_tabs(self, controller, _dx, dy):
++        if controller.get_current_event_device() and \
++                controller.get_current_event_device().get_source() == Gdk.InputSource.TOUCHPAD:
++            return False  # le pavé tactile défile déjà à l'horizontale
++        adjustment = self.tabs_scroll.get_hadjustment()
++        adjustment.set_value(adjustment.get_value() + dy * 60)
++        return True
++
++    def reveal_active_tab(self):
++        """Bring the active tab into view once the tab bar has been laid out."""
++        child = self.tabs.get_first_child()
++        while child:
++            for tab in (child, *self.children_of(child)):
++                if isinstance(tab, Gtk.ToggleButton) and tab.get_active():
++                    ok, bounds = tab.compute_bounds(self.tabs)
++                    if ok:
++                        adjustment = self.tabs_scroll.get_hadjustment()
++                        x, width = bounds.get_x(), bounds.get_width()
++                        if x < adjustment.get_value():
++                            adjustment.set_value(x)
++                        elif x + width > adjustment.get_value() + adjustment.get_page_size():
++                            adjustment.set_value(x + width - adjustment.get_page_size())
++                    return GLib.SOURCE_REMOVE
++            child = child.get_next_sibling()
++        return GLib.SOURCE_REMOVE
++
++    @staticmethod
++    def children_of(widget):
++        child = widget.get_first_child()
++        while child:
++            yield child
++            child = child.get_next_sibling()
++
+     def drop_tab(self, doc):
+         """Remove a tab without asking anything; the caller has decided."""
+         if doc not in self.documents:
