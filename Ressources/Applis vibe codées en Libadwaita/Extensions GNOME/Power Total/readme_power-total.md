@@ -1,18 +1,18 @@
 # Power Total
 
-Version **0.1.1** — extension GNOME Shell **50**. UUID : `power-total@ogu`.
+Version **0.3.0** — extension GNOME Shell **50**. UUID : `power-total@ogu`.
 
 Power Total réunit [Auto Power Profile](https://github.com/dmy3k/auto-power-profile) et [Power Switching Manager](https://github.com/joseruibarros/power-switching-manager), qu’elle remplace dans ce setup.
 
 ## Fonctions
 
-- profils énergétiques distincts sur secteur et batterie ;
-- profils par application et mémorisation optionnelle des changements manuels ;
-- économie à batterie faible et protection expérimentale contre un chargeur insuffisant ;
+- modes d’énergie distincts sur secteur et batterie, mémorisation optionnelle des changements manuels ;
+- économie à batterie faible et protection contre un chargeur insuffisant ;
+- état courant détaillé : alimentation, mode actif, origine du choix et santé de la batterie ;
 - luminosité de l’écran, thème clair/sombre et rétroéclairage du clavier selon l’alimentation ;
 - modules activables séparément dans des préférences Libadwaita en français.
 
-Par défaut, seul le changement de profil est actif : **Performance sur secteur**, **Équilibré sur batterie**. Les autres modules sont désactivés. La luminosité et le rétroéclairage dépendent des capacités exposées par GNOME et le matériel.
+Le tableau **Secteur et batterie** configure indépendamment le mode d’énergie, la luminosité, le thème et le clavier rétroéclairé. La page Applications et les profils par application ont été retirés volontairement en 0.3.0, de même que la relance sur lap-detected. Les animations GNOME peuvent être coupées automatiquement en mode Économie et restaurées à la sortie, sans modifier un choix manuel préexistant. La luminosité et le rétroéclairage dépendent des capacités exposées par GNOME et le matériel.
 
 ## Installation et migration
 
@@ -53,6 +53,15 @@ gnome-extensions uninstall power-total@ogu
 ```
 
 La désactivation conserve les derniers profil, thème et niveaux de luminosité appliqués.
+
+## Évolutions 0.3.0 — 12–13 novembre 2026
+
+- Nouvelle page Alimentation avec état courant, origine de la décision et santé de la batterie.
+- Tableau unique Secteur et batterie pour le mode d’énergie, la luminosité, le thème et le clavier rétroéclairé.
+- Ajout de la gestion des animations GNOME en mode Économie.
+- Retrait volontaire des profils par application et du relancement sur lap-detected.
+
+Les tests en session GNOME réelle restent à effectuer ; voir le [plan de tests](../../../../../../docs/tests-extensions.md).
 
 ## Validation et sources
 

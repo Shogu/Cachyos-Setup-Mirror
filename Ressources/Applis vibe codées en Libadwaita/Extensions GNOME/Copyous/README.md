@@ -1,8 +1,8 @@
 # Copyous — fork GNOME 51
 
-**Version du fork : v14.** Cette version corrige une erreur au chargement : le signal `focus-out` était écouté sur `IBusManager`, alors que cet objet ne fournit pas ce signal. Le branchement fautif est corrigé.
+**Version du fork : v16.** Cette version corrige une erreur au chargement : le signal `focus-out` était écouté sur `IBusManager`, alors que cet objet ne fournit pas ce signal. Le branchement fautif est corrigé.
 
-Archive fournie : `copyous-gnome51.zip` (à ajouter manuellement à ce dossier).
+Archive attendue pour cette version : copyous-multiclipboard_shogu-v16.zip.
 
 Ce fork apporte un correctif de transition GNOME 51, un mode **Cumul** du multi-copiage et un sélecteur multi-presse-papiers.
 
@@ -18,6 +18,13 @@ Ce fork apporte un correctif de transition GNOME 51, un mode **Cumul** du multi-
 Le menu contextuel de l’icône Copyous dans la barre supérieure propose désormais **Multi-Paste Picker**, un interrupteur pour activer ou désactiver le sélecteur, au même titre que **Mode accumule** et **Mode incognito**.
 
 Le raccourci **Super+V** est entièrement configurable dans les préférences et peut être désactivé depuis celles-ci ou depuis le menu contextuel. Le dialogue principal historique reste accessible avec **Super+Shift+V**.
+
+## Évolutions v16 — 12–13 novembre 2026
+
+- Supprime la ligne d’aide inférieure du sélecteur et son séparateur.
+- N’affiche le pied de fenêtre (compteur, Annuler, Coller) que lorsqu’au moins un élément est sélectionné.
+
+Ces points restent à valider en session GNOME réelle ; voir le [plan de tests](../../../../../../docs/tests-extensions.md).
 
 ## Installation
 

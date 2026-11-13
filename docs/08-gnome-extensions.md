@@ -102,44 +102,28 @@ Extension GNOME Shell maison qui remplace **Focus & Boutons** et **Battery Time 
 - **Dropbox** : état du client, dossier synchronisé, derniers fichiers et liens de partage, pause/reprise (par arrêt et relancement du client Linux) ;
 - **Éclairage nocturne** : interrupteur marche/arrêt et réglage de la température de couleur.
 
-Chaque fonction peut être désactivée indépendamment dans les préférences. Voir le [README de Quick Settings](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Quick%20Settings/README.md) pour le détail des tuiles et réglages.
+Quick Settings v12 ajoute les tuiles Clé USB et Minuteur, la santé de la batterie et le débit réseau dans Ressources, les bulles OSD configurables, l’ordre des tuiles tierces et le réglage de l’icône du clavier. La tuile Charge batterie est remplacée par une commande de limitation à 80 % dans le menu Énergie lorsque le matériel le permet. Voir le [plan de tests](tests-extensions.md) et le [README de Quick Settings](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Quick%20Settings/README.md).
 
 ## 8.8 — Widget Topbar
 
-Extension GNOME Shell qui remplace **Topbar Center Widget**. Elle regroupe les widgets de la barre supérieure et du menu de l'horloge, notamment les notes épinglées dans Grimoire, le lecteur Semitone et les éléments d'agenda.
-
-Le dossier [Widget Topbar](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Widget%20Topbar/) accueillera l'archive, les sources et le README. Les détails d'installation seront ajoutés avec ces fichiers.
+**Widget Topbar 2.3** remplace **Topbar Center Widget**. Elle regroupe les notes de Grimoire, le lecteur Semitone, les notifications et le calendrier. La version 2.3 harmonise le rendu des cartes, les tailles typographiques et l’en-tête Notifications ; le thème clair du Shell est également pris en compte. Voir le [README](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Widget%20Topbar/README.md) et le [plan de tests](tests-extensions.md).
 
 ## 8.9 — Power Total
 
-Extension GNOME Shell **50**, version **0.1.1**, remplaçant **Auto Power Profile** et **Power Switching Manager** dans ce setup. Classée automatiquement dans **Système et énergie** par Extension Manager Ogu.
+**Power Total 0.3.0** fusionne **Auto Power Profile** et **Power Switching Manager** (UUID power-total@ogu). Une page Alimentation unique gère le mode d’énergie, la luminosité, le thème et le clavier rétroéclairé selon l’alimentation. Elle affiche aussi l’état courant, l’origine du choix et la santé de la batterie.
 
-Elle regroupe les profils énergétiques sur secteur/batterie et par application, la luminosité de l’écran, le thème clair/sombre et le rétroéclairage du clavier. Chaque module peut être activé séparément. Seul le changement de profil est actif par défaut : **Performance sur secteur**, **Équilibré sur batterie**.
+La version 0.3.0 retire volontairement les profils par application et la relance forcée sur le signal lap-detected. Les animations GNOME peuvent être désactivées automatiquement en mode Économie, sans écraser un réglage déjà désactivé manuellement. Voir le [README de Power Total](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Power%20Total/readme_power-total.md).
 
-Depuis la racine du dépôt, installer l’archive :
+Après installation et reconnexion à GNOME, désactiver les deux anciennes extensions puis activer Power Total :
 
-```fish
-gnome-extensions install --force "Ressources/Applis vibe codées en Libadwaita/Extensions GNOME/Power Total/Power-Total.zip"
-```
-
-Se déconnecter puis se reconnecter à GNOME. Désactiver les deux anciennes extensions avant d’activer Power Total :
-
-```fish
+~~~fish
 gnome-extensions disable auto-power-profile@dmy3k.github.io
 gnome-extensions disable power-switching-manager@joseruibarros.com
 gnome-extensions enable power-total@ogu
 gnome-extensions prefs power-total@ogu
-```
+~~~
 
-Si une ancienne extension n’est pas installée, sa commande de désactivation peut signaler qu’elle est introuvable. Le bouton **Importer** des préférences permet de récupérer ses réglages personnalisés ; les modules supplémentaires restent à activer séparément.
-
-Si la gestion de luminosité de Power Total est activée, désactiver la luminosité automatique de GNOME :
-
-```fish
-gsettings set org.gnome.settings-daemon.plugins.power ambient-enabled false
-```
-
-Les contrôles statiques et les tests avec services simulés ne remplacent pas un essai dans une session GNOME réelle.
+La validation en session GNOME réelle reste à effectuer ; voir le [plan de tests](tests-extensions.md).
 
 ## 8.10 — UI Management
 

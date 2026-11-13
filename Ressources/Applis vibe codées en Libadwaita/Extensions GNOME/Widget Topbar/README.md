@@ -1,5 +1,7 @@
 # Widget Topbar
 
+**Version documentée : 2.3** (widget-topbar@ogu), compatibilité visée GNOME 50/51.
+
 Extension GNOME Shell qui enrichit le **menu de l'horloge**, au centre de la barre supérieure. Elle rassemble le lecteur multimédia, les notes de Grimoire, les notifications et le calendrier.
 
 - **UUID :** `widget-topbar@ogu`
@@ -123,6 +125,15 @@ Les trois pages disponibles sont **Lecteur**, **Notes** et **Calendrier**.
 - **Grimoire 0.3.0-3** pour les notes, les dossiers épinglés et la création de notes.
 - **Semitone** pour les informations multimédias enrichies ; les autres lecteurs compatibles MPRIS restent pris en charge.
 - **Disquaire** est nécessaire uniquement pour l'action « Ouvrir dans Disquaire ».
+
+## Évolutions 2.3 — 12–13 novembre 2026
+
+- Harmonise le gris des cartes de notes avec le lecteur, les notifications et « Aujourd’hui ».
+- Uniformise les tailles des dates, aperçus, sections et morceaux suivants sur la typographie des rendez-vous GNOME (9 pt).
+- Aligne le titre Notifications et sa cloche sur les autres en-têtes.
+- Améliore le rendu des cartes en thème clair du Shell.
+
+Les vérifications restent à effectuer en session GNOME réelle ; voir le [plan de tests](../../../../../../docs/tests-extensions.md).
 
 ## Historique
 

@@ -11,7 +11,7 @@
 Les dossiers sont classés par usage principal. Les extensions GNOME Shell restent regroupées dans [Extensions GNOME](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/).
 
 - **01 — Multimédia** : Amplifaya, Chihito, Decibel, Disquaire, SPECTACLE, Semitone, Polaroid.
-- **02 — Bureautique et rédaction** : Alexandrie, Grimoire, Grille, Dactylo, Maquette.
+- **02 — Bureautique et rédaction** : Alexandrie, Casier, Grimoire, Grille, Dactylo, Maquette.
 - **03 — Fichiers et téléchargements** : Fret, Quai, Grabber, Nautilus Bookmark Icons, Thumbnailer Sushi.
 - **04 — Bureau et personnalisation** : Extension Manager, Iconostase.
 - **05 — Système et utilitaires** : dconf-editor GTK4, Fisherman, Pacto, Perceptron, Pusher, Radar, Sismographe, Snapper GTK4, systemd-gui, Vidange.
@@ -33,6 +33,50 @@ Les dossiers sont classés par usage principal. Les extensions GNOME Shell reste
 - [11.24 — Dactylo](#1124--dactylo)
 - [11.30 — Alexandrie](#1130--alexandrie)
 - [11.34 — Maquette](#1134--maquette)
+- [11.38 — Casier](#1138--casier)
+
+
+### 11.38 — Casier
+
+**Casier 1.3.0** est une application GTK4/libadwaita en Python destinée à récupérer, identifier, corriger et archiver les devoirs déposés par les élèves. Les élèves envoient leur fichier depuis un lien Dropbox File Request, sans compte Dropbox. Casier rapproche les fichiers des élèves, affiche les rendus, retards et copies manquantes, puis associe chaque copie à une note et une appréciation.
+
+#### Fonctions
+
+- Gestion des classes et import des listes d’élèves (un nom par ligne au format NOM Prénom ou un CSV Nom;Prénom).
+- Création de devoirs avec barème, échéance, consignes et document joint ; génération d’une demande de fichiers Dropbox et d’un QR code à partager.
+- Synchronisation des dépôts toutes les deux minutes tant que la page du devoir reste ouverte ; attribution manuelle des fichiers non reconnus.
+- Correction des PDF, images, vidéos et textes extraits de fichiers Word/ODT, avec note et appréciation par élève.
+- Fermeture des dépôts, renommage des copies (NOM_Prénom_Devoir), export CSV des notes et archivage.
+- Mode dossier local pour les dépôts provenant d’un dossier Dropbox synchronisé sur le PC.
+- Sauvegarde automatique quotidienne de la base, conservation des 30 dernières sauvegardes et restauration depuis l’application.
+
+#### Installation
+
+Le paquet Arch casier-1.3.0-1-any.pkg.tar.zst et l’archive de sources casier-1.3.0-sources.tar.gz sont les livrables de cette version. Les placer dans le dossier Casier, puis installer le paquet depuis ce dossier :
+
+~~~fish
+sudo pacman -U ./casier-1.3.0-1-any.pkg.tar.zst
+~~~
+
+Dépendances automatiques : python-gobject, python-cairo, python-qrcode, gtk4, libadwaita, poppler-glib, libsoup3 et libsecret. Facultatifs : gst-plugins-good pour l’aperçu vidéo/audio et libheif pour les photos HEIC.
+
+#### Première connexion à Dropbox
+
+Dans Préférences → Dropbox → Connecter, créer une application Scoped access / Full Dropbox dans la console Dropbox. Accorder les permissions account_info.read, files.metadata.read, files.content.read, files.content.write, file_requests.read, file_requests.write, sharing.read et sharing.write, puis saisir l’App key dans Casier. Ouvrir la page d’autorisation, accepter et coller le code fourni. Le jeton est conservé dans le trousseau GNOME. Après l’ajout de permissions, déconnecter puis reconnecter Casier.
+
+#### Données et sauvegardes
+
+- Base : ~/.local/share/casier/casier.db.
+- Sauvegardes : ~/.local/share/casier/sauvegardes/ (30 derniers jours).
+- Copies récupérées : ~/.local/share/casier/depots/.
+- Archives : ~/Documents/Casier/ (emplacement modifiable dans les Préférences).
+- Espace Dropbox : Casier/<année>/<classe>/<devoir> et Casier/<année>/<classe>/Consignes/.
+
+La suppression d’un devoir ou d’une classe peut également supprimer les fichiers correspondants dans Dropbox. Le nettoyage d’une année supprime Casier/<année> côté Dropbox, sans effacer les copies et notes déjà récupérées localement. Les fichiers supprimés dans Dropbox restent récupérables 30 jours dans « Fichiers supprimés ».
+
+Pour le guide complet, voir le README de Casier dans le dossier de l’application.
+
+---
 
 ## 03 — Fichiers et téléchargements
 

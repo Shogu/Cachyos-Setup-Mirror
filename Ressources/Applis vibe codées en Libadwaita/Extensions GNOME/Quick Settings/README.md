@@ -1,5 +1,7 @@
 # Quick Settings
 
+**Version documentée : v12** (quick-settings@ogu), compatibilité visée GNOME 50/51.
+
 Extension GNOME Shell qui regroupe les personnalisations de la barre supérieure et du panneau **Réglages rapides**. Elle reprend les fonctions de Focus & Boutons et de Battery Time Compact — Ogu.
 
 - **UUID :** `quick-settings@ogu`
@@ -110,6 +112,16 @@ gnome-extensions prefs quick-settings@ogu
 ```
 
 Les deux pages disponibles sont **Réglages rapides** et **Barre du haut**. Les fonctions sont indépendantes et peuvent être désactivées séparément.
+
+## Évolutions v12 — 12–13 novembre 2026
+
+- Ajoute les tuiles Clé USB et Minuteur.
+- Ajoute la santé de la batterie, le débit réseau et les bulles OSD configurables.
+- Ajoute le classement des tuiles tierces et la personnalisation de l’icône clavier.
+- Remplace la tuile Charge batterie par la commande de limitation à 80 % dans le menu Énergie lorsque le matériel le permet.
+- Harmonise les libellés Tout fermer, Clavier, Style sombre, Mise à jour et Énergie.
+
+Les points de validation restent à vérifier en session GNOME réelle ; voir le [plan de tests](../../../../../../docs/tests-extensions.md).
 
 ## Historique
 
