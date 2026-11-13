@@ -74,6 +74,20 @@ Un point sur le bouton de menu rappelle que des modifications n'ont pas encore �
 3. **Importer des icônes redessinées…** avec le ZIP retourné : tout est installé et les lanceurs sont corrigés.
    Une fausse manipulation s'annule depuis le message qui s'affiche ou depuis le menu.
 
+### Kit d'icônes des dossiers Dropbox
+
+Le sous-dossier [Backup icones](Backup%20icones/) conserve deux éléments complémentaires : la sauvegarde complète Iconostase à restaurer dans l'application et le kit autonome `icones-dossiers-kit_dropbox.zip`. Le kit contient les SVG de dossiers et le script `icones-dossiers-kit_dropbox.sh` (également livré seul à côté de l'archive de sauvegarde).
+
+Pour l'utiliser après avoir restauré la sauvegarde Iconostase :
+
+1. Décompresser `icones-dossiers-kit_dropbox.zip` dans le même dossier que le script, afin d'obtenir le sous-dossier `icones/`.
+2. Fermer Iconostase.
+3. Depuis ce dossier, lancer `bash ./icones-dossiers-kit_dropbox.sh`.
+
+Le script copie les SVG dans `~/.local/share/iconostase/dossiers/`, pose les icônes sur les dossiers Dropbox prévus (séances, séquences, cartes, matières, classes et dossiers administratifs), puis attribue automatiquement une icône aux sous-dossiers reconnus sous `Dropbox/LYCEE` et `Dropbox/Dropboxable`. Il actualise aussi `dossiers.json` pour qu'Iconostase reprenne ces icônes dans ses prochaines sauvegardes.
+
+Le script cible une arborescence précise sous `~/Dropbox` : les dossiers absents sont signalés et ignorés, à l'exception des répertoires annuels `Dropboxable` qu'il crée. Il préserve les icônes personnalisées qui ne proviennent pas de ce kit. Il peut être relancé. Fichiers peut nécessiter un redémarrage de Nautilus pour rafraîchir l'affichage.
+
 ## Sauvegarde
 
 L'archive `iconostase-AAAA-MM-JJ.tar.gz` contient :

@@ -188,7 +188,7 @@ Utiliser ce setup d’icônes d’applications et de dossiers afin de conserver 
 
 **Iconostase** est l’application GNOME du setup dédiée à la gestion des icônes des applications installées, à la personnalisation des dossiers et à l’édition des lanceurs `.desktop`.
 
-Le dossier [Iconostase](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/04-Bureau-et-personnalisation/Iconostase/) regroupe son paquet, ses sources et son README.
+Le dossier [Iconostase](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/04-Bureau-et-personnalisation/Iconostase/) regroupe son paquet, ses sources et son README. La procédure de [refonte des icônes et de restauration de la sauvegarde](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/04-Bureau-et-personnalisation/Iconostase/README.md#circuit-de-refonte-dicônes) décrit aussi le kit qui réapplique les icônes aux dossiers de cours synchronisés dans Dropbox.
 ---
 
 [Accueil](../README.md) · [Précédent](06-network.md) · [Suivant](08-gnome-extensions.md)
