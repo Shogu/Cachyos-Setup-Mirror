@@ -279,10 +279,10 @@ La version documentée propose notamment le nettoyage automatique, la normalisat
 
 Les modifications de pochette, la mise en forme et les valeurs récupérées en ligne sont enregistrées directement. Les modifications manuelles dans les champs restent en attente, signalées par un point bleu. Le nettoyage automatique peut être désactivé dans les préférences.
 
-**Installation du paquet 1.7.3** — le fichier `disquaire-1.7.3-1-any.pkg.tar.zst` est présent dans le dossier Disquaire :
+**Installation du paquet 1.7.3** — le fichier `disquaire-1.7.3-3-any.pkg.tar.zst` est présent dans le dossier Disquaire :
 
 ~~~fish
-sudo pacman -U "Ressources/Applis vibe codées en Libadwaita/01-Multimedia/Disquaire/disquaire-1.7.3-1-any.pkg.tar.zst"
+sudo pacman -U "Ressources/Applis vibe codées en Libadwaita/01-Multimedia/Disquaire/disquaire-1.7.3-3-any.pkg.tar.zst"
 ~~~
 
 Le dossier contient le paquet 1.7.3 (l’ancienne archive 1.5.2 et l’intermédiaire 1.7.1 remplacés).
@@ -326,12 +326,12 @@ La procédure ci-dessus fonctionne dès qu’un unique paquet `semitone*.pkg.tar
 
 **Chihito** est une application d’ambiance de travail dans l’esprit de **Lofi Girl**, destinée à accompagner les sessions de concentration. Son paquet intègre une extension GNOME Shell qui ajoute une bascule de lancement dans les réglages rapides.
 
-**Paquet fourni :** `chihiro-0.6.1-1-any.pkg.tar.zst` (à déposer manuellement dans [le dossier Chihito](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/01-Multimedia/Chihito/)).
+**Paquet fourni :** `chihiro-0.7.0-2-any.pkg.tar.zst` (fourni dans [le dossier Chihiro](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/01-Multimedia/Chihiro/)).
 
 Depuis ce dossier, installer le paquet :
 
 ```fish
-sudo pacman -U ./chihiro-0.6.1-1-any.pkg.tar.zst
+sudo pacman -U ./chihiro-0.7.0-2-any.pkg.tar.zst
 ```
 
 Sous Wayland, **se déconnecter puis se reconnecter** : GNOME Shell ne découvre les nouvelles extensions qu’à l’ouverture de session. Activer ensuite l’extension intégrée :
@@ -340,7 +340,7 @@ Sous Wayland, **se déconnecter puis se reconnecter** : GNOME Shell ne découvre
 gnome-extensions enable chihiro-quicksettings-launch-toggle@ogu
 ```
 
-Voir le [README de Chihito](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/01-Multimedia/Chihito/README.md).
+Voir le [README de Chihito](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/01-Multimedia/Chihiro/README.md).
 
 ---
 
@@ -768,12 +768,12 @@ Le build GTK4 est ensuite compilé et installé depuis les sources upstream offi
 
 Gestionnaire graphique minimaliste des fichiers de configuration de Fish, notamment `config.fish` et les fonctions Fish.
 
-**Paquet fourni : `fisherman-0.1.8-2-any.pkg.tar.zst`.**
+**Paquet fourni : `fisherman-0.3.1-6-any.pkg.tar.zst`.**
 
 ### Installation
 
 ```fish
-sudo pacman -U ./fisherman-0.1.8-2-any.pkg.tar.zst
+sudo pacman -U ./fisherman-0.3.1-6-any.pkg.tar.zst
 ```
 
 ### Désinstallation
@@ -792,14 +792,14 @@ Une capture de l'interface de Fisherman n'a pas été fournie dans cet envoi. El
 
 Application GTK4/libadwaita destinée à la gestion des fichiers `.pacnew` et `.pacsave` : collecte, tri, comparaison, édition, remplacement et suppression.
 
-**Paquet fourni : `pacto-1.0.0-1-any.pkg.tar.zst`.**
+**Paquet fourni : `pacto-1.0.0-8-any.pkg.tar.zst`.**
 
 ![Interface de Pacto](../Ressources/screenshots/vibe-coded/pacto.png)
 
 ### Installation
 
 ```fish
-sudo pacman -U ./pacto-1.0.0-1-any.pkg.tar.zst
+sudo pacman -U ./pacto-1.0.0-8-any.pkg.tar.zst
 ```
 
 ### Désinstallation
@@ -889,7 +889,7 @@ Application GTK4/libadwaita de diagnostic du système GNOME. Elle regroupe les v
 Depuis la racine du dépôt, installer le paquet fourni :
 
 ```fish
-sudo pacman -U "Ressources/Applis vibe codées en Libadwaita/05-Systeme-et-utilitaires/Sismographe/sismographe-1.0.0-1-any.pkg.tar.zst"
+sudo pacman -U "Ressources/Applis vibe codées en Libadwaita/05-Systeme-et-utilitaires/Sismographe/sismographe-1.0.0-6-any.pkg.tar.zst"
 sismographe
 ```
 

@@ -1,13 +1,13 @@
 # Maintainer: Ogu
 pkgname=chihiro
 pkgver=0.7.0
-pkgrel=1
-pkgdesc="Petit lecteur GTK4 sans décoration : vidéo de Chihiro en boucle, bande son Lofi Girl en direct"
+pkgrel=2
+pkgdesc="Chihiro : petit compagnon vidéo GTK4 (vidéo locale en boucle + direct Lofi Girl), avec sa tuile Réglages rapides"
 arch=('any')
 url="https://gitlab.com/Shogu"
-license=('custom')
-depends=('python' 'python-gobject' 'gtk4' 'libadwaita' 'gstreamer' 'gst-plugins-base' 'gst-plugins-good' 'libsoup3'
-         'gst-plugins-bad' 'gst-libav' 'gst-plugin-gtk4' 'quickjs-ng')
+license=('GPL-3.0-or-later')
+depends=('python' 'python-gobject' 'gtk4' 'libadwaita' 'gstreamer' 'gst-plugins-base' 'gst-plugins-good'
+         'gst-libav' 'gst-plugin-gtk4' 'libsoup3' 'quickjs-ng')
 install=chihiro.install
 source=("chihiro-$pkgver.tar.gz")
 sha256sums=('6ee3b7dc0a03be5399ba21e7457a320e3cfa18dce7ae5535d78d06bfbbccc466')

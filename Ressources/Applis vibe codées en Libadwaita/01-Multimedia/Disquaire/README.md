@@ -25,10 +25,12 @@ Disquaire conserve sept champs : **artiste, titre, album, année, genre, pochett
 Pour la version **1.7.3**, depuis le dossier contenant le paquet :
 
 ```sh
-sudo pacman -U ./disquaire-1.7.3-1-any.pkg.tar.zst
+sudo pacman -U ./disquaire-1.7.3-3-any.pkg.tar.zst
 ```
 
 Le dossier contient le paquet **1.7.3** (l’ancienne archive 1.5.2 et l’intermédiaire 1.7.1 remplacés).
+
+Le paquet a été reconstruit le 14/11/2026 avec un contenu identique : il contenait deux `.PKGINFO`, ce qui doublait les dépendances dans pacman. Packager : Ogu.
 
 ### Depuis les sources
 

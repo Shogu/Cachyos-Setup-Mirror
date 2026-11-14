@@ -6,10 +6,10 @@ Le paquet intègre également une extension GNOME Shell qui ajoute une bascule d
 
 ## Installation
 
-Déposer le paquet Arch `chihiro-0.6.1-1-any.pkg.tar.zst` dans ce dossier, puis l’installer depuis celui-ci :
+Le paquet Arch `chihiro-0.7.0-2-any.pkg.tar.zst` est fourni dans ce dossier ; l’installer depuis celui-ci :
 
 ```fish
-sudo pacman -U ./chihiro-0.6.1-1-any.pkg.tar.zst
+sudo pacman -U ./chihiro-0.7.0-2-any.pkg.tar.zst
 ```
 
 ## Activer l’extension GNOME
@@ -27,4 +27,4 @@ L’extension est fournie avec le paquet Chihito ; il n’est pas nécessaire de
 
 ## Ressources
 
-Le paquet `chihiro-0.6.1-1-any.pkg.tar.zst` est à déposer manuellement dans ce dossier.
+Le dossier contient le paquet `chihiro-0.7.0-2-any.pkg.tar.zst`, ses sources `chihiro-0.7.0.tar.gz`, le `PKGBUILD-chihiro` et `chihiro.install` (resynchronisés avec le paquet 0.7.0-2 le 14/11/2026 : licence GPL-3.0-or-later, sans gst-plugins-bad).

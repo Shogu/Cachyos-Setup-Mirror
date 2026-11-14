@@ -137,13 +137,13 @@ sudo pacman -U \
   "Ressources/Applis vibe codées en Libadwaita/03-Fichiers-et-telechargements/Fret/fret-0.2.0-1-any.pkg.tar.zst" \
   "Ressources/Applis vibe codées en Libadwaita/01-Multimedia/Decibel/decibel-49.6.1-1-any.pkg.tar.zst" \
   "Ressources/Applis vibe codées en Libadwaita/05-Systeme-et-utilitaires/systemd-gui/systemd-gui-0.4.0-5-any.pkg.tar.zst" \
-  "Ressources/Applis vibe codées en Libadwaita/05-Systeme-et-utilitaires/Fisherman/fisherman-0.1.8-1-any.pkg.tar.zst" \
-  "Ressources/Applis vibe codées en Libadwaita/05-Systeme-et-utilitaires/Pacto/pacto-1.0.0-1-any.pkg.tar.zst" \
+  "Ressources/Applis vibe codées en Libadwaita/05-Systeme-et-utilitaires/Fisherman/fisherman-0.3.1-6-any.pkg.tar.zst" \
+  "Ressources/Applis vibe codées en Libadwaita/05-Systeme-et-utilitaires/Pacto/pacto-1.0.0-8-any.pkg.tar.zst" \
   "Ressources/Applis vibe codées en Libadwaita/05-Systeme-et-utilitaires/Radar/radar-1.4.0-2-any.pkg.tar.zst" \
   "Ressources/Applis vibe codées en Libadwaita/05-Systeme-et-utilitaires/Pusher/pusher-1.8.3-1-any.pkg.tar.zst" \
   "Ressources/Applis vibe codées en Libadwaita/03-Fichiers-et-telechargements/Nautilus Bookmark Icons/nautilus-bookmark-icons-0.1.1-1-any.pkg.tar.zst" \
-  "Ressources/Applis vibe codées en Libadwaita/05-Systeme-et-utilitaires/Sismographe/sismographe-1.0.0-1-any.pkg.tar.zst" \
-  "Ressources/Applis vibe codées en Libadwaita/01-Multimedia/Disquaire/disquaire-1.5.2-1-any.pkg.tar.zst"
+  "Ressources/Applis vibe codées en Libadwaita/05-Systeme-et-utilitaires/Sismographe/sismographe-1.0.0-6-any.pkg.tar.zst" \
+  "Ressources/Applis vibe codées en Libadwaita/01-Multimedia/Disquaire/disquaire-1.7.3-3-any.pkg.tar.zst"
 ```
 
 Pour **Semitone**, installer séparément le paquet Arch compilé avec Claude, après l’avoir ajouté manuellement dans son dossier de ressources ; voir [les instructions d’installation](11-applications-vibe-coded.md#1129--semitone). Pour **Grabber** (AppImage), suivre ses [instructions d’installation](11-applications-vibe-coded.md). La commande Pacman ci-dessus suppose que chaque paquet a été vérifié pour cette machine.

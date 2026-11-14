@@ -1,0 +1,16 @@
+post_install() {
+  echo "==> Extension Réglages rapides installée : se déconnecter/reconnecter, puis"
+  echo "      gnome-extensions enable chihiro-quicksettings-launch-toggle@ogu"
+  echo "==> Si une copie de l'extension existe dans ~/.local/share/gnome-shell/extensions/, la supprimer :"
+  echo "      elle masquerait celle du paquet."
+}
+post_upgrade() {
+  echo "==> Chihiro mis à jour : se déconnecter/reconnecter pour recharger l'extension."
+}
+post_remove() {
+  if [ -x /usr/bin/spectacle-ogu ]; then
+    echo "==> yt-dlp (~/.local/share/yt-dlp-ogu) est conservé : Spectacle s'en sert encore."
+  else
+    echo "==> Pour supprimer aussi yt-dlp : rm -r ~/.local/share/yt-dlp-ogu"
+  fi
+}
