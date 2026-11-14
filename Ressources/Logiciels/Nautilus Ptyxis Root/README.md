@@ -1,6 +1,6 @@
 # Nautilus Ptyxis Root
 
-Ce dossier accueille le paquet Arch compilé **nautilus-ptyxis-root**. Déposer ici manuellement le fichier `.pkg.tar.zst`.
+Ce dossier accueille le paquet Arch compilé **nautilus-tools-ogu**. Déposer ici manuellement le fichier `.pkg.tar.zst`.
 
 L'intégration ajoute cinq actions à Nautilus :
 

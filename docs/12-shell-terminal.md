@@ -10,7 +10,7 @@
 
 ## 12.1 — Intégrer Ptyxis à Nautilus et aux outils CachyOS
 
-Installer **nautilus-ptyxis-root** pour intégrer directement Ptyxis à Nautilus. Le paquet ajoute cinq actions :
+Installer **nautilus-tools-ogu** pour intégrer directement Ptyxis à Nautilus. Le paquet ajoute cinq actions :
 
 - **Ouvrir dans un terminal** : lance Ptyxis dans le dossier affiché ou sélectionné.
 - **Ouvrir en root** : ouvre le dossier avec les droits administrateur.
@@ -25,7 +25,7 @@ sudo pacman -U "Ressources/Logiciels/Nautilus Ptyxis Root/"*.pkg.tar.zst
 nautilus -q
 ```
 
-Rouvrir Nautilus pour retrouver les trois actions. Le dossier de dépôt contient un README avec la procédure.
+Rouvrir Nautilus pour retrouver les cinq actions. Le dossier de dépôt contient un README avec la procédure.
 
 ## 12.2 — Fish, GNOME Text Editor et Micro
 
