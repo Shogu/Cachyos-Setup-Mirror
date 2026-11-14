@@ -77,19 +77,17 @@ Extensions apportant des fonctions d'interface ou de système considérées comm
 
 ## 8.6 — Extension maison : Always on top, always on top
 
-Une icône dans la barre supérieure active ou désactive **Toujours au premier plan** pour la fenêtre active. Elle affiche l’icône de la dernière fenêtre épinglée et suit son état, même après un changement de fenêtre. Compatible GNOME Shell 45 à 50 ; sans dépendance ni préférences. [Détails et captures](11-applications-vibe-coded.md#111--always-on-top-always-on-top).
+Une icône dans la barre supérieure bascule la fonction native **Toujours au premier plan** de Mutter. Elle suit la fenêtre épinglée, affiche l'icône de son application et propose deux préférences : le raccourci **Super+T** (désactivé par défaut) et la liste des applications à épingler automatiquement dès leur ouverture. **Valise** y figure par défaut. Les fenêtres maximisées ne peuvent pas être épinglées par le bouton. Compatibilité déclarée GNOME Shell 45 à 51 ; les versions 45 à 50 ne sont pas toutes vérifiées. [Détails et captures](11-applications-vibe-coded.md#111--always-on-top-always-on-top).
 
-Depuis la racine du dépôt, installer [l’archive fournie](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extension%20Gnome%20ALWAYS%20ON%20TOP%20ALWAYS%20ON%20TOP/always-on-top-always-on-top_localhost.shell-extension.zip) :
+L'archive v32 attendue est nommée `always-on-top-always-on-top@localhost-v32.zip` et doit être ajoutée au dossier [Always On top Always On Top](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Always%20On%20top%20Always%20On%20Top/) avant installation. Depuis ce dossier :
 
-```bash
-gnome-extensions install --force "Ressources/Applis vibe codées en Libadwaita/Extension Gnome ALWAYS ON TOP ALWAYS ON TOP/always-on-top-always-on-top_localhost.shell-extension.zip"
-```
-
-Sous Wayland, se déconnecter puis se reconnecter ; ensuite activer l’extension :
-
-```bash
+```fish
+gnome-extensions install --force "always-on-top-always-on-top@localhost-v32.zip"
 gnome-extensions enable always-on-top-always-on-top@localhost
+gnome-extensions prefs always-on-top-always-on-top@localhost
 ```
+
+Sous Wayland, une déconnexion/reconnexion est obligatoire après installation pour que GNOME Shell recharge le code et les icônes.
 
 
 ## 8.7 — Quick Settings

@@ -12,7 +12,7 @@ Les dossiers sont classés par usage principal. Les extensions GNOME Shell reste
 
 - **01 — Multimédia** : Amplifaya, Chihito, Decibel, Disquaire, SPECTACLE, Semitone, Polaroid.
 - **02 — Bureautique et rédaction** : Alexandrie, Casier, Grimoire, Grille, Dactylo, Maquette.
-- **03 — Fichiers et téléchargements** : Fret, Quai, Grabber, Nautilus Bookmark Icons, Thumbnailer Sushi.
+- **03 — Fichiers et téléchargements** : Fret, Quai, Grabber, Valise, Nautilus Bookmark Icons, Thumbnailer Sushi.
 - **04 — Bureau et personnalisation** : Extension Manager, Iconostase.
 - **05 — Système et utilitaires** : dconf-editor GTK4, Fisherman, Pacto, Perceptron, Pusher, Radar, Sismographe, Snapper GTK4, systemd-gui, Vidange.
 
@@ -45,6 +45,7 @@ Les dossiers sont classés par usage principal. Les extensions GNOME Shell reste
 - [11.12 — Nautilus Bookmark Icons](#1112--nautilus-bookmark-icons)
 - [11.37 — Quai — serveur FTP compagnon pour Fret](#1137--quai--serveur-ftp-compagnon-pour-fret)
 - [11.31 — Thumbnailer Sushi](#1131--thumbnailer-sushi)
+- [11.39 — Valise](#1139--valise)
 
 ### 11.31 — Thumbnailer Sushi
 
@@ -74,6 +75,61 @@ sh ./installer.sh
 L’installeur purge lui-même le cache de miniatures : aucune commande de nettoyage séparée n’est requise. Pour simuler les opérations sans les appliquer, exécuter `sh ./installer.sh -s`.
 
 Pour l’utilisation dans le workflow Nautilus, voir [9.7 — Aperçu et miniatures avec Sushi](09-nautilus-workflow.md#97--aperçu-et-miniatures-avec-sushi).
+
+---
+
+### 11.39 — Valise
+
+**Valise 1.0.0** est un petit collecteur de fichiers GTK4/libadwaita. On y rassemble des fichiers au fil de la navigation, puis on les récupère ensemble par glisser-déposer, copier, couper ou dans une archive ZIP. Copyous retient ce qu’on copie ; Valise retient ce qu’on veut emporter ailleurs. L’application est destinée à un usage strictement personnel et n’est pas diffusée.
+
+#### Fonctions
+
+- Ajout par glisser-déposer, **Ctrl+V** (depuis Fichiers ou le sélecteur de Copyous) ou bouton **+** ; fichiers et dossiers acceptés, doublons ignorés.
+- Sélection par cercle, cochée par défaut ; **Ctrl+A** sélectionne tout et **Ctrl+Maj+A** désélectionne tout.
+- Actions sur la sélection : **Ctrl+C** pour copier, **Ctrl+X** pour couper et coller dans Fichiers, création d’une archive ZIP nommée par défaut `valise-AAAA-MM-JJ.zip`, ou retrait avec **Suppr**.
+- Le glisser vers une destination extérieure (site web, pièce jointe, Fichiers…) emporte toute la sélection si la ligne saisie est cochée ; une ligne non cochée part seule.
+- Survol : miniature des images, premières lignes des textes ou grande icône, avec le dossier d’origine.
+- Clic droit : ouvrir le dossier d’origine ou retirer l’élément ; le menu permet aussi de vider toute la valise.
+- Valise conserve des **références aux fichiers, jamais des copies**. La liste persiste dans `~/.local/state/valise/items.json`. Un fichier déplacé ou supprimé apparaît grisé comme « Introuvable » ; son état est revérifié au retour sur la fenêtre.
+- La commande `valise fichier1 fichier2…` ajoute les éléments à la valise ouverte.
+
+#### Toujours au premier plan
+
+Sous Wayland, une application ne peut pas demander elle-même à être placée au premier plan. L’extension GNOME Shell maison **Always on top, always on top** (v31 et versions ultérieures) s’en charge : Valise figure par défaut dans sa liste « Au premier plan dès l’ouverture ».
+
+#### Installation
+
+Dépendances : `python`, `python-gobject`, `gtk4`, `libadwaita` et `gdk-pixbuf2`.
+
+Le paquet `valise-1.0.0-1-any.pkg.tar.zst` doit être placé dans le dossier Valise, puis installé :
+
+```fish
+sudo pacman -U valise-1.0.0-1-any.pkg.tar.zst
+```
+
+#### Reconstruction
+
+Depuis le répertoire des sources :
+
+```fish
+PKGEXT=.pkg.tar.zst makepkg -f
+```
+
+#### Organisation technique
+
+- Lanceur : `/usr/bin/valise` ; point d’entrée : `/usr/lib/valise/main.py`.
+- Modules : `application.py`, `window.py`, `row.py`, `item.py`, `store.py` et `transfer.py`, sous `/usr/lib/valise/valise/`.
+- Données persistantes : `~/.local/state/valise/items.json`.
+- Identifiant desktop : `io.gitlab.shogu.Valise` ; icônes applicative et symbolique installées dans `hicolor`.
+- Le code est installé dans `/usr/lib/valise/`, et non dans `site-packages`, pour éviter les problèmes liés aux mises à jour Python.
+
+#### Tests
+
+Tests déjà effectués hors session GNOME avec GTK 4.14, libadwaita 1.5 et rendu Broadway : lancement sans erreur, chargement de la liste, sélection, fichiers introuvables grisés, aperçu d’image et de texte, affichage du dossier d’origine, création d’un ZIP avec arborescence correcte et contrôle `ruff` sans erreur.
+
+À vérifier en session : glisser-déposer dans les deux sens avec Fichiers, navigateur et courriel ; copier/couper-coller vers Fichiers ; ajout par Ctrl+V depuis Fichiers et Copyous ; miniatures ; ouverture automatiquement au premier plan via l’extension Always on top.
+
+Le [README de Valise](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/03-Fichiers-et-telechargements/Valise/README.md) reprend les instructions de l’application.
 
 ---
 
@@ -894,26 +950,64 @@ sudo pacman -Rns snapper-gtk4
 
 ### 11.1 — Always on top, always on top
 
-Extension GNOME Shell minimaliste ajoutant une icône dans la barre supérieure pour activer ou désactiver le mode natif **Toujours au premier plan** de la fenêtre active.
+Extension GNOME Shell libadwaita minimaliste : une icône dans la topbar bascule la fonction native de Mutter **Toujours au premier plan** sur la fenêtre active (`make_above()` / `unmake_above()`). L'extension suit la fenêtre épinglée plutôt que le focus : l'icône reste celle de l'application épinglée même lorsqu'on change de fenêtre. En présence de plusieurs fenêtres épinglées, elle représente la plus récemment épinglée.
 
-L'extension est compatible GNOME Shell 45 à 50, sans dépendance ni panneau de préférences.
+#### Icône et comportement
 
-![Always on top — état inactif](../Ressources/screenshots/vibe-coded/always-on-top-off.png)
+- Quand aucune fenêtre n'est épinglée et que l'action est possible, l'icône `aot-pin-available-symbolic` indique qu'on peut épingler.
+- Quand l'action est impossible, l'icône `aot-pin-unavailable-symbolic` l'indique sans simple grisé.
+- Quand une fenêtre est épinglée, l'icône reprend celle de l'application : variante symbolique déclarée par l'application si elle existe, sinon icône Adwaita générique pour quelques applications connues (Ptyxis, GNOME Text Editor, Nautilus, Clapper et Grimoire), puis `application-x-executable-symbolic`.
+- Une fenêtre maximisée ne peut pas être épinglée depuis le bouton ; le bouton est également inactif sans fenêtre active et pour les types dock, bureau et écran de démarrage. Une fenêtre déjà épinglée puis maximisée conserve son état ; il faut la restaurer pour la désépingler.
+- L'icône reste synchronisée si l'état est changé par le menu natif de la fenêtre ou si la fenêtre épinglée est fermée.
+- L'icône est placée avant le menu système, à l'avant-dernière position de la zone d'état droite. Cette position s'appuie sur `Main.panel._rightBox`, API privée susceptible d'évoluer.
 
-![Always on top — fenêtre épinglée](../Ressources/screenshots/vibe-coded/always-on-top-on.png)
+#### Préférences et automatisation
 
-### Installation
+Deux réglages sont disponibles :
+- **Activer le raccourci Super+T** : désactivé par défaut. Lorsqu'il est activé, l'extension enregistre elle-même le raccourci et le libère à sa désactivation. Le bouton et le raccourci utilisent la même logique. Si l'enregistrement échoue, une notification est affichée et l'interrupteur revient à l'état désactivé.
+- **Au premier plan dès l'ouverture** : liste d'applications dont les fenêtres sont automatiquement épinglées dès leur apparition. Le bouton **+** ouvre un sélecteur avec recherche ; la corbeille retire une application. **Valise** (`io.gitlab.shogu.Valise`) est inscrite par défaut. Les identifiants de fichiers desktop sont utilisés, avec compatibilité pour les anciennes entrées.
 
-Depuis le dossier contenant l'extension :
+Les fenêtres maximisées ne sont pas automatiquement épinglées. Sous Wayland, l'application ne peut pas s'auto-épingler : cette extension effectue l'opération à sa place.
+
+#### Installation et configuration
+
+L'archive v32 attendue par le README de développement est nommée `always-on-top-always-on-top@localhost-v32.zip`. Elle doit être présente dans le dossier de l'extension avant de lancer :
 
 ```fish
-gnome-extensions install --force "always-on-top-always-on-top_localhost.shell-extension.zip"
+gnome-extensions install --force "always-on-top-always-on-top@localhost-v32.zip"
 gnome-extensions enable always-on-top-always-on-top@localhost
+gnome-extensions prefs always-on-top-always-on-top@localhost
 ```
 
-Sous X11, recharger GNOME Shell avec `Alt+F2`, puis `r`. Sous Wayland, se déconnecter puis se reconnecter.
+Sous Wayland, une déconnexion/reconnexion est nécessaire après installation pour que GNOME Shell recharge le code et les icônes. Sous X11, utiliser `Alt+F2`, puis `r`.
 
-### Désinstallation
+Si le raccourci Super+T avait été configuré auparavant directement dans GNOME, réinitialiser l'ancienne liaison pour éviter un double déclenchement :
+
+```fish
+gsettings reset org.gnome.desktop.wm.keybindings always-on-top
+```
+
+La combinaison peut être modifiée dans le schéma GSettings de l'extension, puis l'interrupteur du raccourci doit être désactivé/réactivé :
+
+```fish
+gsettings --schemadir "$HOME/.local/share/gnome-shell/extensions/always-on-top-always-on-top@localhost/schemas" set org.gnome.shell.extensions.always-on-top-always-on-top aot-toggle-shortcut "['<Super><Shift>t']"
+```
+
+Journal de diagnostic :
+
+```fish
+journalctl --user -b -o cat /usr/bin/gnome-shell | grep -i "always-on-top"
+```
+
+#### Compatibilité et validation
+
+Compatibilité déclarée : GNOME Shell 45 à 51 (ESM / `gi://`). GNOME 51 est la session de référence ; les versions 45 à 50 sont déclarées mais pas toutes vérifiées.
+
+Tests hors session : syntaxe JavaScript (`node --check`), compilation stricte du schéma GSettings, validation XML et `metadata.json`, recompilation du catalogue français et intégrité de l'archive. Les modules d'automatisation v31/v32 ont également passé le contrôle syntaxique et la compilation du schéma.
+
+Tests en session et retours documentés : bascule au clic, relais vers l'icône de l'application épinglée, géométrie du bouton alignée sur Copyous ; sous GNOME 51, chargement et fenêtre de préférences constatés. Le raccourci v20 avait échoué à cause d'un nom de clé déjà enregistré ; la clé a été renommée en v21. Les fonctions v32 d'épinglage automatique et la nouvelle gestion des icônes restent à vérifier en session selon la liste de contrôle du README.
+
+Désinstallation :
 
 ```fish
 gnome-extensions uninstall always-on-top-always-on-top@localhost
