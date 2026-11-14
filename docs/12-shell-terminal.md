@@ -10,11 +10,13 @@
 
 ## 12.1 — Intégrer Ptyxis à Nautilus et aux outils CachyOS
 
-Installer **nautilus-ptyxis-root** pour intégrer directement Ptyxis à Nautilus. Le paquet ajoute trois actions :
+Installer **nautilus-ptyxis-root** pour intégrer directement Ptyxis à Nautilus. Le paquet ajoute cinq actions :
 
 - **Ouvrir dans un terminal** : lance Ptyxis dans le dossier affiché ou sélectionné.
 - **Ouvrir en root** : ouvre le dossier avec les droits administrateur.
 - **Terminal intégré** : affiche un terminal dans le panneau inférieur de Nautilus ; l'affichage se bascule avec **F4** ou le bouton dédié.
+- **Installer le paquet** : clic droit sur un fichier `.pkg.tar.zst` ; un nouvel onglet Ptyxis lance `sudo pacman -U` sur ce paquet.
+- **Copier le chemin** : clic droit sur un ou plusieurs éléments copie leur chemin complet dans le presse-papiers. Avec plusieurs éléments, chaque chemin occupe une ligne.
 
 Le paquet compilé sera déposé manuellement dans [Ressources/Logiciels/Nautilus Ptyxis Root](../Ressources/Logiciels/Nautilus%20Ptyxis%20Root/). Une fois le fichier `.pkg.tar.zst` ajouté dans ce dossier, l'installer depuis la racine du dépôt :
 
