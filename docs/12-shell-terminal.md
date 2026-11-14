@@ -10,17 +10,20 @@
 
 ## 12.1 — Intégrer Ptyxis à Nautilus et aux outils CachyOS
 
-Installer l'intégration du terminal dans Nautilus :
+Installer **nautilus-ptyxis-root** pour intégrer directement Ptyxis à Nautilus. Le paquet ajoute trois actions :
+
+- **Ouvrir dans un terminal** : lance Ptyxis dans le dossier affiché ou sélectionné.
+- **Ouvrir en root** : ouvre le dossier avec les droits administrateur.
+- **Terminal intégré** : affiche un terminal dans le panneau inférieur de Nautilus ; l'affichage se bascule avec **F4** ou le bouton dédié.
+
+Le paquet compilé sera déposé manuellement dans [Ressources/Logiciels/Nautilus Ptyxis Root](../Ressources/Logiciels/Nautilus%20Ptyxis%20Root/). Une fois le fichier `.pkg.tar.zst` ajouté dans ce dossier, l'installer depuis la racine du dépôt :
 
 ```fish
-paru -S nautilus-open-any-terminal
-gsettings set com.github.stunkymonkey.nautilus-open-any-terminal terminal ptyxis
-gsettings set com.github.stunkymonkey.nautilus-open-any-terminal new-tab true
+sudo pacman -U "Ressources/Logiciels/Nautilus Ptyxis Root/"*.pkg.tar.zst
+nautilus -q
 ```
 
-L'option `new-tab` ouvre un onglet dans la session existante. En cas d'erreur avec GNOME 49, consulter [le ticket du projet](https://github.com/Stunkymonkey/nautilus-open-any-terminal/issues/242).
-
-Pour ajouter Ptyxis aux terminaux proposés par les outils CachyOS, le mémo conserve [ce guide communautaire](https://www.reddit.com/r/cachyos/comments/1rry7qh/guide_add_your_terminal_to_cachyos_tools_like/).
+Rouvrir Nautilus pour retrouver les trois actions. Le dossier de dépôt contient un README avec la procédure.
 
 ## 12.2 — Fish, GNOME Text Editor et Micro
 

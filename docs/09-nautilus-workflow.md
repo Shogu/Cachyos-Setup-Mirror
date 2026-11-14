@@ -5,7 +5,7 @@
 > **Dans ce chapitre :** marque-pages, scripts et extensions Nautilus, dossiers masqués, icônes personnalisées, modèles de documents et tri des téléchargements.
 
 - [9.1 Marque-pages](#91--marque-pages)
-- [9.2 Scripts Nautilus et extensions (copy-path, admin)](#92--scripts-nautilus-et-extensions-copy-path-admin)
+- [9.2 Scripts Nautilus et extensions (copy-path)](#92--scripts-nautilus-et-extensions-copy-path)
 - [9.3 Masquer des dossiers et personnaliser les icônes](#93--masquer-des-dossiers-et-personnaliser-les-icônes)
 - [9.4 Icônes personnalisées des favoris de la sidebar](#94--icônes-personnalisées-des-favoris-de-la-sidebar)
 - [9.5 Modèles de documents](#95--modèles-de-documents)
@@ -20,33 +20,30 @@ Dans Nautilus, créer les marque-pages utiles :
 - Le serveur FTP donnant accès au SSD de la télévision Android : `ftp://192.168.31.68:2121`.
 - L'accès administrateur au système de fichiers via `admin:///` : saisir cette adresse, ouvrir le système de fichiers puis ajouter un marque-page avec **Ctrl+D**.
 
-## 9.2 — Scripts Nautilus et extensions (copy-path, admin)
+## 9.2 — Scripts Nautilus et extensions (copy-path)
 
-
-Ajouter les extensions de copie du chemin et d'accès administrateur :
+Installer l'extension de copie du chemin :
 
 ```fish
 sudo pacman -Syu nautilus-python
-shelly aur install nautilus-copy-path nautilus-admin
-
+shelly aur install nautilus-copy-path
 ```
 
-Éditer les fichiers de configuration et d'extension :
+Éditer ses fichiers de configuration :
 
 ```fish
 sudoedit /usr/share/nautilus-python/extensions/nautilus-copy-path/nautilus_copy_path.py
 sudoedit /usr/share/nautilus-python/extensions/nautilus-copy-path/config.json
-sudoedit /usr/share/nautilus-python/extensions/nautilus-admin.py
 ```
 
-Dans la configuration de copie de chemin, passer **URI** et **Content** à `false`. Dans l'extension administrateur, traduire **Open as admin**.
-
-Ces modifications touchent des fichiers de paquets et peuvent être remplacées lors d'une mise à jour. Fermer puis rouvrir Nautilus après l'édition :
+Dans la configuration de copie de chemin, passer **URI** et **Content** à `false`. Fermer puis rouvrir Nautilus après l'édition :
 
 ```fish
 nautilus -q
 nautilus
 ```
+
+Pour ouvrir un dossier en root, lancer un terminal dans le dossier courant ou afficher un terminal intégré en bas de Nautilus avec **F4** ou le bouton dédié, installer **nautilus-ptyxis-root** ; voir [12.1 — Intégrer Ptyxis à Nautilus](12-shell-terminal.md#121--intégrer-ptyxis-à-nautilus-et-aux-outils-cachyos).
 
 ### Extension Nautilus — « Ouvrir dans OpenCode »
 
