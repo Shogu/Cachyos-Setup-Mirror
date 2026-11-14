@@ -43,7 +43,22 @@ Appliquer le thème au compte GDM :
 sudo -u gdm dbus-launch gsettings set org.gnome.desktop.interface cursor-theme phinger-cursors-light
 ```
 
-Utiliser ensuite **GDM Settings**, notamment pour le fond d'écran de connexion, et importer le fichier **`gdm-settings.ini`** du dépôt. Une fois les réglages effectués, le mémo prévoit de supprimer le paquet de cet outil.
+Utiliser ensuite **GDM Settings**, notamment pour le fond d'écran de connexion, et importer le fichier **`gdm-settings.ini`** du dépôt. Une fois les réglages effectués et le fond personnalisé réappliqué, le paquet de cet outil peut être retiré avec le script [`gdm-settings-nettoyer`](../Ressources/Scripts/gdm-settings-nettoyer).
+
+Le script conserve le fichier `gnome-shell-theme.gresource` personnalisé et les réglages dconf de GDM. Il supprime le paquet `gdm-settings` avec ses dépendances orphelines, le thème de travail `/usr/local/share/themes/default-pure` et la sauvegarde `gnome-shell-theme.gresource.default`. Il vérifie d'abord que le gresource actuellement installé diffère bien de l'original enregistré dans la base pacman ; il refuse aussi d'agir si cette empreinte ne peut pas être déterminée.
+
+**Procédure :** lancer d'abord une simulation, vérifier les opérations annoncées, puis exécuter le script sans option :
+
+```fish
+bash Ressources/Scripts/gdm-settings-nettoyer --simulation
+bash Ressources/Scripts/gdm-settings-nettoyer
+```
+
+Le script utilise `sudo` pour les opérations système. Il ne faut le lancer qu'après avoir réappliqué et vérifié le fond GDM personnalisé. Pour revenir ultérieurement à l'écran GDM d'origine, réinstaller `gnome-shell` :
+
+```fish
+sudo pacman -S gnome-shell
+```
 
 ## 7.4 — Importer et activer le profil couleur de l'écran
 
@@ -59,9 +74,8 @@ org.gnome.mutter experimental-features
 
 Conserver les valeurs utiles déjà présentes et activer :
 
-- `scale-monitor-framebuffer` pour la mise à l'échelle fractionnaire (!! Unknown experimental feature 'scale-monitor-framebuffer' - n'est plus reconnue par GNOME 50? ) 
-- les deux options XWayland : `auto-close` & `native-scaling` 
-
+- `scale-monitor-framebuffer` pour la mise à l'échelle fractionnaire (!! Unknown experimental feature 'scale-monitor-framebuffer' - n'est plus reconnue par GNOME 50? )
+- les deux options XWayland : `auto-close` & `native-scaling`
 
 ## 7.6 — Actions de session, rappels et libellé du profil énergétique (menu d'alimentation)
 
@@ -164,10 +178,10 @@ Deux entrées sont visées : le bus d'accessibilité et les notifications Evolut
 La méthode du mémo consiste à renommer les fichiers système :
 
 ```fish
-sudo mv /etc/xdg/autostart/at-spi-dbus-bus.desktop \
+sudo mv /etc/xdg/autostart/at-spi-dbus-bus.desktop \\
     /etc/xdg/autostart/at-spi-dbus-bus.desktop.disabled
 
-sudo mv /etc/xdg/autostart/org.gnome.Evolution-alarm-notify.desktop \
+sudo mv /etc/xdg/autostart/org.gnome.Evolution-alarm-notify.desktop \\
     /etc/xdg/autostart/org.gnome.Evolution-alarm-notify.desktop.disabled
 ```
 
@@ -183,12 +197,12 @@ Utiliser ce setup d’icônes d’applications et de dossiers afin de conserver 
   <img src="../Ressources/screenshots/gnome-icons-folders-setup.png" alt="Setup d’icônes et dossiers GNOME" width="900">
 </p>
 
-
 ### Iconostase — icônes, dossiers et lanceurs
 
 **Iconostase** est l’application GNOME du setup dédiée à la gestion des icônes des applications installées, à la personnalisation des dossiers et à l’édition des lanceurs `.desktop`.
 
 Le dossier [Iconostase](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/04-Bureau-et-personnalisation/Iconostase/) regroupe son paquet, ses sources et son README. La procédure de [refonte des icônes et de restauration de la sauvegarde](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/04-Bureau-et-personnalisation/Iconostase/README.md#circuit-de-refonte-dicones) décrit aussi le kit qui réapplique les icônes aux dossiers de cours synchronisés dans Dropbox.
+
 ---
 
 [Accueil](../README.md) · [Précédent](06-network.md) · [Suivant](08-gnome-extensions.md)

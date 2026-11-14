@@ -1,0 +1,61 @@
+#!/bin/bash
+# gdm-settings-nettoyer — à lancer APRÈS avoir réappliqué le fond de l'écran de connexion
+# avec gdm-settings (installé temporairement).
+# Garde : le gresource personnalisé (fond GDM) et les réglages dconf de GDM.
+# Supprime : gdm-settings (et ses dépendances orphelines), le thème de travail
+# /usr/local/share/themes/default-pure et la sauvegarde gnome-shell-theme.gresource.default.
+# Usage : gdm-settings-nettoyer [-n|--simulation]
+set -u
+G=/usr/share/gnome-shell/gnome-shell-theme.gresource
+PURE=/usr/local/share/themes/default-pure
+SIM=0
+case "${1:-}" in
+  -n|--simulation) SIM=1 ;;
+  -h|--help) sed -n '2,8p' "$0" | sed 's/^# \{0,1\}//'; exit 0 ;;
+  "") ;;
+  *) echo "Option inconnue : $1 (voir --help)" >&2; exit 2 ;;
+esac
+run() { if ((SIM)); then echo "  [simulation] $*"; else echo "  → $*"; sudo "$@"; fi; }
+
+# Empreinte d'origine du gresource selon la base pacman.
+if [ ! -f "$G" ]; then
+  echo "Erreur : fichier gresource introuvable : $G" >&2
+  exit 1
+fi
+orig=$(zcat /var/lib/pacman/local/gnome-shell-[0-9]*/mtree 2>/dev/null |
+       awk '$1=="./usr/share/gnome-shell/gnome-shell-theme.gresource"' |
+       grep -o 'sha256digest=[0-9a-f]*' | cut -d= -f2)
+if [[ ! "$orig" =~ ^[0-9a-f]{64}$ ]]; then
+  echo "Erreur : impossible d'extraire une empreinte SHA-256 unique de la base pacman." >&2
+  echo "Aucune modification effectuée." >&2
+  exit 1
+fi
+cur=$(sha256sum "$G" | cut -d' ' -f1)
+
+echo "== État"
+if [ "$cur" = "$orig" ]; then
+  echo "  Le gresource est celui d'origine : aucun fond GDM personnalisé n'est appliqué."
+  echo "  Réappliquez d'abord votre réglage avec gdm-settings, puis relancez cette commande."
+  exit 1
+fi
+echo "  Gresource personnalisé détecté (fond GDM) : il sera conservé."
+
+echo "== 1. gdm-settings"
+if pacman -Qq gdm-settings >/dev/null 2>&1; then run pacman -Rns --noconfirm gdm-settings
+else echo "  déjà désinstallé"; fi
+
+echo "== 2. Thème de travail default-pure"
+if [ -e "$PURE" ]; then run rm -r -- "$PURE"; rmdir /usr/local/share/themes 2>/dev/null || true
+else echo "  déjà absent"; fi
+
+echo "== 3. Sauvegarde .default"
+if [ -e "$G.default" ]; then
+  if [ "$(sha256sum "$G.default" | cut -d' ' -f1)" = "$orig" ]; then
+    echo "  (copie exacte de l'original : une réinstallation de gnome-shell le restaure de toute façon)"
+  else
+    echo "  (copie d'une ancienne version de gnome-shell, périmée)"
+  fi
+  run rm -- "$G.default"
+else echo "  déjà absente"; fi
+
+echo "== Terminé. Pour revenir un jour à l'écran d'origine : sudo pacman -S gnome-shell"
