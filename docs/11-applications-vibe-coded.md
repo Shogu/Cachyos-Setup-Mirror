@@ -138,6 +138,15 @@ Le [README de Valise](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/03
 - [11.21 — Extension Manager](#1121--extension-manager)
 - [11.25 — Iconostase](#1125--iconostase)
 
+## 03 — Fichiers et téléchargements
+
+- [11.4 — Fret](#114--fret)
+- [11.2 — Grabber](#112--grabber)
+- [11.12 — Nautilus Bookmark Icons](#1112--nautilus-bookmark-icons)
+- [11.37 — Quai — serveur FTP compagnon pour Fret](#1137--quai--serveur-ftp-compagnon-pour-fret)
+- [11.31 — Thumbnailer Sushi](#1131--thumbnailer-sushi)
+- [11.39 — Valise](#1139--valise)
+
 ## 05 — Système et utilitaires
 
 - [11.28 — Vidange](#1128--vidange)
