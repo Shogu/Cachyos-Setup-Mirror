@@ -222,7 +222,7 @@ sudo vivaldi-webpanel-auto-discard install
 
 ### Suivre l'état des web panels
 
-Le script complémentaire [vivaldi-webpanel-status.py](../Ressources/Logiciels/Vivaldi/Extensions%20Vivaldi%20vibe-coded/Web%20Panel%20Auto%20Discard/Status/README.md) affiche l'état de chaque panneau, le temps passé masqué et le délai restant avant déchargement. Le script Python est à ajouter manuellement dans le sous-dossier `Status/`. Il nécessite Python 3 et Vivaldi lancé avec `--remote-debugging-port=9222`. **Attention :** tant que ce port est ouvert, tout programme local peut piloter Vivaldi ; fermer puis relancer Vivaldi normalement après le contrôle.
+Le script complémentaire [vivaldi-webpanel-status.py](../Ressources/Logiciels/Vivaldi/Extensions%20Vivaldi%20vibe-coded/Web%20Panel%20Auto%20Discard/Controle_webpanel_hibernate/README.md) affiche l'état de chaque panneau, le temps passé masqué et le délai restant avant déchargement. Le script Python est à ajouter manuellement dans le sous-dossier `Controle_webpanel_hibernate/`. Il nécessite Python 3 et Vivaldi lancé avec `--remote-debugging-port=9222`. **Attention :** tant que ce port est ouvert, tout programme local peut piloter Vivaldi ; fermer puis relancer Vivaldi normalement après le contrôle.
 
 ### Vérification et désinstallation
 

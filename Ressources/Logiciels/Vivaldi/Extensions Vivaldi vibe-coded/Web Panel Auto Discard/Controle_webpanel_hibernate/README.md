@@ -1,4 +1,4 @@
-# Vivaldi Web Panel Status
+# Contrôle Web Panel Hibernate
 
 Script de contrôle complémentaire au mod **Web Panel Auto-Discard**. Il affiche en direct l'état de chaque web panel de Vivaldi : panneau affiché, masqué avec compte à rebours avant déchargement, exclu du déchargement ou déjà déchargé.
 
@@ -52,7 +52,7 @@ Le gestionnaire de tâches intégré de Vivaldi (**Maj+Échap**) permet une vér
 Ce dossier est réservé au script de suivi :
 
 ```text
-Status/
+Controle_webpanel_hibernate/
 ├── README.md
 └── vivaldi-webpanel-status.py   # à ajouter manuellement
 ```
