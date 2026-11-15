@@ -11,6 +11,7 @@
 - [13.5 Installer les extensions et associer les liens magnet](#135--installer-les-extensions-et-associer-les-liens-magnet)
 - [13.6 CopierURL — extension Vivaldi pour Grabber](#136--copierurl--extension-vivaldi-pour-grabber)
 - [13.7 Perceptron — extension compagnon pour OpenCode](#137--perceptron--extension-compagnon-pour-opencode)
+- [13.8 Web Panel Auto Discard — déchargement des panneaux fermés](#138--web-panel-auto-discard--déchargement-des-panneaux-fermés)
 
 ## 13.1 — Synchronisation, cache et réglages internes
 
@@ -182,6 +183,54 @@ L’extension Vivaldi **Perceptron** permet d’envoyer le contexte de la page c
 - envoyer une sélection de texte.
 
 L’archive [vivaldi-perceptron.zip](../Ressources/Logiciels/Vivaldi/Perceptron/vivaldi-perceptron.zip) et sa notice sont regroupées dans [Ressources/Logiciels/Vivaldi/Perceptron/](../Ressources/Logiciels/Vivaldi/Perceptron/README.md). Décompresser l’archive, puis charger le dossier extrait depuis `vivaldi://extensions` en mode développeur.
+
+
+---
+
+## 13.8 — Web Panel Auto Discard — déchargement des panneaux fermés
+
+**vivaldi-webpanel-auto-discard** décharge automatiquement les web panels Vivaldi restés fermés depuis **deux minutes**, sauf s'ils jouent du son. Le panneau se recharge lorsqu'on le rouvre. Les onglets ordinaires ne sont jamais touchés, même lorsqu'ils affichent le même site.
+
+Le mod s'exécute dans l'interface de Vivaldi (`window.html`, comme un `custom.js`) : c'est là que les web panels sont identifiables par `vivExtData.panelId`. Toutes les cinq secondes, il vérifie si la webview de chaque panneau est affichée et appelle `chrome.tabs.discard()` sur les panneaux masqués depuis le délai configuré.
+
+Un hook pacman réinjecte automatiquement le mod après chaque mise à jour de Vivaldi.
+
+### Installation
+
+Déposer le paquet `vivaldi-webpanel-auto-discard-*.pkg.tar.zst` dans [le dossier Web Panel Auto Discard](../Ressources/Logiciels/Vivaldi/Web%20Panel%20Auto%20Discard/), puis :
+
+```fish
+sudo pacman -U ./vivaldi-webpanel-auto-discard-*.pkg.tar.zst
+```
+
+Redémarrer Vivaldi après l'installation.
+
+### Modifier le délai
+
+Éditer `/usr/share/vivaldi-webpanel-auto-discard/webpanel-auto-discard.js`, puis adapter la valeur en millisecondes. Deux minutes correspondent à :
+
+```javascript
+let delay = 2 * 60 * 1000;
+```
+
+Réinjecter ensuite le mod et redémarrer Vivaldi :
+
+```fish
+sudo vivaldi-webpanel-auto-discard install
+```
+
+### Vérification et désinstallation
+
+Dans le gestionnaire de tâches de Vivaldi (**Maj+Échap**), un panneau déchargé ne doit plus consommer de mémoire.
+
+Pour retirer le paquet :
+
+```fish
+sudo pacman -R vivaldi-webpanel-auto-discard
+```
+
+Le [README du paquet](../Ressources/Logiciels/Vivaldi/Web%20Panel%20Auto%20Discard/README.md) reprend ces instructions. Le paquet binaire sera ajouté manuellement au dossier ; il n'est pas présent dans le dépôt pour le moment.
+
 
 ---
 
