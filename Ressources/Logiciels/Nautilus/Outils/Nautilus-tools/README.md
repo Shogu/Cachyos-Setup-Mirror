@@ -1,4 +1,4 @@
-# Nautilus Ptyxis Root
+# Nautilus-tools-ogu — intégration Ptyxis à Nautilus
 
 Ce dossier accueille le paquet Arch compilé **nautilus-tools-ogu**. Déposer ici manuellement le fichier `.pkg.tar.zst`.
 
@@ -15,8 +15,8 @@ L'intégration ajoute cinq actions à Nautilus :
 Depuis la racine du dépôt, après avoir déposé le paquet dans ce dossier :
 
 ```fish
-sudo pacman -U "Ressources/Logiciels/Nautilus Ptyxis Root/"*.pkg.tar.zst
+sudo pacman -U "Ressources/Logiciels/Nautilus/Outils/Nautilus-tools/"*.pkg.tar.zst
 nautilus -q
 ```
 
-Rouvrir Nautilus après l'installation. La documentation générale se trouve dans [12.1 — Intégrer Ptyxis à Nautilus](../../../docs/12-shell-terminal.md#121--intégrer-ptyxis-à-nautilus-et-aux-outils-cachyos).
+Rouvrir Nautilus après l'installation. La documentation générale se trouve dans [12.1 — Intégrer Ptyxis à Nautilus](../../../../docs/12-shell-terminal.md#121--intégrer-ptyxis-à-nautilus-et-aux-outils-cachyos).

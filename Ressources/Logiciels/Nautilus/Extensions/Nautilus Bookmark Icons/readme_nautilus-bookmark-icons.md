@@ -19,7 +19,7 @@ Le choix est persistant via GSettings. L’extension réapplique aussi l’icôn
 Depuis la racine du dépôt :
 
 ```fish
-sudo pacman -U "Ressources/Applis vibe codées en Libadwaita/Nautilus Bookmark Icons/nautilus-bookmark-icons-0.1.1-1-any.pkg.tar.zst"
+sudo pacman -U "Ressources/Logiciels/Nautilus/Extensions/Nautilus Bookmark Icons/nautilus-bookmark-icons-0.1.1-1-any.pkg.tar.zst"
 nautilus -q
 ```
 

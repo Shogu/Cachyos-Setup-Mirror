@@ -141,7 +141,7 @@ sudo pacman -U \
   "Ressources/Applis vibe codées en Libadwaita/05-Systeme-et-utilitaires/Pacto/pacto-1.0.0-8-any.pkg.tar.zst" \
   "Ressources/Applis vibe codées en Libadwaita/05-Systeme-et-utilitaires/Radar/radar-1.4.0-2-any.pkg.tar.zst" \
   "Ressources/Applis vibe codées en Libadwaita/05-Systeme-et-utilitaires/Pusher/pusher-1.8.3-1-any.pkg.tar.zst" \
-  "Ressources/Applis vibe codées en Libadwaita/03-Fichiers-et-telechargements/Nautilus Bookmark Icons/nautilus-bookmark-icons-0.1.1-1-any.pkg.tar.zst" \
+  "Ressources/Logiciels/Nautilus/Extensions/Nautilus Bookmark Icons/nautilus-bookmark-icons-0.1.1-1-any.pkg.tar.zst" \
   "Ressources/Applis vibe codées en Libadwaita/05-Systeme-et-utilitaires/Sismographe/sismographe-1.0.0-6-any.pkg.tar.zst" \
   "Ressources/Applis vibe codées en Libadwaita/01-Multimedia/Disquaire/disquaire-1.7.3-3-any.pkg.tar.zst"
 ```

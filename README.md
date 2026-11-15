@@ -12,7 +12,7 @@ Setup, conseils et réglages personnels pour **CachyOS** sur **ASUS Zenbook 14 O
 
 ## Applications et extensions maison
 
-Les applications et extensions GTK4/libadwaita développées ou adaptées pour ce setup, leurs fonctions et leurs procédures d’installation sont documentées dans [le chapitre 11](docs/11-applications-vibe-coded.md). Les réglages GNOME et les logiciels tiers sont détaillés dans leurs chapitres respectifs.
+Les applications et extensions GTK4/libadwaita développées ou adaptées pour ce setup, leurs fonctions et leurs procédures d’installation sont documentées dans [le chapitre 11](docs/11-applications-vibe-coded.md). Les composants spécifiques à Nautilus (extensions, actions contextuelles, outils et scripts) sont regroupés dans [Ressources/Logiciels/Nautilus](Ressources/Logiciels/Nautilus/README.md) et décrits dans [le chapitre 9](docs/09-nautilus-workflow.md). Les réglages GNOME et les logiciels tiers sont détaillés dans leurs chapitres respectifs.
 
 ## Philosophie
 

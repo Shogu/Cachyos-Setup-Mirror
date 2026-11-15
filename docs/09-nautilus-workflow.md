@@ -2,7 +2,9 @@
 
 [Accueil](../README.md) · [Précédent](08-gnome-extensions.md) · [Suivant](10-logiciels.md)
 
-> **Dans ce chapitre :** marque-pages, scripts et extensions Nautilus, dossiers masqués, icônes personnalisées, modèles de documents et tri des téléchargements.
+> **Dans ce chapitre :** marque-pages, extensions et outils Nautilus, dossiers masqués, icônes personnalisées, modèles de documents et tri des téléchargements.
+
+Les composants Nautilus du dépôt sont centralisés dans [Ressources/Logiciels/Nautilus](../Ressources/Logiciels/Nautilus/README.md) ; ce chapitre décrit leur usage. **Sushi / Thumbnailer Sushi reste dans son emplacement actuel** et n’est pas concerné par cette centralisation.
 
 - [9.1 Marque-pages](#91--marque-pages)
 - [9.2 Actions complémentaires dans Nautilus](#92--actions-complémentaires-dans-nautilus)
@@ -49,7 +51,7 @@ Déposer `opencode_open.py` dans :
 Dans le dépôt, conserver le script dans le sous-dossier :
 
 ```text
-Ressources/Nautilus extensions/OpenCode/opencode_open.py
+Ressources/Logiciels/Nautilus/Extensions/Opencode/opencode_open.py
 ```
 
 #### Installation
@@ -64,7 +66,7 @@ Créer le dossier d’extensions utilisateur et y copier le script depuis la rac
 
 ```fish
 mkdir -p ~/.local/share/nautilus-python/extensions
-cp "Ressources/Nautilus extensions/OpenCode/opencode_open.py" ~/.local/share/nautilus-python/extensions/
+cp "Ressources/Logiciels/Nautilus/Extensions/Opencode/opencode_open.py" ~/.local/share/nautilus-python/extensions/
 nautilus -q
 ```
 
@@ -83,6 +85,11 @@ nautilus -q
 
 Pour l'intégration du terminal Ptyxis dans Nautilus (clic droit → ouvrir un terminal), voir [Shell & terminal](12-shell-terminal.md#121--intégrer-ptyxis-à-nautilus-et-aux-outils-cachyos).
 
+### Actions contextuelles Hide et Unhide
+
+Deux petits scripts Python sont conservés dans [Extensions/Actions contextuelles](../Ressources/Logiciels/Nautilus/Extensions/Actions%20contextuelles/) : **Hide** préfixe les noms sélectionnés par un point pour les masquer ; **Unhide** retire ce point. Ils attendent les chemins des éléments en arguments. Leur intégration à une action personnalisée Nautilus dépend de la configuration locale du menu contextuel.
+
+
 ## 9.3 — Masquer des dossiers et personnaliser les icônes
 
 Dans Nautilus :
@@ -100,7 +107,7 @@ Le paquet maison **Nautilus Bookmark Icons** permet de changer l’icône des fa
 Depuis la racine du dépôt :
 
 ```fish
-sudo pacman -U "Ressources/Applis vibe codées en Libadwaita/Nautilus Bookmark Icons/nautilus-bookmark-icons-0.1.1-1-any.pkg.tar.zst"
+sudo pacman -U "Ressources/Logiciels/Nautilus/Extensions/Nautilus Bookmark Icons/nautilus-bookmark-icons-0.1.1-1-any.pkg.tar.zst"
 nautilus -q
 ```
 
@@ -316,7 +323,7 @@ Le paquet des coins arrondis est optionnel pour le script, mais requis pour appl
 
 Nautilus superpose par défaut une décoration de pellicule (*filmholes*) aux miniatures vidéo. Le script maison **Nautilus sans pellicule** remplace cette ressource graphique par un PNG transparent, sans modifier le binaire Nautilus ni les fichiers système.
 
-Le script est conservé dans [Ressources/Scripts/nautilus-sans-pellicule](../Ressources/Scripts/nautilus-sans-pellicule/) avec son README.
+Le script est conservé dans [Ressources/Scripts/nautilus-sans-pellicule](../Ressources/Logiciels/Nautilus/Scripts/nautilus-sans-pellicule/) avec son README.
 
 Depuis la racine du dépôt, se placer dans le dossier du script puis lancer :
 

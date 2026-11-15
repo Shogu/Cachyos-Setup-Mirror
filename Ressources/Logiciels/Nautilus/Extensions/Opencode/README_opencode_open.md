@@ -1,4 +1,4 @@
-# Extension Nautilus — « Ouvrir dans Opencode »
+# Extension Nautilus — « Ouvrir dans OpenCode »
 
 Ajoute une entrée **« Ouvrir dans Opencode »** au menu contextuel de Nautilus :
 - clic droit sur un **dossier** → ouvre une session `opencode` dessus
@@ -23,3 +23,6 @@ Au clic : ouvre `ptyxis -d <dossier> -x opencode`.
 - API ciblée : Nautilus 51 / nautilus-python 4.x (`get_file_items(files)`, `get_background_items(current_folder)` — plus d'argument `window`).
 - L'entrée n'apparaît que si **un seul dossier** est sélectionné.
 - Désinstallation : retirer le fichier puis `nautilus -q`.
+
+
+Le script source est conservé dans ce dossier du dépôt : `Ressources/Logiciels/Nautilus/Extensions/Opencode/`.

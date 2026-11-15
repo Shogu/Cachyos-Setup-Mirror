@@ -12,7 +12,9 @@ Les dossiers sont classés par usage principal. Les extensions GNOME Shell reste
 
 - **01 — Multimédia** : Amplifaya, Chihito, Decibel, Disquaire, SPECTACLE, Semitone, Polaroid.
 - **02 — Bureautique et rédaction** : Alexandrie, Casier, Grimoire, Grille, Dactylo, Maquette.
-- **03 — Fichiers et téléchargements** : Fret, Quai, Grabber, Valise, Nautilus Bookmark Icons, Thumbnailer Sushi.
+- **03 — Fichiers et téléchargements** : Fret, Quai, Grabber, Valise, Thumbnailer Sushi.
+
+Les personnalisations propres à Nautilus sont désormais regroupées dans [Ressources/Logiciels/Nautilus](../Ressources/Logiciels/Nautilus/README.md) et documentées au [chapitre 9](09-nautilus-workflow.md). Le composant **Thumbnailer Sushi** conserve son emplacement et sa documentation actuels.
 - **04 — Bureau et personnalisation** : Extension Manager, Iconostase.
 - **05 — Système et utilitaires** : dconf-editor GTK4, Fisherman, Pacto, Perceptron, Pusher, Radar, Sismographe, Snapper GTK4, systemd-gui, Vidange.
 
@@ -602,7 +604,7 @@ Penser à régler son icone avec Menu!
 
 ### 11.12 — Nautilus Bookmark Icons
 
-Petite extension `nautilus-python` pour Nautilus 48–50 permettant de personnaliser l’icône des favoris de la barre latérale. Elle est dérivée du mécanisme de **Nautilus My Computer**, mais ne reprend aucune de ses autres fonctions.
+Petite extension `nautilus-python` pour Nautilus 48–50 permettant de personnaliser l’icône des favoris de la barre latérale. Elle est dérivée du mécanisme de **Nautilus My Computer**, mais ne reprend aucune de ses autres fonctions. Le paquet, le README et les notes techniques sont regroupés dans [Ressources/Logiciels/Nautilus/Extensions/Nautilus Bookmark Icons](../Ressources/Logiciels/Nautilus/Extensions/Nautilus%20Bookmark%20Icons/).
 
 **Paquet fourni : `nautilus-bookmark-icons-0.1.1-1-any.pkg.tar.zst`.**
 
@@ -611,7 +613,7 @@ Petite extension `nautilus-python` pour Nautilus 48–50 permettant de personnal
 Depuis la racine du dépôt :
 
 ```fish
-sudo pacman -U "Ressources/Applis vibe codées en Libadwaita/03-Fichiers-et-telechargements/Nautilus Bookmark Icons/nautilus-bookmark-icons-0.1.1-1-any.pkg.tar.zst"
+sudo pacman -U "Ressources/Logiciels/Nautilus/Extensions/Nautilus Bookmark Icons/nautilus-bookmark-icons-0.1.1-1-any.pkg.tar.zst"
 nautilus -q
 ```
 
