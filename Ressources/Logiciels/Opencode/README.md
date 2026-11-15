@@ -1,29 +1,25 @@
-# Config OpenCode (Albert API)
+# Config OpenCode — sauvegarde
 
 Sauvegarde de la configuration OpenCode pour survivre à une réinstallation.
+Aucune clé API ici (voir `.gitignore`).
 
 ## Contenu
-- `opencode.json` — provider **Albert**, modèles, réglage **effort DeepSeek** (`low`/`medium`/`high`), agents et plugin.
-- `plugins/albert-fallback/` — plugin de repli.
-- `restore.sh` — restaure le tout dans `~/.config/opencode`.
+- `opencode-backup-20261115.zip` : `opencode.json`, `cli.json`, `AGENTS.md`, `command/`, `plugins/albert-fallback/`.
+- `.gitignore` : exclut les clés (`albert.key`, `secrets/`).
 
-## Clé API (secret, NON versionnée)
-La clé n'est pas dans ce dépôt (voir `.gitignore`). Conserve-la dans un
-gestionnaire de mots de passe (KeePassXC, Bitwarden, `pass`…) ou un support chiffré.
+## Clés API (secrets, NON versionnées)
+Les clés sont dans l'archive chiffrée stockée sur Dropbox : `DOMESTIQUE/INFORMATIQUE/opencode-secrets-20261115.7z`.
+Voir `README-opencode-secrets.md` dans le même dossier.
 
 ## Restauration après une fresh install
-1. Installer OpenCode, puis **le lancer une première fois** (crée `~/.config/opencode`).
-2. Depuis ce dossier :
+1. Installer OpenCode, puis le lancer une fois (crée `~/.config/opencode`).
+2. Décompresser le zip dans `~/.config/opencode/` :
    ```fish
-   ./restore.sh
+   python3 -m zipfile -e ~/Gitlab/CACHYOS-Setup/Ressources/Logiciels/Opencode/opencode-backup-20261115.zip /tmp/opencode-restore
+   cp -r /tmp/opencode-restore/opencode/* ~/.config/opencode/
    ```
-   Le script copie la config et les plugins, puis demande la clé API
-   (ou dépose-la dans `~/.config/opencode/secrets/albert.key`, `chmod 600`).
-3. Relancer OpenCode. Les variantes d'effort apparaissent via `/models`
-   (ex. `albert/deepseek-v4-flash-0731#high`).
+3. Extraire les clés depuis l'archive chiffrée Dropbox (voir son README).
+4. Dans OpenCode : `/connect` pour GitHub Copilot (OAuth), puis `/models`.
 
 ## Mise à jour de la sauvegarde
-Après toute modification de `~/.config/opencode/opencode.json`, recopier le fichier ici :
-```fish
-cp ~/.config/opencode/opencode.json ~/Gitlab/CACHYOS-Setup/Ressources/Logiciels/opencode/
-```
+Après un changement de configuration, recréer le zip avec les fichiers de `~/.config/opencode/` (`opencode.json`, `cli.json`, `AGENTS.md`, `command/`, `plugins/`) et remplacer l'ancien zip.

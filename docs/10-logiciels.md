@@ -381,7 +381,7 @@ Le script appelle l’endpoint de transcription avec la clé transmise dans l’
 ### Sauvegarde / restauration de la configuration OpenCode
 
 La config à restaurer après une fresh install est stockée ici (sans la clé API, voir `.gitignore`) :
-`Ressources/Logiciels/opencode/` — restauration via `restore.sh` (copie config + plugins, puis pose de la clé API). Détails et mise à jour dans son `README.md`.
+`Ressources/Logiciels/Opencode/` — archive `opencode-backup-20261115.zip` (config sans secret). Restauration : décompresser le zip dans `~/.config/opencode/`. Les clés API sont dans l'archive chiffrée stockée sur Dropbox. Détails dans le `README.md` du dossier.
 
 ## 10.7 — Claude Code
 
