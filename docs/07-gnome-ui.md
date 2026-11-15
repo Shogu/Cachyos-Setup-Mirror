@@ -189,6 +189,10 @@ Ces fichiers peuvent être recréés lors d'une mise à jour des paquets. Ne pas
 
 🔗 L'autostart du script de désactivation de XWayland est décrit dans [Allégement système](02-system-cleanup.md#29--désactiver-xwayland-au-démarrage).
 
+## 7.14 — Miniatures vidéo Nautilus sans effet pellicule
+
+Le réglage **Nautilus sans pellicule** supprime la décoration `filmholes` des vignettes vidéo en utilisant `G_RESOURCE_OVERLAYS`. Il est facultatif, réversible et ne modifie pas les fichiers système. Le script et sa sauvegarde sont documentés dans [Nautilus — workflow, section 9.8](09-nautilus-workflow.md#98--supprimer-leffet-pellicule-des-vignettes-vidéo).
+
 ## 7.13 — Setup d’icônes et dossiers GNOME
 
 Utiliser ce setup d’icônes d’applications et de dossiers afin de conserver une interface GNOME / Adwaita cohérente.

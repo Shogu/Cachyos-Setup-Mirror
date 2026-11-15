@@ -11,6 +11,7 @@
 - [9.5 Modèles de documents](#95--modèles-de-documents)
 - [9.6 Trieur automatique de Téléchargements](#96--trieur-automatique-de-téléchargements)
 - [9.7 Aperçu et miniatures avec Sushi](#97--aperçu-et-miniatures-avec-sushi)
+- [9.8 Supprimer l'effet pellicule des vignettes vidéo](#98--supprimer-leffet-pellicule-des-vignettes-vidéo)
 
 ## 9.1 — Marque-pages
 
@@ -309,6 +310,35 @@ sh ./installer.sh -s
 ```
 
 Le paquet des coins arrondis est optionnel pour le script, mais requis pour appliquer le rayon Nautilus/Adwaita à toutes les miniatures. Les aperçus prennent en charge DOCX, ODT, RTF, Markdown, PDF simplifiés, PPTX/ODP, XLSX/ODS, archives ZIP/TAR/7z/RAR et paquets Arch. Les anciens formats Office binaires (`.doc`, `.xls`, `.ppt`) et les mises en page complexes ne sont pas pris en charge.
+
+
+## 9.8 — Supprimer l'effet pellicule des vignettes vidéo
+
+Nautilus superpose par défaut une décoration de pellicule (*filmholes*) aux miniatures vidéo. Le script maison **Nautilus sans pellicule** remplace cette ressource graphique par un PNG transparent, sans modifier le binaire Nautilus ni les fichiers système.
+
+Le script est conservé dans [Ressources/Scripts/nautilus-sans-pellicule](../Ressources/Scripts/nautilus-sans-pellicule/) avec son README.
+
+Depuis la racine du dépôt, se placer dans le dossier du script puis lancer :
+
+```bash
+cd Ressources/Scripts/nautilus-sans-pellicule
+./supprimer-effet-pellicule.sh
+```
+
+Le mode par défaut est `install`. Il sauvegarde l'image originale dans `sauvegardes/filmholes.png` à côté du script, génère une image transparente de mêmes dimensions et configure `G_RESOURCE_OVERLAYS` pour les prochaines sessions GNOME. Après validation des étapes de préparation, il vide le cache des miniatures et ferme puis relance Nautilus. Il ne demande pas `sudo` et ne modifie pas les ressources intégrées au paquet Nautilus.
+
+Commandes disponibles :
+
+```bash
+./supprimer-effet-pellicule.sh install
+./supprimer-effet-pellicule.sh status
+./supprimer-effet-pellicule.sh restore
+./supprimer-effet-pellicule.sh help
+```
+
+Le mode `restore` retire la configuration et le PNG de remplacement, renouvelle le cache et relance Nautilus pour retrouver l'effet natif. La sauvegarde originale est conservée. Le mode `status` affiche l'état du réglage.
+
+**À noter :** l'icône et les miniatures déjà en cache ne sont pas rechargées simplement parce que le script est présent dans le dépôt. La modification n'est appliquée qu'après exécution de `install`. Consulter le README du dossier avant utilisation pour les détails techniques et les prérequis.
 
 ---
 
