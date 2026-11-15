@@ -193,6 +193,9 @@ remove_env_config() {
 # ---------------------------------------------------------------------------
 restart_nautilus() {
   export "$ENV_LINE"
+  # rend la variable active dans la session systemd user courante (sans attendre
+  # une reconnexion), pour les apps lancées ensuite dans cette session.
+  systemctl --user import-environment "$ENV_MARK" 2>/dev/null || true
   pkill -x nautilus 2>/dev/null || true
   sleep 1
   nohup "$NAUTILUS_BIN" >/dev/null 2>&1 &
