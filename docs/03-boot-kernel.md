@@ -26,7 +26,7 @@ sudoedit /etc/mkinitcpio.conf
 sudoedit /etc/default/limine
 ```
 
-Retirer `plymouth` de `HOOKS` et `splash` de `LINUX_OPTIONS`. La liste principale des hooks devient :
+Retirer `plymouth` de `HOOKS` et `splash` de `KERNEL_CMDLINE[default]`. La liste principale des hooks devient :
 
 ```bash
 HOOKS=(systemd autodetect microcode modconf block)
@@ -37,7 +37,7 @@ Conserver le complément `sd-btrfs-overlayfs` fourni séparément par Limine.
 Pour le démarrage silencieux et le curseur masqué :
 
 ```text
-quiet systemd.show_status=false udev.log_level=0 loglevel=0 consoleblank=0 vt.global_cursor_default=0
+quiet systemd.show_status=0 udev.log_level=0 loglevel=0 consoleblank=0 vt.global_cursor_default=0
 ```
 
 Supprimer Plymouth puis reconstruire :
@@ -123,13 +123,13 @@ sudo limine-mkinitcpio
 sudoedit /etc/default/limine
 ```
 
-Puis saisir :
+Compléter la ligne existante (qui contient déjà `root=UUID=…` écrit à l'installation) avec :
 
 ```ini
-LINUX_OPTIONS="pci=noaer module_blacklist=thunderbolt init_on_alloc=0 page_alloc.shuffle=0 drm_kms_helper.poll=0 systemd.tpm2_wait=false cryptomgr.notests efi=disable_early_pci_dma nomce nowatchdog no_timer_check noresume zswap.enabled=0 systemd.show_status=false quiet 8250.nr_uarts=0 amd_iommu=off vt.global_cursor_default=0 consoleblank=0 udev.log_level=0 loglevel=0 systemd.watchdog_sec=0 rootflags=subvol=/@,noatime,commit=60,noacl,compress=zstd:1"
+KERNEL_CMDLINE[default]+="module_blacklist=thunderbolt init_on_alloc=0 page_alloc.shuffle=0 drm_kms_helper.poll=0 systemd.tpm2_wait=false cryptomgr.notests efi=disable_early_pci_dma nowatchdog no_timer_check noresume zswap.enabled=0 systemd.show_status=0 quiet 8250.nr_uarts=0 amd_iommu=off vt.global_cursor_default=0 consoleblank=0 udev.log_level=0 loglevel=0 systemd.watchdog_sec=0 rootflags=subvol=/@,noatime,commit=60,noacl,compress=zstd:1"
 ```
 
-**Puis gérer les options de la racine dès l'initramfs.** Si utilisation de l'option `rootflags` comme flag kernel, alors masquage de `systemd-remount-fs.service` et commentaire de la ligne `/` dans `/etc/fstab`.
+**Puis gérer les options de la racine dès l'initramfs.** Si utilisation de l'option `rootflags` comme flag kernel, alors masquage de `systemd-remount-fs.service` et commentaire de la ligne `/` dans `/etc/fstab`. Ajouter `rw` pour monter la racine directement en lecture-écriture, sinon elle reste en lecture seule une fois le service masqué.
 
 ```fish
 sudo systemctl mask systemd-remount-fs.service
@@ -158,7 +158,7 @@ sudo dmesg
 **Démarrage silencieux :**
 
 ```text
-console=tty1 systemd.show_status=false quiet udev.log_level=0 loglevel=0 consoleblank=0 systemd.watchdog_sec=0 vt.global_cursor_default=0
+console=tty1 systemd.show_status=0 quiet udev.log_level=0 loglevel=0 consoleblank=0 systemd.watchdog_sec=0 vt.global_cursor_default=0
 ```
 
 **Matériel et vérifications :**
@@ -170,7 +170,7 @@ nowatchdog no_timer_check 8250.nr_uarts=0 tpm_crb.disable=1 clearcpuid=rdseed
 **Sécurité et cryptographie :**
 
 ```text
-cryptomgr.notests random.trust_cpu=on efi=disable_early_pci_dma nomce
+cryptomgr.notests random.trust_cpu=on efi=disable_early_pci_dma
 ```
 
 **Stockage et systèmes de fichiers :**

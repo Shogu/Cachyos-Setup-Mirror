@@ -1,0 +1,15 @@
+# Recette de RÉEMPAQUETAGE (pas de compilation) : le paquet est construit à partir du binaire
+# ananicy-cpp 1.1.1.r17.g7fb9ed déjà compilé (make install du 21/02/2026), voir README.md.
+# Construit sans makepkg (fakeroot absent) avec un script bsdtar ; .PKGINFO et .MTREE générés.
+pkgname=ananicy-cpp-ogu
+pkgver=1.1.1.r17.g7fb9ed
+pkgrel=1
+pkgdesc='CONTOURNEMENT : ananicy-cpp 1.1.1 sans BPF, à la place du paquet 1.2.0 qui plante (SEGV) — pas une amélioration'
+arch=(x86_64)
+url='https://gitlab.com/ananicy-cpp/ananicy-cpp'
+license=(GPL-3.0-or-later)
+provides=('ananicy-cpp=1.1.1')
+conflicts=(ananicy-cpp)
+depends=(glibc gcc-libs systemd-libs)
+optdepends=('cachyos-ananicy-rules: règles et ananicy.conf')
+install=ananicy-cpp-ogu.install

@@ -1,0 +1,7 @@
+post_install() {
+  echo "==> ananicy-cpp-ogu est un CONTOURNEMENT, pas une amélioration :"
+  echo "    binaire 1.1.1 sans BPF, car ananicy-cpp 1.2.0 plante (SEGV) sur cette machine."
+  echo "    Retester le paquet officiel à chaque nouvelle version (voir /usr/share/doc/ananicy-cpp-ogu/README.md)."
+  echo "==> Activer : sudo systemctl enable --now ananicy-cpp"
+}
+post_upgrade() { post_install; }

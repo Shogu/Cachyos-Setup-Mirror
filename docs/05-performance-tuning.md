@@ -2,12 +2,12 @@
 
 [Accueil](../README.md) · [Précédent](04-filesystems-storage.md) · [Suivant](06-network.md)
 
-> **Dans ce chapitre :** coordination TuneD/sched-ext, Ananicy-cpp, ADIOS, split lock et compilation optimisée znver4.
+> **Dans ce chapitre :** coordination TuneD/sched-ext, Ananicy-cpp (contournement `ananicy-cpp-ogu`), ADIOS, split lock et compilation optimisée znver4.
 
 > ⚠️ **Avertissement** : certaines optimisations de ce chapitre réduisent la stabilité ou la sécurité par défaut du système (modification de fichiers de paquets sous `/usr/lib`, désactivation de mitigations noyau comme le split lock, etc.).
 
 - [5.1 Coordonner TuneD, les profils énergétiques et SCX](#51--coordonner-tuned-les-profils-énergétiques-et-scx)
-- [5.3 Ananicy-cpp : installation depuis les sources et dépannage](#53--ananicy-cpp--installation-depuis-les-sources-et-dépannage)
+- [5.3 Ananicy-cpp : contournement du plantage du paquet officiel](#53--ananicy-cpp--contournement-du-plantage-du-paquet-officiel)
 - [5.4 Désactiver le Split Lock](#54--désactiver-le-split-lock)
 - [5.5 Sélectionner ADIOS avec udev et TuneD](#55--sélectionner-adios-avec-udev-et-tuned)
 - [5.6 Configurer makepkg pour znver4](#56--configurer-makepkg-pour-znver4)
@@ -200,10 +200,63 @@ La valeur attendue est :
 boost=1
 ```
 
-## 5.3 — Ananicy-cpp : installation depuis les sources et dépannage
+## 5.3 — Ananicy-cpp : contournement du plantage du paquet officiel
 
-Installation depuis les sources à la suite d'une erreur rencontrée avec l'installation native. 
-Installer les outils puis nettoyer l'ancienne installation :
+> **Contournement, pas une amélioration.** Le paquet CachyOS `ananicy-cpp` 1.2.0 plante sur cette machine (`SEGV` juste après « Doing a full scan »). Il est remplacé par le paquet maison **`ananicy-cpp-ogu`**, qui contient un binaire **plus ancien** (1.1.1.r17.g7fb9ed, compilé sans BPF). Il faut revenir au paquet officiel dès qu’une version de celui-ci démarre sans planter.
+
+Le paquet, sa recette et la documentation complète (symptômes, hypothèse sur la cause, retour au paquet officiel) se trouvent dans [Ressources/Logiciels/Ananicy-cpp-ogu](../Ressources/Logiciels/Ananicy-cpp-ogu/README.md).
+
+### Installation du contournement
+
+Les règles restent celles de `cachyos-ananicy-rules`.
+
+```fish
+sudo pacman -S --needed cachyos-ananicy-rules
+sudo systemctl disable --now ananicy-cpp
+sudo pacman -Rdd ananicy-cpp
+sudo pacman -U "Ressources/Logiciels/Ananicy-cpp-ogu/ananicy-cpp-ogu-1.1.1.r17.g7fb9ed-1-x86_64.pkg.tar.zst"
+sudo rm -f /dev/shm/AnanicyCppMutex
+sudo systemctl enable --now ananicy-cpp
+```
+
+Si une ancienne installation `make install` existe dans `/usr/local`, la supprimer, car son unité l’emporte sur celle du paquet :
+
+```fish
+sudo rm -f /usr/local/bin/ananicy-cpp /usr/local/lib/systemd/system/ananicy-cpp.service
+sudo systemctl daemon-reload
+```
+
+### Vérification
+
+```fish
+systemctl show ananicy-cpp -p FragmentPath -p ActiveState -p NRestarts   # /usr/lib/systemd/system/…, active, 0
+journalctl -u ananicy-cpp -b | grep 'Worker initialized'                  # nombre de règles chargées
+```
+
+**Piège à connaître :** après un plantage, ananicy-cpp laisse le verrou `/dev/shm/AnanicyCppMutex`. Toutes les relances suivantes échouent alors avec `Ananicy Cpp is already running!`. Supprimer ce fichier avant de relancer le service.
+
+Le remplacement du lien ci-dessous n'est envisagé que si le journal affiche **Cgroups are not available on this platform (or are not enabled)**, après vérification de `/etc/mtab` :
+
+```fish
+ls -l /etc/mtab
+```
+
+```fish
+# de dépannage conditionnelle du mémo
+sudo ln -sf /proc/self/mounts /etc/mtab
+sudo systemctl restart ananicy-cpp
+
+# du fonctionnement avec Vivaldi
+ps -eo pid,ni,policy,cls,pri,comm | grep vivaldi
+# version complète :
+ps -eo pid,ni,cgroup:50,comm | grep vivaldi
+
+# cas d'échec, contrôler les règles installées et les journaux avant de relancer le service
+```
+
+### Historique : compilation du binaire (février 2026)
+
+Le binaire de `ananicy-cpp-ogu` vient de cette compilation depuis les sources, installée à l’origine dans `/usr/local` avec `make install`. Elle a été faite à la suite du même plantage du paquet natif. Ce mode d’installation est **remplacé par le paquet** : pacman suit désormais les fichiers, et une mise à jour ne peut plus remettre la version qui plante. Commandes conservées pour mémoire. **Ne pas les relancer telles quelles** : le nettoyage supprime `/etc/ananicy.d`, donc les règles de `cachyos-ananicy-rules`.
 
 ```fish
 # de build
@@ -233,60 +286,6 @@ sudo make install
 sudo systemctl daemon-reload
 sudo systemctl enable --now ananicy-cpp
 ```
-
-Redémarrer à cette étape, puis reprendre les commandes suivantes dans un nouveau terminal :
-
-```fish
-systemctl reboot
-```
-
-```fish
-# des règles
-sudo pacman -S --noconfirm cachyos-ananicy-rules
-sudo systemctl restart ananicy-cpp
-sudo systemctl daemon-reload
-
-# des paquets de build inutiles ; conservation des paquets nécessaires aux mises à jour d'Ananicy
-sudo pacman -Rns cmake cppdap rhash --noconfirm
-```
-
-Redémarrer à cette étape, puis reprendre les commandes suivantes dans un nouveau terminal :
-
-```fish
-systemctl reboot
-```
-
-```fish
-# du service une fois les règles installées
-sudo systemctl daemon-reload
-sudo systemctl restart ananicy-cpp # Pas de problème au lancement ?
-
-# du service
-sudo systemctl status ananicy-cpp
-journalctl -u ananicy-cpp -f # Mention des 1 800 règles ? Pas de problème avec cgroup ?
-```
-
-Quitter le suivi du journal avec **Ctrl+C** avant de poursuivre. Le remplacement du lien ci-dessous n'est envisagé que pour le message **Cgroups are not available on this platform (or are not enabled)**, après vérification de `/etc/mtab` :
-
-```fish
-ls -l /etc/mtab
-```
-
-```fish
-# de dépannage conditionnelle du mémo
-sudo ln -sf /proc/self/mounts /etc/mtab
-sudo systemctl restart ananicy-cpp
-
-# du fonctionnement avec Vivaldi
-ps -eo pid,ni,policy,cls,pri,comm | grep vivaldi
-# version complète :
-ps -eo pid,ni,cgroup:50,comm | grep vivaldi
-
-# cas d'échec, contrôler les règles installées et les journaux avant de relancer le service
-```
-
-Les commandes de nettoyage de l'installation Ananicy suppriment les anciens fichiers et règles aux chemins indiqués. 
-
 
 ## 5.4 — Désactiver le Split Lock
 
