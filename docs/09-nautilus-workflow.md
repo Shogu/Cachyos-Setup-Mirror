@@ -328,7 +328,7 @@ Le script est conservé dans [Ressources/Scripts/nautilus-sans-pellicule](../Res
 Depuis la racine du dépôt, se placer dans le dossier du script puis lancer :
 
 ```bash
-cd Ressources/Scripts/nautilus-sans-pellicule
+cd Ressources/Logiciels/Nautilus/Scripts/nautilus-sans-pellicule
 ./supprimer-effet-pellicule.sh
 ```
 

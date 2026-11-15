@@ -19,4 +19,4 @@ sudo pacman -U "Ressources/Logiciels/Nautilus/Outils/Nautilus-tools/"*.pkg.tar.z
 nautilus -q
 ```
 
-Rouvrir Nautilus après l'installation. La documentation générale se trouve dans [12.1 — Intégrer Ptyxis à Nautilus](../../../../docs/12-shell-terminal.md#121--intégrer-ptyxis-à-nautilus-et-aux-outils-cachyos).
+Rouvrir Nautilus après l'installation. La documentation générale se trouve dans [12.1 — Intégrer Ptyxis à Nautilus](../../../../../docs/12-shell-terminal.md#121--intégrer-ptyxis-à-nautilus-et-aux-outils-cachyos).
