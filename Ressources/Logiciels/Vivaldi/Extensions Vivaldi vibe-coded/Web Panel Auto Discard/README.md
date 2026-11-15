@@ -25,6 +25,10 @@ sudo pacman -U ./vivaldi-webpanel-auto-discard-*.pkg.tar.zst
 
 Redémarrer Vivaldi après l'installation.
 
+## Outil de suivi — Web Panel Status
+
+Le script complémentaire [vivaldi-webpanel-status.py](Status/README.md) affiche l'état de chaque web panel, notamment le temps restant avant son déchargement. Le script Python lui-même est à déposer manuellement dans le sous-dossier `Status/` ; consulter son README pour les prérequis de lancement et l'avertissement lié au port de débogage distant.
+
 ## Désinstallation
 
 ```fish
