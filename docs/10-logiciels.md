@@ -378,6 +378,11 @@ Le script doit lire la clé API depuis la variable d’environnement secrète `G
 
 Le script appelle l’endpoint de transcription avec la clé transmise dans l’en-tête d’authentification. La fonction Whisper d’OpenCode s’appuie sur ce script pour transcrire les fichiers audio.
 
+### Sauvegarde / restauration de la configuration OpenCode
+
+La config à restaurer après une fresh install est stockée ici (sans la clé API, voir `.gitignore`) :
+`Ressources/Logiciels/opencode/` — restauration via `restore.sh` (copie config + plugins, puis pose de la clé API). Détails et mise à jour dans son `README.md`.
+
 ## 10.7 — Claude Code
 
 [**Claude Code**](https://code.claude.com/docs/en/quickstart) est l’assistant de programmation Anthropic en terminal. Utiliser l’installateur natif officiel pour Linux : il ne nécessite pas Node.js et gère ses mises à jour automatiquement. Cette installation est indépendante de Shelly et des paquets AUR.

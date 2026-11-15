@@ -25,5 +25,5 @@ gestionnaire de mots de passe (KeePassXC, Bitwarden, `pass`…) ou un support ch
 ## Mise à jour de la sauvegarde
 Après toute modification de `~/.config/opencode/opencode.json`, recopier le fichier ici :
 ```fish
-cp ~/.config/opencode/opencode.json ~/Gitlab/CACHYOS-Setup/Ressources/Configs/opencode/
+cp ~/.config/opencode/opencode.json ~/Gitlab/CACHYOS-Setup/Ressources/Logiciels/opencode/
 ```
