@@ -22,12 +22,19 @@ Ce répertoire rassemble les composants du dépôt qui étendent ou personnalise
 
 - **[Nautilus sans pellicule](Scripts/nautilus-sans-pellicule/)** — remplace la ressource graphique `filmholes` par une image transparente via `G_RESOURCE_OVERLAYS`. Le script est réversible et conserve la sauvegarde de l'image d'origine dans son propre dossier.
 
+## Composant associé — Sushi / Thumbnailer Sushi
+
+**Thumbnailer Sushi** complète le workflow de Nautilus avec les aperçus rapides à la barre d’espace et des miniatures enrichies (documents, PDF, présentations, tableurs, fichiers texte/code et archives). Le paquet complémentaire applique les coins arrondis de style Nautilus/Adwaita aux miniatures.
+
+- [Dossier Thumbnailer Sushi](../../Applis%20vibe%20codées%20en%20Libadwaita/03-Fichiers-et-telechargements/Thumbnailer%20Sushi/)
+- [README et procédure d’installation](../../Applis%20vibe%20codées%20en%20Libadwaita/03-Fichiers-et-telechargements/Thumbnailer%20Sushi/README.md)
+- [Chapitre 9.7 — Aperçu et miniatures avec Sushi](../../../docs/09-nautilus-workflow.md#97--aperçu-et-miniatures-avec-sushi)
+- [Chapitre 11.31 — Thumbnailer Sushi](../../../docs/11-applications-vibe-coded.md#1131--thumbnailer-sushi)
+
+Sushi reste volontairement dans son dossier d’origine, hors de l’arborescence centralisée ci-dessus. Ses paquets, son installeur et sa documentation ne sont pas déplacés ni modifiés.
+
 ## Documentation
 
 - [Chapitre 9 — Nautilus : workflow](../../../docs/09-nautilus-workflow.md)
 - [Chapitre 12 — Shell & terminal : intégration Ptyxis](../../../docs/12-shell-terminal.md#121--intégrer-ptyxis-à-nautilus-et-aux-outils-cachyos)
 - [Maintenance](../../../docs/14-maintenance.md)
-
-## Périmètre
-
-Les composants **Sushi / Thumbnailer Sushi ne sont pas déplacés ni modifiés** : ils restent dans leur emplacement actuel, avec leur documentation et leurs procédures.

@@ -4,7 +4,7 @@
 
 > **Dans ce chapitre :** marque-pages, extensions et outils Nautilus, dossiers masqués, icônes personnalisées, modèles de documents et tri des téléchargements.
 
-Les composants Nautilus du dépôt sont centralisés dans [Ressources/Logiciels/Nautilus](../Ressources/Logiciels/Nautilus/README.md) ; ce chapitre décrit leur usage. **Sushi / Thumbnailer Sushi reste dans son emplacement actuel** et n’est pas concerné par cette centralisation.
+Les personnalisations propres à Nautilus sont centralisées dans [Ressources/Logiciels/Nautilus](../Ressources/Logiciels/Nautilus/README.md). **Sushi / Thumbnailer Sushi**, qui complète directement ce workflow (aperçus à la barre d’espace et miniatures), reste dans son dossier d’origine ; sa documentation détaillée figure dans [ce chapitre, section 9.7](#97--aperçu-et-miniatures-avec-sushi) et dans [le catalogue des applications, section 11.31](11-applications-vibe-coded.md#1131--thumbnailer-sushi).
 
 - [9.1 Marque-pages](#91--marque-pages)
 - [9.2 Actions complémentaires dans Nautilus](#92--actions-complémentaires-dans-nautilus)
