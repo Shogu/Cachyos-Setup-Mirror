@@ -23,6 +23,16 @@ Déposer manuellement le paquet `vivaldi-webpanel-auto-discard-*.pkg.tar.zst` da
 sudo pacman -U ./vivaldi-webpanel-auto-discard-*.pkg.tar.zst
 ```
 
+### Conserver xdg-utils comme dépendance explicitement installée
+
+Vivaldi a besoin de **xdg-utils**, mais ne le déclare pas comme explicitement installé. Pacman peut donc le considérer comme une dépendance orpheline et le désinstaller lors d'un nettoyage des paquets inutilisés.
+
+Pour éviter cela, marquer le paquet comme explicitement installé :
+
+```fish
+sudo pacman -D --asexplicit xdg-utils
+```
+
 Redémarrer Vivaldi après l'installation.
 
 ## Outil de suivi — Contrôle Web Panel Hibernate
