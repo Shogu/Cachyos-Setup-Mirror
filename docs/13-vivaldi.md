@@ -5,6 +5,7 @@
 > **Dans ce chapitre :** synchronisation, thème, panneau latéral et extensions du navigateur Vivaldi.
 
 - [13.1 Synchronisation, cache et réglages internes](#131--synchronisation-cache-et-réglages-internes)
+  - [Dépendance système : xdg-utils](#dépendance-système--xdg-utils)
 - [13.2 Appliquer le thème et les modifications CSS](#132--appliquer-le-thème-et-les-modifications-css)
 - [13.3 Configurer le panneau latéral et la recherche Google](#133--configurer-le-panneau-latéral-et-la-recherche-google)
 - [13.4 Personnaliser les icônes des extensions](#134--personnaliser-les-icônes-des-extensions)
@@ -16,6 +17,17 @@
 ## 13.1 — Synchronisation, cache et réglages internes
 
 Commencer par synchroniser les réglages avec le compte Vivaldi, puis utiliser `chrome://settings/system`.
+
+### Dépendance système : xdg-utils
+
+Vivaldi utilise **xdg-utils**, mais ne le déclare pas comme explicitement installé. Pacman peut donc le considérer comme une dépendance orpheline et le proposer à la suppression lors du nettoyage des paquets inutilisés.
+
+Pour le conserver comme paquet explicitement installé :
+
+```fish
+sudo pacman -D --asexplicit xdg-utils
+```
+
 
 ### Lanceur : processus et cache
 
