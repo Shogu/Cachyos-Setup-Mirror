@@ -32,6 +32,14 @@ sudo efibootmgr -b 0002 -B
 
 ## 2.2 — Alléger les logiciels installés
 
+### Paquets à conserver explicitement
+
+`xdg-utils` est utilisé par Vivaldi, mais n'est pas toujours marqué comme explicitement installé. Pacman peut donc le considérer comme un paquet orphelin et le proposer lors d'un nettoyage. Pour le conserver dans la liste des paquets explicitement installés :
+
+```fish
+sudo pacman -D --asexplicit xdg-utils
+```
+
 ### Première passe — paquets dont l'inutilité est confirmée sur ce setup
 
 Cette transaction regroupe les paquets retenus pour la première passe de l'audit d'octobre 2026 : aucun volume JFS/NILFS, pas de Secure Boot ni de second système à détecter, pas de VPN, pas d'alertes e-mail SMART, pas de gestion des miroirs par Reflector, pas de fichiers RAW. Les dépendances ont été examinées avec pactree -r lorsque pertinent. `fd` et `sd` ne sont utilisés ni par les scripts Fish repérés ni par le dépôt ; ils sont uniquement requis par `hwdetect`. `jemalloc` est requis par `fd` et `bind`, tandis que `libmaxminddb` et `liburcu` sont requis par `bind`. Ces cinq paquets sont donc inclus explicitement dans la commande.
