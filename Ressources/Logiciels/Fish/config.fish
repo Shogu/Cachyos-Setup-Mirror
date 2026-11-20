@@ -38,15 +38,6 @@ abbr --add boot 'systemd-analyze'
 abbr --add boot+ 'systemd-analyze blame'
 abbr --add watts 'echo "scale=2; $(cat /sys/class/power_supply/BAT0/power_now)/1000000" | bc'
 
-# === Shelly ===
-abbr --add aur 'shelly install aur'
-abbr --add aursearch 'shelly search aur'
-abbr --add aurremove 'shelly remove aur --opt-deps'
-abbr --add aurlist 'shelly list aur'
-
-abbr --add add 'shelly install standard'
-abbr --add remove 'shelly remove standard'
-
 # === Fish ===
 abbr --add sourcefish 'source ~/.config/fish/config.fish'
 abbr --add fishedit 'xdg-open ~/.config/fish/config.fish'

@@ -18,6 +18,10 @@ Ce répertoire rassemble les composants du dépôt qui étendent ou personnalise
 
 - **[Nautilus-tools-ogu](Outils/Nautilus-tools/)** — intégration de Ptyxis : terminal dans le dossier, ouverture en root, terminal intégré, installation de paquets et copie de chemins.
 
+## Aperçu et miniatures
+
+- **[Thumbnailer Sushi](Thumbnailer%20Sushi/)** — deux paquets Arch : aperçus Sushi des documents (DOCX/ODT/RTF/Markdown), PDF simplifiés, présentations, tableurs et archives, miniatures des documents et fichiers texte/code, et coins arrondis Nautilus/Adwaita sur les vignettes. Un installeur (sous-dossier *Sushi thumbnailer extra*) purge automatiquement le cache des miniatures. README, captures et procédures dans le dossier.
+
 ## Scripts
 
 - **[Nautilus sans pellicule](Scripts/nautilus-sans-pellicule/)** — remplace la ressource graphique `filmholes` par une image transparente via `G_RESOURCE_OVERLAYS`. Le script est réversible et conserve la sauvegarde de l'image d'origine dans son propre dossier.

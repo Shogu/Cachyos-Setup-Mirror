@@ -7,7 +7,7 @@
 - [7.2 Régler l'échelle (HiDPI)](#72--régler-léchelle-hidpi)
 - [7.3 Fond d'écran, thème de curseurs et GDM](#73--fond-décran-thème-de-curseurs-et-gdm)
 - [7.4 Importer et activer le profil couleur de l'écran](#74--importer-et-activer-le-profil-couleur-de-lécran)
-- [7.5 Fonctions expérimentales de Mutter](#75--fonctions-expérimentales-de-mutter)
+- [7.5 Fonctions expérimentales de Mutter et Xwayland au repos](#75--fonctions-expérimentales-de-mutter-et-xwayland-au-repos)
 - [7.6 Actions de session, rappels et libellé du profil énergétique (menu d'alimentation)](#76--actions-de-session-rappels-et-libellé-du-profil-énergétique-menu-dalimentation)
 - [7.7 Bouton d'alimentation, capot et veille (suspension)](#77--bouton-dalimentation-capot-et-veille-suspension)
 - [7.8 Modifier le mot de passe du trousseau](#78--modifier-le-mot-de-passe-du-trousseau)
@@ -64,18 +64,75 @@ sudo pacman -S gnome-shell
 
 Importer depuis le repo le profil **ICM/ICC de l'écran** dans **Paramètres GNOME → Couleur**, l'associer à l'écran intégré puis l'activer comme profil utilisé.
 
-## 7.5 — Fonctions expérimentales de Mutter
+## 7.5 — Fonctions expérimentales de Mutter et Xwayland au repos
 
-Dans **dconf-editor**, ouvrir :
+Sous GNOME 51, les fonctions expérimentales de Mutter ne sont plus dans `org.gnome.mutter experimental-features` (clé supprimée) mais dans un schéma séparé, `org.gnome.mutter.experimental`. Elles restent éditables dans **dconf-editor**. Les anciennes options `scale-monitor-framebuffer` et `native-scaling` n'existent plus dans ce schéma.
 
-```text
-org.gnome.mutter experimental-features
+### Fermer Xwayland quand aucune application X11 ne tourne
+
+Activer la fermeture automatique de Xwayland (nécessite une reconnexion de session) :
+
+```fish
+gsettings set org.gnome.mutter.experimental autoclose-xwayland true
 ```
 
-Conserver les valeurs utiles déjà présentes et activer :
+Xwayland est alors lancé par Mutter avec `-terminate 10` : il doit s'arrêter 10 secondes après le départ du dernier client X11, puis redémarrer à la demande au lancement d'une application X11.
 
-- `scale-monitor-framebuffer` pour la mise à l'échelle fractionnaire (!! Unknown experimental feature 'scale-monitor-framebuffer' - n'est plus reconnue par GNOME 50? )
-- les deux options XWayland : `auto-close` & `native-scaling`
+**Constat sur ce setup :** même avec ce réglage à `true`, Xwayland restait en mémoire (environ 77 Mo) pendant toute la session. Deux clients X11 le retiennent :
+
+- **`gsd-xsettings`** (paquet `gnome-settings-daemon`) transmet aux applications X11 l'échelle, les polices et le thème du curseur. Son service utilisateur est relancé par la cible de session à chaque démarrage de Xwayland.
+- **`mutter-x11-frames`**, lancé directement par GNOME Shell avec Xwayland (ce n'est pas un service systemd : il n'y a rien à masquer), ne quitte que lorsqu'**une fenêtre X11 se ferme**. Si aucune fenêtre X11 n'a jamais été ouverte, il reste connecté et Xwayland aussi.
+
+`ibus-x11` ne bloque pas l'arrêt. Ne pas désinstaller `gnome-settings-daemon` ni `ibus`, requis par GNOME Shell.
+
+#### Étape 1 — masquer le service XSettings
+
+```fish
+systemctl --user mask org.gnome.SettingsDaemon.XSettings.service
+```
+
+Seul, ce masquage ne suffit pas : Xwayland démarre à l'ouverture de session et `mutter-x11-frames` le retient.
+
+#### Étape 2 — fermer une fenêtre X11 fictive à chaque ouverture de session
+
+Le script [`fermer-xwayland`](../Ressources/Scripts/fermer-xwayland) attend que `mutter-x11-frames` soit lancé (30 s au plus), patiente 5 s, crée une fenêtre X11 de 1×1 pixel pendant 0,3 s, puis la détruit. `mutter-x11-frames` quitte alors, et Xwayland s'arrête de lui-même 10 secondes plus tard. Si Xwayland est toujours là après 20 s, il recommence (4 essais au plus) puis abandonne, par exemple si une vraie application X11 tourne. Xwayland redémarre à la demande si une application X11 est lancée plus tard. Le script écrit son résultat dans le journal :
+
+```fish
+journalctl --user -b | grep fermer-xwayland
+```
+
+La fenêtre est de type **`override-redirect`** : GNOME ne la gère pas, elle n'est ni activée ni encadrée. Une fenêtre ordinaire (testée d'abord avec GTK) est activée à son ouverture, ce qui fait sortir de la vue d'ensemble affichée au démarrage, puis y ramène à sa fermeture. Le script n'utilise que Python et la bibliothèque `libX11` (déjà présentes, sans GTK) ; il consomme environ 0,04 s de processeur, une fois par session, sans retarder l'affichage du bureau.
+
+Depuis la racine du dépôt :
+
+```fish
+mkdir -p ~/.local/bin ~/.config/autostart
+cp Ressources/Scripts/fermer-xwayland ~/.local/bin/fermer-xwayland
+chmod +x ~/.local/bin/fermer-xwayland
+printf '[Desktop Entry]\nType=Application\nName=Fermer Xwayland\nComment=Ferme Xwayland après l'"'"'ouverture de session si aucune application X11 ne tourne\nExec=%s/.local/bin/fermer-xwayland\nTerminal=false\nNoDisplay=true\nX-GNOME-Autostart-enabled=true\n' $HOME > ~/.config/autostart/fermer-xwayland.desktop
+```
+
+Se reconnecter, patienter une trentaine de secondes (le script attend 5 s, puis Xwayland met 10 s à se fermer), puis contrôler :
+
+```fish
+pgrep -a Xwayland    # ne doit rien afficher en l'absence d'application X11
+```
+
+**Vérifications faites sur ce setup :** sans le script, Xwayland reste présent indéfiniment (plus de 60 s sans changement) ; avec le script, il disparaît environ 10 s après la fenêtre fictive, GNOME Shell reste stable, et une application X11 lancée ensuite (`GDK_BACKEND=x11 gnome-calculator`) redémarre Xwayland à la demande.
+
+**Contreparties :**
+
+- Sans `gsd-xsettings`, une application X11 lancée plus tard (Wine, ancien AppImage) peut s'afficher avec une mauvaise échelle, une mauvaise police ou un curseur par défaut. Ce setup n'utilise aucune application X11.
+- Le mécanisme dépend du comportement de Mutter sous GNOME 51 (`mutter-x11-frames` quitte à la fermeture d'une fenêtre X11). À revérifier avec `pgrep -a Xwayland` après une mise à jour de Mutter ou de GNOME Shell.
+
+**Annuler :**
+
+```fish
+rm ~/.config/autostart/fermer-xwayland.desktop ~/.local/bin/fermer-xwayland
+systemctl --user unmask org.gnome.SettingsDaemon.XSettings.service
+```
+
+Le masquage figure aussi dans la liste des services utilisateur masqués : [Allégement système](02-system-cleanup.md#24--masquer-les-services-système-et-utilisateur-inutilisés).
 
 ## 7.6 — Actions de session, rappels et libellé du profil énergétique (menu d'alimentation)
 
@@ -175,19 +232,15 @@ Dans les paramètres GNOME, affecter :
 
 Deux entrées sont visées : le bus d'accessibilité et les notifications Evolution.
 
-La méthode du mémo consiste à renommer les fichiers système :
+Ne pas toucher aux fichiers de `/etc/xdg/autostart/` : un paquet peut les recréer. Placer à la place, dans le dossier utilisateur, un fichier de même nom avec `Hidden=true`, qui neutralise l'entrée système et qu'aucune mise à jour ne remplace :
 
 ```fish
-sudo mv /etc/xdg/autostart/at-spi-dbus-bus.desktop \\
-    /etc/xdg/autostart/at-spi-dbus-bus.desktop.disabled
-
-sudo mv /etc/xdg/autostart/org.gnome.Evolution-alarm-notify.desktop \\
-    /etc/xdg/autostart/org.gnome.Evolution-alarm-notify.desktop.disabled
+mkdir -p ~/.config/autostart
+printf '[Desktop Entry]\nType=Application\nHidden=true\n' > ~/.config/autostart/at-spi-dbus-bus.desktop
+printf '[Desktop Entry]\nType=Application\nHidden=true\n' > ~/.config/autostart/org.gnome.Evolution-alarm-notify.desktop
 ```
 
-Ces fichiers peuvent être recréés lors d'une mise à jour des paquets. Ne pas confondre ces entrées avec les services utilisateur masqués dans [Allégement système](02-system-cleanup.md#24--masquer-les-services-système-et-utilisateur-inutilisés).
-
-🔗 L'autostart du script de désactivation de XWayland est décrit dans [Allégement système](02-system-cleanup.md#29--désactiver-xwayland-au-démarrage).
+Les changements sont pris en compte à la prochaine ouverture de session. Pour arrêter tout de suite le processus d'Evolution déjà lancé : `pkill -f evolution-alarm-notify`. Ne pas confondre ces entrées avec les services utilisateur masqués dans [Allégement système](02-system-cleanup.md#24--masquer-les-services-système-et-utilisateur-inutilisés).
 
 ## 7.14 — Miniatures vidéo Nautilus sans effet pellicule
 

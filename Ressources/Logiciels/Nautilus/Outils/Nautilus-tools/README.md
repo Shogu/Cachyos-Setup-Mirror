@@ -10,6 +10,18 @@ L'intégration ajoute cinq actions à Nautilus :
 - **Installer le paquet** : clic droit sur un fichier `.pkg.tar.zst` ; un nouvel onglet Ptyxis lance `sudo pacman -U` sur ce paquet.
 - **Copier le chemin** : clic droit sur un ou plusieurs éléments copie leur chemin complet dans le presse-papiers ; avec plusieurs éléments, un chemin est copié par ligne.
 
+Depuis la version 0.4.0, elle retouche aussi le menu du clic droit de Nautilus :
+
+- **Courriel…** est retiré.
+- **Extraire ici** (ajouté par File Roller) est retiré : il fait doublon avec **Extraire** de Nautilus.
+- **Copier vers…** et **Déplacer vers…** ouvrent le sélecteur de dossier moderne de Nautilus (portail GNOME) au lieu de l'ancien sélecteur GTK. La copie ou le déplacement reste fait par Nautilus : barre de progression, gestion des conflits et annulation par **Ctrl+Z** inchangées.
+
+**Extraire vers…** garde l'ancien sélecteur : Nautilus n'expose aucune interface pour lancer une extraction depuis l'extension.
+
+## Pourquoi « Copier vers… » utilisait l'ancien sélecteur
+
+Depuis GNOME 47, le sélecteur de fichiers moderne est fourni par Nautilus lui-même, via le portail `xdg-desktop-portal-gnome`. Les autres applications (Éditeur de texte, etc.) l'obtiennent en passant par ce portail. Nautilus, lui, désactive le portail de sélection de fichiers pour son propre processus (`gtk_disable_portal_interfaces`), afin de ne pas s'appeler lui-même. Ses propres boîtes de dialogue retombent donc sur l'ancien `GtkFileChooser`. L'extension contourne ce blocage en appelant le portail directement par D-Bus.
+
 ## Installation
 
 Depuis la racine du dépôt, après avoir déposé le paquet dans ce dossier :
@@ -20,3 +32,11 @@ nautilus -q
 ```
 
 Rouvrir Nautilus après l'installation. La documentation générale se trouve dans [12.1 — Intégrer Ptyxis à Nautilus](../../../../../docs/12-shell-terminal.md#121--intégrer-ptyxis-à-nautilus-et-aux-outils-cachyos).
+
+## Dépannage
+
+Les messages de l'extension s'affichent quand Nautilus est lancé depuis un terminal :
+
+```fish
+nautilus -q; nautilus 2>&1 | grep nautilus-tools-ogu
+```

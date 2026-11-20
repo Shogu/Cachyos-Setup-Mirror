@@ -11,7 +11,7 @@ JDownloader 2. Elle ne cherche pas à reproduire l'interface Java ni ses
 milliers de réglages : son objectif est de trouver des liens, choisir les
 fichiers utiles, les télécharger et suivre la file.
 
-Version documentée : 0.10.30 (pyproject.toml).
+Version documentée : 0.10.46 (AppImage fournie ; sources Python dans Grabber.zip).
 
 Ce que fait Grabber
 Interface et identité GNOME

@@ -12,9 +12,9 @@ Les dossiers sont classés par usage principal. Les extensions GNOME Shell reste
 
 - **01 — Multimédia** : Amplifaya, Chihito, Decibel, Disquaire, SPECTACLE, Semitone, Polaroid.
 - **02 — Bureautique et rédaction** : Alexandrie, Casier, Grimoire, Grille, Dactylo, Maquette.
-- **03 — Fichiers et téléchargements** : Fret, Quai, Grabber, Valise, Thumbnailer Sushi.
+- **03 — Fichiers et téléchargements** : Fret, Quai, Grabber, Valise.
 
-Les personnalisations propres à Nautilus sont désormais regroupées dans [Ressources/Logiciels/Nautilus](../Ressources/Logiciels/Nautilus/README.md) et documentées au [chapitre 9](09-nautilus-workflow.md). Le composant **Thumbnailer Sushi** conserve son emplacement et sa documentation actuels.
+Les personnalisations propres à Nautilus sont désormais regroupées dans [Ressources/Logiciels/Nautilus](../Ressources/Logiciels/Nautilus/README.md) et documentées au [chapitre 9](09-nautilus-workflow.md). Le composant **Thumbnailer Sushi** a rejoint cette centralisation : son dossier et sa documentation sont regroupés avec les autres composants Nautilus, et sa section ci-dessous reste la référence de son fonctionnement.
 - **04 — Bureau et personnalisation** : Extension Manager, Iconostase.
 - **05 — Système et utilitaires** : dconf-editor GTK4, Fisherman, Pacto, Perceptron, Pusher, Radar, Sismographe, Snapper GTK4, systemd-gui, Vidange.
 
@@ -68,7 +68,7 @@ La conversion s’exécute dans un processus Python séparé sans shell ; l’ap
 
 ### Installation / mise à jour
 
-Les deux paquets et le script sont présents dans [le dossier Thumbnailer Sushi](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/03-Fichiers-et-telechargements/Thumbnailer%20Sushi/). Depuis ce dossier, lancer sans sudo :
+Les deux paquets et le script sont présents dans [le dossier Thumbnailer Sushi](../Ressources/Logiciels/Nautilus/Thumbnailer%20Sushi/) (sous-dossier *Sushi thumbnailer extra*). Depuis ce sous-dossier, lancer sans sudo :
 
 ```bash
 sh ./installer.sh

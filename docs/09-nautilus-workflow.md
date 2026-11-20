@@ -4,7 +4,7 @@
 
 > **Dans ce chapitre :** marque-pages, extensions et outils Nautilus, dossiers masqués, icônes personnalisées, modèles de documents et tri des téléchargements.
 
-Les personnalisations propres à Nautilus sont centralisées dans [Ressources/Logiciels/Nautilus](../Ressources/Logiciels/Nautilus/README.md). **Sushi / Thumbnailer Sushi**, qui complète directement ce workflow (aperçus à la barre d’espace et miniatures), reste dans son dossier d’origine ; sa documentation détaillée figure dans [ce chapitre, section 9.7](#97--aperçu-et-miniatures-avec-sushi) et dans [le catalogue des applications, section 11.31](11-applications-vibe-coded.md#1131--thumbnailer-sushi).
+Les composants Nautilus du dépôt sont centralisés dans [Ressources/Logiciels/Nautilus](../Ressources/Logiciels/Nautilus/README.md) ; ce chapitre décrit leur usage. **Sushi / Thumbnailer Sushi** fait partie de cette centralisation : son dossier *Thumbnailer Sushi* y est regroupé avec sa documentation et ses procédures.
 
 - [9.1 Marque-pages](#91--marque-pages)
 - [9.2 Actions complémentaires dans Nautilus](#92--actions-complémentaires-dans-nautilus)
@@ -291,7 +291,7 @@ Attribuer manuellement les icônes **Teal** aux dossiers Archives, Audio, Code, 
 
 ## 9.7 — Aperçu et miniatures avec Sushi
 
-**Sushi** ouvre un aperçu rapide avec la barre d’espace dans Nautilus. Deux paquets complémentaires sont fournis dans [le dossier Thumbnailer Sushi](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/03-Fichiers-et-telechargements/Thumbnailer%20Sushi/), avec un script d’installation.
+**Sushi** ouvre un aperçu rapide avec la barre d’espace dans Nautilus. Deux paquets complémentaires sont fournis dans [le dossier Thumbnailer Sushi](../Ressources/Logiciels/Nautilus/Thumbnailer%20Sushi/), avec un script d’installation.
 
 - **Aperçus Sushi** : documents DOCX/ODT/RTF/Markdown, PDF avec rendu simplifié, présentations PPTX/ODP et tableurs XLSX/ODS.
 - **Archives** : ZIP, TAR et variantes compressées, 7z, RAR et paquets Arch, listés sans extraction.
@@ -302,7 +302,7 @@ Le rendu sert à la consultation rapide, pas à remplacer l’application d’or
 
 ### Installation et mise à jour
 
-Les deux paquets et `installer.sh` sont conservés dans le dossier Thumbnailer Sushi. Depuis ce dossier, lancer le script **sans sudo** :
+Les deux paquets et `installer.sh` sont conservés dans le sous-dossier *Sushi thumbnailer extra* du dossier Thumbnailer Sushi. Depuis ce sous-dossier, lancer le script **sans sudo** :
 
 ```bash
 sh ./installer.sh

@@ -2,6 +2,15 @@
 
 **Perceptron** est une interface GTK4/libadwaita pour [OpenCode](https://opencode.ai). L’application démarre `opencode serve`, effectue l’appairage avec `opencode pair`, puis affiche l’interface web d’OpenCode dans une vue **WebKitGTK 6.0**. OpenCode doit être installé séparément et accessible dans le `PATH` : Perceptron fournit une fenêtre GNOME native, tandis que les modèles, les conversations et les sessions restent gérés par OpenCode.
 
+Version fournie : `1.7.23-1` (paquet et sources `perceptron-1.7.23-sources.tar.gz`).
+
+## Nouveautés de la 1.7.x
+
+- Démarrage direct sur l’accueil OpenCode (plus de bascule visuelle vers la dernière session).
+- Onglets OpenCode redessinés en CSS façon GNOME/Adwaita : pastilles pleine hauteur, survol et onglet actif discrets, croix de fermeture conservée, plus de trait sous la barre.
+- Boutons Accueil, Recherche et « + » plats, avec survol Adwaita.
+- Outils de développement WebKit activés (clic droit → Inspecter l’élément).
+
 ## Dépendances
 
 Dépendances système :

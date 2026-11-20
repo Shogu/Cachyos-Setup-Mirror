@@ -3,11 +3,11 @@ Fret  - appli perso libadwaita type Nautilus pour transfert locaux et ftp, avec 
 
 ![Interface de Fret](../../screenshots/vibe-coded/fret.png)
 
-Version du paquet actuellement fourni : `0.2.0-1`.
+Version du paquet actuellement fourni : `0.2.0-32`.
 
 Installation : 
 ```fish
-sudo pacman -U ./fret-0.2.0-1-any.pkg.tar.zst
+sudo pacman -U ./fret-0.2.0-32-any.pkg.tar.zst
 ```
 
 
@@ -225,7 +225,7 @@ sudo pacman -S --needed base-devel
 La version actuellement produite est :
 
 ```bash
-sudo pacman -U ./fret-0.2.0-1-any.pkg.tar.zst
+sudo pacman -U ./fret-0.2.0-32-any.pkg.tar.zst
 ```
 
 Le paquet installe le programme dans `/usr/lib/fret`, le lanceur dans

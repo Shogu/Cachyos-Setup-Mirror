@@ -9,7 +9,7 @@ Usage strictement personnel.
 ## Installation
 
 ```sh
-sudo pacman -U iconostase-<version>-1-any.pkg.tar.zst
+sudo pacman -U iconostase-0.2.5-3-any.pkg.tar.zst
 ```
 
 Dépendances : `python`, `python-gobject`, `gtk4`, `libadwaita`, `gdk-pixbuf2`, `librsvg`.

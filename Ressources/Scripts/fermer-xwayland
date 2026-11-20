@@ -1,0 +1,111 @@
+#!/usr/bin/env python3
+"""Ferme Xwayland après l'ouverture de session quand aucune application X11 ne tourne.
+
+mutter-x11-frames, lancé par GNOME Shell avec Xwayland, ne quitte que lorsqu'une
+fenêtre X11 se ferme : sans cela, Xwayland reste résident même avec
+org.gnome.mutter.experimental autoclose-xwayland=true. On crée donc une fenêtre X11
+minuscule puis on la détruit ; Xwayland s'arrête ensuite de lui-même (-terminate 10)
+et redémarre à la demande.
+
+La fenêtre est de type override-redirect : GNOME ne la gère pas, elle n'est ni
+activée ni encadrée et ne sort donc pas de la vue d'ensemble affichée au démarrage.
+
+Au démarrage de session, mutter-x11-frames n'est pas encore connecté à Xwayland
+quand son processus apparaît : on attend quelques secondes, puis on réessaie si
+Xwayland est toujours là. Les messages vont dans le journal (journalctl --user -b | grep fermer-xwayland).
+"""
+import ctypes
+import os
+import subprocess
+import sys
+import time
+
+os.environ.setdefault("DISPLAY", ":0")
+ESSAIS = 4
+ATTENTE_FRAMES = 30
+DELAI_CONNEXION = 5
+ATTENTE_ARRET = 20
+
+
+def log(message):
+    print(f"fermer-xwayland: {message}", flush=True)
+
+
+def actif(nom):
+    return subprocess.run(["pgrep", "-x", nom], capture_output=True).returncode == 0
+
+
+def attendre(condition, delai):
+    fin = time.monotonic() + delai
+    while time.monotonic() < fin:
+        if condition():
+            return True
+        time.sleep(0.5)
+    return condition()
+
+
+x = ctypes.CDLL("libX11.so.6")
+
+
+class Attributs(ctypes.Structure):
+    _fields_ = [
+        ("background_pixmap", ctypes.c_ulong), ("background_pixel", ctypes.c_ulong),
+        ("border_pixmap", ctypes.c_ulong), ("border_pixel", ctypes.c_ulong),
+        ("bit_gravity", ctypes.c_int), ("win_gravity", ctypes.c_int),
+        ("backing_store", ctypes.c_int), ("backing_planes", ctypes.c_ulong),
+        ("backing_pixel", ctypes.c_ulong), ("save_under", ctypes.c_int),
+        ("event_mask", ctypes.c_long), ("do_not_propagate_mask", ctypes.c_long),
+        ("override_redirect", ctypes.c_int), ("colormap", ctypes.c_ulong),
+        ("cursor", ctypes.c_ulong),
+    ]
+
+
+CW_OVERRIDE_REDIRECT = 1 << 9
+ptr, ul, i = ctypes.c_void_p, ctypes.c_ulong, ctypes.c_int
+x.XOpenDisplay.restype, x.XOpenDisplay.argtypes = ptr, [ctypes.c_char_p]
+x.XDefaultRootWindow.restype, x.XDefaultRootWindow.argtypes = ul, [ptr]
+x.XCreateSimpleWindow.restype = ul
+x.XCreateSimpleWindow.argtypes = [ptr, ul, i, i, ctypes.c_uint, ctypes.c_uint, ctypes.c_uint, ul, ul]
+x.XChangeWindowAttributes.argtypes = [ptr, ul, ul, ctypes.POINTER(Attributs)]
+x.XMapWindow.argtypes = [ptr, ul]
+x.XDestroyWindow.argtypes = [ptr, ul]
+x.XSync.argtypes = [ptr, i]
+x.XCloseDisplay.argtypes = [ptr]
+
+
+def fenetre_fictive():
+    ecran = x.XOpenDisplay(None)
+    if not ecran:
+        log("connexion à l'affichage X refusée")
+        return False
+    fenetre = x.XCreateSimpleWindow(ecran, x.XDefaultRootWindow(ecran), 0, 0, 1, 1, 0, 0, 0)
+    attributs = Attributs()
+    attributs.override_redirect = 1
+    x.XChangeWindowAttributes(ecran, fenetre, CW_OVERRIDE_REDIRECT, ctypes.byref(attributs))
+    x.XMapWindow(ecran, fenetre)
+    x.XSync(ecran, 0)
+    time.sleep(0.3)
+    x.XDestroyWindow(ecran, fenetre)
+    x.XSync(ecran, 0)
+    x.XCloseDisplay(ecran)
+    return True
+
+
+if not attendre(lambda: actif("mutter-x11-fram"), ATTENTE_FRAMES):
+    log("mutter-x11-frames absent : rien à faire")
+    sys.exit(0)
+
+for essai in range(1, ESSAIS + 1):
+    if essai == 1:
+        time.sleep(DELAI_CONNEXION)
+    if not actif("Xwayland"):
+        log("Xwayland déjà arrêté")
+        sys.exit(0)
+    if not fenetre_fictive():
+        sys.exit(1)
+    if attendre(lambda: not actif("Xwayland"), ATTENTE_ARRET):
+        log(f"Xwayland arrêté (essai {essai})")
+        sys.exit(0)
+    log(f"Xwayland toujours actif après l'essai {essai}")
+
+log("abandon : Xwayland reste actif (application X11 en cours ?)")
