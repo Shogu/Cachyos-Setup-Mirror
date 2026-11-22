@@ -100,7 +100,7 @@ Voir [11.32 — Polaroid](11-applications-vibe-coded.md#1132--polaroid) pour les
 Commande des paquets des dépôts (les applications maison se trouvent ci-dessous) :
 
 ```
-sudo pacman -Syu powertop gst-thumbnailers profile-cleaner seahorse fragments papers nicotine+ resources xournal++ gnome-calendar duf trash-cli libgda6 shelly inotify-tools libnotify showtime sushi
+sudo pacman -Syu powertop gst-thumbnailers profile-cleaner seahorse fragments papers nicotine+ resources xournal++ gnome-calendar duf trash-cli libgda6 inotify-tools libnotify showtime sushi
 ```
 
 ### 10.1.1 — dconf-editor GTK4
@@ -385,7 +385,7 @@ La config à restaurer après une fresh install est stockée ici (sans la clé A
 
 ## 10.7 — Claude Code
 
-[**Claude Code**](https://code.claude.com/docs/en/quickstart) est l’assistant de programmation Anthropic en terminal. Utiliser l’installateur natif officiel pour Linux : il ne nécessite pas Node.js et gère ses mises à jour automatiquement. Cette installation est indépendante de Shelly et des paquets AUR.
+[**Claude Code**](https://code.claude.com/docs/en/quickstart) est l’assistant de programmation Anthropic en terminal. Utiliser l’installateur natif officiel pour Linux : il ne nécessite pas Node.js et gère ses mises à jour automatiquement. Cette installation est indépendante de Pamac et des paquets AUR.
 
 Depuis Fish, installer sans `sudo`, ajouter le répertoire au PATH et contrôler la version :
 
@@ -429,7 +429,7 @@ Les applications personnelles développées avec l'aide du Vibe Coding sont docu
 
 ## 10.7 — Claude Code
 
-[**Claude Code**](https://code.claude.com/docs/en/quickstart) est l’assistant de programmation Anthropic en terminal. Utiliser l’installateur natif officiel pour Linux : il ne nécessite pas Node.js et gère ses mises à jour automatiquement. Cette installation est indépendante de Shelly et des paquets AUR.
+[**Claude Code**](https://code.claude.com/docs/en/quickstart) est l’assistant de programmation Anthropic en terminal. Utiliser l’installateur natif officiel pour Linux : il ne nécessite pas Node.js et gère ses mises à jour automatiquement. Cette installation est indépendante de Pamac et des paquets AUR.
 
 Depuis Fish, installer sans `sudo`, ajouter le répertoire au PATH et contrôler la version :
 
@@ -464,7 +464,7 @@ Les applications personnelles développées avec l'aide du Vibe Coding sont docu
 
 ## 10.7 — Claude Code
 
-[**Claude Code**](https://code.claude.com/docs/en/quickstart) est l’assistant de programmation Anthropic en terminal. Utiliser l’installateur natif officiel pour Linux : il ne nécessite pas Node.js et gère ses mises à jour automatiquement. Cette installation est indépendante de Shelly et des paquets AUR.
+[**Claude Code**](https://code.claude.com/docs/en/quickstart) est l’assistant de programmation Anthropic en terminal. Utiliser l’installateur natif officiel pour Linux : il ne nécessite pas Node.js et gère ses mises à jour automatiquement. Cette installation est indépendante de Pamac et des paquets AUR.
 
 Depuis Fish, installer sans `sudo`, ajouter le répertoire au PATH et contrôler la version :
 

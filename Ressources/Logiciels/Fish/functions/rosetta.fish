@@ -1,4 +1,4 @@
-function rosetta --description 'Aide-mémoire Shelly CLI (dépôts + AUR), d’après la Rosetta Pacman ↔ Shelly'
+function rosetta --description 'Aide-mémoire Pamac CLI (dépôts + AUR), d’après la Rosetta Pacman ↔ Pamac'
     argparse h/help p/pacman -- $argv
     or return 1
 
@@ -23,17 +23,17 @@ function rosetta --description 'Aide-mémoire Shelly CLI (dépôts + AUR), d’a
         Configurer
 
     set -l synt \
-        'shelly search <standard|aur> <terme>' \
-        'shelly install standard <paquet>' \
-        'shelly install aur <paquet>' \
-        'shelly install standard ./<archive.pkg.tar.zst>' \
-        'shelly build --sync-deps --install [PKGBUILD]' \
-        'shelly remove <standard|aur> <paquet>' \
-        'shelly list <standard|aur>' \
-        'shelly list-updates <standard|aur|all>' \
-        'shelly upgrade <standard|aur|all>' \
-        'shelly purify standard --cache <n>' \
-        'shelly config set <clé> <valeur>'
+        'pamac search <terme>' \
+        'pamac install <paquet>' \
+        'pamac build <paquet>' \
+        'pacman -U ./<archive.pkg.tar.zst>' \
+        'pamac build (PKGBUILD courant)' \
+        'pamac remove <paquet>' \
+        'pamac list --installed' \
+        'pamac checkupdates' \
+        'pamac upgrade' \
+        'pamac clean --build-files' \
+        'pamac (interface graphique)'
 
     set -l pac \
         'pacman -Ss' \
@@ -89,7 +89,7 @@ function rosetta --description 'Aide-mémoire Shelly CLI (dépôts + AUR), d’a
 
     # ── Rendu ─────────────────────────────────────────────────────────────
     echo
-    echo (set_color --bold)'  Shelly CLI — Rosetta (dépôts + AUR)'$rst
+    echo (set_color --bold)'  Pamac CLI — Rosetta (dépôts + AUR)'$rst
     __rosetta_ligne '┌' '┬' '┐'
     printf '%s│%s' $bord $rst
     for c in (seq $ncol)
@@ -106,7 +106,7 @@ function rosetta --description 'Aide-mémoire Shelly CLI (dépôts + AUR), d’a
         echo
     end
     __rosetta_ligne '└' '┴' '┘'
-    echo (set_color brblack)'  Archive locale : préfixer par ./ (ou chemin complet) ; .pkg.tar.zst, pas de .xz. Raccourcis : shelly -Ss, -Is, -Ia, -Rs, -Ux…'$rst
+    echo (set_color brblack)'  AUR : `pamac build` construit puis installe. Archive locale : `pacman -U` avec ./ (ou chemin complet), .pkg.tar.zst, pas de .xz.'$rst
     echo
 
     functions -e __rosetta_ligne __rosetta_cell

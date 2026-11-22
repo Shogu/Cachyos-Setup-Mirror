@@ -735,7 +735,7 @@ sudo pacman -Rns perceptron
 
 - **Paquets orphelins** : trois niveaux, des orphelins classiques (`pacman -Qtdq`) aux dépendances utilisées uniquement entre elles et aux paquets explicitement installés qui ne sont utilisés par aucun autre paquet.
 - **Cache pacman** : garder deux versions, retirer les versions désinstallées ou vider entièrement le cache.
-- **Cache AUR** : Shelly, yay et paru ; journaux systemd avec taille réglable ; miniatures et corbeille ; caches pip, npm, yarn et Go ; profils navigateurs via `profile-cleaner`.
+- **Cache AUR** : Pamac (répertoires de construction du BuildDirectory, par défaut `/var/tmp`) ; journaux systemd avec taille réglable ; miniatures et corbeille ; caches pip, npm, yarn et Go ; profils navigateurs via `profile-cleaner`.
 - Chaque catégorie présente une estimation avant action. « Tout nettoyer » enchaîne les catégories de nettoyage et récapitule les résultats.
 - Les vues des dépendances entre orphelins et des paquets explicitement installés sont des **vues de vérification** : rien n'est coché par défaut et elles ne sont pas incluses dans « Tout nettoyer ».
 
@@ -1088,7 +1088,7 @@ Session Keeper restaure les applications et leurs fenêtres, mais pas leur conte
 
 **Quick Settings** est l'extension GNOME Shell maison qui remplace **Focus & Boutons** et **Battery Time Compact — Ogu**. Elle regroupe les personnalisations des réglages rapides, l'affichage compact de la batterie (autonomie, pourcentage et puissance instantanée en watts) et plusieurs commandes système directement accessibles dans le panneau :
 
-- **Mise à jour Shelly** : lancement du script de mise à jour configuré ;
+- **Mise à jour** : lancement du script de mise à jour configuré (Pamac, dépôts + AUR) ;
 - **Task Manager / Ressources** : accès à l'application et aux mesures système ;
 - **Fermer les applis** : fermeture des fenêtres sélectionnées après confirmation ;
 - **Dropbox** : état du client, dossier synchronisé, derniers fichiers et liens de partage, pause/reprise par arrêt et relancement du client Linux ;

@@ -237,7 +237,7 @@ Le hook vérifie le montage de `/boot` avant une transaction correspondante et a
 
 Le déclencheur de type chemin `usr/lib/modules/*/vmlinuz` doit correspondre aux fichiers touchés par les paquets noyau de cette installation. Si le chemin ne correspond pas, le hook risque de ne pas se déclencher : vérifier ce point avec les paquets installés. Le hook est une protection supplémentaire, pas un substitut à la vérification du montage de `/boot`.
 
-Le lanceur Shelly vérifie aussi `/boot` avant la mise à jour, puis exécute les mises à jour standard et AUR. Son installation est documentée dans [Shell & terminal](12-shell-terminal.md#123--shelly-et-le-lanceur-de-mise-à-jour).
+Le lanceur de mise à jour (Pamac) vérifie aussi `/boot` avant la mise à jour, puis exécute les mises à jour standard (pacman) et AUR (pamac). Son installation est documentée dans [Shell & terminal](12-shell-terminal.md#123--pamac-et-le-lanceur-de-mise-à-jour).
 
 
 ## 3.8 — Hook Pacman : alerte avant la mise à jour des paquets sensibles

@@ -16,39 +16,6 @@ function _lastinstalled_rp
             -e 's/\[ALPM\] upgraded / = /' \
             -e 's/\[ALPM\] installed / + /' \
             -e 's/\[ALPM\] removed / - /'
-
-        awk '
-            /Command:/ || /INFO \[STANDARD\]: (Installing|Removing|Upgrading) package:/ { print }
-        ' /var/log/shelly.log |
-        perl -MTime::Local -pe '
-            if (/^\[([0-9]+)\]/) {
-                $e = $1;
-                ($s,$min,$h,$day,$m,$y) = localtime($e);
-                $y += 1900;
-                $m++;
-                s/^\[[^]]+\]/sprintf("[%04d-%02d-%02d %02d:%02d:%02d]",$y,$m,$day,$h,$min,$s)/e;
-            }
-            elsif (/^\[([^]]+)Z\]/) {
-                ($d,$t)=split("T",$1);
-                ($y,$m,$day)=split("-",$d);
-                ($h,$min,$s)=split(":",$t);
-                $e=timegm($s,$min,$h,$day,$m-1,$y);
-                ($s,$min,$h,$day,$m,$y)=localtime($e);
-                $y += 1900;
-                $m++;
-                s/^\[[^]]+\]/sprintf("[%04d-%02d-%02d %02d:%02d:%02d]",$y,$m,$day,$h,$min,$s)/e;
-            }
-        ' |
-        sed -E \
-            -e 's/^(.*)INFO \[STANDARD\]: Installing package: (.+)$/\1 + \2/' \
-            -e 's/^(.*)INFO \[STANDARD\]: Removing package: (.+)$/\1 - \2/' \
-            -e 's/^(.*)INFO \[STANDARD\]: Upgrading package: (.+) -> (.+)$/\1 = \2 -> \3/' \
-            -e "s/Command: /--- '/" \
-            -e "/--- '/ s/\$/'/" \
-            -e 's/^(\[[^]]+\])[[:space:]]+= ([^ ]+) ([^ ]+) -> ([^ ]+)$/\1 = \2 (\3 -> \4)/' \
-            -e 's/^(\[[^]]+\])[[:space:]]+(\+|-) (.*) ([^ ]+)$/\1 \2 \3 (\4)/' \
-            -e 's/^(\[[^]]+\])[[:space:]]+(\+|-) (.*)-([^ -]+-[^ -]+)$/\1 \2 \3 (\4)/' \
-            -e 's/^(.*) = (.*)-([^ -]+-[^ -]+) -> (.*)-([^ -]+-[^ -]+)$/\1 = \2 (\3 -> \5)/'
     end |
     sort -s -k1,2 |
     awk '

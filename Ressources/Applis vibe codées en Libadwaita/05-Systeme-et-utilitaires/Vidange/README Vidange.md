@@ -24,7 +24,7 @@ Vidange réunit en une fenêtre tout ce qu'on fait d'habitude à la main pour al
 |---|---|
 | Orphelins sûrs | `pacman -Qtdq` |
 | Cache pacman | `paccache -rk2` (ou `-ruk0`, ou `pacman -Scc`) |
-| Cache AUR | `shelly purify standard --aur-cache` |
+| Cache AUR | `pamac clean --build-files` |
 | Flatpak inutilisés | `flatpak uninstall --unused` |
 | Journaux systemd | `journalctl --vacuum-size` (taille réglable) |
 | Cache des micrologiciels | `/var/cache/fwupd` |
@@ -62,7 +62,7 @@ makepkg -si
 ```
 
 Dépendances : `python-gobject`, `gtk4`, `libadwaita` ≥ 1.6, `pacman-contrib`, `polkit`.
-Optionnelles : `profile-cleaner`, `shelly`, et les outils de développement dont on veut vider le cache.
+Optionnelles : `profile-cleaner`, et les outils de développement dont on veut vider le cache.
 
 ## En savoir plus
 

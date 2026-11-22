@@ -49,7 +49,7 @@ Les noms de paquets sont validés strictement, au plus 2000 noms. PATH=/usr/bin 
 ## Pièges connus
 
 - pacman -Scc --noconfirm répond « non » et ne vide rien : le helper envoie y puis y sur stdin.
-- shelly purify standard --aur-cache vide tout ~/.cache/Shelly, y compris PKGBUILD, sources et historique git ; le nettoyage direct du dossier a le même effet.
+- pamac clean --build-files nettoie les répertoires de construction AUR du BuildDirectory (pamac.conf, par défaut /var/tmp) ; le cache pacman (/var/cache/pacman/pkg) est géré par la catégorie Cache pacman.
 - L'estimation keep2-uninstalled combine -k2, -uk0 et -uk2 pour éviter le double comptage.
 - pacman -Qi est analysé avec LC_ALL=C.
 - pacman -Qtdq renvoie 1 lorsqu'il n'y a rien ; ce n'est pas une erreur.

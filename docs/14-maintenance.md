@@ -11,15 +11,15 @@
 
 ## 14.1 — Retirer Cachy-update
 
-Shelly est l'outil de mise à jour retenu pour ce setup. Pour supprimer Cachy-update, lancer :
+Pamac est l'outil de mise à jour retenu pour ce setup (dépôts officiels via Pacman, AUR via Pamac). Pour supprimer Cachy-update, lancer :
 
 ```fish
 sudo pacman -Rns cachy-update
 ```
 
-Lire attentivement la liste des paquets proposés par Pacman avant de confirmer. Cette commande retire Cachy-update et les dépendances devenues inutiles ; elle ne désinstalle pas Paru.
+Lire attentivement la liste des paquets proposés par Pacman avant de confirmer. Cette commande retire Cachy-update et les dépendances devenues inutiles.
 
-La configuration de Shelly et son lanceur sont documentés dans [Shell & terminal](12-shell-terminal.md#123--shelly-et-le-lanceur-de-mise-à-jour). Le hook de protection de `/boot` est documenté dans [Boot & kernel](03-boot-kernel.md#37--protéger-les-transactions-noyau-si-boot-nest-pas-monté).
+La configuration de Pamac et son lanceur sont documentés dans [Shell & terminal](12-shell-terminal.md#123--pamac-et-le-lanceur-de-mise-à-jour). Le hook de protection de `/boot` est documenté dans [Boot & kernel](03-boot-kernel.md#37--protéger-les-transactions-noyau-si-boot-nest-pas-monté).
 
 ## 14.2 — Points à revoir après les mises à jour
 

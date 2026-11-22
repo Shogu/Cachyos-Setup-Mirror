@@ -34,7 +34,7 @@ gsettings set org.gnome.shell disable-extension-version-validation false
 
 Extensions apportant des fonctions d'interface ou de système considérées comme centrales dans ce setup :
 
-- **Quick Settings** — extension maison qui remplace Focus & Boutons et Battery Time Compact — Ogu. Outre les réglages rapides et l'affichage compact de la batterie (autonomie, pourcentage et puissance en watts), elle regroupe des commandes directes pour lancer la mise à jour Shelly, ouvrir Task Manager/Ressources, fermer les applications après confirmation, piloter Dropbox et activer ou régler l'éclairage nocturne. Voir [8.7](#87--quick-settings), [11.17](11-applications-vibe-coded.md#1117--quick-settings) et [son dossier](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Quick%20Settings/).
+- **Quick Settings** — extension maison qui remplace Focus & Boutons et Battery Time Compact — Ogu. Outre les réglages rapides et l'affichage compact de la batterie (autonomie, pourcentage et puissance en watts), elle regroupe des commandes directes pour lancer la mise à jour (Pamac/Pacman), ouvrir Task Manager/Ressources, fermer les applications après confirmation, piloter Dropbox et activer ou régler l'éclairage nocturne. Voir [8.7](#87--quick-settings), [11.17](11-applications-vibe-coded.md#1117--quick-settings) et [son dossier](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Quick%20Settings/).
 - **Widget Topbar** — extension qui remplace Topbar Center Widget et regroupe les widgets de la barre supérieure et du menu de l'horloge, notamment les notes Grimoire, le lecteur Semitone et l'agenda. Voir [8.8](#88--widget-topbar), [11.18](11-applications-vibe-coded.md#1118--widget-topbar) et [son dossier](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/Widget%20Topbar/).
 - **UI Management** — extension maison **GNOME 49/50/51**, classée dans **Bureau et fenêtres**. Elle remplace dans ce setup **Just Perfection**, **AutoActivities**, **Hot Edge** et **Quick Close Overview** en ne conservant que les fonctions réellement utilisées. Voir [8.10](#810--ui-management) et [11.21](11-applications-vibe-coded.md#1120--ui-management).
 - [Power Total](#89--power-total) — extension maison GNOME 50, catégorie **Système et énergie** : profils secteur/batterie, luminosité, thème et rétroéclairage. Voir [11.20](11-applications-vibe-coded.md#1119--power-total).
@@ -94,7 +94,7 @@ Sous Wayland, une déconnexion/reconnexion est obligatoire après installation p
 
 Extension GNOME Shell maison qui remplace **Focus & Boutons** et **Battery Time Compact — Ogu**. Elle regroupe les personnalisations de Quick Settings, l'affichage compact de la batterie (autonomie, pourcentage et puissance instantanée en watts) et plusieurs commandes système accessibles directement dans le panneau :
 
-- **Mise à jour Shelly** : lancement du script de mise à jour configuré ;
+- **Mise à jour** : lancement du script de mise à jour configuré (Pamac, dépôts + AUR) ;
 - **Task Manager / Ressources** : accès à l'application et aux mesures système ;
 - **Fermer les applis** : fermeture des fenêtres sélectionnées après confirmation ;
 - **Dropbox** : état du client, dossier synchronisé, derniers fichiers et liens de partage, pause/reprise (par arrêt et relancement du client Linux) ;

@@ -9,8 +9,8 @@ end
 
 ############################################################################################################################
 
-# Mises à jour Shelly
-alias upgrade='set_color 3584e4; echo "╔══════════════════════╗"; echo "║  MISE À JOUR SHELLY  ║"; echo "╚══════════════════════╝"; set_color normal; echo; shelly upgrade standard; shelly upgrade aur; echo; read -P "Fermer avec ENTREE "'
+# Mises à jour Pamac (dépôts officiels via pacman + AUR via pamac)
+alias upgrade='set_color 3584e4; echo "╔══════════════════════╗"; echo "║   MISE À JOUR PAMAC   ║"; echo "╚══════════════════════╝"; set_color normal; echo; sudo pacman -Syu; pamac upgrade --aur; echo; read -P "Fermer avec ENTREE "'
 
 
 # === Abbréviations ===
@@ -48,6 +48,14 @@ abbr --add pacsearch_installed 'pacman -Qs'
 abbr --add pacdep 'pactree -r'
 abbr --add pacfiles 'pacman -Ql'
 abbr --add orphans 'pacman -Qdtq'
+
+# === Pamac (paquets & AUR) ===
+abbr --add add 'pamac install'
+abbr --add remove 'pamac remove'
+abbr --add aur 'pamac build'
+abbr --add aursearch 'pamac search --aur'
+abbr --add aurremove 'pamac remove'
+abbr --add aurlist 'pamac list --foreign'
 
 # === Presse-papiers Wayland ===
 abbr --add clip --position anywhere '2>&1 | wl-copy'

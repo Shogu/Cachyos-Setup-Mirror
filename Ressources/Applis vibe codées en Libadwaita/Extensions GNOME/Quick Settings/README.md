@@ -15,7 +15,7 @@ Chaque fonction peut être désactivée indépendamment.
 
 Quick Settings regroupe également plusieurs interrupteurs et commandes système :
 
-- **Mise à jour Shelly** : lance le script de mise à jour configuré.
+- **Mise à jour** : lance le script de mise à jour configuré (Pamac, dépôts + AUR).
 - **Task Manager / Ressources** : ouvre l'application Ressources et donne accès à ses mesures système détaillées.
 - **Fermer les applis** : demande confirmation avant de fermer les fenêtres sélectionnées dans les préférences.
 - **Dropbox** : contrôle l'état du client, ouvre le dossier synchronisé, donne accès aux derniers fichiers et à leurs liens de partage, et permet de quitter ou relancer le client.
@@ -47,8 +47,7 @@ Il reste ouvert :
 Affiche un sous-titre synthétique, par exemple `CPU 12 % · RAM 41 % · 52 °C`.
 
 - Clic : ouvre l'application Ressources.
-- Chevron : affiche le processeur, la température, la mémoire, le GPU, le disque personnel, le réseau (débits ↓ et ↑), la batterie (puissance et autonomie) et l'application la plus gourmande.
-- Les processus sont regroupés sous l'application qui les a lancés.
+- Chevron : affiche le processeur, la température, la mémoire, le GPU, le disque personnel, le réseau (débits ↓ et ↑) et la batterie (puissance et autonomie).
 - La tuile devient bleue lorsque le processeur dépasse 80 %.
 - Aucune mesure n'est effectuée lorsque Quick Settings est fermé ; les mesures sont actualisées toutes les 2 secondes lorsque le panneau est ouvert.
 
@@ -65,9 +64,15 @@ Affiche un sous-titre synthétique, par exemple `CPU 12 % · RAM 41 % · 52 °C`
 
 Un clic lance le script de mise à jour configuré, par défaut :
 
-`~/.local/bin/update-shelly.sh`
+`~/.local/bin/update-system.sh`
 
-La tuile est bleue pendant son exécution.
+La tuile est bleue pendant son exécution : le script crée un témoin
+(`$XDG_RUNTIME_DIR/update-system.running`) et le supprime à la fin. Le script
+bénéficie d'un `trap` bash qui retire témoin et fichier temp même en cas de
+fermeture brutale. Un témoin âgé de plus de **10 minutes** n'est considéré comme
+orphelin (et la tuile repassée à l'état réel, sondée toutes les 30 s) que si
+aucun processus `update-system` n'est actif — une vraie transaction qui dure
+longtemps garde la tuile bleue.
 
 ### Fermer les applis
 

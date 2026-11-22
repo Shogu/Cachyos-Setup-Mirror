@@ -74,7 +74,7 @@ function memo --description "Liste interactive des abbr et fonctions disponibles
         echo
 
         set_color brmagenta
-        echo "  SHELLY (AUR & Paquets)"
+        echo "  PAMAC (AUR & Paquets)"
         set_color normal
         set_color brblue; echo -n " 19) aur"; set_color normal; echo " → Installe paquet AUR"
         set_color brblue; echo -n " 20) aursearch"; set_color normal; echo " → Recherche AUR"
@@ -230,7 +230,7 @@ function memo --description "Liste interactive des abbr et fonctions disponibles
         set_color brblue; echo -n "  8) clean"; set_color normal; echo " → Nettoyage système"
         set_color brblue; echo -n "  9) pacstats"; set_color normal; echo " → Statistiques paquets"
         set_color brblue; echo -n " 10) search"; set_color normal; echo " → Recherche fichiers"
-        set_color brblue; echo -n " 11) upgrade"; set_color normal; echo " → Mise à jour Shelly"
+        set_color brblue; echo -n " 11) upgrade"; set_color normal; echo " → Mise à jour Pamac"
         echo
 
         set_color brmagenta
