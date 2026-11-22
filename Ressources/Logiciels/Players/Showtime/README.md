@@ -4,10 +4,12 @@ Ce dossier conserve un petit correctif local du lecteur vidéo GNOME Showtime. C
 
 ## Comportement
 
-- **← / →** : saut d’environ 1 % de la durée totale de la vidéo.
-- **↑ / ↓** : saut d’environ 5 % de la durée totale de la vidéo.
+- **← / →** : saut d’environ **1 %** de la durée totale de la vidéo (minimum 5 s).
+- **↑ / ↓** : saut d’environ **5 %** de la durée totale de la vidéo (minimum 30 s).
+- **Maj + ← / →** : saut fixe de **10 s** pour l’ajustement fin.
+- **Volume** : déplacé sur `Ctrl + ↑ / ↓` (les flèches ↑/↓ sont réutilisées pour les sauts de 5 %).
 
-Le pourcentage est calculé par rapport à la durée du média, pour que les déplacements s’adaptent aux vidéos courtes comme aux longues.
+Les pourcentages sont calculés par rapport à la durée du média, pour que les déplacements s’adaptent aux vidéos courtes comme aux longues (avec un saut minimal en secondes).
 
 ## Fichier à déposer
 
@@ -20,10 +22,10 @@ Place le fichier Python corrigé ici, à côté de ce README :
 Depuis la racine du dépôt :
 
 ```fish
-sudo cp "Ressources/Logiciels/Players/Showtime/window.py" (pacman -Ql showtime | string match -r '\\S+/widgets/window\\.py$')
+sudo cp "Ressources/Logiciels/Players/Showtime/window.py" (pacman -Ql showtime | string match -r '\S+/widgets/window\.py$')
 ```
 
-Cette commande remplace le fichier `window.py` installé par le paquet Showtime. Une mise à jour du paquet peut écraser le correctif.
+Cette commande remplace le fichier `window.py` installé par le paquet Showtime.
 
 ## Vérification
 
@@ -35,7 +37,19 @@ grep -n -i "sauts" /usr/lib/python3.14/site-packages/showtime/widgets/window.py
 La recherche doit retrouver le marqueur `sauts` dans le fichier installé. Si le chemin diffère, retrouve le chemin fourni par le paquet :
 
 ```fish
-pacman -Ql showtime | string match -r '\\S+/widgets/window\\.py$'
+pacman -Ql showtime | string match -r '\S+/widgets/window\.py$'
 ```
 
-Le fichier corrigé doit être ajouté manuellement ; le correctif n’est pas inclus dans ce README et doit être testé après installation.
+## ⚠️ Après une mise à jour de Showtime — ré-appliquer, ne pas réécrire l’ancien fichier
+
+Une mise à jour du paquet remplace `window.py` et **efface le correctif**. Pour le ré-appliquer :
+
+1. **Ne jamais poser l’ancien `window.py` entier en lieu et place du nouveau.** Le fichier de ce dossier reflète la version actuellement installée : une mise à jour de Showtime fait évoluer `window.py` (API, connecteurs, gestion des plugins…). Régresser tout le fichier à une version antérieure casse le lancement de Showtime.
+2. **Ré-injecter uniquement les blocs du correctif** sur le `window.py` **neuf** du paquet. Le cœ ur du correctif tient en deux parties :
+
+   - les deux méthodes `_seek_by()` et `_seek_by_percent()` (sauts par % de durée et saut minimal en secondes) à insérer dans la classe `Window`, juste avant `_create_actions()` ;
+   - dans `_create_actions()`, remplacer les actions `backwards` / `forwards` et les raccourcis volume par les raccourcis proportionnels (voir le comportement ci-dessus).
+
+3. Tester avec `showtime` puis, le cas échéant, mettre à jour ce dossier avec le nouveau `window.py` corrigé pour qu’il reste aligné sur la version installée.
+
+Le marqueur `sauts` sert justement à vérifier que le correctif est bien présent après installation.

@@ -16,6 +16,7 @@
 - [10.5 Showtime](#105--showtime)
 - [10.6 Applications Vibe Coded](#106--applications-vibe-coded)
 - [10.7 Claude Code](#107--claude-code)
+- [10.8 OpenCode](#108--opencode)
 
 
 ## 10.1 — Logiciels à installer
@@ -330,7 +331,6 @@ Aligner le port d'écoute sur les [règles du pare-feu](06-network.md#61--config
 ### Nicotine
 
 Port 2234, réglage sur wlan0, réglage de l'UI.
-
 ## 10.5 — Showtime
 
 [**Showtime**](https://apps.gnome.org/Showtime/) est le lecteur vidéo GNOME retenu dans ce setup.
@@ -344,72 +344,21 @@ showtime
 
 ### Astuce d’interface — sauts proportionnels dans la vidéo
 
-Un petit correctif local de `window.py` modifie la recherche au clavier : les flèches **gauche/droite** déplacent la lecture d’environ **1 %** de la durée totale, et les flèches **haut/bas** d’environ **5 %**. Les sauts s’adaptent ainsi à la longueur de la vidéo. Il s’agit d’une astuce de personnalisation de Showtime, pas d’une application vibe coded.
+Un petit correctif local de `window.py` personnalise la recherche au clavier, proportionnellement à la durée de la vidéo :
 
-Le fichier corrigé à conserver dans le dépôt est :
-`Ressources/Logiciels/Players/Showtime/window.py`.
+- **← / →** : saut d’environ **1 %** de la durée (minimum 5 s).
+- **↑ / ↓** : saut d’environ **5 %** de la durée (minimum 30 s).
+- **Maj + ← / →** : saut fixe de **10 s** pour l’ajustement fin.
+- **Volume** : déplacé sur `Ctrl + ↑ / ↓` (les flèches ↑/↓ étant réutilisées pour les sauts de 5 %).
 
-Depuis la racine du dépôt, après avoir placé ce fichier :
+Le correctif est conservé dans le dépôt : `Ressources/Logiciels/Players/Showtime/window.py`.
 
-```fish
-sudo cp "Ressources/Logiciels/Players/Showtime/window.py" (pacman -Ql showtime | string match -r '\\S+/widgets/window\\.py
-## 10.6 — Applications Vibe Coded
+> **⚠️ Après une mise à jour de Showtime :** le paquet remplace `window.py` et efface le correctif. Il ne faut **pas** écrire un ancien fichier entier à la place du nouveau (risque d’incompatibilité qui empêche Showtime de se lancer). Il faut réinjecter **uniquement les blocs du correctif** sur le `window.py` neuf. Voir le `README.md` du dossier Showtime pour la procédure.
 
-Les applications personnelles développées avec l'aide du Vibe Coding sont documentées séparément afin de conserver ici uniquement les logiciels et réglages généraux : [11 — Applications Vibe Coded](11-applications-vibe-coded.md).
-
-## 10.8 — OpenCode
-
-OpenCode est l’assistant de développement utilisé depuis le terminal ou via l’interface GNOME **Perceptron**. Après son installation, vérifier sa configuration et les intégrations suivantes.
-
-### Fournisseur principal et fournisseurs de secours
-
-- **Albert Dinum API** : penser à activer/configurer l’API dans OpenCode.
-- **Groq**, **Gemini** et **OpenRouter** : conserver ces fournisseurs comme solutions de secours disponibles, sans bascule automatique. Le changement de fournisseur doit rester une action volontaire : OpenCode ne doit pas basculer de lui-même vers un autre modèle en cas d’échec.
-
-### Whisper : transcription audio avec Groq
-
-La fonction **Whisper** est un script local Bash ou Python qui envoie le fichier audio à l’API de transcription Groq, compatible OpenAI :
-
-```text
-POST https://api.groq.com/openai/v1/audio/transcriptions
-```
-
-Le script doit lire la clé API depuis la variable d’environnement secrète `GROQ_API_KEY`. Ne jamais inscrire la clé en dur dans le script, dans la configuration versionnée ou dans le dépôt.
-
-Le script appelle l’endpoint de transcription avec la clé transmise dans l’en-tête d’authentification. La fonction Whisper d’OpenCode s’appuie sur ce script pour transcrire les fichiers audio.
-
-### Sauvegarde / restauration de la configuration OpenCode
-
-La config à restaurer après une fresh install est stockée ici (sans la clé API, voir `.gitignore`) :
-`Ressources/Logiciels/Opencode/` — archive `opencode-backup-20261115.zip` (config sans secret). Restauration : décompresser le zip dans `~/.config/opencode/`. Les clés API sont dans l'archive chiffrée stockée sur Dropbox. Détails dans le `README.md` du dossier.
-
-## 10.7 — Claude Code
-
-[**Claude Code**](https://code.claude.com/docs/en/quickstart) est l’assistant de programmation Anthropic en terminal. Utiliser l’installateur natif officiel pour Linux : il ne nécessite pas Node.js et gère ses mises à jour automatiquement. Cette installation est indépendante de Pamac et des paquets AUR.
-
-Depuis Fish, installer sans `sudo`, ajouter le répertoire au PATH et contrôler la version :
+Depuis la racine du dépôt, après avoir placé le fichier corrigé :
 
 ```fish
-sudo pacman -Syu --needed curl bash git
-curl -fsSL https://claude.ai/install.sh | bash
-fish_add_path "$HOME/.local/bin"
-claude --version
-```
-
-Ouvrir ensuite le terminal dans le projet et lancer l’assistant :
-
-```fish
-cd "$HOME/Gitlab/CACHYOS-Setup"
-claude
-```
-
-Au premier lancement, suivre la connexion dans le navigateur avec un abonnement Claude compatible (Pro, Max, Team ou Enterprise), ou un compte Claude Console disposant de crédits API. Dans Claude Code, `/help` affiche l’aide et `/login` permet de changer de compte.
-
-
----
-
-[Accueil](../README.md) · [Précédent](01-installation.md) · [Suivant](11-applications-vibe-coded.md)
-)
+sudo cp "Ressources/Logiciels/Players/Showtime/window.py" (pacman -Ql showtime | string match -r '\S+/widgets/window\.py$')
 ```
 
 Vérifier le fichier installé et rechercher le marqueur `sauts` :
@@ -422,38 +371,7 @@ grep -n -i "sauts" /usr/lib/python3.14/site-packages/showtime/widgets/window.py
 Si le chemin change avec la version de Python ou du paquet, retrouver le chemin installé avec :
 
 ```fish
-pacman -Ql showtime | string match -r '\\S+/widgets/window\\.py
-## 10.6 — Applications Vibe Coded
-
-Les applications personnelles développées avec l'aide du Vibe Coding sont documentées séparément afin de conserver ici uniquement les logiciels et réglages généraux : [11 — Applications Vibe Coded](11-applications-vibe-coded.md).
-
-## 10.7 — Claude Code
-
-[**Claude Code**](https://code.claude.com/docs/en/quickstart) est l’assistant de programmation Anthropic en terminal. Utiliser l’installateur natif officiel pour Linux : il ne nécessite pas Node.js et gère ses mises à jour automatiquement. Cette installation est indépendante de Pamac et des paquets AUR.
-
-Depuis Fish, installer sans `sudo`, ajouter le répertoire au PATH et contrôler la version :
-
-```fish
-sudo pacman -Syu --needed curl bash git
-curl -fsSL https://claude.ai/install.sh | bash
-fish_add_path "$HOME/.local/bin"
-claude --version
-```
-
-Ouvrir ensuite le terminal dans le projet et lancer l’assistant :
-
-```fish
-cd "$HOME/Gitlab/CACHYOS-Setup"
-claude
-```
-
-Au premier lancement, suivre la connexion dans le navigateur avec un abonnement Claude compatible (Pro, Max, Team ou Enterprise), ou un compte Claude Console disposant de crédits API. Dans Claude Code, `/help` affiche l’aide et `/login` permet de changer de compte.
-
-
----
-
-[Accueil](../README.md) · [Précédent](01-installation.md) · [Suivant](11-applications-vibe-coded.md)
-
+pacman -Ql showtime | string match -r '\S+/widgets/window\.py$'
 ```
 
 Une mise à jour de Showtime peut écraser le fichier modifié ; il faudra alors réappliquer le correctif à partir de `Ressources/Logiciels/Players/Showtime/window.py`.
@@ -484,6 +402,31 @@ claude
 
 Au premier lancement, suivre la connexion dans le navigateur avec un abonnement Claude compatible (Pro, Max, Team ou Enterprise), ou un compte Claude Console disposant de crédits API. Dans Claude Code, `/help` affiche l’aide et `/login` permet de changer de compte.
 
+## 10.8 — OpenCode
+
+OpenCode est l’assistant de développement utilisé depuis le terminal ou via l’interface GNOME **Perceptron**. Après son installation, vérifier sa configuration et les intégrations suivantes.
+
+### Fournisseur principal et fournisseurs de secours
+
+- **Albert Dinum API** : penser à activer/configurer l’API dans OpenCode.
+- **Groq**, **Gemini** et **OpenRouter** : conserver ces fournisseurs comme solutions de secours disponibles, sans bascule automatique. Le changement de fournisseur doit rester une action volontaire : OpenCode ne doit pas basculer de lui-même vers un autre modèle en cas d’échec.
+
+### Whisper : transcription audio avec Groq
+
+La fonction **Whisper** est un script local Bash ou Python qui envoie le fichier audio à l’API de transcription Groq, compatible OpenAI :
+
+```text
+POST https://api.groq.com/openai/v1/audio/transcriptions
+```
+
+Le script doit lire la clé API depuis la variable d’environnement secrète `GROQ_API_KEY`. Ne jamais inscrire la clé en dur dans le script, dans la configuration versionnée ou dans le dépôt.
+
+Le script appelle l’endpoint de transcription avec la clé transmise dans l’en-tête d’authentification. La fonction Whisper d’OpenCode s’appuie sur ce script pour transcrire les fichiers audio.
+
+### Sauvegarde / restauration de la configuration OpenCode
+
+La config à restaurer après une fresh install est stockée ici (sans la clé API, voir `.gitignore`) :
+`Ressources/Logiciels/Opencode/` — archive `opencode-backup-20261115.zip` (config sans secret). Restauration : décompresser le zip dans `~/.config/opencode/`. Les clés API sont dans l'archive chiffrée stockée sur Dropbox. Détails dans le `README.md` du dossier.
 
 ---
 
