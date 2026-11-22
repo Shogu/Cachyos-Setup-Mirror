@@ -253,6 +253,12 @@ La suppression de `base-devel` a été vérifiée sur cette installation : Pacma
 
 Pour ce poste, la compilation est principalement déléguée à distance. Si une compilation locale ou un paquet AUR devient nécessaire, réinstaller `base-devel` (et les dépendances spécifiques demandées par le paquet) avant de lancer `makepkg`. Pacman signale certaines dépendances optionnelles lors de la désinstallation ; un outil lancé plus tard peut aussi afficher une erreur s'il lui manque une commande ou une bibliothèque, mais le terminal ne réinstallera pas automatiquement `fakeroot` ou les autres outils.
 
+Si tu souhaites simplement rétablir la création de paquets avec `makepkg` sans réinstaller tout le groupe `base-devel`, installe au minimum `fakeroot` :
+
+```fish
+sudo pacman -S fakeroot
+```
+
 ```
 sudo pacman -Rns ninja tesseract tesseract-data-fra tesseract-data-osd autoconf base-devel rust lld llvm pahole linux-cachyos-headers linux-cachyos-lts-headers mesa-utils cachyos-packageinstaller bash-completion
 ```
