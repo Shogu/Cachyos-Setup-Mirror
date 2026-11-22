@@ -33,8 +33,16 @@ from showtime import (
     state_settings,
     system,
 )
-from showtime.play import Messenger, gst_play_setup
+from showtime.play import (
+    Messenger,
+    MissingPlugin,
+    gst_play_setup,
+)
+from showtime.util.connection import Connection
+from showtime.util.source import SourceId
 from showtime.utils import (
+    get_file_hash_identifier,
+    get_subtitle_font_desc,
     get_title,
     lookup_action,
     nanoseconds_to_timestamp,
@@ -133,15 +141,12 @@ class Window(Adw.ApplicationWindow):
     _playing_gfile: Gio.File | None = None
 
     _last_reveal: float = 0.0
-    _last_seek: float = 0.0
 
     _paused: bool = True
-    _seeking: bool = False
     _seek_paused: bool = False
-    _prev_motion_xy: tuple = (0, 0)
+    _prev_motion_xy: tuple[float | None, float | None] = (0, 0)
     _prev_volume = -1
     _toplevel_focused: bool = False
-    _already_shown_missing_plugins = False
 
     @GObject.Property(type=bool, default=False)
     def mute(self) -> bool:
@@ -162,6 +167,13 @@ class Window(Adw.ApplicationWindow):
         self.play.props.rate = float(rate)
         self.options.popover.popdown()
         self.emit("rate-changed")
+
+    def _step_rate(self, step: int) -> None:
+        rates = ("0.5", "1.0", "1.25", "1.5", "2.0")
+        current = self.rate if self.rate in rates else "1.0"
+        index = rates.index(current)
+
+        self.rate = rates[max(0, min(index + step, len(rates) - 1))]
 
     @GObject.Property(type=bool, default=True)
     def paused(self) -> bool:
@@ -210,32 +222,54 @@ class Window(Adw.ApplicationWindow):
             self.sink,
         ) = gst_play_setup(self.picture)
 
-        self.paintable.connect("invalidate-size", self._on_paintable_invalidate_size)
+        # Connections to objects that may outlive the window, disconnected in teardown
+        self._paintable_connection = Connection(
+            "invalidate-size", self._on_paintable_invalidate_size, self.paintable
+        )
+        self._pipeline_connection = Connection(
+            "source-setup", self._setup_pipeline_source, self.pipeline
+        )
 
-        messenger = Messenger(self.play, self.pipeline)
-        messenger.connect("state-changed", self._on_playback_state_changed)
-        messenger.connect("duration-changed", self._on_duration_changed)
-        messenger.connect("position-updated", self._on_position_updated)
-        messenger.connect("seek-done", self._on_seek_done)
-        messenger.connect("media-info-updated", self._on_media_info_updated)
-        messenger.connect("volume-changed", self._on_volume_changed)
-        messenger.connect("end-of-stream", self._on_end_of_stream)
-        messenger.connect("warning", self._on_warning)
-        messenger.connect("error", self._on_error)
-        messenger.connect("missing-plugin", self._on_missing_plugin)
+        self._messenger = Messenger(self.play)
+        self._messenger_connections = [
+            Connection("state-changed", self._on_playback_state_changed, self._messenger),
+            Connection("duration-changed", self._on_duration_changed, self._messenger),
+            Connection("position-updated", self._on_position_updated, self._messenger),
+            Connection("seek-done", self._on_seek_done, self._messenger),
+            Connection("media-info-updated", self._on_media_info_updated, self._messenger),
+            Connection("volume-changed", self._on_volume_changed, self._messenger),
+            Connection("end-of-stream", self._on_end_of_stream, self._messenger),
+            Connection("warning", self._on_warning, self._messenger),
+            Connection("error", self._on_error, self._messenger),
+            Connection("missing-plugins", self._on_missing_plugins, self._messenger),
+        ]
+
+        self._state_settings_connection = Connection(
+            "changed::end-timestamp-type",
+            self._on_end_timestamp_type_changed,
+            state_settings,
+        )
+
+        self._update_subtitle_font_desc()
+        self._font_connection = Connection(
+            "notify::gtk-xft-dpi",
+            self._update_subtitle_font_desc,
+            Gtk.Settings.get_default(),
+        )
+
+        self._toplevel_connection = Connection(
+            "notify::state", self._on_toplevel_state_changed
+        )
+
+        # Pending timeouts, removed in teardown
+        self._resize_source = SourceId()
+        self._hide_overlays_source = SourceId()
+        self._buffering_source = SourceId()
+        self._seeking_source = SourceId()
+        self._build_menus_source = SourceId()
 
         if PROFILE == "development":
             self.add_css_class("devel")
-
-        # Unfullscreen on Escape
-
-        (esc := Gtk.ShortcutController()).add_shortcut(
-            Gtk.Shortcut.new(
-                Gtk.ShortcutTrigger.parse_string("Escape"),
-                Gtk.CallbackAction.new(lambda *_: bool(self.unfullscreen())),
-            )
-        )
-        self.add_controller(esc)
 
         self.overlay_motions = set()
         for widget in (
@@ -259,11 +293,6 @@ class Window(Adw.ApplicationWindow):
             self.options.menu_button,
             self.sound_options.menu_button,
         }
-
-        state_settings.connect(
-            "changed::end-timestamp-type",
-            self._on_end_timestamp_type_changed,
-        )
 
         # Force playback controls and progress bar to be Left-to-Right
         for widget in (
@@ -292,7 +321,6 @@ class Window(Adw.ApplicationWindow):
         app.save_play_position(self)  # pyright: ignore[reportAttributeAccessIssue]
 
         self._playing_gfile = gfile
-        self._already_shown_missing_plugins = False
 
         try:
             file_info = gfile.query_info(
@@ -311,30 +339,11 @@ class Window(Adw.ApplicationWindow):
 
         logger.debug("Playing video: %s", uri)
 
-        def setup_cb(*_args) -> None:
-            self.pipeline.disconnect_by_func(setup_cb)
-
-            if not (pos := self._get_previous_play_position()):
-                self.unpause()
-                logger.debug("No previous play position")
-                return
-
-            if pos < MINUTE_IN_NS:
-                self.unpause()
-                logger.debug("Previous play position before 60s")
-                return
-
-            self._reveal_overlay(self.restore_breakpoint_bin)
-            self._hide_overlay(self.controls_box)
-            self.play.seek(pos)
-            logger.debug("Previous play position restored: %i", pos)
-
-        self.pipeline.connect("source-setup", setup_cb)
-
         self.media_info_updated = False
         self.stack.props.visible_child = self.video_page
         self.placeholder_stack.props.visible_child = self.error_status_page
         self.select_subtitles(0)
+        self.select_language(0)
         self.rate = "1.0"
 
         self.play.props.uri = uri
@@ -364,6 +373,42 @@ class Window(Adw.ApplicationWindow):
         if action := lookup_action(self, "select-subtitles"):
             action.activate(GLib.Variant.new_uint16(index))
 
+    def select_language(self, index: int) -> None:
+        """Select the audio track for the given index."""
+        if action := lookup_action(self, "select-language"):
+            action.activate(GLib.Variant.new_uint16(index))
+
+    def teardown_playback(self) -> None:
+        """Stop playback and clear all references to self."""
+        for connection in (
+            self._paintable_connection,
+            self._pipeline_connection,
+            self._toplevel_connection,
+            self._state_settings_connection,
+            self._font_connection,
+            *self._messenger_connections,
+        ):
+            connection.disconnect()
+
+        for source in (
+            self._resize_source,
+            self._hide_overlays_source,
+            self._buffering_source,
+            self._seeking_source,
+            self._build_menus_source,
+        ):
+            source.remove()
+
+        self._messenger.teardown()
+        self._messenger = None
+
+        for name in self.list_actions():
+            self.remove_action(name)
+
+        self.play.stop()
+        self.play = None
+        self.pipeline = None
+
     @Gtk.Template.Callback()
     def _cycle_end_timestamp_type(self, *_args) -> None:
         state_settings.set_enum(
@@ -384,8 +429,7 @@ class Window(Adw.ApplicationWindow):
         self.play.seek(0)
         self.unpause()
 
-    @Gtk.Template.Callback()
-    def _rotate_left(self, *_args) -> None:
+    def _rotate_left(self) -> None:
         match int((props := self.paintable.props).orientation):
             case 0:
                 props.orientation = 4
@@ -396,8 +440,7 @@ class Window(Adw.ApplicationWindow):
             case _:
                 props.orientation -= 1
 
-    @Gtk.Template.Callback()
-    def _rotate_right(self, *_args) -> None:
+    def _rotate_right(self) -> None:
         match int((props := self.paintable.props).orientation):
             case 0:
                 props.orientation = 2
@@ -429,8 +472,7 @@ class Window(Adw.ApplicationWindow):
             return None
 
         hist_file.close()
-
-        return hist.get(sha256(uri.encode("utf-8")).hexdigest())
+        return hist.get(get_file_hash_identifier(uri))
 
     def _resize_window(
         self, _obj, paintable: Gdk.Paintable, initial: bool | None = False
@@ -523,6 +565,27 @@ class Window(Adw.ApplicationWindow):
             (anim.skip if initial else anim.play)()
             logger.debug("Resized window to %ix%i", nat_width, nat_height)
 
+    def _setup_pipeline_source(self, *_args) -> None:
+        self._pipeline_connection.disconnect()
+
+        if not (pos := self._get_previous_play_position()):
+            self.unpause()
+            logger.debug("No previous play position")
+            return
+
+        if pos < MINUTE_IN_NS:
+            self.unpause()
+            logger.debug("Previous play position before 60s")
+            return
+
+        self._reveal_overlay(self.restore_breakpoint_bin)
+        self._hide_overlay(self.controls_box)
+        self.play.seek(pos)
+        logger.debug("Previous play position restored: %i", pos)
+
+    def _update_subtitle_font_desc(self) -> None:
+        self.pipeline.props.subtitle_font_desc = get_subtitle_font_desc()
+
     def _on_end_timestamp_type_changed(self, *_args) -> None:
         showtime.end_timestamp_type = state_settings.get_enum("end-timestamp-type")
         self._set_end_timestamp_label(
@@ -591,15 +654,22 @@ class Window(Adw.ApplicationWindow):
         if self.overlay_motion.contains_pointer():
             self.set_cursor_from_name("none")
 
-    @Gtk.Template.Callback()
-    def _on_realize(self, *_args) -> None:
+    def do_realize(self) -> None:
+        Adw.ApplicationWindow.do_realize(self)
+
         if not (surface := self.get_surface()):
             return
 
         if not isinstance(surface, Gdk.Toplevel):
             return
 
-        surface.connect("notify::state", self._on_toplevel_state_changed)
+        self._toplevel_connection.connect(surface)
+
+    def do_move_focus(  # pyright: ignore[reportIncompatibleMethodOverride]
+        self, direction: Gtk.DirectionType
+    ) -> None:
+        self._on_motion()
+        Adw.ApplicationWindow.do_move_focus(self, direction)
 
     def _on_toplevel_state_changed(self, toplevel: Gdk.Toplevel, *_args) -> None:
         if (
@@ -615,7 +685,11 @@ class Window(Adw.ApplicationWindow):
     def _on_paintable_invalidate_size(self, paintable: Gdk.Paintable, *_args) -> None:
         if self.is_visible():
             # Add a timeout to not interfere with loading the stream too much
-            GLib.timeout_add(100, self._resize_window, None, paintable)
+            self._resize_source.add_timeout(
+                GLib.PRIORITY_DEFAULT,
+                100,
+                lambda: self._resize_window(None, paintable),
+            )
         else:
             self.connect("map", self._resize_window, paintable, True)
 
@@ -635,21 +709,25 @@ class Window(Adw.ApplicationWindow):
             self._reveal_overlay(widget)
 
         self._last_reveal = time()
-        GLib.timeout_add_seconds(2, self._hide_overlays, self._last_reveal)
+        self._hide_overlays_source.add_timeout(
+            GLib.PRIORITY_DEFAULT,
+            2000,
+            lambda: self._hide_overlays(self._last_reveal),
+        )
 
     def _on_playback_state_changed(self, _obj, state: GstPlay.PlayState) -> None:
         # Only show a spinner if buffering for more than a second
         if state == GstPlay.PlayState.BUFFERING:
             self.buffering = True
-            GLib.timeout_add_seconds(
-                1,
-                lambda *_: (
-                    self._reveal_overlay(self.spinner) if self.buffering else None
-                ),
+            self._buffering_source.ensure_timeout(
+                GLib.PRIORITY_DEFAULT,
+                1000,
+                lambda: self._reveal_overlay(self.spinner),
             )
             return
 
         self.buffering = False
+        self._buffering_source.remove()
         self._hide_overlay(self.spinner)
 
         match state:
@@ -675,8 +753,7 @@ class Window(Adw.ApplicationWindow):
 
     @Gtk.Template.Callback()
     def _seek(self, _obj, _scroll, val: float) -> None:
-        if not self._seeking:
-            self._seeking = True
+        if not self._seeking_source.added:
             self._seek_paused = self.paused
 
         if not self.paused:
@@ -685,17 +762,11 @@ class Window(Adw.ApplicationWindow):
         self.play.seek(max(self.play.props.duration * (val / SCALE_MULT), 0))
         self.emit("seeked")
 
-        def post_seek(seeked: float) -> None:
-            if seeked != self._last_seek:
-                return
-
+        def post_seek() -> None:
             if not self._seek_paused:
                 self.unpause()
 
-            self._seeking = False
-
-        self._last_seek = time()
-        GLib.timeout_add(250, post_seek, self._last_seek)
+        self._seeking_source.add_timeout(GLib.PRIORITY_DEFAULT, 250, post_seek)
 
     def _on_seek_done(self, _obj) -> None:
         pos = self.play.props.position
@@ -711,8 +782,11 @@ class Window(Adw.ApplicationWindow):
 
         # Add a timeout to reduce things happening at once while the video is loading
         # since the user won't want to change languages/subtitles within 500ms anyway
-        self.options.menus_building += 1
-        GLib.timeout_add(500, self.options.build_menus, media_info)
+        self._build_menus_source.ensure_timeout(
+            GLib.PRIORITY_DEFAULT,
+            500,
+            lambda: self.options.build_menus(media_info),
+        )
         self.emit("media-info-updated")
 
     def _on_volume_changed(self, _obj) -> None:
@@ -773,21 +847,13 @@ class Window(Adw.ApplicationWindow):
         self.placeholder_stack.props.visible_child = self.error_status_page
         self.stack.props.visible_child = self.placeholder_page
 
-    def _on_missing_plugin(self, _obj, msg: Gst.Message) -> None:
-        if self._already_shown_missing_plugins:
-            return
-
-        self._already_shown_missing_plugins = True
-
-        # https://gstreamer.freedesktop.org/documentation/additional/design/missing-plugins.html#partially-missing-plugins
-        if partially_missing := (
-            self.pipeline.get_state(Gst.CLOCK_TIME_NONE)[0]
-            != Gst.StateChangeReturn.FAILURE
-        ):
+    def _on_missing_plugins(
+        self, _obj, missing_plugins: tuple[MissingPlugin, ...], partially_missing: bool
+    ) -> None:
+        if partially_missing:
             self.pause()
 
-        desc = GstPbutils.missing_plugin_message_get_description(msg)
-        detail = GstPbutils.missing_plugin_message_get_installer_detail(msg)
+        desc, detail = missing_plugins[0]
         group = Adw.PreferencesGroup(
             halign=Gtk.Align.CENTER,
             width_request=250,
@@ -926,6 +992,12 @@ class Window(Adw.ApplicationWindow):
         )
 
         self._create_action(
+            "leave-fullscreen",
+            lambda *_: self.set_property("fullscreened", False),
+            ("Escape",),
+        )
+
+        self._create_action(
             "toggle-fullscreen",
             lambda *_: self.set_property("fullscreened", not self.props.fullscreened),
             ("F11", "f"),
@@ -981,6 +1053,28 @@ class Window(Adw.ApplicationWindow):
             )
 
         self._create_action(
+            "decrease-rate",
+            lambda *_: self._step_rate(-1),
+            ("bracketleft",),
+        )
+
+        self._create_action(
+            "increase-rate",
+            lambda *_: self._step_rate(1),
+            ("bracketright",),
+        )
+
+        self._create_action(
+            "rotate-left",
+            lambda *_: self._rotate_left(),
+        )
+
+        self._create_action(
+            "rotate-right",
+            lambda *_: self._rotate_right(),
+        )
+
+        self._create_action(
             "screenshot",
             lambda *_args: self._screenshot(),
             ("<primary><alt>s",),
@@ -1034,7 +1128,7 @@ class Window(Adw.ApplicationWindow):
     def _create_action(
         self,
         name: str,
-        callback: Callable,
+        callback: Callable[[Gio.SimpleAction, GLib.Variant], None],
         shortcuts: Sequence[str] | None = None,
     ) -> Gio.SimpleAction:
         action = Gio.SimpleAction.new(name, None)
@@ -1065,8 +1159,10 @@ class Window(Adw.ApplicationWindow):
         about.props.translator_credits = _("translator-credits")
 
         try:
-            about.props.debug_info = log_file.read_text()
-        except FileNotFoundError:
+            about.props.debug_info = log_file.read_text(
+                encoding="utf-8", errors="replace"
+            )
+        except (FileNotFoundError, OSError):
             pass
         else:
             about.props.debug_info_filename = log_file.name
