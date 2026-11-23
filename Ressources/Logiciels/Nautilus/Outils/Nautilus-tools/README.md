@@ -2,15 +2,23 @@
 
 Ce dossier accueille le paquet Arch compilé **nautilus-tools-ogu**. Déposer ici manuellement le fichier `.pkg.tar.zst`.
 
-L'intégration ajoute cinq actions à Nautilus :
+L'extension, native (une bibliothèque `libnautilus-tools-ogu.so`), ajoute les actions suivantes à Nautilus.
+
+### Actions de terminal et de fichiers
 
 - **Ouvrir dans un terminal** : lance Ptyxis dans le dossier affiché ou sélectionné.
 - **Ouvrir en root** : ouvre le dossier avec les droits administrateur.
 - **Terminal intégré** : affiche un terminal dans le panneau inférieur de Nautilus, avec bascule par **F4** ou le bouton dédié.
-- **Installer le paquet** : clic droit sur un fichier `.pkg.tar.zst` ; un nouvel onglet Ptyxis lance `sudo pacman -U` sur ce paquet.
 - **Copier le chemin** : clic droit sur un ou plusieurs éléments copie leur chemin complet dans le presse-papiers ; avec plusieurs éléments, un chemin est copié par ligne.
+- **Ouvrir dans OpenCode** : clic droit sur un **dossier** (ou dans une **zone vide**) → ouvre une session `opencode` dans ce dossier via Ptyxis (`ptyxis -d <dossier> -x opencode`). L'entrée n'apparaît que lorsqu'un seul dossier est sélectionné.
 
-Depuis la version 0.4.0, elle retouche aussi le menu du clic droit de Nautilus :
+### Icônes des favoris
+
+- **Changer l'icône des favoris** : clic droit sur un favori de la barre latérale → **Changer l'icône** pour sélectionner une icône symbolique du thème courant ; **Réinitialiser** restaure l'icône native.
+
+Nautilus n'expose pas d'API officielle pour modifier les lignes de sa sidebar : cette fonction parcourt donc l'arbre de widgets GTK interne. Une future version majeure peut nécessiter une adaptation.
+
+Depuis la version 0.4.0, l'extension retouche aussi le menu du clic droit de Nautilus :
 
 - **Courriel…** est retiré.
 - **Extraire ici** (ajouté par File Roller) est retiré : il fait doublon avec **Extraire** de Nautilus.

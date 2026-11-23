@@ -9,11 +9,10 @@ Les composants Nautilus du dépôt sont centralisés dans [Ressources/Logiciels/
 - [9.1 Marque-pages](#91--marque-pages)
 - [9.2 Actions complémentaires dans Nautilus](#92--actions-complémentaires-dans-nautilus)
 - [9.3 Masquer des dossiers et personnaliser les icônes](#93--masquer-des-dossiers-et-personnaliser-les-icônes)
-- [9.4 Icônes personnalisées des favoris de la sidebar](#94--icônes-personnalisées-des-favoris-de-la-sidebar)
-- [9.5 Modèles de documents](#95--modèles-de-documents)
-- [9.6 Trieur automatique de Téléchargements](#96--trieur-automatique-de-téléchargements)
-- [9.7 Aperçu et miniatures avec Sushi](#97--aperçu-et-miniatures-avec-sushi)
-- [9.8 Supprimer l'effet pellicule des vignettes vidéo](#98--supprimer-leffet-pellicule-des-vignettes-vidéo)
+- [9.4 Modèles de documents](#94--modèles-de-documents)
+- [9.5 Trieur automatique de Téléchargements](#95--trieur-automatique-de-téléchargements)
+- [9.6 Aperçu et miniatures avec Sushi](#96--aperçu-et-miniatures-avec-sushi)
+- [9.7 Supprimer l'effet pellicule des vignettes vidéo](#97--supprimer-leffet-pellicule-des-vignettes-vidéo)
 
 ## 9.1 — Marque-pages
 
@@ -25,65 +24,7 @@ Dans Nautilus, créer les marque-pages utiles :
 
 ## 9.2 — Actions complémentaires dans Nautilus
 
-Les actions de terminal, d'administration, d'installation de paquets et de copie des chemins sont intégrées par **nautilus-ptyxis-root**. Voir [12.1 — Intégrer Ptyxis à Nautilus](12-shell-terminal.md#121--intégrer-ptyxis-à-nautilus-et-aux-outils-cachyos).
-
-### Extension Nautilus — « Ouvrir dans OpenCode »
-
-L’extension ajoute **« Ouvrir dans OpenCode »** au menu contextuel de Nautilus :
-
-- Clic droit sur un **dossier** : ouvre une session `opencode` dans ce dossier.
-- Clic droit dans une **zone vide** : ouvre une session dans le dossier actuellement affiché.
-
-Au clic, elle lance :
-
-```bash
-ptyxis -d <dossier> -x opencode
-```
-
-#### Emplacement du script
-
-Déposer `opencode_open.py` dans :
-
-```text
-~/.local/share/nautilus-python/extensions/
-```
-
-Dans le dépôt, conserver le script dans le sous-dossier :
-
-```text
-Ressources/Logiciels/Nautilus/Extensions/Opencode/opencode_open.py
-```
-
-#### Installation
-
-Installer la dépendance une seule fois :
-
-```fish
-sudo pacman -S nautilus-python
-```
-
-Créer le dossier d’extensions utilisateur et y copier le script depuis la racine du dépôt :
-
-```fish
-mkdir -p ~/.local/share/nautilus-python/extensions
-cp "Ressources/Logiciels/Nautilus/Extensions/Opencode/opencode_open.py" ~/.local/share/nautilus-python/extensions/
-nautilus -q
-```
-
-#### Compatibilité et comportement
-
-- API ciblée : **Nautilus 51 / nautilus-python 4.x**.
-- Utilise `get_file_items(files)` et `get_background_items(current_folder)`, sans ancien argument `window`.
-- L’entrée n’apparaît que lorsqu’un seul dossier est sélectionné.
-
-#### Désinstallation
-
-```fish
-rm ~/.local/share/nautilus-python/extensions/opencode_open.py
-nautilus -q
-```
-
-Pour l'intégration du terminal Ptyxis dans Nautilus (clic droit → ouvrir un terminal), voir [Shell & terminal](12-shell-terminal.md#121--intégrer-ptyxis-à-nautilus-et-aux-outils-cachyos).
+Les actions de terminal, d'administration, d'installation de paquets, d'ouverture dans OpenCode et de copie des chemins sont intégrées par **nautilus-tools-ogu**. Voir [12.1 — Intégrer Ptyxis à Nautilus](12-shell-terminal.md#121--intégrer-ptyxis-à-nautilus-et-aux-outils-cachyos).
 
 ### Actions contextuelles Hide et Unhide
 
@@ -100,29 +41,7 @@ Dans Nautilus :
 
 Personnaliser les icônes **Places** des dossiers suivants à partir des icônes du dossier **Icons & background** du dépôt : `Dropbox`, MP3, Root, Domestique et Lycée (dans Dropbox), Nicotine, Téléchargements, `usr`, `root`, Extensions, Icons, ainsi que des extensions GNOME et des autres dossiers souhaités.
 
-## 9.4 — Icônes personnalisées des favoris de la sidebar
-
-Le paquet maison **Nautilus Bookmark Icons** permet de changer l’icône des favoris directement dans la barre latérale de Nautilus. Le choix est persistant via GSettings et l’extension réapplique l’icône lorsque Nautilus reconstruit sa sidebar.
-
-Depuis la racine du dépôt :
-
-```fish
-sudo pacman -U "Ressources/Logiciels/Nautilus/Extensions/Nautilus Bookmark Icons/nautilus-bookmark-icons-0.1.1-1-any.pkg.tar.zst"
-nautilus -q
-```
-
-Rouvrir Nautilus, puis faire **clic droit sur un favori → Changer l’icône**. Le bouton **Réinitialiser** restaure l’icône native.
-
-Désinstallation :
-
-```fish
-sudo pacman -Rns nautilus-bookmark-icons
-nautilus -q
-```
-
-> Cette extension touche à la sidebar interne de Nautilus : une future version majeure de Nautilus peut nécessiter une adaptation.
-
-## 9.5 — Modèles de documents
+## 9.4 — Modèles de documents
 
 Utiliser un dossier caché **`.Modèles`** pour le menu de création de fichiers de Nautilus.
 
@@ -160,7 +79,7 @@ Rouvrir Nautilus et vérifier la présence des deux modèles dans le menu de cr�
 
 ---
 
-## 9.6 — Trieur automatique de Téléchargements
+## 9.5 — Trieur automatique de Téléchargements
 
 `Trieur.path` surveille `~/Téléchargements` ; `Trieur.service` attend **2 secondes**, exécute le script, puis s'arrête. Le script ne parcourt que les fichiers à la racine : dossiers extraits, vidéos et formats inconnus restent en place.
 
@@ -289,7 +208,7 @@ systemctl --user restart Trieur.path
 Attribuer manuellement les icônes **Teal** aux dossiers Archives, Audio, Code, Documents, Images, ISOs et Packages.
 
 
-## 9.7 — Aperçu et miniatures avec Sushi
+## 9.6 — Aperçu et miniatures avec Sushi
 
 **Sushi** ouvre un aperçu rapide avec la barre d’espace dans Nautilus. Deux paquets complémentaires sont fournis dans [le dossier Thumbnailer Sushi](../Ressources/Logiciels/Nautilus/Thumbnailer%20Sushi/), avec un script d’installation.
 
@@ -319,7 +238,7 @@ sh ./installer.sh -s
 Le paquet des coins arrondis est optionnel pour le script, mais requis pour appliquer le rayon Nautilus/Adwaita à toutes les miniatures. Les aperçus prennent en charge DOCX, ODT, RTF, Markdown, PDF simplifiés, PPTX/ODP, XLSX/ODS, archives ZIP/TAR/7z/RAR et paquets Arch. Les anciens formats Office binaires (`.doc`, `.xls`, `.ppt`) et les mises en page complexes ne sont pas pris en charge.
 
 
-## 9.8 — Supprimer l'effet pellicule des vignettes vidéo
+## 9.7 — Supprimer l'effet pellicule des vignettes vidéo
 
 Nautilus superpose par défaut une décoration de pellicule (*filmholes*) aux miniatures vidéo. Le script maison **Nautilus sans pellicule** remplace cette ressource graphique par un PNG transparent, sans modifier le binaire Nautilus ni les fichiers système.
 

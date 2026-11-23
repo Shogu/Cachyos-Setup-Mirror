@@ -93,7 +93,6 @@ Voir [11.32 — Polaroid](11-applications-vibe-coded.md#1132--polaroid) pour les
 - **Pacto** : installer [le gestionnaire maison des fichiers `.pacnew` et `.pacsave`](11-applications-vibe-coded.md#119--pacto).
 - **Radar** : installer [l’outil maison de recherche de fichiers](11-applications-vibe-coded.md#1110--radar).
 - **Pusher** : installer [l’interface maison du dépôt GitLab](11-applications-vibe-coded.md#1111--pusher).
-- **Nautilus Bookmark Icons** : installer [l’extension maison de personnalisation des icônes de favoris Nautilus](11-applications-vibe-coded.md#1112--nautilus-bookmark-icons).
 - **Iconostase** : application unifiée pour les icônes des applications, les dossiers et les lanceurs `.desktop`, qui remplace les anciens outils Icônes UI et PLACES ([présentation](11-applications-vibe-coded.md#1125--iconostase)).
 - **Sismographe** : installer [l’outil maison d’analyse du démarrage et des journaux](11-applications-vibe-coded.md#1113--sismographe).
 - **Snapper GTK4** : installer [l’interface GTK4/libadwaita pour Snapper et Limine](11-applications-vibe-coded.md#1114--snapper-gtk4).
@@ -142,7 +141,6 @@ sudo pacman -U \
   "Ressources/Applis vibe codées en Libadwaita/05-Systeme-et-utilitaires/Pacto/pacto-1.0.0-8-any.pkg.tar.zst" \
   "Ressources/Applis vibe codées en Libadwaita/05-Systeme-et-utilitaires/Radar/radar-1.4.0-2-any.pkg.tar.zst" \
   "Ressources/Applis vibe codées en Libadwaita/05-Systeme-et-utilitaires/Pusher/pusher-1.8.3-1-any.pkg.tar.zst" \
-  "Ressources/Logiciels/Nautilus/Extensions/Nautilus Bookmark Icons/nautilus-bookmark-icons-0.1.1-1-any.pkg.tar.zst" \
   "Ressources/Applis vibe codées en Libadwaita/05-Systeme-et-utilitaires/Sismographe/sismographe-1.0.0-6-any.pkg.tar.zst" \
   "Ressources/Applis vibe codées en Libadwaita/01-Multimedia/Disquaire/disquaire-1.7.3-3-any.pkg.tar.zst"
 ```

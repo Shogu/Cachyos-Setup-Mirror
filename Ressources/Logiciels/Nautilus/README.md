@@ -4,11 +4,6 @@ Ce répertoire rassemble les composants du dépôt qui étendent ou personnalise
 
 ## Extensions et actions
 
-### Extensions Python
-
-- **[Nautilus Bookmark Icons](Extensions/Nautilus%20Bookmark%20Icons/)** — personnalisation des icônes des favoris dans la barre latérale. Le dossier contient le paquet Arch, le README et les notes techniques.
-- **[Ouvrir dans OpenCode](Extensions/Opencode/)** — ajoute une entrée au menu contextuel pour ouvrir une session OpenCode dans le dossier visé.
-
 ### Actions contextuelles
 
 - **[Hide](Extensions/Actions%20contextuelles/Hide)** — renomme les éléments sélectionnés en ajoutant un point initial pour les masquer.
@@ -16,7 +11,7 @@ Ce répertoire rassemble les composants du dépôt qui étendent ou personnalise
 
 ## Outils
 
-- **[Nautilus-tools-ogu](Outils/Nautilus-tools/)** — intégration de Ptyxis : terminal dans le dossier, ouverture en root, terminal intégré, installation de paquets et copie de chemins.
+- **[Nautilus-tools-ogu](Outils/Nautilus-tools/)** — extension native : terminal dans le dossier, ouverture en root, terminal intégré, installation de paquets, copie de chemins, ouverture d'une session OpenCode, et personnalisation des icônes des favoris de la sidebar.
 
 ## Aperçu et miniatures
 

@@ -10,13 +10,14 @@
 
 ## 12.1 — Intégrer Ptyxis à Nautilus et aux outils CachyOS
 
-Installer **nautilus-tools-ogu** pour intégrer directement Ptyxis à Nautilus. Le paquet ajoute cinq actions :
+Installer **nautilus-tools-ogu** pour intégrer directement Ptyxis à Nautilus et étendre son menu contextuel. L'extension native ajoute notamment :
 
 - **Ouvrir dans un terminal** : lance Ptyxis dans le dossier affiché ou sélectionné.
 - **Ouvrir en root** : ouvre le dossier avec les droits administrateur.
 - **Terminal intégré** : affiche un terminal dans le panneau inférieur de Nautilus ; l'affichage se bascule avec **F4** ou le bouton dédié.
-- **Installer le paquet** : clic droit sur un fichier `.pkg.tar.zst` ; un nouvel onglet Ptyxis lance `sudo pacman -U` sur ce paquet.
 - **Copier le chemin** : clic droit sur un ou plusieurs éléments copie leur chemin complet dans le presse-papiers. Avec plusieurs éléments, chaque chemin occupe une ligne.
+- **Ouvrir dans OpenCode** : clic droit sur un dossier (ou en zone vide) → ouvre une session `opencode` dans ce dossier.
+- **Changer l'icône des favoris** : clic droit sur un favori de la sidebar → choisir une icône symbolique ; **Réinitialiser** restaure l'icône native.
 
 Le paquet compilé sera déposé manuellement dans [Ressources/Logiciels/Nautilus/Outils/Nautilus-tools](../Ressources/Logiciels/Nautilus/Outils/Nautilus-tools/). Une fois le fichier `.pkg.tar.zst` ajouté dans ce dossier, l'installer depuis la racine du dépôt :
 
@@ -25,7 +26,7 @@ sudo pacman -U "Ressources/Logiciels/Nautilus/Outils/Nautilus-tools/"*.pkg.tar.z
 nautilus -q
 ```
 
-Rouvrir Nautilus pour retrouver les cinq actions. Le dossier de dépôt contient un README avec la procédure.
+Rouvrir Nautilus pour retrouver les actions. Le dossier de dépôt contient un README avec la procédure.
 
 ## 12.2 — Fish, GNOME Text Editor et Micro
 

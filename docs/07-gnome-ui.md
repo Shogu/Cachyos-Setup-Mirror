@@ -244,7 +244,7 @@ Les changements sont pris en compte à la prochaine ouverture de session. Pour a
 
 ## 7.14 — Miniatures vidéo Nautilus sans effet pellicule
 
-Le réglage **Nautilus sans pellicule** supprime la décoration `filmholes` des vignettes vidéo en utilisant `G_RESOURCE_OVERLAYS`. Il est facultatif, réversible et ne modifie pas les fichiers système. Le script et sa sauvegarde sont documentés dans [Nautilus — workflow, section 9.8](09-nautilus-workflow.md#98--supprimer-leffet-pellicule-des-vignettes-vidéo).
+Le réglage **Nautilus sans pellicule** supprime la décoration `filmholes` des vignettes vidéo en utilisant `G_RESOURCE_OVERLAYS`. Il est facultatif, réversible et ne modifie pas les fichiers système. Le script et sa sauvegarde sont documentés dans [Nautilus — workflow, section 9.7](09-nautilus-workflow.md#97--supprimer-leffet-pellicule-des-vignettes-vidéo).
 
 ## 7.13 — Setup d’icônes et dossiers GNOME
 

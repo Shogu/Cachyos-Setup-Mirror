@@ -44,7 +44,6 @@ Les personnalisations propres à Nautilus sont désormais regroupées dans [Ress
 
 - [11.4 — Fret](#114--fret)
 - [11.2 — Grabber](#112--grabber)
-- [11.12 — Nautilus Bookmark Icons](#1112--nautilus-bookmark-icons)
 - [11.37 — Quai — serveur FTP compagnon pour Fret](#1137--quai--serveur-ftp-compagnon-pour-fret)
 - [11.31 — Thumbnailer Sushi](#1131--thumbnailer-sushi)
 - [11.39 — Valise](#1139--valise)
@@ -76,7 +75,7 @@ sh ./installer.sh
 
 L’installeur purge lui-même le cache de miniatures : aucune commande de nettoyage séparée n’est requise. Pour simuler les opérations sans les appliquer, exécuter `sh ./installer.sh -s`.
 
-Pour l’utilisation dans le workflow Nautilus, voir [9.7 — Aperçu et miniatures avec Sushi](09-nautilus-workflow.md#97--aperçu-et-miniatures-avec-sushi).
+Pour l’utilisation dans le workflow Nautilus, voir [9.6 — Aperçu et miniatures avec Sushi](09-nautilus-workflow.md#96--aperçu-et-miniatures-avec-sushi).
 
 ---
 
@@ -144,7 +143,6 @@ Le [README de Valise](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/03
 
 - [11.4 — Fret](#114--fret)
 - [11.2 — Grabber](#112--grabber)
-- [11.12 — Nautilus Bookmark Icons](#1112--nautilus-bookmark-icons)
 - [11.37 — Quai — serveur FTP compagnon pour Fret](#1137--quai--serveur-ftp-compagnon-pour-fret)
 - [11.31 — Thumbnailer Sushi](#1131--thumbnailer-sushi)
 - [11.39 — Valise](#1139--valise)
@@ -357,7 +355,7 @@ Voir le [README de Chihito](../Ressources/Applis%20vibe%20codées%20en%20Libadwa
 
 ### 11.36 — SPECTACLE
 
-**SPECTACLE** est un lecteur YouTube qui permet de lire les contenus **avec ou sans vidéo**. Il comprend également une fonction nommée **Rideau**.
+**SPECTACLE** est un lecteur YouTube qui permet de lire les contenus **avec ou sans vidéo**. Il comprend également une fonction nommée **Rideau** (son seul) et un filtre **Vidéos / Albums** pour lire les albums officiels en continu, ainsi que des **radios sans fin** réapprovisionnées depuis le dernier titre joué.
 
 Le paquet et les éventuelles sources seront ajoutés manuellement dans [le dossier SPECTACLE](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/01-Multimedia/SPECTACLE/). Les dépendances et la procédure d’installation seront précisées lorsque le README technique sera disponible.
 
@@ -599,34 +597,6 @@ rm -rf "$HOME/.local/share/jd-adwaita/jdownloader"
 
 
 Penser à régler son icone avec Menu!
-
----
-
-### 11.12 — Nautilus Bookmark Icons
-
-Petite extension `nautilus-python` pour Nautilus 48–50 permettant de personnaliser l’icône des favoris de la barre latérale. Elle est dérivée du mécanisme de **Nautilus My Computer**, mais ne reprend aucune de ses autres fonctions. Le paquet, le README et les notes techniques sont regroupés dans [Ressources/Logiciels/Nautilus/Extensions/Nautilus Bookmark Icons](../Ressources/Logiciels/Nautilus/Extensions/Nautilus%20Bookmark%20Icons/).
-
-**Paquet fourni : `nautilus-bookmark-icons-0.1.1-1-any.pkg.tar.zst`.**
-
-### Installation
-
-Depuis la racine du dépôt :
-
-```fish
-sudo pacman -U "Ressources/Logiciels/Nautilus/Extensions/Nautilus Bookmark Icons/nautilus-bookmark-icons-0.1.1-1-any.pkg.tar.zst"
-nautilus -q
-```
-
-Rouvrir Nautilus puis utiliser **clic droit sur un favori → Changer l’icône**. Le choix est conservé via GSettings ; **Réinitialiser** restaure l’icône native.
-
-### Désinstallation
-
-```fish
-sudo pacman -Rns nautilus-bookmark-icons
-nautilus -q
-```
-
-La sidebar de Nautilus n’étant pas couverte par une API d’extension officielle, une future version majeure peut nécessiter une adaptation.
 
 ---
 

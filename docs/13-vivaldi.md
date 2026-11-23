@@ -12,6 +12,7 @@
 - [13.6 CopierURL — extension Vivaldi pour Grabber](#136--copierurl--extension-vivaldi-pour-grabber)
 - [13.7 Perceptron — extension compagnon pour OpenCode](#137--perceptron--extension-compagnon-pour-opencode)
 - [13.8 Web Panel Auto Discard — déchargement des panneaux fermés](#138--web-panel-auto-discard--déchargement-des-panneaux-fermés)
+- [13.9 Envoyer vers Spectacle — extension Vivaldi pour Spectacle](#139--envoyer-vers-spectacle--extension-vivaldi-pour-spectacle)
 
 ## 13.1 — Synchronisation, cache et réglages internes
 
@@ -125,6 +126,7 @@ Les extensions sont regroupées ci-dessous par usage.
 
 - **CopierURL — Grabber** : extension locale documentée en [13.6](#136--copierurl--extension-vivaldi-pour-grabber), qui remplace Tab Copy/Auto Tab Copy pour la copie d’URL et ajoute l’envoi vers Grabber.
 - **Perceptron** : extension compagnon qui envoie l’URL de l’onglet ou une sélection de texte vers une nouvelle session dédiée dans Perceptron. Voir [13.7](#137--perceptron--extension-compagnon-pour-opencode).
+- **Envoyer vers Spectacle** : extension qui ouvre une vidéo YouTube dans Spectacle à la même position. Voir [13.9](#139--envoyer-vers-spectacle--extension-vivaldi-pour-spectacle).
 - [Raindrop](https://chromewebstore.google.com/detail/raindropio/ldgfbffkinooeloadekpmfoklnobpien?pli=1)
 
 ### Apparence
@@ -239,4 +241,17 @@ Le [README du paquet](../Ressources/Logiciels/Vivaldi/Web%20Panel%20Auto%20Disca
 
 ---
 
+
+## 13.9 — Envoyer vers Spectacle — extension Vivaldi pour Spectacle
+
+L'extension **Envoyer vers Spectacle** ouvre une vidéo YouTube dans **Spectacle** (lecteur natif, mode Rideau) à la même position : moins de processeur et de batterie que le navigateur.
+
+- **Sur YouTube** : un bouton **« Spectacle »** apparaît sous la vidéo ; la vidéo est mise en pause dans le navigateur et reprend dans Spectacle à la position actuelle.
+- **Partout** : clic droit sur un lien YouTube (`youtube.com/watch`, `youtu.be/`, `youtube.com/shorts/`, `music.youtube.com`, playlists) → **Ouvrir dans Spectacle**.
+
+L'envoi passe par `spectacle://open?url=…&t=…` : Spectacle démarre ou reçoit l'URL dans sa fenêtre déjà ouverte. L'archive [vivaldi-send-to-spectacle-1.0.0.zip](../Ressources/Logiciels/Vivaldi/Extensions%20Vivaldi%20vibe-coded/Envoyer%20vers%20Spectacle/vivaldi-send-to-spectacle-1.0.0.zip) et sa notice sont regroupées dans [Ressources/Logiciels/Vivaldi/Extensions Vivaldi vibe-coded/Envoyer vers Spectacle/](../Ressources/Logiciels/Vivaldi/Extensions%20Vivaldi%20vibe-coded/Envoyer%20vers%20Spectacle/README.md). Décompresser l'archive, puis charger le dossier extrait depuis `vivaldi://extensions` en mode développeur (le laisser en place).
+
+Au premier envoi, cocher **« toujours autoriser »** pour `spectacle://`. Nécessite **Spectacle 0.6.1** ou plus récent (voir [11.36 — SPECTACLE](11-applications-vibe-coded.md#1136--spectacle)).
+
+---
 [Accueil](../README.md) · [Précédent](12-shell-terminal.md) · [Suivant](14-maintenance.md)

@@ -30,7 +30,7 @@ Les procédures détaillées restent dans leur rubrique pour éviter de mainteni
 - [Traductions à ne pas réextraire avec pacman](02-system-cleanup.md#28--nettoyer-les-traductions-et-les-fichiers-de-configuration).
 - [Extensions GNOME](08-gnome-extensions.md) : vérifier leur compatibilité après changement de version.
 - [Intégration Nautilus–Ptyxis](12-shell-terminal.md#121--intégrer-ptyxis-à-nautilus-et-aux-outils-cachyos) et [traduction du bouton énergétique](07-gnome-ui.md#76--actions-de-session-rappels-et-libellé-du-profil-énergétique-menu-dalimentation) : vérifier les extensions et fichiers concernés après mise à jour.
-- [Ressources Nautilus](../Ressources/Logiciels/Nautilus/README.md) : vérifier les extensions, actions contextuelles et outils après une mise à jour majeure de Nautilus. Pour l'effet pellicule, si la ressource `filmholes` ou l'extraction du PNG change, vérifier le script et retester `install` / `restore` ([procédure](09-nautilus-workflow.md#98--supprimer-leffet-pellicule-des-vignettes-vidéo)).
+- [Ressources Nautilus](../Ressources/Logiciels/Nautilus/README.md) : vérifier les extensions, actions contextuelles et outils après une mise à jour majeure de Nautilus. Pour l'effet pellicule, si la ressource `filmholes` ou l'extraction du PNG change, vérifier le script et retester `install` / `restore` ([procédure](09-nautilus-workflow.md#97--supprimer-leffet-pellicule-des-vignettes-vidéo)).
 - [Reconstruction de l'initramfs](03-boot-kernel.md#33--réduire-linitramfs) avec `limine-mkinitcpio` après changement des hooks, modules ou paramètres de démarrage.
 - [Restauration des snapshots](04-filesystems-storage.md#42--configurer-et-restaurer-les-snapshots-limine) avec l'outil adapté à Limine.
 
