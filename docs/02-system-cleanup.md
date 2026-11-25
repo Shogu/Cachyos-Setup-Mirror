@@ -378,8 +378,9 @@ sudo systemctl mask cachyos-rate-mirrors.service cachyos-rate-mirrors.timer
 ```
 sudo systemctl mask fwupd
 sudo systemctl mask sys-kernel-tracing.mount
-sudo systemctl mask flatpak-system-helper.service
 ```
+
+Les services propres à Pamac sont réglés dans [12.3 — Pamac](12-shell-terminal.md#123--pamac-et-le-lanceur-de-mise-à-jour) : son daemon D-Bus doit rester disponible à la demande, tandis que le nettoyage périodique et les mises à jour hors ligne sont désactivés. Si Flatpak est conservé, ne pas masquer arbitrairement son helper ; si le paquet est retiré, cette unité n'a plus à être gérée ici.
 
 Après redémarrage, examiner les durées de démarrage :
 

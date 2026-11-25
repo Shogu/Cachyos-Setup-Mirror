@@ -94,22 +94,65 @@ Insérer ces valeurs dans l'objet JSON existant, ou utiliser ce contenu si le fi
 
 Le setup met à jour le système via **Pamac** : dépôts officiels par Pacman, AUR par Pamac. Les opérations de contrôle après mise à jour restent dans [Maintenance](14-maintenance.md).
 
-### Installer Pamac et retirer Flatpak
+### Installer Pamac
 
-Installer Pamac depuis les dépôts disponibles sur ce setup :
+Installer la version GTK4 + libadwaita fournie par le dépôt CachyOS :
 
 ```fish
-sudo pacman -S pamac-aur
+sudo pacman -S cachyos/pamac-aur
 ```
 
-**Vérifier que Pamac est bien installé et fonctionnel avant de poursuivre.** Une fois cette étape validée, supprimer le dépôt distant Flathub puis le paquet Flatpak :
+Le paquet `pamac-aur` fournit l'interface graphique et la commande `pamac`. `libpamac-aur` fournit le backend transactionnel. Dans cette version, `libpamac-aur` déclare `flatpak` comme dépendance dure : même si l'on ne souhaite pas gérer d'applications Flatpak, le paquet Flatpak est donc installé avec Pamac.
+
+### Régler les services systemd de Pamac
+
+Objectif : ne lancer aucun service de maintenance Pamac au démarrage, tout en gardant le daemon D-Bus disponible à la demande.
+
+**Ne pas masquer `pamac-daemon.service`.** Pamac, en interface graphique comme en ligne de commande, en a besoin pour les opérations de rafraîchissement. Le service est `static` : il n'est pas activé au démarrage et se lance à la demande.
+
+```fish
+sudo systemctl unmask pamac-daemon.service
+sudo systemctl disable --now pamac-cleancache.timer
+sudo systemctl mask pamac-cleancache.service pamac-offline-upgrade.service
+```
+
+État attendu :
+
+| Unité | Réglage | État attendu |
+|---|---|---|
+| `pamac-daemon.service` | Laisser disponible, non masqué | `static`, à la demande |
+| `pamac-cleancache.timer` | Désactiver et arrêter | `disabled` |
+| `pamac-cleancache.service` | Masquer | `masked` |
+| `pamac-offline-upgrade.service` | Masquer | `masked` |
+
+Contrôler les états :
+
+```fish
+systemctl status pamac-daemon.service
+systemctl is-enabled pamac-cleancache.timer pamac-cleancache.service pamac-offline-upgrade.service
+```
+
+Le daemon D-Bus peut être actif pendant une opération Pamac : c'est normal et ne signifie pas qu'il est lancé en permanence au démarrage.
+
+### Indicateur GNOME de mises à jour
+
+Le paquet installe également l'extension GNOME `pamac-updates@manjaro.org`. Dans cette configuration, elle reste désactivée : elle ne figure pas dans la liste des extensions GNOME activées et n'est donc pas chargée. Il n'est pas nécessaire de supprimer ses fichiers, qui appartiennent au paquet.
+
+### Retirer Flathub et, éventuellement, Flatpak
+
+Si le dépôt Flathub n'est pas utilisé, retirer uniquement le dépôt distant :
 
 ```fish
 flatpak remote-delete flathub
+```
+
+**Attention :** retirer ensuite le paquet `flatpak` avec `pacman -Rdd` contourne la dépendance dure déclarée par `libpamac-aur`. Cela laisse la base Pacman dans un état où une dépendance installée manque. Pamac peut continuer à fonctionner pour les dépôts et l'AUR, mais cette configuration n'est plus cohérente du point de vue des dépendances et peut compliquer les mises à jour. À réserver à un choix délibéré, en sachant qu'il faudra éventuellement réinstaller Flatpak pour rétablir la cohérence :
+
+```fish
 sudo pacman -Rdd flatpak
 ```
 
-La suppression de Flatpak est volontairement placée ici, après l'installation de Pamac, et non dans la passe générale de nettoyage. L'option `-Rdd` force la suppression du paquet sans vérifier ses dépendances : ne l'utiliser que si Flatpak n'est plus souhaité. Cette opération ne désinstalle pas Pamac.
+La suppression forcée de Flatpak n'est donc pas une étape normale de l'installation de Pamac ; la solution propre est de conserver le paquet Flatpak tout en supprimant le remote Flathub.
 
 ### Installer le lanceur personnel
 
@@ -128,7 +171,7 @@ Le hook Pacman qui protège également les mises à jour lancées en dehors de c
 
 ### Mises à jour AUR
 
-Les paquets AUR sont gérés par Pamac : `pamac upgrade --aur` met à jour l'AUR après `pacman -Syu` pour les dépôts officiels. L'alias Fish `upgrade` enchaîne les deux.
+Les paquets AUR sont gérés par Pamac : `pamac upgrade --aur --devel` met à jour l'AUR après `pacman -Syu` pour les dépôts officiels. L'alias Fish `upgrade` enchaîne les deux. Les mises à jour des paquets AUR distribués sous forme de sources nécessitent une chaîne de compilation (`base-devel`, `fakeroot`, `gcc`). Si ces outils ont été retirés lors du nettoyage, la compilation des paquets AUR concernés échouera ; les paquets binaires du dépôt CachyOS ne sont pas concernés.
 
 ---
 
