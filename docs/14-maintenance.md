@@ -8,6 +8,7 @@
 - [14.2 Points à revoir après les mises à jour](#142--points-à-revoir-après-les-mises-à-jour)
 - [14.3 Dépannage iwd](#143--dépannage-iwd)
 - [14.4 Maintenir les applications GNOME maison](#144--maintenir-les-applications-gnome-maison)
+- [14.5 Purge finale après installation complète](#145--purge-finale-après-installation-complète)
 
 ## 14.1 — Retirer Cachy-update
 
@@ -203,6 +204,55 @@ journalctl -f -o cat /usr/bin/gnome-shell
 **À chaque reconstruction d'un paquet maison :**
 
 - [ ] Incrémenter au minimum `pkgrel` dans le PKGBUILD afin que le gestionnaire de paquets reconnaisse la nouvelle version.
+
+## 14.5 — Purge finale après installation complète
+
+À exécuter **une seule fois, à la fin du setup**, après avoir installé tous les logiciels des chapitres 10 à 13. Les installations ont pu tirer des dépendances devenues inutiles, réactiver des paquets ou des services retirés au chapitre [02](02-system-cleanup.md), ou ajouter leurs propres unités. Cette passe s'ajoute à l'allégement de 02 — elle ne le remplace pas.
+
+### Orphelins de paquets
+
+Rechercher les orphelins (retirés par personne) :
+
+```fish
+pacman -Qdtq
+```
+
+Les supprimer s'il y en a :
+
+```fish
+set -l orphelins (pacman -Qdtq)
+if test (count $orphelins) -gt 0
+    sudo pacman -Rns $orphelins
+end
+```
+
+### Paquets que 02 retirait et que les installations ont pu réintroduire
+
+Certains paquets supprimés en 02 sont des dépendances de logiciels installés plus tard et peuvent être revenus avec eux :
+
+- **`djvulibre`** : dépendance de `papers` ([10.1](10-logiciels.md#101--logiciels-à-installer)). Si `papers` n'en a finalement pas besoin, restaurer la suppression de 02 (`sudo pacman -Rdd djvulibre`), sinon le conserver.
+- **chaîne de compilation** (`base-devel`, `gcc`, `rust`, `lld`, `llvm`, `linux-cachyos-headers`) : réinstallée le temps d'un rebuild local (dconf-editor GTK4, Dactylo, Semitone…). Une fois les paquets construits et installés, elle peut être retirée de nouveau si elle ne sert plus.
+- **`dnsmasq`** : à examiner si un logiciel installé l'a ramené (paquet incertain laissé hors transaction en 02).
+
+Vérifier l'état réel avant toute suppression : `pacman -Qi <paquet>` et `pacman -Qtd`.
+
+### Services systemd réintroduits par l'installation des applications
+
+Des paquets installés (notamment les applications maison qui fournissent leurs propres fichiers systemd) peuvent réactiver une unité que 02 avait masquée ou désactivée, ou en ajouter une nouvelle. Après les installations, repasser sur les deux listes :
+
+Système (rechercher les unités réapparues, à re-masquer comme en [2.4](02-system-cleanup.md#24--masquer-les-services-système-et-utilisateur-inutilisés)) :
+
+```fish
+systemctl list-unit-files --type=service --state=enabled
+```
+
+Utilisateur (même vérification pour les unités de 02 : Evolution, XSettings, A11y, arch-update, etc.) :
+
+```fish
+systemctl --user list-unit-files --type=service --state=enabled
+```
+
+Toute unité amenée par un paquet installé entre-temps et jugée inutile peut être masquée de la même façon que celles du chapitre 02.
 
 ---
 
