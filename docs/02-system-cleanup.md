@@ -32,8 +32,6 @@ sudo efibootmgr -b 0002 -B
 
 ## 2.2 — Alléger les logiciels installés
 
-**Ordre conseillé :** installer d'abord les logiciels que l'on souhaite conserver ou ajouter, puis effectuer ce nettoyage. Par exemple, installer et configurer Pamac avant de retirer Flatpak ; la procédure figure dans [12.3 — Pamac et le lanceur de mise à jour](12-shell-terminal.md#123--pamac-et-le-lanceur-de-mise-à-jour). Le nettoyage intervient ensuite, une fois les installations vérifiées.
-
 ### Paquets à conserver explicitement
 
 `xdg-utils` est utilisé par Vivaldi, mais n'est pas toujours marqué comme explicitement installé. Pacman peut donc le considérer comme un paquet orphelin et le proposer lors d'un nettoyage. Pour le conserver dans la liste des paquets explicitement installés :
@@ -41,6 +39,55 @@ sudo efibootmgr -b 0002 -B
 ```fish
 sudo pacman -D --asexplicit xdg-utils
 ```
+
+### Pamac — installation et configuration
+
+Installer la version GTK4 + libadwaita fournie par le dépôt CachyOS :
+
+```fish
+sudo pacman -S cachyos/pamac-aur
+```
+
+Le paquet `pamac-aur` fournit l'interface graphique et la commande `pamac`. `libpamac-aur` fournit le backend transactionnel. Dans cette version, `libpamac-aur` déclare `flatpak` comme dépendance dure : Flatpak est donc installé avec Pamac, même si l'on ne souhaite pas utiliser les applications Flatpak.
+
+**Services systemd :** conserver le daemon D-Bus disponible à la demande. Ne pas le masquer : Pamac en a besoin pour les opérations de rafraîchissement. Le service est `static`, donc il ne démarre pas au boot de lui-même. Désactiver le nettoyage périodique et masquer le service de nettoyage ainsi que la mise à jour hors ligne :
+
+```fish
+sudo systemctl unmask pamac-daemon.service
+sudo systemctl disable --now pamac-cleancache.timer
+sudo systemctl mask pamac-cleancache.service pamac-offline-upgrade.service
+```
+
+États attendus :
+
+| Unité | Réglage | État attendu |
+|---|---|---|
+| `pamac-daemon.service` | Disponible, non masqué | `static`, à la demande |
+| `pamac-cleancache.timer` | Désactiver et arrêter | `disabled` |
+| `pamac-cleancache.service` | Masquer | `masked` |
+| `pamac-offline-upgrade.service` | Masquer | `masked` |
+
+Contrôle :
+
+```fish
+systemctl status pamac-daemon.service
+systemctl is-enabled pamac-cleancache.timer pamac-cleancache.service pamac-offline-upgrade.service
+```
+
+Le daemon peut être actif pendant une opération Pamac : cela ne signifie pas qu'il tourne en permanence au démarrage.
+
+L'extension GNOME `pamac-updates@manjaro.org` est fournie par le paquet, mais reste désactivée si elle n'est pas présente dans la liste `org.gnome.shell enabled-extensions`. Ses fichiers ne doivent pas être supprimés manuellement puisqu'ils appartiennent au paquet.
+
+**Retrait de Flathub et Flatpak :** après l'installation de Pamac, supprimer le dépôt distant Flathub puis le paquet Flatpak si l'on ne souhaite pas le conserver :
+
+```fish
+flatpak remote-delete flathub
+sudo pacman -Rdd flatpak
+```
+
+`-Rdd` force la suppression sans vérifier les dépendances. Cette commande contourne donc la dépendance dure de `libpamac-aur` envers `flatpak` et laisse une dépendance déclarée non satisfaite dans la base Pacman. Pamac peut continuer à fonctionner pour les dépôts et l'AUR, mais cette configuration est volontairement incohérente du point de vue des dépendances ; réinstaller Flatpak peut être nécessaire pour rétablir la cohérence.
+
+**AUR :** la mise à jour des paquets AUR distribués sous forme de sources nécessite une chaîne de compilation (`base-devel`, `fakeroot`, `gcc`). Si ces outils ont été retirés, la compilation des paquets AUR concernés échouera. Les paquets binaires du dépôt CachyOS ne sont pas concernés.
 
 ### Première passe — paquets dont l'inutilité est confirmée sur ce setup
 
@@ -269,11 +316,19 @@ sudo pacman -Rns ninja tesseract tesseract-data-fra tesseract-data-osd autoconf 
 
 - fuse2 : **déjà supprimé de cette installation**. Ne pas le remettre dans les commandes de nettoyage. L'AppImage de LeLivreScolaire doit être testée sans ce runtime ; si elle échoue, faire adapter son runtime pour FUSE 3 avant d'envisager une réinstallation. Voir [10.2 — Puls et LeLivreScolaire](10-logiciels.md#102--puls-et-lelivrescolaire).
 
-### Contrôle parental
+### Flatpak et contrôle parental
 
+- `flatpak` : gestion d'applications Flatpak.
 - `malcontent` : contrôle parental et restrictions d'usage.
 
-Si ces fonctions ne sont pas utilisées :
+Supprimer d'abord le dépôt distant Flathub, puis retirer le paquet Flatpak en ignorant volontairement le contrôle des dépendances :
+
+```fish
+flatpak remote-delete flathub
+sudo pacman -Rdd flatpak
+```
+
+`-Rdd` force la suppression de `flatpak` sans vérifier les dépendances. À utiliser ici uniquement après avoir décidé de ne plus utiliser Flatpak. Retirer séparément le contrôle parental :
 
 ```fish
 sudo pacman -Rns malcontent
@@ -378,9 +433,9 @@ sudo systemctl mask cachyos-rate-mirrors.service cachyos-rate-mirrors.timer
 ```
 sudo systemctl mask fwupd
 sudo systemctl mask sys-kernel-tracing.mount
+sudo systemctl mask flatpak-system-helper.service
+sudo systemctl mask flatpak-system-helper.service
 ```
-
-Les services propres à Pamac sont réglés dans [12.3 — Pamac](12-shell-terminal.md#123--pamac-et-le-lanceur-de-mise-à-jour) : son daemon D-Bus doit rester disponible à la demande, tandis que le nettoyage périodique et les mises à jour hors ligne sont désactivés. Si Flatpak est conservé, ne pas masquer arbitrairement son helper ; si le paquet est retiré, cette unité n'a plus à être gérée ici.
 
 Après redémarrage, examiner les durées de démarrage :
 
