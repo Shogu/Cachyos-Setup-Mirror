@@ -94,6 +94,23 @@ Insérer ces valeurs dans l'objet JSON existant, ou utiliser ce contenu si le fi
 
 Le setup met à jour le système via **Pamac** : dépôts officiels par Pacman, AUR par Pamac. Les opérations de contrôle après mise à jour restent dans [Maintenance](14-maintenance.md).
 
+### Installer Pamac et retirer Flatpak
+
+Installer Pamac depuis les dépôts disponibles sur ce setup :
+
+```fish
+sudo pacman -S pamac-aur
+```
+
+**Vérifier que Pamac est bien installé et fonctionnel avant de poursuivre.** Une fois cette étape validée, supprimer le dépôt distant Flathub puis le paquet Flatpak :
+
+```fish
+flatpak remote-delete flathub
+sudo pacman -Rdd flatpak
+```
+
+La suppression de Flatpak est volontairement placée ici, après l'installation de Pamac, et non dans la passe générale de nettoyage. L'option `-Rdd` force la suppression du paquet sans vérifier ses dépendances : ne l'utiliser que si Flatpak n'est plus souhaité. Cette opération ne désinstalle pas Pamac.
+
 ### Installer le lanceur personnel
 
 Le script versionné dans `Ressources/Scripts/update-system.sh` ouvre Ptyxis, vérifie si `/boot` est monté, tente de le monter si nécessaire et annule la mise à jour si cette tentative échoue. Si le montage est disponible, il lance les mises à jour des dépôts officiels (pacman) puis de l'AUR (pamac). La tuile **Mise à jour** de Quick Settings est le point d'entrée graphique vers ce script ; le chemin du script (`~/.local/bin/update-system.sh`) est sélectionnable dans les préférences de Quick Settings. Pour les contrôles après mise à jour, voir [14 — Maintenance](14-maintenance.md).

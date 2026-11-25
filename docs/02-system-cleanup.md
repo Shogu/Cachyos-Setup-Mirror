@@ -32,6 +32,8 @@ sudo efibootmgr -b 0002 -B
 
 ## 2.2 — Alléger les logiciels installés
 
+**Ordre conseillé :** installer d'abord les logiciels que l'on souhaite conserver ou ajouter, puis effectuer ce nettoyage. Par exemple, installer et configurer Pamac avant de retirer Flatpak ; la procédure figure dans [12.3 — Pamac et le lanceur de mise à jour](12-shell-terminal.md#123--pamac-et-le-lanceur-de-mise-à-jour). Le nettoyage intervient ensuite, une fois les installations vérifiées.
+
 ### Paquets à conserver explicitement
 
 `xdg-utils` est utilisé par Vivaldi, mais n'est pas toujours marqué comme explicitement installé. Pacman peut donc le considérer comme un paquet orphelin et le proposer lors d'un nettoyage. Pour le conserver dans la liste des paquets explicitement installés :
@@ -267,19 +269,11 @@ sudo pacman -Rns ninja tesseract tesseract-data-fra tesseract-data-osd autoconf 
 
 - fuse2 : **déjà supprimé de cette installation**. Ne pas le remettre dans les commandes de nettoyage. L'AppImage de LeLivreScolaire doit être testée sans ce runtime ; si elle échoue, faire adapter son runtime pour FUSE 3 avant d'envisager une réinstallation. Voir [10.2 — Puls et LeLivreScolaire](10-logiciels.md#102--puls-et-lelivrescolaire).
 
-### Flatpak et contrôle parental
+### Contrôle parental
 
-- `flatpak` : gestion d'applications Flatpak.
 - `malcontent` : contrôle parental et restrictions d'usage.
 
-Supprimer d'abord le dépôt distant Flathub, puis retirer le paquet Flatpak en ignorant volontairement le contrôle des dépendances :
-
-```fish
-flatpak remote-delete flathub
-sudo pacman -Rdd flatpak
-```
-
-`-Rdd` force la suppression de `flatpak` sans vérifier les dépendances. À utiliser ici uniquement après avoir décidé de ne plus utiliser Flatpak. Retirer séparément le contrôle parental :
+Si ces fonctions ne sont pas utilisées :
 
 ```fish
 sudo pacman -Rns malcontent
