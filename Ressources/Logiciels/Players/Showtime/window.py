@@ -356,6 +356,9 @@ class Window(Adw.ApplicationWindow):
         if action := lookup_action(self, "show-in-files"):
             action.props.enabled = True
 
+        if action := lookup_action(self, "delete-file"):
+            action.props.enabled = True
+
     def unpause(self) -> None:
         """Start playing the current video."""
         self._hide_overlay(self.restore_breakpoint_bin)
@@ -979,6 +982,52 @@ class Window(Adw.ApplicationWindow):
         step = max(dur_secs * abs(percent) / 100, min_secs)
         self._seek_by(step if percent > 0 else -step)
 
+    def _delete_current_video(self, *_args) -> None:
+        """Déplace la vidéo en cours de lecture vers la corbeille (SUPPR)."""
+        if not (gfile := self._playing_gfile):
+            return
+
+        if not gfile.is_native():
+            self.toast_overlay.add_toast(
+                Adw.Toast.new(
+                    "Seuls les fichiers locaux peuvent être déplacés vers la corbeille"
+                )
+            )
+            return
+
+        dialog = Adw.AlertDialog.new(
+            "Déplacer vers la corbeille ?",
+            None,
+        )
+        dialog.props.body = "« {} » sera déplacé dans la corbeille.".format(
+            gfile.get_basename() or gfile.get_uri()
+        )
+        dialog.add_response("cancel", "Annuler")
+        dialog.add_response("trash", "Déplacer vers la corbeille")
+        dialog.set_response_appearance("trash", Adw.ResponseAppearance.DESTRUCTIVE)
+        dialog.props.default_response = "cancel"
+        dialog.props.close_response = "cancel"
+
+        def on_response(_dialog, response: str) -> None:
+            if response != "trash":
+                return
+
+            try:
+                gfile.trash(None)
+            except GLib.Error as error:
+                logger.error("Could not move video to trash: %s", error.message)
+                self.toast_overlay.add_toast(
+                    Adw.Toast.new(
+                        "Impossible de déplacer le fichier vers la corbeille"
+                    )
+                )
+                return
+
+            self.close()
+
+        dialog.connect("response", on_response)
+        dialog.present(self)
+
     def _create_actions(self) -> None:
         self._create_action(
             "close-window",
@@ -1085,6 +1134,12 @@ class Window(Adw.ApplicationWindow):
             lambda *_: Gtk.FileLauncher.new(
                 Gio.File.new_for_uri(self.play.props.uri)
             ).open_containing_folder(),
+        ).props.enabled = False
+
+        self._create_action(
+            "delete-file",
+            lambda *_: self._delete_current_video(),
+            ("Delete",),
         ).props.enabled = False
 
         self._create_action(

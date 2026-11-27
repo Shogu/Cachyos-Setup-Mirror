@@ -1,15 +1,22 @@
 # Showtime — astuce d’interface
 
-Ce dossier conserve un petit correctif local du lecteur vidéo GNOME Showtime. Ce n’est pas une application vibe coded : il s’agit uniquement d’une personnalisation du comportement de recherche au clavier.
+Ce dossier conserve un petit correctif local du lecteur vidéo GNOME Showtime. Ce n’est pas une application vibe coded : il s’agit uniquement d’une personnalisation du comportement au clavier (recherche proportionnelle et suppression du fichier en cours).
 
 ## Comportement
 
 - **← / →** : saut d’environ **1 %** de la durée totale de la vidéo (minimum 5 s).
 - **↑ / ↓** : saut d’environ **5 %** de la durée totale de la vidéo (minimum 30 s).
 - **Maj + ← / →** : saut fixe de **10 s** pour l’ajustement fin.
+- **Supr** : déplace le fichier vidéo en cours vers la **corbeille** (après confirmation).
 - **Volume** : déplacé sur `Ctrl + ↑ / ↓` (les flèches ↑/↓ sont réutilisées pour les sauts de 5 %).
 
 Les pourcentages sont calculés par rapport à la durée du média, pour que les déplacements s’adaptent aux vidéos courtes comme aux longues (avec un saut minimal en secondes).
+
+## Suppression du fichier en cours (Supr)
+
+- Fonctionne uniquement sur les **fichiers locaux** : appuyer sur **Supr** ouvre un dialogue « Déplacer vers la corbeille ? » ;
+- le fichier part dans la **corbeille** (récupérable) et Showtime se ferme ;
+- **Annuler / Échap** : rien ne se passe. Un fichier distant (réseau) affiche « uniquement les fichiers locaux ».
 
 ## Fichier à déposer
 
@@ -32,9 +39,10 @@ Cette commande remplace le fichier `window.py` installé par le paquet Showtime.
 ```fish
 cat /usr/lib/python3.14/site-packages/showtime/widgets/window.py
 grep -n -i "sauts" /usr/lib/python3.14/site-packages/showtime/widgets/window.py
+grep -n "delete-file" /usr/lib/python3.14/site-packages/showtime/widgets/window.py
 ```
 
-La recherche doit retrouver le marqueur `sauts` dans le fichier installé. Si le chemin diffère, retrouve le chemin fourni par le paquet :
+La recherche doit retrouver le marqueur `sauts` (sauts proportionnels) et le marqueur `delete-file` (suppression vers la corbeille) dans le fichier installé. Si le chemin diffère, retrouve le chemin fourni par le paquet :
 
 ```fish
 pacman -Ql showtime | string match -r '\S+/widgets/window\.py$'
@@ -45,11 +53,12 @@ pacman -Ql showtime | string match -r '\S+/widgets/window\.py$'
 Une mise à jour du paquet remplace `window.py` et **efface le correctif**. Pour le ré-appliquer :
 
 1. **Ne jamais poser l’ancien `window.py` entier en lieu et place du nouveau.** Le fichier de ce dossier reflète la version actuellement installée : une mise à jour de Showtime fait évoluer `window.py` (API, connecteurs, gestion des plugins…). Régresser tout le fichier à une version antérieure casse le lancement de Showtime.
-2. **Ré-injecter uniquement les blocs du correctif** sur le `window.py` **neuf** du paquet. Le cœ ur du correctif tient en deux parties :
+2. **Ré-injecter uniquement les blocs du correctif** sur le `window.py` **neuf** du paquet. Le cœur du correctif tient en trois parties :
 
-   - les deux méthodes `_seek_by()` et `_seek_by_percent()` (sauts par % de durée et saut minimal en secondes) à insérer dans la classe `Window`, juste avant `_create_actions()` ;
-   - dans `_create_actions()`, remplacer les actions `backwards` / `forwards` et les raccourcis volume par les raccourcis proportionnels (voir le comportement ci-dessus).
+   - **Sauts proportionnels** : les deux méthodes `_seek_by()` et `_seek_by_percent()` (sauts par % de durée et saut minimal en secondes) à insérer dans la classe `Window`, juste avant `_create_actions()` ;
+   - dans `_create_actions()`, remplacer les actions `backwards` / `forwards` et les raccourcis volume par les raccourcis proportionnels (voir le comportement ci-dessus) ;
+   - **Suppression (Supr)** : la méthode `_delete_current_video()` (déplacement vers la corbeille avec confirmation) et son action `delete-file` avec le raccourci `Supr` — même emplacement que ci-dessus (méthode avant `_create_actions()`, action dans `_create_actions()`, activation dans `play_video()`).
 
 3. Tester avec `showtime` puis, le cas échéant, mettre à jour ce dossier avec le nouveau `window.py` corrigé pour qu’il reste aligné sur la version installée.
 
-Le marqueur `sauts` sert justement à vérifier que le correctif est bien présent après installation.
+Le marqueur `sauts` sert à vérifier la présence des sauts proportionnels, le marqueur `delete-file` celle de la suppression vers la corbeille.

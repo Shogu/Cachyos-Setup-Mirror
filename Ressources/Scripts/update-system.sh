@@ -3,9 +3,10 @@
 #
 # Déroulé : vérifie que /boot (ESP) est monté (sinon une MAJ du noyau
 # désynchronise l'ESP et ses modules → mode d'urgence), liste les mises à jour
-# du dépôt standard (pacman) et de l'AUR (pamac-cli) sans sudo, affiche les
-# actualités Arch (avec pause pour les lire), puis lance les mises à jour
-# standard (pacman) puis AUR (pamac), seulement si nécessaire.
+# du dépôt standard (checkupdates) et de l'AUR (pamac-cli) sans sudo, affiche
+# les actualités Arch pas encore lues (avec pause pour les lire), puis lance
+# les mises à jour standard (pacman) puis AUR (pamac), seulement si nécessaire.
+# Actualités déjà vues : ~/.local/state/update-system/arch-news-seen.
 #
 #   • le mot de passe n'est demandé que s'il y a vraiment quelque chose à faire ;
 #   • tout échec (listage, montage, upgrade) est signalé et arrête le script :
@@ -88,7 +89,13 @@ function __fail
         echo "   $l"
     end
     if command -q notify-send
-        notify-send -u critical 'Mise à jour système' "$title"
+        # -a fixe le nom d'application affiché (sinon « notify-send ») ;
+        # icône : pamac-manager. On passe le CHEMIN ABSOLU du fichier SVG :
+        # la résolution par nom ne marchait pas (le démon affichait une icône
+        # de repli), alors que le chemin absolu s'affiche correctement.
+        notify-send -u critical -a 'Mise à jour CachyOS' \
+            -i "$HOME/.local/share/icons/hicolor/scalable/apps/pamac-manager.svg" \
+            'Mise à jour CachyOS' "$title"
     end
     echo
     read -P 'Fermer avec ENTRÉE '
@@ -104,6 +111,21 @@ function __names
     end
 end
 
+# Taille humaine d'un nombre d'octets (Ko, Mo, Go).
+function __hrsize -a bytes
+    set -l n (math $bytes 2>/dev/null)
+    test -n "$n"; or set n 0
+    if test $n -lt 1024
+        printf '%do' $n
+    else if test $n -lt 1048576
+        printf '%s Ko' (math -s1 "$n / 1024")
+    else if test $n -lt 1073741824
+        printf '%s Mo' (math -s1 "$n / 1048576")
+    else
+        printf '%s Go' (math -s1 "$n / 1073741824")
+    end
+end
+
 # --- Vérif des outils utilisés ---------------------------------
 if not command -q pacman
     __fail 'pacman est introuvable : impossible de mettre à jour le système.'
@@ -111,6 +133,10 @@ end
 if not command -q pamac
     __fail 'pamac est introuvable : impossible de gérer l’AUR.' \
         'Installe-le : sudo pacman -S pamac-aur'
+end
+if not command -q checkupdates
+    __fail 'checkupdates est introuvable : impossible de lister les mises à jour.' \
+        'Installe-le : sudo pacman -S pacman-contrib'
 end
 if not command -q curl
     echo '⚠  curl absent : les actualités Arch ne seront pas affichées.' >&2
@@ -147,14 +173,33 @@ if not mountpoint -q /boot
 end
 
 # --- Listage des mises à jour (sans mot de passe) -------------
-# Dépôt standard : pacman -Qu (propre, une ligne par mise à jour).
-set -l std_upd (pacman -Qu 2>/dev/null)
+# Dépôt standard : checkupdates (pacman-contrib) synchronise une copie
+# temporaire des bases, sans sudo. « pacman -Qu » seul lirait les bases
+# locales, pas rafraîchies depuis le dernier -Syu → liste périmée.
+# Codes retour : 0 = mises à jour, 2 = aucune, autre = erreur.
+set -l cu_err (mktemp)
+set -l std_upd (checkupdates 2>$cu_err)
+set -l st $status
+set -l cu_msg (cat $cu_err)
+rm -f -- $cu_err
+if test $st -ne 0 -a $st -ne 2
+    __fail "Impossible de lister les mises à jour du dépôt (checkupdates, code $st)." \
+        $cu_msg
+end
 set -l repo_names (string replace -r '^([^ ]+).*' '$1' -- $std_upd)
 set -l std_count (count $std_upd)
 
 # AUR : pamac checkupdates liste dépôt + AUR ; on retire les noms du dépôt
-# déjà comptés par pacman pour ne garder que les paquets AUR.
+# déjà comptés pour ne garder que les paquets AUR.
+# Codes retour : 0 = rien, 100 = mises à jour disponibles, autre = erreur.
 set -l aur_raw (pamac checkupdates --aur --devel -q 2>/dev/null)
+set -l st $status
+if test $st -ne 0 -a $st -ne 100
+    set_color $ORANGE
+    echo "⚠  Listage AUR en échec (pamac, code $st) : l’AUR sera ignorée cette fois."
+    set_color normal
+    set aur_raw
+end
 set -l aur_mix (__names $aur_raw)
 set -l aur_names ()
 for n in $aur_mix
@@ -162,24 +207,48 @@ for n in $aur_mix
 end
 set -l aur_count (count $aur_names)
 
-# --- Actualités Arch (lecture seule) --------------------------
+# --- Actualités Arch : seulement celles pas encore lues -------
+# Les titres déjà vus sont mémorisés dans un fichier d'état ; seules les
+# nouvelles actualités sont affichées. Elles ne sont marquées « lues »
+# qu'une fois la suite acceptée (si tu annules, elles reviendront).
+set -l state_dir (set -q XDG_STATE_HOME; and echo $XDG_STATE_HOME; or echo $HOME/.local/state)/update-system
+set -l seen_file $state_dir/arch-news-seen
+set -l seen ()
+test -r $seen_file; and set seen (cat $seen_file)
+
 set -l news ()
+set -l all_titles ()
 if command -q curl
     set -l feed (curl -s --max-time 10 https://archlinux.org/feeds/news/)
-    set -l titles (string match -r '<title>[^<]+</title>' -- $feed \
-        | string replace -r '.*<title>(.*)</title>' '$1' 2>/dev/null)
+    set all_titles (string match -r '<title>[^<]+</title>' -- $feed \
+        | string replace -r '.*<title>(.*)</title>' '$1' \
+        | string replace -a '&amp;' '&' | string replace -a '&#39;' "'" \
+        | string replace -a '&quot;' '"' | string replace -a '&lt;' '<' \
+        | string replace -a '&gt;' '>')
     # La 1ère entrée est le titre du flux ; on la retire.
-    test (count $titles) -gt 1; and set -e titles[1]
-    if test (count $titles) -gt 0
-        set news $titles
+    test (count $all_titles) -gt 1; and set -e all_titles[1]
+    for t in $all_titles
+        contains -- $t $seen; or set -a news $t
     end
 end
 
+function __mark_news_read -V state_dir -V seen_file -V all_titles
+    test (count $all_titles) -gt 0; or return
+    mkdir -p $state_dir
+    # Le flux ne garde que les ~10 dernières : on enregistre la liste
+    # actuelle, le fichier ne grossit donc jamais.
+    printf '%s\n' $all_titles > $seen_file
+end
+
 if test (count $news) -gt 0
-    __header 'ACTUALITÉS ARCH' $CYAN
+    __header "ACTUALITÉS ARCH — "(count $news)" nouvelle(s)" $CYAN
     for t in $news
         echo "  ▸ $t"
     end
+    echo
+    set_color $DIM
+    echo '  https://archlinux.org/news/'
+    set_color normal
     if test $std_count -gt 0 -o $aur_count -gt 0
         echo
         set_color --bold $ORANGE
@@ -195,6 +264,7 @@ if test (count $news) -gt 0
         end
     end
 end
+__mark_news_read
 
 # --- Mise à jour effective ------------------------------------
 set -l running_kernel (uname -r)
@@ -203,9 +273,108 @@ set -l did_aur 0
 
 if test $std_count -gt 0
     __header "MISE À JOUR SYSTÈME (dépôt) — $std_count paquet(s)" $BLUE
-    sudo pacman -Syu
-    or __fail 'La mise à jour système a échoué ou a été interrompue.' \
-        'La mise à jour AUR n’a pas été lancée.'
+    # Tableau : noms, versions, taille et dépôt d'origine en bout de ligne.
+    # Détails lus dans la copie de bases fraîche synchronisée par checkupdates
+    # (sans root) via --print-format.
+    set -l cu_db (set -q TMPDIR; and string length -q -- "$TMPDIR"; and echo "$TMPDIR"; or echo /tmp)"/checkup-db-"(id -u)
+    set -l info_lines ()
+    if test -d "$cu_db"
+        set info_lines (pacman --dbpath "$cu_db" -S -u -p --print-format '%n|%v|%s|%r' 2>/dev/null)
+    end
+    # Rassemble les lignes puis calcule la largeur de chaque colonne.
+    set -l rows ()
+    for l in $std_upd
+        set -l f (string split ' ' -- $l)             # repo/name old -> new
+        set -l name (string replace -r '^[^/]+/' '' -- $f[1])
+        set -l ver "$f[2] -> $f[4]"
+        set -l sz ''
+        set -l repo ''
+        # Recherche de la ligne info (nom | nouvelle version | taille | dépôt)
+        # par comparaison du 1er champ : `string match -r` ne renverrait ici que
+        # le groupe capturé, pas toute la ligne.
+        set -l hit ''
+        for i in $info_lines
+            set -l fld (string split '|' -- $i)
+            if test "$fld[1]" = "$name"
+                set hit $i
+                break
+            end
+        end
+        if test -n "$hit"
+            set -l p (string split '|' -- $hit)       # name | new | bytes | repo
+            set sz (__hrsize $p[3])
+            set repo $p[4]
+        end
+        set -a rows "$name|$ver|$sz|$repo"
+    end
+    set -l w1 6    # Paquet
+    set -l w2 19   # Ancienne -> Nouvelle
+    set -l w3 6    # Taille
+    set -l w4 5    # Dépôt
+    for r in $rows
+        set -l c (string split '|' -- $r)
+        test (string length -- $c[1]) -gt $w1; and set w1 (string length -- $c[1])
+        test (string length -- $c[2]) -gt $w2; and set w2 (string length -- $c[2])
+        test (string length -- $c[3]) -gt $w3; and set w3 (string length -- $c[3])
+        test (string length -- $c[4]) -gt $w4; and set w4 (string length -- $c[4])
+    end
+    set_color $BLUE
+    printf '┌─%s─┬─%s─┬─%s─┬─%s─┐\n' (string repeat -n $w1 '─') (string repeat -n $w2 '─') (string repeat -n $w3 '─') (string repeat -n $w4 '─')
+    set_color --bold $BLUE
+    printf '│ %s │ %s │ %s │ %s │\n' \
+        (string pad -w $w1 -- 'Paquet') \
+        (string pad -w $w2 -- 'Ancienne -> Nouvelle') \
+        (string pad -w $w3 -- 'Taille') \
+        (string pad -w $w4 -- 'Dépôt')
+    set_color $BLUE
+    printf '├─%s─┼─%s─┼─%s─┼─%s─┤\n' (string repeat -n $w1 '─') (string repeat -n $w2 '─') (string repeat -n $w3 '─') (string repeat -n $w4 '─')
+    for r in $rows
+        set -l c (string split '|' -- $r)
+        set_color $BLUE
+        printf '│ '
+        set_color --bold $BLUE
+        printf '%s' (string pad -w $w1 -- $c[1])
+        set_color $BLUE
+        printf ' │ '
+        set_color $DIM
+        printf '%s' (string pad -w $w2 -- $c[2])
+        set_color $BLUE
+        printf ' │ '
+        set_color $CYAN
+        printf '%s' (string pad -w $w3 -- $c[3])
+        set_color $BLUE
+        printf ' │ '
+        set_color $DIM
+        printf '%s' (string pad -w $w4 -- $c[4])
+        set_color $BLUE
+        echo ' │'
+    end
+    printf '└─%s─┴─%s─┴─%s─┴─%s─┘\n' (string repeat -n $w1 '─') (string repeat -n $w2 '─') (string repeat -n $w3 '─') (string repeat -n $w4 '─')
+    set_color normal
+    echo
+    # et on filtre aussi la ligne « Packages (N) » qu'affiche pacman lui-même.
+    # --color=always conserve les couleurs syntaxiques de pacman malgré le
+    # filtre en pipe ; stderr (progression, erreurs) n'est pas pipé.
+    sudo pacman -Syu --color=always | perl -pe '
+        s/\e\[[0-9;]*m//g;
+        if (/^Packages\s*\((\d+)\)/) {
+            my $n = $1;
+            my @pkgs = grep { length } split /\s+/, (split /\)/, $_, 2)[1];
+            my @names = map {
+                my $x = $_;
+                $x =~ s{^[^/]+/}{};   # retire « dépôt/ »
+                $x =~ s{-[^-]+$}{};   # retire l’éventuel -pkgrel (peut être « -1.1 »)
+                $x =~ s{-[^-]+$}{};   # retire la version
+                $x
+            } @pkgs;
+            $_ = "\e[1;38;2;53;132;228mPackages ($n)\e[0m " . join(" ", @names) . "\n";
+        }
+    '
+    set -l ps $pipestatus
+    if test $ps[1] -ne 0
+        __fail 'La mise à jour système a échoué ou a été interrompue.' \
+            'La mise à jour AUR n’a pas été lancée.'
+    end
     set did_std 1
 end
 

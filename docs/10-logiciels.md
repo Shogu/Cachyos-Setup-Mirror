@@ -340,13 +340,14 @@ sudo pacman -Syu --needed showtime
 showtime
 ```
 
-### Astuce d’interface — sauts proportionnels dans la vidéo
+### Astuce d’interface — sauts proportionnels et suppression du fichier en cours
 
-Un petit correctif local de `window.py` personnalise la recherche au clavier, proportionnellement à la durée de la vidéo :
+Un petit correctif local de `window.py` personnalise le clavier : recherche proportionnelle à la durée de la vidéo et suppression du fichier en cours vers la corbeille.
 
 - **← / →** : saut d’environ **1 %** de la durée (minimum 5 s).
 - **↑ / ↓** : saut d’environ **5 %** de la durée (minimum 30 s).
 - **Maj + ← / →** : saut fixe de **10 s** pour l’ajustement fin.
+- **Supr** : déplace le fichier vidéo en cours vers la **corbeille** (dialogue de confirmation, fichiers locaux uniquement, Showtime se ferme ensuite).
 - **Volume** : déplacé sur `Ctrl + ↑ / ↓` (les flèches ↑/↓ étant réutilisées pour les sauts de 5 %).
 
 Le correctif est conservé dans le dépôt : `Ressources/Logiciels/Players/Showtime/window.py`.
