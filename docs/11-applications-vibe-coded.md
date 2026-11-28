@@ -10,7 +10,7 @@
 
 Les dossiers sont classés par usage principal. Les extensions GNOME Shell restent regroupées dans [Extensions GNOME](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/Extensions%20GNOME/).
 
-- **01 — Multimédia** : Amplifaya, Chihito, Decibel, Disquaire, SPECTACLE, Semitone, Polaroid.
+- **01 — Multimédia** : Amplifaya, Carrousel, Chihito, Decibel, Disquaire, SPECTACLE, Semitone, Polaroid.
 - **02 — Bureautique et rédaction** : Alexandrie, Casier, Grimoire, Grille, Dactylo, Maquette.
 - **03 — Fichiers et téléchargements** : Fret, Quai, Grabber, Valise.
 
@@ -23,6 +23,7 @@ Les personnalisations propres à Nautilus sont désormais regroupées dans [Ress
 - [11.22 — Amplifaya — moteur headless et interface](#1122--amplifaya--moteur-headless-et-interface)
 - [11.7 — Decibel](#117--decibel)
 - [11.32 — Polaroid](#1132--polaroid)
+- [11.40 — Carrousel — Google Photos dans une fenêtre GNOME](#1140--carrousel--google-photos-dans-une-fenêtre-gnome)
 - [11.27 — Disquaire](#1127--disquaire)
 - [11.29 — Semitone](#1129--semitone)
 - [11.35 — Chihito](#1135--chihito)
@@ -253,6 +254,38 @@ sudo pacman -U ./polaroid-51.1.0-1-x86_64.pkg.tar.zst
 Lancer ensuite Polaroid depuis la grille d’applications GNOME ou avec `polaroid`.
 
 Licence : **GPL-3.0-or-later**, comme Loupe.
+
+---
+
+### 11.40 — Carrousel — Google Photos dans une fenêtre GNOME
+
+**Carrousel 1.0.2** enveloppe [Google Photos](https://photos.google.com) dans une véritable fenêtre GTK4/libadwaita, avec WebKitGTK. Il conserve l'interface et les fonctions du service web officiel tout en apportant une barre latérale et une intégration GNOME natives. Projet personnel, non affilié à Google.
+
+La Library API Google Photos ne donnant plus accès à l'ensemble de la photothèque des utilisateurs depuis le 31 mars 2025, Carrousel utilise le site officiel plutôt qu'un client natif indépendant.
+
+#### Fonctions
+
+- Barre latérale native : Photos, Explorer, Albums, Partages, Archives, Dossier verrouillé et Corbeille ; la sélection suit la page affichée, y compris dans un album ou une photo.
+- Menu latéral Google masqué par défaut (option désactivable).
+- Recherche Google Photos dans la barre d'en-tête, notamment par sujets, lieux, dates et texte dans les images.
+- Session persistante entre les lancements ; déconnexion avec effacement des cookies et données du site après confirmation.
+- Téléchargements dans `~/Images`, sans écraser les fichiers existants, avec proposition d'ouverture à la fin.
+- Import par glisser-déposer ou par le bouton Google Photos, qui ouvre le sélecteur GNOME.
+- Liens externes ouverts dans le navigateur par défaut ; pages Google de connexion et de compte conservées dans Carrousel.
+- Barre latérale repliable sous 640 px, zoom mémorisé, taille et état de fenêtre mémorisés.
+- Gestes de navigation au pavé tactile et boutons précédent/suivant de la souris.
+
+#### Installation
+
+Le paquet Arch précompilé `carrousel-1.0.2-1-any.pkg.tar.zst` sera ajouté manuellement dans [le dossier Carrousel](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/01-Multimedia/Carrousel/). Depuis la racine du dépôt, après y avoir déposé le paquet :
+
+```fish
+sudo pacman -U "Ressources/Applis vibe codées en Libadwaita/01-Multimedia/Carrousel/carrousel-1.0.2-1-any.pkg.tar.zst"
+```
+
+Dépendances principales : `python`, `python-gobject`, `gtk4`, `libadwaita` (≥ 1.5) et `webkitgtk-6.0`. Le paquet configure le schéma GSettings et les caches d'icônes et de menus à l'installation.
+
+Le [README de Carrousel](../Ressources/Applis%20vibe%20codées%20en%20Libadwaita/01-Multimedia/Carrousel/README.md) détaille les raccourcis, réglages, fichiers de session, dépannage et reconstruction depuis les sources.
 
 ---
 

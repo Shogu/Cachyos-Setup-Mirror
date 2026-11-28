@@ -18,6 +18,7 @@ Installer **nautilus-tools-ogu** pour intégrer directement Ptyxis à Nautilus e
 - **Copier le chemin** : clic droit sur un ou plusieurs éléments copie leur chemin complet dans le presse-papiers. Avec plusieurs éléments, chaque chemin occupe une ligne.
 - **Ouvrir dans OpenCode** : clic droit sur un dossier (ou en zone vide) → ouvre une session `opencode` dans ce dossier.
 - **Changer l'icône des favoris** : clic droit sur un favori de la sidebar → choisir une icône symbolique ; **Réinitialiser** restaure l'icône native.
+- **Dossiers récents et fréquents (0.8)** : à l'ouverture de la recherche Nautilus, une liste propose les cinq derniers dossiers ouverts et les cinq plus visités selon zoxide, sans doublon. Elle se filtre pendant la saisie, ouvre au clic dans l'onglet courant ou au clic du milieu dans un nouvel onglet, et ajoute les visites à zoxide. Sans zoxide, seuls les récents sont affichés. Historique : `~/.local/state/nautilus-tools-ogu/recent-folders` (50 dossiers maximum). Les chemins temporaires, caches, supports amovibles et montages GVfs sont exclus. Requiert Nautilus 47 ou plus récent.
 
 Le paquet compilé sera déposé manuellement dans [Ressources/Logiciels/Nautilus/Outils/Nautilus-tools](../Ressources/Logiciels/Nautilus/Outils/Nautilus-tools/). Une fois le fichier `.pkg.tar.zst` ajouté dans ce dossier, l'installer depuis la racine du dépôt :
 

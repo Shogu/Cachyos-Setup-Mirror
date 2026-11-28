@@ -24,7 +24,13 @@ Dans Nautilus, créer les marque-pages utiles :
 
 ## 9.2 — Actions complémentaires dans Nautilus
 
-Les actions de terminal, d'administration, d'installation de paquets, d'ouverture dans OpenCode et de copie des chemins sont intégrées par **nautilus-tools-ogu**. Voir [12.1 — Intégrer Ptyxis à Nautilus](12-shell-terminal.md#121--intégrer-ptyxis-à-nautilus-et-aux-outils-cachyos).
+Les actions de terminal, d'administration, d'installation de paquets, d'ouverture dans OpenCode, de copie des chemins, de personnalisation des icônes de favoris et de recherche de dossiers récents/fréquents sont intégrées par **nautilus-tools-ogu**. Voir [12.1 — Intégrer Ptyxis à Nautilus](12-shell-terminal.md#121--intégrer-ptyxis-à-nautilus-et-aux-outils-cachyos) et le [README de Nautilus-tools](../Ressources/Logiciels/Nautilus/Outils/Nautilus-tools/README.md).
+
+### Dossiers récents et fréquents
+
+À l'ouverture de la recherche Nautilus (loupe, `Ctrl+F` ou frappe directe dans un dossier), **Nautilus-tools 0.8** affiche sous la loupe une liste de raccourcis : les cinq derniers dossiers ouverts et les cinq dossiers les plus visités selon zoxide, sans doublon. La liste se filtre au fil de la saisie et ne détourne pas le clavier : la recherche habituelle reste inchangée.
+
+Un clic ouvre le dossier dans l'onglet courant ; un clic du milieu l'ouvre dans un nouvel onglet. Les dossiers visités sont également ajoutés à zoxide et deviennent accessibles avec `z` dans le terminal. `/tmp`, `/var/tmp`, `~/.cache`, les supports amovibles, `/mnt` et les montages GVfs sont exclus ; changer d'onglet ne compte pas comme une nouvelle visite. Sans zoxide, seuls les récents sont proposés. L'historique est conservé dans `~/.local/state/nautilus-tools-ogu/recent-folders` (50 entrées au maximum). Cette fonction nécessite Nautilus 47 ou plus récent (`slot.open-location`).
 
 ### Actions contextuelles Hide et Unhide
 

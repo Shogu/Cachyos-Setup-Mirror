@@ -16,6 +16,23 @@ L'extension, native (une bibliothèque `libnautilus-tools-ogu.so`), ajoute les a
 
 - **Changer l'icône des favoris** : clic droit sur un favori de la barre latérale → **Changer l'icône** pour sélectionner une icône symbolique du thème courant ; **Réinitialiser** restaure l'icône native.
 
+### Dossiers récents et fréquents (0.8)
+
+À l'ouverture de la recherche (loupe, `Ctrl+F` ou frappe directe dans un dossier), une liste centrée sous la loupe propose :
+
+- **Récents** : les 5 derniers dossiers ouverts dans Nautilus ;
+- **Fréquents** : les 5 dossiers les plus visités selon zoxide, sans doublon avec les récents.
+
+La liste suit le texte tapé (mots n'importe où dans le chemin, dans l'ordre : `cours tm` → `TMCV2`) et disparaît quand aucun dossier ne correspond. Elle ne prend jamais le clavier : la recherche classique marche comme avant.
+
+- Clic : ouvre le dossier dans l'onglet courant. Clic du milieu : dans un nouvel onglet.
+- Chaque dossier ouvert dans Nautilus est ajouté à zoxide (`zoxide add`) : `z` dans le terminal le connaît aussi.
+- Exclus : `/tmp`, `/var/tmp`, `~/.cache`, `/run/media`, `/media`, `/mnt`, montages GVfs. Changer d'onglet ne compte pas comme une visite.
+- Historique des récents : `~/.local/state/nautilus-tools-ogu/recent-folders` (50 dossiers au plus).
+- Sans zoxide : seulement les récents. Si une mise à jour de Nautilus fait disparaître le champ de recherche interne, un bouton dans la barre d'en-tête prend le relais.
+
+Nécessite Nautilus 47 ou plus récent (action `slot.open-location`).
+
 Nautilus n'expose pas d'API officielle pour modifier les lignes de sa sidebar : cette fonction parcourt donc l'arbre de widgets GTK interne. Une future version majeure peut nécessiter une adaptation.
 
 Depuis la version 0.4.0, l'extension retouche aussi le menu du clic droit de Nautilus :
