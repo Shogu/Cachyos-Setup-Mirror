@@ -50,7 +50,7 @@ sudo pacman -Rns perceptron
 
 ## Extension compagnon Vivaldi
 
-L’extension compagnon permet d’envoyer l’URL de l’onglet courant ou une sélection de texte vers **une nouvelle session dédiée dans Perceptron**. Les fichiers et la notice d’installation sont regroupés dans [Ressources/Logiciels/Vivaldi/Perceptron](../../../Logiciels/Vivaldi/Perceptron/README.md).
+L’extension compagnon permet d’envoyer l’URL de l’onglet courant ou une sélection de texte vers **une nouvelle session dédiée dans Perceptron** (bouton de la barre d’outils, ou menu contextuel **Analyser la page avec Perceptron** / **Envoyer la sélection vers Perceptron**). Les fichiers et la notice d’installation sont regroupés dans [Ressources/Logiciels/Vivaldi/Extensions Vivaldi vibe-coded/Perceptron](../../../Logiciels/Vivaldi/Extensions%20Vivaldi%20vibe-coded/Perceptron/README.md).
 
 ## Dépannage : génération automatique du titre des sessions
 

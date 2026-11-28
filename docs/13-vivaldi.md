@@ -181,10 +181,11 @@ L’extension utilise les raccourcis et menus contextuels listés ci-dessus. L�
 
 L’extension Vivaldi **Perceptron** permet d’envoyer le contexte de la page consultée vers une **nouvelle session dédiée dans Perceptron** :
 
-- envoyer l’URL de l’onglet courant ;
-- envoyer une sélection de texte.
+- le bouton de la barre d’outils : URL de l’onglet courant (avec la sélection de texte le cas échéant) ;
+- le menu contextuel **Analyser la page avec Perceptron** : la page consultée ;
+- le menu contextuel **Envoyer la sélection vers Perceptron** : une sélection de texte.
 
-L’archive [vivaldi-perceptron.zip](../Ressources/Logiciels/Vivaldi/Perceptron/vivaldi-perceptron.zip) et sa notice sont regroupées dans [Ressources/Logiciels/Vivaldi/Perceptron/](../Ressources/Logiciels/Vivaldi/Perceptron/README.md). Décompresser l’archive, puis charger le dossier extrait depuis `vivaldi://extensions` en mode développeur.
+L’archive [vivaldi-perceptron-1.2.zip](../Ressources/Logiciels/Vivaldi/Extensions%20Vivaldi%20vibe-coded/Perceptron/vivaldi-perceptron-1.2.zip) et sa notice sont regroupées dans [Ressources/Logiciels/Vivaldi/Extensions Vivaldi vibe-coded/Perceptron/](../Ressources/Logiciels/Vivaldi/Extensions%20Vivaldi%20vibe-coded/Perceptron/README.md). Décompresser l’archive, puis charger le dossier extrait depuis `vivaldi://extensions` en mode développeur.
 
 
 ---

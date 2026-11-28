@@ -683,7 +683,7 @@ opencode --version
 
 ### Extension compagnon pour Vivaldi
 
-Une extension compagnon Vivaldi permet d’envoyer l’URL de l’onglet courant ou une sélection de texte vers **une nouvelle session dédiée dans Perceptron**. Les fichiers de l’extension et sa notice sont regroupés dans [Ressources/Logiciels/Vivaldi/Perceptron](../Ressources/Logiciels/Vivaldi/Perceptron/README.md).
+Une extension compagnon Vivaldi permet d’envoyer l’URL de l’onglet courant ou une sélection de texte vers **une nouvelle session dédiée dans Perceptron** (bouton de la barre d’outils, ou menu contextuel **Analyser la page avec Perceptron** / **Envoyer la sélection vers Perceptron**). Les fichiers de l’extension et sa notice sont regroupés dans [Ressources/Logiciels/Vivaldi/Extensions Vivaldi vibe-coded/Perceptron](../Ressources/Logiciels/Vivaldi/Extensions%20Vivaldi%20vibe-coded/Perceptron/README.md).
 
 ### Dépannage : génération automatique du titre des sessions
 
