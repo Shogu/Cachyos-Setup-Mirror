@@ -10,7 +10,7 @@ Contenu du dossier :
 | Fichier | Rôle |
 | --- | --- |
 | `window.py` | Fichier `window.py` **complet corrigé** (clavier + SRT), aligné sur la **version actuellement installée**. C’est la référence pour un `mv` / `cp` de réinstallation. |
-| `patch_showtime.py` | Script de **ré-injection** de la partie sous-titres (additif, idempotent) — utilisé après une mise à jour de Showtime. |
+| `patch_showtime.py` | Script de **ré-injection des deux correctifs** (sous-titres + clavier) — additif, idempotent, basé sur la version neuve du paquet. |
 | `README.md` | Ce mode d’emploi. |
 
 ---
@@ -62,29 +62,30 @@ Après `sudo pacman -Syu`, le paquet **réécrit** `window.py` et **efface les d
 
 > ⚠️ **Ne jamais poser l’ancien `window.py` entier** sur le nouveau : le fichier de ce dossier reflète la version installée aujourd’hui ; une maj fait évoluer l’API / les connecteurs / les actions. Régresser tout le fichier casse le lancement de Showtime. **Ré-injecter uniquement les correctifs** sur le `window.py` neuf.
 
-### 4.1 Partie sous-titres (sûre, ré-applicable par script)
+### 4.1 Ré-injection automatique des DEUX correctifs (script unique)
 
-Cette partie est **purement additive** (ajout d’un `import` + d’un appel + d’une méthode, aucun code existant remplacé). Elle se ré-applique donc proprement sur n’importe quelle version récente, via le script :
+Un **seul script** ré-applique tout (sous-titres **+** clavier) :
 
 ```fish
 pkexec python3 "Ressources/Logiciels/Players/Showtime/patch_showtime.py"
 ```
 
-Le script (`pkexec` ouvre le dialogue d’autorisation graphique) :
-- **ne fait rien** s’il est déjà appliqué (idempotent) ;
-- **sauvegarde l’original** `window.py` → `window.py.pre-srt.bak` (une seule fois) avant la première application ;
-- vérifie chaque **ancrage** (`import json`, `self.play.props.uri = uri`, `def teardown_playback`) ; si un ancrage n’est pas trouvé (version trop différente), il **s’arrête proprement** au lieu d’écrire un fichier incohérent ;
-- n’écrit que si tous les ancrages sont présents.
+Il fonctionne en **transformations ciblées ancrées** sur le fichier d’origine :
+- il prend pour base la **version NEUVE du paquet** (extraite de `/var/cache/pacman/pkg/showtime-*.pkg.tar.zst` s’il y est, sinon le fichier installé), donc il n’utilise jamais un ancien `window.py` écrasé ;
+- pour chacune des 9 transformations, il vérifie que l’**ancrage** existe **une seule fois** ; sinon il **s’arrête proprement** (version trop différente) sans rien écrire ;
+- il ignore chaque transformation déjà présente (**idempotent**) — relançable sans risque ;
+- il **sauvegarde l’original** `window.py` → `window.py.pre-ogu.bak` (une seule fois) avant la première application ;
+- le résultat obtenu est **strictement identique** au `window.py` corrigé de référence (vérifiable par `diff`, cf. §6).
 
-### 4.2 Partie clavier
+`pkexec` ouvre le dialogue d’autorisation graphique (pas de mot de passe à taper dans le terminal de l’agent).
 
-Le correctif clavier remplace des actions existantes (`backwards` / `forwards`, raccourcis volume, ajout de `Supr`), donc il ne s’auto-ré-injecte pas par script. Le ré-appliquer manuellement sur le `window.py` neuf, en réinsérant :
+### 4.2 Si le script refuse (ancrage absent)
 
-- les méthodes `_seek_by()` et `_seek_by_percent()` (sauts par % + saut minimal) et `_delete_current_video()` (corbeille avec confirmation), dans la classe `Window`, juste avant `_create_actions()` ;
-- dans `_create_actions()` : les actions proportionnelles (remplacement de `backwards`/`forwards`) et l’action `delete-file` + le raccourci `Supr` ;
-- dans `play_video()` : l’activation de `delete-file`.
-
-Si le script 4.1 s’arrête sur un ancrage absent (version trop récente) ou si le clavier diffère, **mets-toi à jour** : rapproche-toi du `window.py` neuf, ré-injecte les blocs par-dessus, teste, puis **actualise ce dossier** (voir §6) pour qu’il reste aligné.
+Cela signifie que la nouvelle version de Showtime a déplacé/renommé l’un des points d’ancrage (`self.play.props.uri = uri`, `def teardown_playback`, `def _create_actions`, `backwards`/`forwards`, volume…). Dans ce cas :
+1. regarde **quel ancrage échoue** (le script l’indique) ;
+2. ouvre le `window.py` neuf pour localiser le point équivalent et **recaler la transformation concernée** dans `patch_showtime.py` ;
+3. teste le script sur une copie (`cp`), vérifie avec `diff` + `python3 -m py_compile`, puis applique ;
+4. **actualise ce dossier** (voir §6) pour qu’il reste aligné.
 
 ---
 
@@ -116,5 +117,5 @@ pacman -Ql showtime | string match -r '\S+/widgets/window\.py$'
   ```fish
   cp (pacman -Ql showtime | string match -r '\S+/widgets/window\.py$') "Ressources/Logiciels/Players/Showtime/window.py"
   ```
-- **Sauvegarde locale** : `patch_showtime.py` conserve l’original sous `window.py.pre-srt.bak` à côté du fichier système — il n’a pas vocation à être versionné.
+- **Sauvegarde locale** : `patch_showtime.py` conserve l’original sous `window.py.pre-ogu.bak` à côté du fichier système — il n’a pas vocation à être versionné.
 - **Ne pas commiter** le `__pycache__`.

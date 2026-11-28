@@ -356,15 +356,15 @@ Le correctif est conservé dans le dépôt : `Ressources/Logiciels/Players/Showt
 
 Par défaut Showtime n’affiche pas les fichiers `.srt` externes dans son menu (il faut « Ajouter un fichier de sous-titres… »). Un correctif local fait que, à l’ouverture d’une vidéo `video.mp4`, Showtime charge automatiquement un fichier jumeau nommé `video.fr.srt` (prioritaire) ou `video.srt`, sans aucun menu. Pratique pour des sous-titres français générés à côté des vidéos.
 
-Le correctif est en deux parties dans `Ressources/Logiciels/Players/Showtime/` :
+Le correctif est en deux fichiers dans `Ressources/Logiciels/Players/Showtime/` :
 - `window.py` : fichier complet corrigé (clavier **+** SRT), référence pour une réinstallation (`sudo cp`, voir plus bas) ;
-- `patch_showtime.py` : script de **ré-injection** de la seule partie sous-titres (additif, idempotent) après une mise à jour.
+- `patch_showtime.py` : **script de ré-injection des DEUX** correctifs (clavier + SRT) après une mise à jour — additif/idempotent, basé sur la version neuve du paquet.
 
-> **⚠️ Après une mise à jour de Showtime :** le paquet remplace `window.py` et efface les correctifs. Il ne faut **pas** écrire un ancien fichier entier à la place du nouveau (risque d’incompatibilité qui empêche Showtime de se lancer). Il faut réinjecter **uniquement les blocs des correctifs** sur le `window.py` neuf.
-> - **Sous-titres (sûr, ré-applicable)** : `pkexec python3 "Ressources/Logiciels/Players/Showtime/patch_showtime.py"` — idempotent, vérifie ses ancrages, sauvegarde l’original en `window.py.pre-srt.bak`.
-> - **Clavier** : ré-injecter manuellement (méthodes `_seek_by*`, `_delete_current_video`, actions) puis actualiser `window.py`.
->
-> Procédure complète : voir le `README.md` du dossier Showtime.
+> **⚠️ Après une mise à jour de Showtime :** le paquet remplace `window.py` et efface les correctifs. Il ne faut **pas** écrire un ancien fichier entier à la place du nouveau (risque d’incompatibilité qui empêche Showtime de se lancer). Il faut réinjecter **uniquement les blocs des correctifs** sur le `window.py` neuf — fait automatiquement par le script :
+> ```fish
+> pkexec python3 "Ressources/Logiciels/Players/Showtime/patch_showtime.py"
+> ```
+> Idempotent, vérifie ses ancrages, sauvegarde l’original en `window.py.pre-ogu.bak`, reproduit à l’identique le `window.py` corrigé de référence. Si un ancrage manque (version trop différente), il s’arrête proprement sans rien écrire ; cf. `README.md` du dossier Showtime pour re-calibrer.
 
 Depuis la racine du dépôt, après avoir placé le fichier corrigé :
 
