@@ -1,6 +1,6 @@
 # Vivaldi Web Panel Auto Discard
 
-Paquet Arch **vivaldi-webpanel-auto-discard** : décharge automatiquement les web panels Vivaldi qui restent fermés depuis deux minutes, afin de libérer leur mémoire.
+Paquet Arch **vivaldi-webpanel-auto-discard** : décharge automatiquement les web panels Vivaldi qui restent fermés depuis deux minutes, afin de libérer leur mémoire — et resynchronise leur **mode d'affichage mobile/bureau** à l'ouverture (v1.1).
 
 ## Fonctionnement
 
@@ -14,6 +14,20 @@ Toutes les cinq secondes, il vérifie si la webview de chaque panneau est affich
 - Les onglets ordinaires ne sont jamais concernés, y compris lorsqu'ils affichent le même site qu'un web panel.
 
 Un hook pacman réinjecte le mod après chaque mise à jour de Vivaldi.
+
+## Mode d'affichage mobile / bureau (v1.1)
+
+Depuis Vivaldi 8.3, un web panel restauré « à froid » (après décharge/hibernation, ex. au démarrage) peut revenir dans le **mauvais mode d'affichage** (panel réglé bureau qui s'affiche mobile, ou l'inverse).
+
+Le mod corrige ce bug : à chaque fois qu'un web panel **devient visible** (clic sur son icône, ou panneau ouvert dès le lancement), il
+
+1. lit la préférence stockée du panneau — `vivaldi.panels.web.elements[].mobileMode` — via `chrome.settings.getSetting()`,
+2. compare avec l'User-Agent réellement appliqué par la webview,
+3. et, s'il y a incohérence, applique le bon mode (`setUserAgentOverride` + rechargement), exactement comme le ferait Vivaldi en interne.
+
+- Fonctionne dans les deux sens (mobile ↔ bureau), panel par panel.
+- Les panels d'extensions (`EXT_PANEL_…`) ne sont pas touchés.
+- Aucune action manuelle : la bascule en haut du panneau n'est plus nécessaire.
 
 ## Installation
 
