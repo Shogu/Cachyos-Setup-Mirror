@@ -49,7 +49,7 @@ Mécanique : dans `play_video()`, la méthode `_try_auto_subtitles(uri)` branche
 Le plus simple est de poser le fichier **complet corrigé** :
 
 ```fish
-sudo cp "Ressources/Logiciels/Players/Showtime/window.py" (pacman -Ql showtime | string match -r '\S+/widgets/window\.py$')
+pkexec cp "Ressources/Logiciels/Players/Showtime/window.py" (pacman -Ql showtime | string match -r '\S+/widgets/window\.py$')
 ```
 
 Cette commande remplace le `window.py` installé par le paquet par la version corrigée courante (clavier **+** SRT).

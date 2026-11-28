@@ -357,7 +357,7 @@ Le correctif est conservé dans le dépôt : `Ressources/Logiciels/Players/Showt
 Par défaut Showtime n’affiche pas les fichiers `.srt` externes dans son menu (il faut « Ajouter un fichier de sous-titres… »). Un correctif local fait que, à l’ouverture d’une vidéo `video.mp4`, Showtime charge automatiquement un fichier jumeau nommé `video.fr.srt` (prioritaire) ou `video.srt`, sans aucun menu. Pratique pour des sous-titres français générés à côté des vidéos.
 
 Le correctif est en deux fichiers dans `Ressources/Logiciels/Players/Showtime/` :
-- `window.py` : fichier complet corrigé (clavier **+** SRT), référence pour une réinstallation (`sudo cp`, voir plus bas) ;
+- `window.py` : fichier complet corrigé (clavier **+** SRT), référence pour une réinstallation (`pkexec cp`, voir plus bas) ;
 - `patch_showtime.py` : **script de ré-injection des DEUX** correctifs (clavier + SRT) après une mise à jour — additif/idempotent, basé sur la version neuve du paquet.
 
 > **⚠️ Après une mise à jour de Showtime :** le paquet remplace `window.py` et efface les correctifs. Il ne faut **pas** écrire un ancien fichier entier à la place du nouveau (risque d’incompatibilité qui empêche Showtime de se lancer). Il faut réinjecter **uniquement les blocs des correctifs** sur le `window.py` neuf — fait automatiquement par le script :
@@ -369,7 +369,7 @@ Le correctif est en deux fichiers dans `Ressources/Logiciels/Players/Showtime/` 
 Depuis la racine du dépôt, après avoir placé le fichier corrigé :
 
 ```fish
-sudo cp "Ressources/Logiciels/Players/Showtime/window.py" (pacman -Ql showtime | string match -r '\S+/widgets/window\.py$')
+pkexec cp "Ressources/Logiciels/Players/Showtime/window.py" (pacman -Ql showtime | string match -r '\S+/widgets/window\.py$')
 ```
 
 Vérifier le fichier installé et rechercher les correctifs :
