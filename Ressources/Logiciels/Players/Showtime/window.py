@@ -2,6 +2,7 @@
 # SPDX-FileCopyrightText: Copyright 2024-2026 kramo
 
 import json
+import os
 from collections.abc import Callable, Sequence
 from functools import partial
 from hashlib import sha256
@@ -347,6 +348,7 @@ class Window(Adw.ApplicationWindow):
         self.rate = "1.0"
 
         self.play.props.uri = uri
+        self._try_auto_subtitles(uri)
         self.pause()
         self._on_motion()
 
@@ -380,6 +382,22 @@ class Window(Adw.ApplicationWindow):
         """Select the audio track for the given index."""
         if action := lookup_action(self, "select-language"):
             action.activate(GLib.Variant.new_uint16(index))
+
+    def _try_auto_subtitles(self, uri: str) -> None:
+        """Auto-load a sidecar subtitle file matching the video basename."""
+        try:
+            vpath = Gio.File.new_for_uri(uri).get_path()
+            if not vpath:
+                return
+            base = vpath.rsplit(".", 1)[0] if "." in vpath else vpath
+            for suffix in (".fr.srt", ".srt"):
+                cand = base + suffix
+                if os.path.exists(cand):
+                    self.play.props.suburi = Gio.File.new_for_path(cand).get_uri()
+                    logger.debug("Auto subtitle loaded: %s", cand)
+                    break
+        except Exception:
+            return
 
     def teardown_playback(self) -> None:
         """Stop playback and clear all references to self."""

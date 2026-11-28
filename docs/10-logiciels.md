@@ -352,7 +352,19 @@ Un petit correctif local de `window.py` personnalise le clavier : recherche prop
 
 Le correctif est conservé dans le dépôt : `Ressources/Logiciels/Players/Showtime/window.py`.
 
-> **⚠️ Après une mise à jour de Showtime :** le paquet remplace `window.py` et efface le correctif. Il ne faut **pas** écrire un ancien fichier entier à la place du nouveau (risque d’incompatibilité qui empêche Showtime de se lancer). Il faut réinjecter **uniquement les blocs du correctif** sur le `window.py` neuf. Voir le `README.md` du dossier Showtime pour la procédure.
+### Astuce — chargement automatique des sous-titres externes (SRT)
+
+Par défaut Showtime n’affiche pas les fichiers `.srt` externes dans son menu (il faut « Ajouter un fichier de sous-titres… »). Un correctif local fait que, à l’ouverture d’une vidéo `video.mp4`, Showtime charge automatiquement un fichier jumeau nommé `video.fr.srt` (prioritaire) ou `video.srt`, sans aucun menu. Pratique pour des sous-titres français générés à côté des vidéos.
+
+Le correctif est en deux parties dans `Ressources/Logiciels/Players/Showtime/` :
+- `window.py` : fichier complet corrigé (clavier **+** SRT), référence pour une réinstallation (`sudo cp`, voir plus bas) ;
+- `patch_showtime.py` : script de **ré-injection** de la seule partie sous-titres (additif, idempotent) après une mise à jour.
+
+> **⚠️ Après une mise à jour de Showtime :** le paquet remplace `window.py` et efface les correctifs. Il ne faut **pas** écrire un ancien fichier entier à la place du nouveau (risque d’incompatibilité qui empêche Showtime de se lancer). Il faut réinjecter **uniquement les blocs des correctifs** sur le `window.py` neuf.
+> - **Sous-titres (sûr, ré-applicable)** : `pkexec python3 "Ressources/Logiciels/Players/Showtime/patch_showtime.py"` — idempotent, vérifie ses ancrages, sauvegarde l’original en `window.py.pre-srt.bak`.
+> - **Clavier** : ré-injecter manuellement (méthodes `_seek_by*`, `_delete_current_video`, actions) puis actualiser `window.py`.
+>
+> Procédure complète : voir le `README.md` du dossier Showtime.
 
 Depuis la racine du dépôt, après avoir placé le fichier corrigé :
 
@@ -360,11 +372,12 @@ Depuis la racine du dépôt, après avoir placé le fichier corrigé :
 sudo cp "Ressources/Logiciels/Players/Showtime/window.py" (pacman -Ql showtime | string match -r '\S+/widgets/window\.py$')
 ```
 
-Vérifier le fichier installé et rechercher le marqueur `sauts` :
+Vérifier le fichier installé et rechercher les correctifs :
 
 ```fish
 cat /usr/lib/python3.14/site-packages/showtime/widgets/window.py
-grep -n -i "sauts" /usr/lib/python3.14/site-packages/showtime/widgets/window.py
+grep -n "_try_auto_subtitles" /usr/lib/python3.14/site-packages/showtime/widgets/window.py
+grep -n "_seek_by_percent\|_delete_current_video" /usr/lib/python3.14/site-packages/showtime/widgets/window.py
 ```
 
 Si le chemin change avec la version de Python ou du paquet, retrouver le chemin installé avec :
